@@ -71,6 +71,11 @@ router.get(
   employeeController.getEmployeeListAsPerUnit
 );
 
-router.post("/import-employee/:organizationId", authMiddleware.verifyUserToken, upload.single('file'), employeeController.importEmployee)
+router.post(
+  "/import-employee/:organizationId",
+  authMiddleware.verifyUserToken,
+  upload.single("file"),
+  employeeController.importEmployee
+);
 
 module.exports = router;

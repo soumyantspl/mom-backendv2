@@ -958,7 +958,7 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   if (meetingDetails) {
     const logo = process.env.LOGO;
     console.log("userData2-->", userData)
-    kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  
     const mailData = await emailTemplates.actionReassignEmailTemplate(
       meetingDetails,
       logo,
