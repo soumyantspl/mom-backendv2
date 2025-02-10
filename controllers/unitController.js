@@ -146,21 +146,11 @@ const listAllUnitForMeeting = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
-/**FUNC- TO CREATE EVENT**/
-const createEvent = async (req, res) => {
-  try {
-    await googleService.createEvent();
-  } catch (error) {
-    console.log(error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
+
 module.exports = {
   createUnit,
   editUnit,
   deleteUnit,
   listUnit,
-  createEvent,
   listAllUnitForMeeting,
 };

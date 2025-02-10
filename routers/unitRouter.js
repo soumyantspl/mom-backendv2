@@ -32,8 +32,7 @@ router.post(
   authMiddleware.verifyUserToken,
   unitController.listUnit
 );
-//LIST UNIT API
-router.post("/createEvent", unitController.createEvent);
+
 //LIST UNIT API
 router.post(
   "/listAllUnitForMeeting",
