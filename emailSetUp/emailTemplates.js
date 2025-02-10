@@ -553,9 +553,11 @@ const sendReScheduledMeetingEmailTemplate = async (
 const sendCreateMinutesEmailTemplate = async (
   meetingData,
   attendeeName,
+  momAcceptanceRejectionEndtime,
   logo
 ) =>
   new Promise((resolve, reject) => {
+    console.log("configTime-->", momAcceptanceRejectionEndtime)
     const attendeeData = meetingData?.attendees
       .map((attendee) => {
         return `${attendee.name}(${attendee.email})`;
@@ -612,8 +614,8 @@ const sendCreateMinutesEmailTemplate = async (
       -  ${meetingData.toTime}, titled "${meetingData.title}"</p>` +
       // '<p style="color: #000 !important">We request you to kindly review the minutes and take necessary actions like accept or reject or request for amendment if any.We would like to mention that the action window will be open for the next 12 hours and post that all minutes will be treated as accepted.</p>' +
       // '<p style="color: #000 !important">Please log in with the below URL to view the minutes of the meeting.</p>' +
-      '<p style="color: #000 !important">We kindly request you to review the minutes and provide your acceptance. Please note that the action window is open for the next 12 hours. After this period, all minutes will be considered accepted.</p>' +
-      '<p style="color: #000 !important">Please log in with the below URL to view the minutes of the meeting or check the attached MOM.</p>' +
+      `<p style="color: #000 !important">We kindly request you to review the minutes and provide your acceptance. Please note that the action window is open for the next ${momAcceptanceRejectionEndtime}  hours. After this period, all minutes will be considered accepted.</p>` +
+      `<p style="color: #000 !important">Please log in with the below URL to view the minutes of the meeting or check the attached MOM.</p>` +
       `<p style="color: #000 !important">${process.env.FRONTEND_URL}/view-minute-detail/${meetingData?._id}</p>` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Meeting Title</strong></p>' +
       `<p style="color: #000 !important;margin:0px;">${meetingData?.title} (${meetingData?.meetingId})</p>` +

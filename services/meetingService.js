@@ -25,6 +25,7 @@ const notificationService = require("./notificationService");
 const axios = require("axios");
 const JSZip = require("jszip");
 const path = require("path");
+const Configuration = require("../models/configurationModel");
 process.env.TZ = "Asia/Calcutta";
 
 /**FUNC- CREATE MEETING */
@@ -1999,6 +2000,16 @@ const generateMOM = async (meetingId, userId, data, ipAddress = "1000") => {
     },
     updateData
   );
+
+  const configTime = await Configuration.findOne({
+    organizationId: new ObjectId(data.organizationId)
+  }, {
+    acceptanceRejectionEndtime: 1
+  }
+  )
+  console.log("configTime--->", configTime)
+  const momAcceptanceRejectionEndtime = configTime.acceptanceRejectionEndtime ? configTime.acceptanceRejectionEndtime : 0
+
   if (updateMomDetails) {
     const meetingDetails = await viewMeeting(meetingId, userId);
     if (data.attendees?.length !== 0 && meetingDetails) {
@@ -2007,6 +2018,7 @@ const generateMOM = async (meetingId, userId, data, ipAddress = "1000") => {
         const mailData = await emailTemplates.sendCreateMinutesEmailTemplate(
           meetingDetails,
           attendee.name,
+          momAcceptanceRejectionEndtime,
           logo
         );
         const emailSubject = await emailConstants.createMinuteSubject(
