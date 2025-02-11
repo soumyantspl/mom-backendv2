@@ -589,40 +589,71 @@ const importEmployee = async (data) => {
     name: Joi.string()
       .trim()
       .pattern(regularExpression)
+      .required()
       .messages({
         "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
+        "any.required": "Name is required."
       }),
     email: Joi.string()
       .trim()
       .email()
+      .required()
       .messages({
         "string.email": `Invalid email format.`,
+        "any.required": "Email is required."
       }),
     empId: Joi.string()
       .trim()
       .pattern(regularExpression)
+      .required()
       .messages({
         "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
+        "any.required": "Employee Id is required."
       }),
-    designation: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
-    }),
-    department: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
-    }),
-    unitName: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
-    }),
-    unitAddress: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
-    }),
-    organizationId: Joi.string().required().messages({
-      "any.required": `Organization ID is required.`,
-    }),
-    isAdmin: Joi.boolean().strict(),
+    designation: Joi.string()
+      .trim()
+      .required()  // Mark designation as required
+      .pattern(regularExpression)
+      .messages({
+        "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
+        "any.required": "Designation is required."
+      }),
+    department: Joi.string()
+      .trim()
+      .required()  // Mark department as required
+      .pattern(regularExpression)
+      .messages({
+        "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
+        "any.required": "Department is required."
+      }),
+    unitName: Joi.string()
+      .trim()
+      .required()  // Mark unitName as required
+      .pattern(regularExpression)
+      .messages({
+        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
+        "any.required": "Unit Name is required."
+      }),
+    unitAddress: Joi.string()
+      .trim()
+      .pattern(regularExpression)
+      .allow('') // optional field
+      .messages({
+        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
+      }),
+    organizationId: Joi.string()
+      .required()
+      .messages({
+        "any.required": `Organization ID is required.`,
+      }),
   });
 
+
   for (const record of data) {
+    if (record.email) {
+      record.email = record.email.toLowerCase();
+    }
+
     const duplicateFields = {};
     const existingByEmail = await Employee.findOne({ email: record.email });
     const existingByEmpId = await Employee.findOne({ empId: record.empId });
@@ -639,11 +670,12 @@ const importEmployee = async (data) => {
       continue;
     }
 
-    const { error } = employeeValidationSchema.validate(record);
+    const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
     if (error) {
+      const combinedErrorMessage = error.details.map(detail => detail.message).join(" | ")
       validationErrors.push({
         record,
-        message: error.details[0].message,
+        message: combinedErrorMessage,
       });
       continue;
     }
@@ -712,11 +744,21 @@ const importEmployee = async (data) => {
 
     const savedRecord = await newEmployee.save();
     savedData.push(savedRecord);
-    console.log("Saved Data", savedRecord);
+    console.log("Saved Data--->>", savedRecord);
   }
+
 
   return { savedData, duplicateRecords, validationErrors };
 };
+
+
+
+
+
+
+
+
+
 
 
 
