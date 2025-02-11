@@ -7,7 +7,6 @@ const fs = require("fs");
 const xlsx = require("xlsx");
 const path = require("path");
 
-
 const columnMapping = {
   Name: "name",
   "Employee Id": "empId",
@@ -307,7 +306,6 @@ const getEmployeeListAsPerUnit = async (req, res) => {
 };
 
 
-
 const writeErrorFile = (duplicateRecords, validationErrors) => {
   const workbook = xlsx.utils.book_new();
 
@@ -462,6 +460,11 @@ const importEmployee = async (req, res) => {
 };
 
 
+
+
+
+
+
 module.exports = {
   createEmployee,
   editEmployee,
@@ -473,4 +476,5 @@ module.exports = {
   listOnlyEmployee,
   getEmployeeListAsPerUnit,
   importEmployee,
+  writeErrorFile
 };
