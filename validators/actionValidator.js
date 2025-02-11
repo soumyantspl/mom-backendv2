@@ -15,7 +15,7 @@ const statusEnumData = [
 const delayStatusEnumData = ["DELAYED", "NOTDELAYED"];
 //const regularExpression = /^[0-9a-zA-Z ,/-]+$/;
 const enumPriorityValues = ["HIGH", "LOW", "NORMAL"];
-const regularExpression = /^[0-9a-zA-Z .(),/-]+$/;
+const regularExpression = /^[0-9a-zA-Z .,:;()/\-_\n]+$/;
 const actionCommentsValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
@@ -131,7 +131,7 @@ const reAssignActionValidator = async (req, res, next) => {
       designation: Joi.string().trim().allow(null, ""),
       companyName: Joi.string().trim().allow(null, ""),
       organizationId: Joi.string().trim().alphanum().required(),
-      lastActionActivityId:Joi.string().trim().alphanum().allow(null, ""),
+      lastActionActivityId: Joi.string().trim().alphanum().allow(null, ""),
       reAssignReason: Joi.string().trim().pattern(regularExpression).messages({
         "string.pattern.base": `HTML tags & Special letters are not allowed!`,
       }),
@@ -444,32 +444,32 @@ const totalActionList = async (req, res, next) => {
 // ACTION STATUS DATA
 const getUserActionPriotityDetailsValidator = async (req, res, next) => {
   try {
-     const headerSchema = Joi.object({
-       headers: Joi.object({
-         authorization: Joi.required(),
-       }).unknown(true),
-     });
- 
-     const bodySchema = Joi.object({
-       organizationId: Joi.string().trim().alphanum().required(),
-       searchKey: Joi.string()
-       .trim()
-       .pattern(regularExpression)
-       .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
-     });
-     const paramsSchema = Joi.object({
-       limit: Joi.number().required(),
-       page: Joi.number().required(),
-       order: Joi.number().required(),
-     });
-     await headerSchema.validateAsync({ headers: req.headers });
-     await paramsSchema.validateAsync(req.query);
-     await bodySchema.validateAsync(req.body);
-     next();
-   } catch (error) {
-     console.log(error);
-     return Responses.errorResponse(req, res, error, 200);
-   }
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+      }).unknown(true),
+    });
+
+    const bodySchema = Joi.object({
+      organizationId: Joi.string().trim().alphanum().required(),
+      searchKey: Joi.string()
+        .trim()
+        .pattern(regularExpression)
+        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+    });
+    const paramsSchema = Joi.object({
+      limit: Joi.number().required(),
+      page: Joi.number().required(),
+      order: Joi.number().required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await paramsSchema.validateAsync(req.query);
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
 };
 
 
