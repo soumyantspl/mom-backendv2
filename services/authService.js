@@ -5,7 +5,8 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const emailService = require("./emailService");
 const authMiddleware = require("../middlewares/authMiddleware");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailConstants = require("../constants/emailConstants");
 const ObjectId = require("mongoose").Types.ObjectId;
 const axios = require("axios");
@@ -151,13 +152,15 @@ const insertOtp = async (
     logo
   );
   //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
-  const emailSubject = emailConstants.signInOtpsubject;
+  // const emailSubject = emailConstants.signInOtpsubject;
+
+  const { emailSubject, mailData: mailBody } = mailData;
   "sendOtpEmailTemplate-----------------------maildata", mailData;
   await emailService.sendEmail(
     userData.email,
     emailType,
     emailSubject,
-    mailData
+    mailBody
   );
   return data.otp;
 };

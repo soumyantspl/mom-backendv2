@@ -1,7 +1,8 @@
 const Organization = require("../models/organizationModel");
 const Configuration = require("../models/configurationModel");
 const emailConstants = require("../constants/emailConstants");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
@@ -97,18 +98,18 @@ const organizationRegistrationService = async (data) => {
         const empResult = await empData.save();
         console.log("result-->", empResult)
 
-        const logo = process.env.LOGO;
+        const logo = data.dashboardLogo;
         const emailType = "Organization Registration";
-        const emailSubject = "Organization Registration";
+       // const emailSubject = "Organization Registration";
 
-        const mailData = await emailTemplates.organizationRegistration(
-          commonHelper.convertFirstLetterOfFullNameToCapital(result.name),
-          logo
-        );
+       const mailData = await emailTemplates.registrationWelcomeMail(
+        commonHelper.convertFirstLetterOfFullNameToCapital(result.name),
+        logo
+      );
+      const { emailSubject, mailData: mailBody } = mailData;
+      console.log("mail data", mailData)
 
-        console.log("mail data", mailData)
-
-        await emailService.sendEmail(result.email, emailType, emailSubject, mailData);
+      await emailService.sendEmail(result.email, emailType, emailSubject, mailBody);
         console.log("result-->", result)
 
         return result;
@@ -155,7 +156,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
 
     const logo = process.env.LOGO;
     const emailType = "Send OTP";
-    const emailSubject = "Organization Registration";
+    // const emailSubject = "Organization Registration";
     const mailData =
       await emailTemplates.organizationRegistrationSendOtpTemplate(
         commonHelper.convertFirstLetterOfFullNameToCapital(name),
@@ -164,7 +165,9 @@ const organizationSendOtp = async (id, data, ipAddress) => {
         logo
       );
 
-    await emailService.sendEmail(email, emailType, emailSubject, mailData);
+      const { emailSubject, mailData: mailBody } = mailData;
+
+    await emailService.sendEmail(email, emailType, emailSubject, mailBody);
     return {
       data: {
         usedOtp: 1,
@@ -201,7 +204,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
 
   const logo = process.env.LOGO;
   const emailType = "Send OTP";
-  const emailSubject = "Organization Registration";
+  // const emailSubject = "Organization Registration";
   const mailData = await emailTemplates.organizationRegistrationSendOtpTemplate(
     commonHelper.convertFirstLetterOfFullNameToCapital(name),
     otp,
@@ -209,7 +212,8 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     logo
   );
 
-  await emailService.sendEmail(email, emailType, emailSubject, mailData);
+  const { emailSubject, mailData: mailBody } = mailData;
+  await emailService.sendEmail(email, emailType, emailSubject, mailBody);
   return {
     data: {
       usedOtp: otpLogsData.otpCount + 1,
