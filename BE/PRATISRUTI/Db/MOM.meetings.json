@@ -1,0 +1,51 @@
+[{
+  "_id": {
+    "$oid": "66965177ac3cd986ca2abe76"
+  },
+  "title": "Tata Curvv EV latest update",
+  "meetingId": "380534",
+  "mode": "PHYSICAL",
+  "locationDetails": {
+    "isMeetingRoom": true,
+    "roomId": {
+      "$oid": "666fbd602039cc92a30250f3"
+    }
+  },
+  "link": "",
+  "date": {
+    "$date": "2024-07-26T00:00:00.000Z"
+  },
+  "fromTime": "16:27",
+  "toTime": "16:30",
+  "step": 3,
+  "meetingStatus": {
+    "status": "scheduled"
+  },
+  "organizationId": {
+    "$oid": "6655d3118ba49b304f0d8258"
+  },
+  "isActive": true,
+  "createdById": {
+    "$oid": "6655d2b68ba49b304f0d8256"
+  },
+  "agendaIds": [
+    {
+      "$oid": "669651a8ac3cd986ca2abe93"
+    }
+  ],
+  "attendees": [
+    {
+      "rsvp": "AWAITING",
+      "_id": {
+        "$oid": "6655d2b68ba49b304f0d8256"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-07-16T10:54:47.826Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-16T10:55:36.111Z"
+  },
+  "__v": 0
+}]
