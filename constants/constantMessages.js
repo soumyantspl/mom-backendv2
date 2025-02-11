@@ -108,9 +108,13 @@ const updateAttendanceSuccess = " Attendance updated successfully";
 const emailAlreadyUsed = "This Email is already in use by an Employee"
 const importedSuccess = "File imported successfully"
 const duplicateOrganizationCode = "The Organization Code is already exist, Please try another one!";
-const wrongZoomCredentials="Please add correct credentials!";
-const recordingsDownloadedSuccessfully="All recordings downloaded successfully."
-const MOMDownloadedSuccessfully="MOM downloaded successfully."
+const wrongZoomCredentials = "Please add correct credentials!";
+const recordingsDownloadedSuccessfully = "All recordings downloaded successfully."
+const MOMDownloadedSuccessfully = "MOM downloaded successfully."
+const importSuccess = "Import completed successfully."
+const importFailed = "Import completed with errors.Please check Reason for Failed column"
+const importEroor = "Error in processing Excel file"
+const validationError = "Validation Errors"
 module.exports = {
   pleaseAddMinute,
   isDeleteNotAllowed,
@@ -207,5 +211,9 @@ module.exports = {
   wrongZoomCredentials,
   rejectedSuccess,
   MOMDownloadedSuccessfully,
-  recordingsDownloadedSuccessfully
+  recordingsDownloadedSuccessfully,
+  importSuccess,
+  importFailed,
+  importEroor,
+  validationError,
 };

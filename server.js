@@ -43,6 +43,8 @@ const corsOpts = {
 };
 app.use("/pdfFiles", express.static("pdfFiles"));
 app.use(cors());
+app.use('/Downloads', express.static(path.join(__dirname, 'Downloads')));
+
 
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", allowOrigin);

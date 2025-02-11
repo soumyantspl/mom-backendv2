@@ -712,11 +712,13 @@ const importEmployee = async (data) => {
 
     const savedRecord = await newEmployee.save();
     savedData.push(savedRecord);
-    console.log("Saved Data", savedRecord);
+    console.log("Saved Data--->>", savedRecord);
   }
 
   return { savedData, duplicateRecords, validationErrors };
 };
+
+
 
 
 
