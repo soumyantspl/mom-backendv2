@@ -1,5 +1,6 @@
 const commonHelper = require("../helpers/commonHelper");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const emailConstants = require("../constants/emailConstants");
 const otpDemoLogs = require("../models/otpDemoLogsModel");
@@ -45,8 +46,8 @@ const createDemoClient = async (data, ipAddress) => {
       await emailService.sendEmail(
         adminEmail,
         emailType,
-        emailSubject,
-        mailData
+        mailData.subject, 
+        mailData.mailBody
       );
     }
     return result;
@@ -89,7 +90,7 @@ const demoSendOtp = async (data, ipAddress) => {
       logo,
       typeMessage
     );
-    await emailService.sendEmail(email, emailType, emailSubject, mailData);
+    await emailService.sendEmail(email, emailType, mailData.subject, mailData.mailBody);
     return {
       data: {
         usedOtp: 1,
@@ -252,20 +253,15 @@ const saveContactUsDetails = async (data, ipAddress) => {
       const logo = process.env.LOGO;
       const emailType = "Demo Inquiry";
       const adminEmail = process.env.ADMIN_EMAIL;
-      const emailSubject = emailConstants.contactUsSubject(data.name);
-      const mailData = await emailTemplates.sendContactUsEmailTemplate(
+     // const emailSubject = emailConstants.contactUsSubject(data.name);
+     const { subject, mailBody } = await emailTemplates.sendContactUsEmailTemplate(
         data.name,
         data.email,
         data.phoneNo,
         data.message,
         logo
       );
-      await emailService.sendEmail(
-        adminEmail,
-        emailType,
-        emailSubject,
-        mailData
-      );
+      await emailService.sendEmail(adminEmail, emailType, subject, mailBody);
     }
     return result;
   } else {
@@ -303,7 +299,7 @@ const contactUsSendOtp = async (data, ipAddress) => {
       data.type === "contactus"
         ? emailConstants.contactUsMessage
         : emailConstants.requestDemoOtpMessage;
-    const mailData = await emailTemplates.sendOtpDemoEmailTemplate(
+        const { subject, mailBody } = await emailTemplates.sendOtpContactEmailTemplate(
       commonHelper.convertFirstLetterOfFullNameToCapital(name),
       otp,
       process.env.CHECK_OTP_VALIDATION_TIME,
@@ -311,7 +307,7 @@ const contactUsSendOtp = async (data, ipAddress) => {
       logo,
       typeMessage
     );
-    await emailService.sendEmail(email, emailType, emailSubject, mailData);
+    await emailService.sendEmail(email, emailType, subject, mailBody);
     return {
       data: {
         usedOtp: 1,
