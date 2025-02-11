@@ -5,6 +5,9 @@ const { errorLog } = require("../middlewares/errorLog");
 const commonHelper = require("../helpers/commonHelper");
 const fs = require("fs");
 const xlsx = require("xlsx");
+const path = require("path");
+
+
 const columnMapping = {
   Name: "name",
   "Employee Id": "empId",
@@ -13,7 +16,6 @@ const columnMapping = {
   Department: "department",
   "Unit Name": "unitName",
   "Unit Address": "unitAddress",
-  "Admin": "isAdmin",
 };
 
 
