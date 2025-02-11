@@ -471,5 +471,4 @@ module.exports = {
   listOnlyEmployee,
   getEmployeeListAsPerUnit,
   importEmployee,
-  writeXLSXErrorFile
 };
