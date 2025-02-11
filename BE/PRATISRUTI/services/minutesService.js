@@ -13,7 +13,8 @@ const fileService = require("./fileService");
 const Meetings = require("../models/meetingModel");
 const Employee = require("../models/employeeModel");
 const ObjectId = require("mongoose").Types.ObjectId;
-const emailTemplates = require("../emailSetUp/emailTemplates");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const meetingService = require("../services/meetingService");
 const actionService = require("../services/actionService");
 const emailConstants = require("../constants/emailConstants");
@@ -178,14 +179,16 @@ const createMinutes = async (
         userData,
         newMinutes,
       );
-      const emailSubject = await emailConstants.assignSubject(newMinutes);
+      // const emailSubject = await emailConstants.assignSubject(newMinutes);
+      const { emailSubject, mailData: mailBody } = mailData;
+
       console.log("userData->", userData)
       if (assignedUserDetail) {
         emailService.sendEmail(
           assignedUserDetail?.email,
           "Action Created",
           emailSubject,
-          mailData
+          mailBody
         );
       }
 
@@ -197,7 +200,8 @@ const createMinutes = async (
           newMinutes,
           userData
         );
-        const emailSubject = await emailConstants.assignSubject(newMinutes);
+        // const emailSubject = await emailConstants.assignSubject(newMinutes);
+        const { emailSubject, mailData: mailBody } = mailData;
         console.log("userData->", userData)
         console.log("emailSubject->", emailSubject)
         console.log("Meeting details start", meetingDetails)
@@ -206,7 +210,7 @@ const createMinutes = async (
           meetingDetails.createdByDetail.email,
           "Action Created",
           emailSubject,
-          mailData
+          mailBody
         );
       }
     }
@@ -940,14 +944,15 @@ const updateMinute = async (data, minuteId, userId, userData, ipAddress = "1000"
         result,
         userData
       );
-      const emailSubject = await emailConstants.assignSubject(result);
+      // const emailSubject = await emailConstants.assignSubject(result);
+      const { emailSubject, mailData: mailBody } = mailData;
 
       if (assignedUserDetail) {
         emailService.sendEmail(
           assignedUserDetail?.email,
           "Action Created",
           emailSubject,
-          mailData
+          mailBody
         );
 
       }
@@ -960,7 +965,8 @@ const updateMinute = async (data, minuteId, userId, userData, ipAddress = "1000"
           result,
           userData
         );
-        const emailSubject = await emailConstants.assignSubject(result);
+        // const emailSubject = await emailConstants.assignSubject(result);
+        const { emailSubject, mailData: mailBody } = mailData;
         console.log("userData->", userData)
         console.log("emailSubject->", emailSubject)
         console.log("Meeting details start", meetingDetails)
@@ -969,7 +975,7 @@ const updateMinute = async (data, minuteId, userId, userData, ipAddress = "1000"
           meetingDetails.createdByDetail.email,
           "Action Created",
           emailSubject,
-          mailData
+          mailBody
         );
       }
 
@@ -1198,14 +1204,16 @@ const acceptMinutes = async (data, meetingId, userId, ipAddress = "1000") => {
       attendeeDetails,
       logo
     );
-    const emailSubject = await emailConstants.acceptMinuteSubject(
-      meetingDetails
-    );
+    // const emailSubject = await emailConstants.acceptMinuteSubject(
+    //   meetingDetails
+    // );
+    const { emailSubject, mailData: mailBody } = mailData;
+
     emailService.sendEmail(
       meetingDetails?.createdByDetail?.email,
       "Create Minutes Amendment",
       emailSubject,
-      mailData
+      mailBody
     );
   }
   return acceptDetails;

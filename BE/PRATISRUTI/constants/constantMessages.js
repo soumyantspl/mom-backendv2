@@ -71,7 +71,7 @@ const otpResendMessage = async (attemptNumbar, email) => {
 };
 const otpResendMaxLimitCrossed = `Sorry! You have reached the maximum limit of 3 OTP resend attempts. Please try again after ${process.env.OTP_MAX_RESEND_TIMEINMINUTES} minutes.`;
 const momGeneratedSuccessfully =
-  "MOM generated succeffully & notification sent to all attendees.";
+  "MOM generated Successfully & notification sent to all attendees.";
 const pleaseAddAttendance = "Please add attendance.";
 const configCreatedSuccess = "Configuration Created successfully!";
 const configUpdateSuccess = "Configuration Updated successfully!";
@@ -89,6 +89,7 @@ const isUnread = "Marked as unread";
 const isImportant = "Marked as important";
 const isDelete = "Deleted successfully";
 const pleaseAddMinute = "Please add minute.";
+const roomUnavailable = "The room is already booked for the selected date and time range.";
 const inActiveOrganization =
   "The Organization has been deactivated, please contact adminstration";
 const isMaxOtpSendOvered = `You have sent maximum number of OTP, Please try after ${process.env.CHECK_OTP_VALIDATION_TIME} minutes`;
@@ -115,6 +116,11 @@ const importSuccess = "Import completed successfully."
 const importFailed = "Import completed with errors.Please check Reason for Failed column"
 const importEroor = "Error in processing Excel file"
 const validationError = "Validation Errors"
+
+///Pratishruti//
+//view pRofile//
+const currentPasswordIncorrect ="Current Password is Incorrect"
+
 module.exports = {
   pleaseAddMinute,
   isDeleteNotAllowed,
@@ -216,4 +222,6 @@ module.exports = {
   importFailed,
   importEroor,
   validationError,
+  currentPasswordIncorrect,
+  roomUnavailable
 };

@@ -5,6 +5,33 @@ const validator = require("../validators/employeeValidator");
 const authMiddleware = require("../middlewares/authMiddleware");
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const path=require('path')
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, '../uploads'); 
+    console.log(`File is being uploaded to: ${uploadPath}`);
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueFilename = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueFilename);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only image files are allowed!"), false);
+  }
+};
+const uploadpicture = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, 
+});
+
 
 /* CREATE EMPLOYEE  */
 router.post(
@@ -77,5 +104,14 @@ router.post(
   upload.single("file"),
   employeeController.importEmployee
 );
+/* VIEW PROFILE  */
+router.put(
+  "/viewProfile/:id",
+  uploadpicture.single("profilePicture"),
+  validator.viewProfileValidator,
+  authMiddleware.verifyUserToken,
+  employeeController.viewProfile
+);
+
 
 module.exports = router;
