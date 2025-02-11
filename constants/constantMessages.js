@@ -116,11 +116,14 @@ const importSuccess = "Import completed successfully."
 const importFailed = "Import completed with errors.Please check Reason for Failed column"
 const importEroor = "Error in processing Excel file"
 const validationError = "Validation Errors"
+<<<<<<< HEAD
 
 //Pratishruti//
 //view pRofile//
 const currentPasswordIncorrect ="Current Password is Incorrect"
 
+=======
+>>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 module.exports = {
   pleaseAddMinute,
   isDeleteNotAllowed,
@@ -222,6 +225,9 @@ module.exports = {
   importFailed,
   importEroor,
   validationError,
+<<<<<<< HEAD
   currentPasswordIncorrect,
   roomUnavailable
+=======
+>>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 };

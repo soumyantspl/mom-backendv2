@@ -104,6 +104,7 @@ router.post(
   upload.single("file"),
   employeeController.importEmployee
 );
+<<<<<<< HEAD
 /* VIEW PROFILE  */
 router.put(
   "/viewProfile/:id",
@@ -113,5 +114,7 @@ router.put(
   employeeController.viewProfile
 );
 
+=======
+>>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 
 module.exports = router;
