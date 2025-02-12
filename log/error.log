@@ -1500,3 +1500,27 @@ Stack Trace: TypeError [ERR_INVALID_ARG_TYPE]: The "listener" argument must be o
     at next (E:\Ongoing\V2\mom-backend\node_modules\express\lib\router\route.js:149:13)
     at Route.dispatch (E:\Ongoing\V2\mom-backend\node_modules\express\lib\router\route.js:119:3)
     at Layer.handle [as handle_request] (E:\Ongoing\V2\mom-backend\node_modules\express\lib\router\layer.js:95:5)
+Date: 12/02/2025, Time: 15:45
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:170:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:987:20)
+Date: 12/02/2025, Time: 15:49
+Error: uuuuuuuuuuu is not defined
+Stack Trace: ReferenceError: uuuuuuuuuuu is not defined
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:125:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:987:20)
+Date: 12/02/2025, Time: 15:58
+Error: jwtClient is not defined
+Stack Trace: ReferenceError: jwtClient is not defined
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:182:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:987:20)

@@ -984,7 +984,7 @@ const downloadZoomRecordingsInZip = async (req, res) => {
 const createGMeeting = async (req, res) => {
   try {
    
-    const result = await googleService.createGMeeting();
+    const result = await googleService.addEvent();
     console.log("result=============", result);
     if (!result) {
       return Responses.failResponse(
