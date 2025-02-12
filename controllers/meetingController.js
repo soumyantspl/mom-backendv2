@@ -1,4 +1,5 @@
 const meetingService = require("../services/meetingService");
+const googleService = require("../services/googleService");
 const Responses = require("../helpers/response");
 const messages = require("../constants/constantMessages");
 const { errorLog } = require("../middlewares/errorLog");
@@ -794,13 +795,14 @@ const getRecordingsZoomMeetingForMOM = async (req, res) => {
 /**FUNC- TO CREATE A NEW MEETING FROM SCEDULED MEETING**/
 const newMeetingAsRescheduled = async (req, res) => {
   try {
-    console.log(req.body);
+    console.log(req);
     let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
     const result = await meetingService.newMeetingAsRescheduled(
       req.params.id,
       req.body,
       req.userId,
-      ip
+      ip,
+      req.userData
     );
     if (!result) {
       return Responses.failResponse(
@@ -977,6 +979,37 @@ const downloadZoomRecordingsInZip = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+/**FUNC- TO CREATE A NEW MEETING FROM SCEDULED MEETING**/
+const createGMeeting = async (req, res) => {
+  try {
+   
+    const result = await googleService.createGMeeting();
+    console.log("result=============", result);
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+   
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.createdSuccess,
+      201
+    );
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
 module.exports = {
   createMeeting,
   updateRsvp,
@@ -1007,4 +1040,5 @@ module.exports = {
   getMeetingActionPriotityDetails,
   deleteZoomRecording,
   downloadZoomRecordingsInZip,
+  createGMeeting,
 };

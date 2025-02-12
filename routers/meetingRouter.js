@@ -228,4 +228,13 @@ router.post(
   meetingController.downloadZoomRecordingsInZip
 );
 
+
+
+/* DOWNLOAD ALL ZOOM RECORDING  */
+router.post(
+  "/createGMeeting",
+  meetingController.createGMeeting
+);
+
+
 module.exports = router;

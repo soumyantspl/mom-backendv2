@@ -884,6 +884,14 @@ const viewMeeting = async (meetingId, userId) => {
       },
     },
     {
+      $lookup: {
+        from: "meetings",
+        foreignField: "_id",
+        localField: "rescheduledForMeetingId",
+        as: "rescheduledForMeetingDetails",
+      },
+    },
+    {
       $project: {
         _id: 1,
         createdById: 1,
@@ -906,6 +914,8 @@ const viewMeeting = async (meetingId, userId) => {
         linkType: 1,
         hostDetails: 1,
         followOnSerialNo: 1,
+        rescheduledParentMeetingId:1,
+        rescheduledForMeetingId:1,
         agendasDetail: {
           title: 1,
           _id: 1,
@@ -965,6 +975,11 @@ const viewMeeting = async (meetingId, userId) => {
           organizationId: 1,
           zoomCredentials: 1,
         },
+        rescheduledForMeetingDetails:{
+          _id:1,
+          meetingId:1,
+          title:1
+        }
       },
     },
     //  { $unwind: "$createdByDetail" },
@@ -986,6 +1001,13 @@ const viewMeeting = async (meetingId, userId) => {
         preserveNullAndEmptyArrays: true,
       },
     },
+    {
+      $unwind: {
+        path: "$rescheduledForMeetingDetails",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    
   ]);
 
   console.log("meetingData===================", meetingData);
@@ -1295,6 +1317,14 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
       },
     },
     {
+      $lookup: {
+        from: "meetings",
+        foreignField: "_id",
+        localField: "rescheduledForMeetingId",
+        as: "rescheduledForMeetingDetails",
+      },
+    },
+    {
       $project: {
         _id: 1,
         attendees: 1,
@@ -1311,6 +1341,9 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
         meetingStatus: 1,
         createdAt: 1,
         createdById: 1,
+        rescheduledParentMeetingId:1,
+   rescheduledForMeetingId:1,
+        parentMeetingId:1,
         momGenerationDetails: 1,
         actionDetail: {
           _id: 1,
@@ -1349,12 +1382,25 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
         parentMeetingDetails: {
           _id: 1,
         },
+        rescheduledForMeetingDetails:{
+          _id:1,
+          meetingId:1,
+          title:1
+        }
       },
     },
+     {
+            $unwind: {
+              path: "$rescheduledForMeetingDetails",
+              preserveNullAndEmptyArrays: true,
+            },
+          },
   ])
     .sort({ _id: parseInt(order) })
     .skip(skip)
     .limit(limit);
+    console.log(meetingData)
+  //  ppppppppppppppppppp
   if (meetingData.length !== 0) {
     meetingData.map((meetingDataObject) => {
       const meetingDate = new Date(meetingDataObject.date);
@@ -3920,8 +3966,10 @@ const newMeetingAsRescheduled = async (
   oldMeetingId,
   data,
   userId,
-  ipAddress = "1000"
+  ipAddress = "1000",
+  userData
 ) => {
+  console.log(userData)
   let updatedAgendaIds = [];
   let rescheduledParentMeetingId = null;
   let sequence = 0;
@@ -4110,37 +4158,6 @@ const newMeetingAsRescheduled = async (
         <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
                 }</td>
         </tr>
-        ${agenda.topic !== (null || "")
-                  ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-              <td
-                style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                colspan="6"
-              >
-                Topic to Discuss
-              </td>
-              <td colspan="6" style="border: 1px solid black; border-collapse: collapse; width: 50%; padding: 3px;">
-                <p>${agenda?.topic ? parse(agenda?.topic) : ""}</p>
-              </td>
-            </tr>`
-                  : `<tr style={{display:"none"}}></tr>`
-                }
-           ${agenda.timeLine !== (null || "" || 0)
-                  ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
-                 <td
-                   style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
-                   colspan="6"
-                 >
-                   Timeline
-                 </td>
-                 <td
-                   colspan="6"
-                   style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-                 >
-                   ${agenda.timeLine} Mins
-                 </td>
-               </tr>`
-                  : `<tr style={{display:"none"}}></tr>`
-                }
         </table><br />`;
             })
             .join(" ");
@@ -4180,7 +4197,8 @@ const newMeetingAsRescheduled = async (
             attendeeData,
             attendee,
             meetingLinkCode,
-            finalMeetingLink
+            finalMeetingLink,
+            userData
             // (meetingLink =
             //   meeting?.createdById?.toString() == attendee?._id?.toString()
             //     ? hostLink
