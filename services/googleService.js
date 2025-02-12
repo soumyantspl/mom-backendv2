@@ -7,12 +7,6 @@ const SCOPES = [
   "https://www.googleapis.com/auth/calendar",
 ];
 
-const client_id =
-  "260087855691-e91cmkn3allf0gagu5sfas2jfifhv1in.apps.googleusercontent.com";
-const client_secret = "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";
-const redirect_uris = ["https://mom.ntspl.co.in", "http://localhost:3000"];
-const code =
-  "4/0ASVgi3KA7eHJNenfAsQDmuFmQj855bEeL-omYL8uZjrHTyyQvm7picqjGyIEHCpkLCWuAg";
 
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
