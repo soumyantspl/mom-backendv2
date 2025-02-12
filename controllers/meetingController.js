@@ -21,6 +21,15 @@ const createMeeting = async (req, res) => {
         200
       );
     }
+    if (result?.roomUnavailable) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.roomUnavailable,
+        409
+      );
+    }
     if (result?.isDuplicateEmail) {
       return Responses.failResponse(
         req,
