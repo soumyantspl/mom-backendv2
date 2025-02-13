@@ -1658,3 +1658,484 @@ Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out 
 =======
 >>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 >>>>>>> caa0640c391ca778542dbcfeb4f0fe0e466584ef
+Date: 13/02/2025, Time: 10:41
+Error: meetings validation failed: linkType: `GMEET` is not a valid enum value for path `linkType`., hostDetails.hostType: `GMEET` is not a valid enum value for path `hostDetails.hostType`.
+Stack Trace: ValidationError: meetings validation failed: linkType: `GMEET` is not a valid enum value for path `linkType`., hostDetails.hostType: `GMEET` is not a valid enum value for path `hostDetails.hostType`.
+    at Document.invalidate (E:\Ongoing\V2\mom-backend\node_modules\mongoose\lib\document.js:3312:32)
+    at E:\Ongoing\V2\mom-backend\node_modules\mongoose\lib\document.js:3073:17
+    at E:\Ongoing\V2\mom-backend\node_modules\mongoose\lib\schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+Date: 13/02/2025, Time: 11:25
+Error: commonHelper is not defined
+Stack Trace: ReferenceError: commonHelper is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:240:32)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 11:26
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:280:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 11:43
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:122:22)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 11:44
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:123:22)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 11:45
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:123:22)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 11:46
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:177:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 11:48
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:122:22)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 11:52
+Error: MMM is not defined
+Stack Trace: ReferenceError: MMM is not defined
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:132:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 11:52
+Error: meetingHostDetails validation failed: meetingDateTime: Path `meetingDateTime` is required.
+Stack Trace: ValidationError: meetingHostDetails validation failed: meetingDateTime: Path `meetingDateTime` is required.
+    at Document.invalidate (E:\Ongoing\V2\mom-backend\node_modules\mongoose\lib\document.js:3312:32)
+    at E:\Ongoing\V2\mom-backend\node_modules\mongoose\lib\document.js:3073:17
+    at E:\Ongoing\V2\mom-backend\node_modules\mongoose\lib\schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+Date: 13/02/2025, Time: 12:09
+Error: Bad Request
+Stack Trace: Error: Bad Request
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:429:18)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:293:20)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:23
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:311:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:38
+Error: Bad Request
+Stack Trace: Error: Bad Request
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:429:18)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:303:20)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:39
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:311:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:40
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:311:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:46
+Error: date is not defined
+Stack Trace: ReferenceError: date is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:275:13)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:46
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:333:28)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:314:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 13/02/2025, Time: 12:47
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:333:28)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:314:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 13/02/2025, Time: 12:48
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:333:28)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:314:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 13/02/2025, Time: 12:50
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:314:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:53
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:326:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:55
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:329:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:57
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:329:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 12:58
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:330:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:01
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:335:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:02
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:335:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:08
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:335:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:11
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:335:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:12
+Error: date.getHours is not a function
+Stack Trace: TypeError: date.getHours is not a function
+    at Object.combineDateAndTime (E:\Ongoing\V2\mom-backend\helpers\commonHelper.js:369:43)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:262:45)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:13
+Error: The specified time range is empty.
+Stack Trace: Error: The specified time range is empty.
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:429:18)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:327:20)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:14
+Error: oooooooooooooo is not defined
+Stack Trace: ReferenceError: oooooooooooooo is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:327:3)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:16
+Error: oooooooooooooo is not defined
+Stack Trace: ReferenceError: oooooooooooooo is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:327:3)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:19
+Error: date.getHours is not a function
+Stack Trace: TypeError: date.getHours is not a function
+    at Object.combineDateAndTime (E:\Ongoing\V2\mom-backend\helpers\commonHelper.js:371:43)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:262:45)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:21
+Error: date.getHours is not a function
+Stack Trace: TypeError: date.getHours is not a function
+    at Object.combineDateAndTime (E:\Ongoing\V2\mom-backend\helpers\commonHelper.js:377:22)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:262:45)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:22
+Error: oooooooooooooo is not defined
+Stack Trace: ReferenceError: oooooooooooooo is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:327:3)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:24
+Error: The specified time range is empty.
+Stack Trace: Error: The specified time range is empty.
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:429:18)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:328:20)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:27
+Error: The specified time range is empty.
+Stack Trace: Error: The specified time range is empty.
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:429:18)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:329:20)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 13:28
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:337:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 14:20
+Error: date.getHours is not a function
+Stack Trace: TypeError: date.getHours is not a function
+    at Object.combineDateAndTime (E:\Ongoing\V2\mom-backend\helpers\commonHelper.js:371:22)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:263:45)
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 14:21
+Error: LLLLLLLLL is not defined
+Stack Trace: ReferenceError: LLLLLLLLL is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:328:1)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 14:22
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:333:28)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:329:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 13/02/2025, Time: 14:23
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:333:28)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:188:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 13/02/2025, Time: 14:24
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:333:28)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:333:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 13/02/2025, Time: 14:31
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:188:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 14:33
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:341:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 14:39
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:143:22)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 14:45
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:152:22)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 14:46
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:207:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 14:54
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:208:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 13/02/2025, Time: 14:58
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:361:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 15:00
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:361:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 15:03
+Error: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+Stack Trace: ReferenceError: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh is not defined
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:361:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 13/02/2025, Time: 17:19
+Error: "gclientId" is required
+Stack Trace: ValidationError: "gclientId" is required
+Date: 13/02/2025, Time: 17:19
+Error: "gclientId" is required
+Stack Trace: ValidationError: "gclientId" is required
+Date: 13/02/2025, Time: 17:25
+Error: "gaccountId" is required
+Stack Trace: ValidationError: "gaccountId" is required
+Date: 13/02/2025, Time: 17:25
+Error: "gaccountId" is required
+Stack Trace: ValidationError: "gaccountId" is required
+Date: 13/02/2025, Time: 17:25
+Error: "gaccountId" is required
+Stack Trace: ValidationError: "gaccountId" is required
+Date: 13/02/2025, Time: 17:26
+Error: "gaccountId" is required
+Stack Trace: ValidationError: "gaccountId" is required
+Date: 13/02/2025, Time: 17:27
+Error: "gaccountId" is required
+Stack Trace: ValidationError: "gaccountId" is required
+Date: 13/02/2025, Time: 17:27
+Error: "gaccountId" is required
+Stack Trace: ValidationError: "gaccountId" is required
+Date: 13/02/2025, Time: 17:27
+Error: "gaccountId" is required
+Stack Trace: ValidationError: "gaccountId" is required
+Date: 13/02/2025, Time: 17:29
+Error: "gaccountId" is required
+Stack Trace: ValidationError: "gaccountId" is required

@@ -38,7 +38,7 @@ const meetingSchema = new mongoose.Schema(
       },
       hostType: {
         type: String,
-        enum: ["MANUAL", "ZOOM"],
+        enum: ["MANUAL", "ZOOM","GMEET"],
         default: "zoom",
       },
     },
@@ -187,7 +187,7 @@ const meetingSchema = new mongoose.Schema(
     },
     linkType: {
       type: String,
-      enum: ["MANUAL", "ZOOM"],
+      enum: ["MANUAL", "ZOOM","GMEET"],
       default: "MANUAL",
     },
     isRescheduled: {

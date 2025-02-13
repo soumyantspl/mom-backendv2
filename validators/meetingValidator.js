@@ -39,8 +39,8 @@ const createMeetingValidator = async (req, res, next) => {
       mode: Joi.string().trim().valid("VIRTUAL", "PHYSICAL").required(),
       linkType: Joi.any().when("mode", {
         is: "VIRTUAL",
-        then: Joi.string().trim().valid("MANUAL", "ZOOM").required(),
-        otherwise: Joi.string().trim().valid("MANUAL", "ZOOM"),
+        then: Joi.string().trim().valid("MANUAL", "ZOOM","GMEET").required(),
+        otherwise: Joi.string().trim().valid("MANUAL", "ZOOM","GMEET"),
         //.allow(null, ""),
       }),
 
@@ -218,8 +218,8 @@ const updateMeetingValidator = async (req, res, next) => {
       // }),
       linkType: Joi.any().when("mode", {
         is: "VIRTUAL",
-        then: Joi.string().trim().valid("MANUAL", "ZOOM").required(),
-        otherwise: Joi.string().trim().valid("MANUAL", "ZOOM"),
+        then: Joi.string().trim().valid("MANUAL", "ZOOM","GMEET").required(),
+        otherwise: Joi.string().trim().valid("MANUAL", "ZOOM","GMEET"),
         //.allow(null, ""),
       }),
 

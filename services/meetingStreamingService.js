@@ -461,39 +461,13 @@ const updateZoomMeetingForMOM = async (
       );
       console.log("startTime===============", startTime, duration);
 
-      // default_password: false,
-      // topic,
-      // type: 2,
-      // start_time: startTime,
-      // duration: Math.round(duration),
-      // timezone: "Asia/Kolkata",
-      // private_meeting: true,
-      // password: commonHelper.generateAlphaNumericPasscode(6),
-      // settings: {
-      //   enforce_login: false,
-      //   meeting_authentication: false,
-      //   email_notification: true,
-      //   calendar_type: 2,
-      //   watermark: true,
-      //   meeting_invitees,
-      //   // auto_recording: "cloud",
-      //   join_before_host: true,
-      //   participant_video: true,
-      //   private_meeting: true,
-      //   waiting_room: false,
-      // },
-
       let data = JSON.stringify({
-        // agenda: "my agenda",
         default_password: false,
         topic,
         type: 2,
         start_time: startTime,
-        //start_time: new Date().toLocaleDateString(),
-        //start_time: "2024-11-14T14:28:57Z",
         duration: Math.round(duration),
         timezone: "Asia/Kolkata",
-        //password: "Demo@123", //10 characters and only contain alphanumeric characters and the @, -, _, and * characters.
         settings: {
           email_notification: true,
           enforce_login: false,
@@ -501,12 +475,10 @@ const updateZoomMeetingForMOM = async (
           calendar_type: 2,
           watermark: true,
           meeting_invitees,
-          // auto_recording: "cloud",
           join_before_host: true,
           participant_video: true,
           private_meeting: true,
           waiting_room: false,
-          //  alternative_hosts: "node.js@ntspl.co.in;",
         },
       });
 
@@ -533,18 +505,6 @@ const updateZoomMeetingForMOM = async (
         if (meetingResponse.status !== 204) {
           return "Unable to generate meeting link";
         }
-        // const response_data = meetingResponse.data;
-        // const content = {
-        //   meeting_url: response_data.join_url,
-        //   meetingTime: response_data.start_time,
-        //   purpose: response_data.topic,
-        //   duration: response_data.duration,
-        //   message: "Success",
-        //   status: 1,
-        //   id: response_data.id,
-        //   password: response_data.password,
-        //   host_url: response_data.start_url,
-        // };
         return { zoomMeetingId, startTime };
       }
     } else {
@@ -555,12 +515,8 @@ const updateZoomMeetingForMOM = async (
 
     const responseData = meetingResponse.response.data;
     console.log("responseData--------------ww", responseData);
-    // if (responseData.code === 3301) {
-    // const content = {
 
-    // };
     return responseData;
-    // return e;
   }
 };
 

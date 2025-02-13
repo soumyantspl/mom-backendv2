@@ -49,7 +49,6 @@ const updateHostDetails = async (organizationId, data, userId, ipAddress) => {
     hostDetails["gMeetCredentials"] = {
       clientId: data.gclientId,
       secretToken: data.gsecretToken,
-      accountId: data.gaccountId,
     };
   }
   if (data.hostType === "MSTEAMS") {

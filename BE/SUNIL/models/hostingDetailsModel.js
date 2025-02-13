@@ -33,10 +33,6 @@ const gMeetSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  accountId: {
-    type: String,
-    required: true,
-  },
   isActive: {
     type: Boolean,
     required: true,

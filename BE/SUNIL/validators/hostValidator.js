@@ -72,12 +72,6 @@ const updateHostDetails = async (req, res, next) => {
         otherwise: Joi.string().trim().allow(null, ""),
         //.allow(null, ""),
       }),
-      gaccountId: Joi.any().when("hostType", {
-        is: "GMEET",
-        then: Joi.string().trim().required(),
-        otherwise: Joi.string().trim().allow(null, ""),
-        //.allow(null, ""),
-      }),
       msclientId: Joi.any().when("hostType", {
         is: "MSTEAMS",
         then: Joi.string().trim().required(),

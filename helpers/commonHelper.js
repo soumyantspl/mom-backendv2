@@ -372,6 +372,29 @@ const combineDateAndTime = (date, time) => {
   date.setMinutes(date.getMinutes() + parseInt(modifiedMinute));
   return date;
 };
+const combineDateAndTimeInISO = (date1, time) => {
+  console.log("date-----222-------", date1,time);
+  date1=convertIsoFormat(new Date(date1));
+  const date=new Date(date1)
+  console.log("date----222---44-----", date);
+  let timeString = time.split(":")[0] + ":" + time.split(":")[1] + ":00";
+  const modifiedHour =
+    time.split(":")[0] < 10
+      ? time.split(":")[0].split("")[1]
+      : time.split(":")[0];
+      console.log("time.split()[0]==========",time.split(":")[0])
+      console.log("modifiedHour=======",modifiedHour)
+      console.log("new Date(date)=============",new Date(date))
+      console.log("date.getHours() ",new Date(date).getHours())
+  const modifiedMinute =
+    time.split(":")[1] < 10
+      ? time.split(":")[1].split("")[1]
+      : time.split(":")[1];
+  date.setHours(date.getHours() + parseInt(modifiedHour));
+  date.setMinutes(date.getMinutes() + parseInt(modifiedMinute));
+  console.log("date in-======333========",date)
+  return date;
+};
 const convertFirstLetterOfFullNameToCapital = (textData) => {
   const textArray = textData.split(" ");
   const convertedTextArray = textArray.map((text) => {
@@ -733,6 +756,7 @@ module.exports = {
   convertFirstLetterToCapital,
   customMeetingId,
   combineDateAndTime,
+  combineDateAndTimeInISO,
   convertFirstLetterOfFullNameToCapital,
   decryptWithAES,
   generateLogObjectForMeetingRoom,

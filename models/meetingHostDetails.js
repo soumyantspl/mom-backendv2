@@ -39,7 +39,7 @@ const hostSchema = new mongoose.Schema(
     ],
     hostedBy: {
       type: String,
-      enum: ["zoom"],
+      enum: ["zoom","gmeet"],
       default: "zoom",
     },
   },

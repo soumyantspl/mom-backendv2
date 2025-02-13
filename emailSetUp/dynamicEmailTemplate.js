@@ -251,7 +251,7 @@ const sendScheduledMeetingEmailTemplate = async (
       `<div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">` +
       `<div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin:0 auto;">` +
       `<a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">` +
-      `<img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />` +
+      `<img style="float: none; margin: 30px auto; display: block;" src="${logo}" />` +
       `</a>` +
       `<div style="padding: 20px; font-family: Arial, sans-serif; color: #000;">` +
     // `${salutation}` +

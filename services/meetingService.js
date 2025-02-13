@@ -8,6 +8,7 @@ const HostingDetails = require("../models/hostingDetailsModel");
 const Organization = require("../models/organizationModel");
 const meetingService = require("../services/meetingService");
 const agendaService = require("./agendaService");
+const googleService=require("../services/googleService");
 const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const ObjectId = require("mongoose").Types.ObjectId;
@@ -381,6 +382,56 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
     }
   }
 
+
+  ///////////////START OF UPDATE GOOGLE MEET///////////////
+
+  if (
+    meeting?.hostDetails?.hostType === "GMEET" &&
+    meeting?.hostDetails?.hostLink &&
+    data.step == 2
+  ) {
+    const attendeesEmailids = meeting?.attendees.map((item) => {
+      return {
+        email: item.email,
+      };
+    });
+    const duration =
+      (parseFloat(meeting?.toTime.split(":").join(".")) -
+        parseFloat(meeting?.fromTime.split(":").join("."))) *
+      60;
+    let updatedMeetingHostData =
+      await meetingStreamingService.updateZoomMeetingForMOM(
+        meeting?.title,
+        Math.abs(duration),
+        meeting?.date,
+        process.env.TZ,
+        attendeesEmailids,
+        meeting
+      );
+    console.log("updatedMeetingHostData============", updatedMeetingHostData);
+
+    if (updatedMeetingHostData) {
+      const meetingHostDeatils = {
+        meetingDateTime: updatedMeetingHostData.startTime,
+      };
+
+      await meetingHostDetails.findByIdAndUpdate(
+        {
+          _id: new ObjectId(updatedMeetingHostData.id),
+          meetingId: new ObjectId(meeting?._id),
+        },
+
+        {
+          $set: meetingHostDeatils,
+        },
+
+        {
+          new: true,
+        }
+      );
+    }
+  }
+  ///////////////END OF UPDATE GOOGLE MEET///////////////
   let allowedUsers = [new ObjectId(userId), meeting?.createdById];
   let details = null;
   if (data.step === 1) {
@@ -413,12 +464,12 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
       typeId: meeting?._id,
     };
     console.log("notificationData==============>>>>>>>>>", notificationData);
-    // dddddddddddd
+  
     const addNotification = await notificationService.createNotification(
       notificationData
     );
     if (data.isUpdate === false && meeting.hostDetails.hostType == "ZOOM") {
-      //&& data.mode=="VIRTUAL") {
+    
       console.log(
         "duration-------------226--",
         meeting?.toTime.split(":").join(".")
@@ -447,14 +498,12 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
         (item) => item.email
       );
       console.log(duration);
-      //   fffffffffffff
+     
       let meetingHostData =
         await meetingStreamingService.createZoomMeetingForMOM(
           meeting?.title,
           Math.abs(duration),
           meeting?.date,
-          //agenda,
-          //password,
           process.env.TZ,
           attendeesEmailids,
           meeting
@@ -469,20 +518,13 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
         meetingLink = meetingHostData?.host_url?.split("?")[0];
         hostLink = meetingHostData?.meeting_url;
         const hostData = {
-          // hostLink: meetingHostData?.host_url,
+       
           hostLink: meetingHostData?.meeting_url,
           hostingPassword,
           hostType: meeting?.hostDetails?.hostType,
         };
 
-        // hostingPassword = meetingHostData?.password;
-        // meetingLink = meetingHostData?.meeting_url;
-        // hostLink = meetingHostData?.meeting_url;
-        // const hostData = {
-        //   hostLink: meetingHostData?.meeting_url,
-        //   hostingPassword,
-        //   hostType: meeting?.hostDetails?.hostType,
-        // };
+       
         console.log("hostData-------------", hostData);
         console.log(
           " meetingHostData?.meeting_url,-----------",
@@ -503,7 +545,7 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           }
         );
         console.log(updatedMeeting);
-        //ppppppppppppppppppppp;
+       
         const meetingHostDeatils = {
           hostedBy: "zoom",
           meetingId: meeting._id,
@@ -514,19 +556,71 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           meetingLink: meetingHostData.meeting_url,
           purpose: meetingHostData.purpose,
           hostKey: meetingHostData?.hostKey,
-          // meeting_url: response_data.join_url,
-          // meetingTime: response_data.start_time,
-          // purpose: response_data.topic,
-          // duration: response_data.duration,
-          // message: "Success",
-          // status: 1,
-          // id: response_data.id,
-          // password: response_data.password,
+         
         };
         const meetingHostDatas = new meetingHostDetails(meetingHostDeatils);
         await meetingHostDatas.save();
       }
     }
+ ///////////////START OF ADD GOOGLE MEET///////////////
+    if (data.isUpdate === false && meeting.hostDetails.hostType == "GMEET") {
+     
+      const attendeesEmailids = meeting?.attendees.map((item) => {
+        return {
+          email: item.email,
+        };
+      });
+      const attendeesOnlyEmailids = meeting?.attendees.map(
+        (item) => item.email
+      );
+     
+     
+      let meetingHostData =await googleService.createGMeetingMOM(
+          meeting,
+          attendeesEmailids,
+          process.env.TZ
+        );
+        console.log(
+          "meetingHostData=========================>>>>>>>>>>>>>>>>>>>",
+          meetingHostData
+        );
+      if (meetingHostData) {
+        meetingLink = meetingHostData?.host_url?.split("?")[0];
+        hostLink = meetingHostData?.hangoutLink;
+        const hostData = {
+          hostLink: meetingHostData?.hangoutLink,
+          hostType: meeting?.hostDetails?.hostType,
+        };
+        console.log("hostData-------------", hostData);
+       
+        updatedMeeting = await Meeting.findByIdAndUpdate(
+          { _id: new ObjectId(id) },
+
+          {
+            $set: {
+              link: meetingHostData?.hangoutLink,
+              hostDetails: hostData,
+            },
+          },
+          {
+            new: true,
+          }
+        );
+        console.log(updatedMeeting);
+        const meetingHostDeatils = {
+          hostedBy:"gmeet",
+          meetingId: meeting._id,
+          hostMeetingId: meetingHostData.id,
+          meetingDateTime: meetingHostData?.start?.dateTime,
+          attendees: attendeesOnlyEmailids,
+          meetingLink: meetingHostData?.hangoutLink,
+          purpose: meetingHostData?.title,
+        };
+        const meetingHostDatas = new meetingHostDetails(meetingHostDeatils);
+        await meetingHostDatas.save();
+      }
+    }
+     ///////////////END OF ADD GOOGLE MEET///////////////
   }
   console.log(meeting.hostDetails);
   console.log(meeting.meetingStatus.status);
@@ -643,7 +737,7 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           </table><br />`;
             })
             .join(" ");
-
+// EMAIL FOR ZOOM START
           let finalMeetingLink = null;
           let meetingLinkCode = null;
           if (updatedMeeting) {
