@@ -8,9 +8,6 @@ const SCOPES = [
   "https://www.googleapis.com/auth/calendar",
 ];
 
-const client_id =
-  "260087855691-e91cmkn3allf0gagu5sfas2jfifhv1in.apps.googleusercontent.com";
-const client_secret = "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";
 const redirect_uris = ["https://mom.ntspl2222.co.in", "http://localhost222:3000"];
 const code =
   "4/0ASVgi3LyrYaudzwBc-eqfSPpPyGaIvgHYEPubfWZFfO286eeMsguy4444fSfeeOnLWgRaQ";
