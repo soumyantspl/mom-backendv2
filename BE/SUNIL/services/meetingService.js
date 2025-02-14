@@ -42,34 +42,9 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
       inActiveOrganization: true,
     };
   }
-
-// rooms availability for meeting
-  const existingMeeting = await Meeting.findOne({
-    organizationId: data.organizationId,
-    date: new Date(data.date),
-    "locationDetails.roomId": data.locationDetails.roomId,
-    "locationDetails.isMeetingRoom": true,
-    $or: [
-      {
-        fromTime: { $lt: data.toTime },
-        toTime: { $gt: data.fromTime }
-      },
-      {
-        fromTime: { $gte: data.fromTime, $lt: data.toTime }
-      },
-      {
-        toTime: { $gt: data.fromTime, $lte: data.toTime }
-      }
-    ]
-  });
-
-  if (existingMeeting) {
-    return { roomUnavailable: true };
-  }  
-
   const inputData = {
     meetingId,
-    // title: commonHelper.encryptWithAES(data.title.trim()),
+    //title: commonHelper.encryptWithAES(data.title.trim()),
     title: data.title.trim(),
     mode: data.mode,
     link: data.link.trim(),
@@ -1083,6 +1058,10 @@ const viewMeeting = async (meetingId, userId) => {
       "meetingDataObject--------------======================",
       meetingDataObject
     );
+    console.log("Decrypted Title-----", commonHelper.decryptWithAES(meetingDataObject.title));
+
+    
+
     meetingDataObject.attendees.map((item) => {
       const attendeeData = meetingDataObject.attendeesDetail.find(
         (attendee) => attendee._id == item._id.toString()
@@ -1511,6 +1490,7 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
       delete meetingDataObject.attendeesDetail;
     });
   }
+  
 
   return {
     totalCount,
@@ -1586,23 +1566,20 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
   const meetingDetails = await viewMeeting(id, userId);
   if (meetingDetails?.attendees?.length !== 0) {
     meetingDetails?.attendees?.map(async (attendee) => {
-       const logo = process.env.LOGO;
-
- 
-      const { subject: emailSubject, mailBody } =
-        await emailTemplates.sendCancelMeetingEmailTemplate(
-          meetingDetails,
-          attendee.name,
-          logo
-        );
-      // const emailSubject = await emailConstants.cancelMeetingSubject(
-      //   meetingDetails
-      // );
+      const logo = process.env.LOGO;
+      const mailData = await emailTemplates.sendCancelMeetingEmailTemplate(
+        meetingDetails,
+        attendee.name,
+        logo
+      );
+      const emailSubject = await emailConstants.cancelMeetingSubject(
+        meetingDetails
+      );
       emailService.sendEmail(
         attendee.email,
         "Cancel Meeting",
         emailSubject,
-        mailBody
+        mailData
       );
     });
   }
@@ -2061,7 +2038,7 @@ const generateMOM = async (meetingId, userId, data, ipAddress = "1000") => {
   }
   const fileDetails = await minutesService.downLoadMinutes(meetingId, userId);
   const filePath = `${process.env.BASE_URL + fileDetails}`;
- 
+
   const momGenerationDetails = {
     createdById: userId,
     filePath,
@@ -2092,26 +2069,35 @@ const generateMOM = async (meetingId, userId, data, ipAddress = "1000") => {
     },
     updateData
   );
+
+  const configTime = await Configuration.findOne({
+    organizationId: new ObjectId(data.organizationId)
+  }, {
+    acceptanceRejectionEndtime: 1
+  }
+  )
+  console.log("configTime--->", configTime)
+  const momAcceptanceRejectionEndtime = configTime.acceptanceRejectionEndtime ? configTime.acceptanceRejectionEndtime : 0
+
   if (updateMomDetails) {
     const meetingDetails = await viewMeeting(meetingId, userId);
     if (data.attendees?.length !== 0 && meetingDetails) {
       data.attendees.map(async (attendee) => {
         const logo = process.env.LOGO;
-
         const mailData = await emailTemplates.sendCreateMinutesEmailTemplate(
           meetingDetails,
           attendee.name,
+          momAcceptanceRejectionEndtime,
           logo
         );
-        // const emailSubject = await emailConstants.createMinuteSubject(
-        //   meetingDetails
-        // );
-        const { emailSubject, mailData: mailBody } = mailData;
+        const emailSubject = await emailConstants.createMinuteSubject(
+          meetingDetails
+        );
         emailService.sendEmail(
           attendee.email,
           "Create Meeting Minutes",
           emailSubject,
-          mailBody,
+          mailData,
           {
             filename: `MOM-${new Date().getDate()}-${new Date().getMonth()}-${new Date().getYear()}.pdf`,
             path: filePath,
@@ -2212,7 +2198,7 @@ const downloadMOM = async (meetingId, userId, ipAddress = "1000") => {
 };
 
 /**FUNC- TO RESCHEDULE MEETING */
-const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
+const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000") => {
   const updatedMeeting = null;
 
   const isUpdated = await Meeting.findOneAndUpdate(
@@ -2295,11 +2281,9 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
             _id: new ObjectId(updatedMeetingHostData.id),
             meetingId: new ObjectId(updatedMeeting?._id),
           },
-
           {
             $set: meetingHostDeatils,
           },
-
           {
             new: true,
           }
@@ -2309,8 +2293,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
 
     if (data.attendees?.length !== 0 && meetingDetails) {
       data.attendees.map(async (attendee) => {
-         const logo = process.env.LOGO;
-   
+        const logo = process.env.LOGO;
         const attendeeData = meetingDetails?.attendees
           .map((attendee) => {
             return `${attendee.name}(${attendee.email})`;
@@ -2320,68 +2303,58 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
           .map((agenda) => {
             return `<table style="border: 1px solid black;border-collapse: collapse; width:100%;color:black;margin-top:5px;">
         <tr style="border: 1px solid black;border-collapse: collapse;" >
-        <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
+        <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
         Agenda Title
         </td>
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${
-          agenda.title
-        }</td>
+        <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+              }</td>
         </tr>
-        ${
-          agenda.topic !== (null || "")
-            ? `<tr style="border: 1px solid black;border-collapse: collapse;">
+        ${agenda.topic !== (null || "")
+                ? `<tr style="border: 1px solid black;border-collapse: collapse;">
               <td
                 style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                colspan="6"
+                colspan="4"
               >
                 Topic to Discuss
               </td>
               <td
-                colspan="6"
-                style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
+                colspan="8"
+                style="border: 1px solid black;border-collapse: collapse;width:50%;"
               >
-                <p>${agenda.topic}</p>
+              
+               ${agenda.topic
+                  .replace(/<\/?h[1-6]>/g, (match) => {
+                    return match.startsWith("</")
+                      ? "</p>"
+                      : '<p style="margin:0px;padding:1px">';
+                  })
+                  .replace(/<br\s*\/?>/g, "")
+                  .replace(/<\/p>(?!.*<\/p>)/, "</span>")
+                  .replace(/<p>(?!.*<p>)/, "<span>")}
               </td>
             </tr>`
-            : `<tr style={{display:"none"}}></tr>`
-        }
-           ${
-             agenda.timeLine !== (null || "" || 0)
-               ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
+                : `<tr style={{display:"none"}}></tr>`
+              }
+           ${agenda.timeLine !== (null || "" || 0)
+                ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
                  <td
                    style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
-                   colspan="6"
+                   colspan="4"
                  >
                    Timeline
                  </td>
                  <td
-                   colspan="6"
+                   colspan="8"
                    style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
                  >
                    ${agenda.timeLine} Mins
                  </td>
                </tr>`
-               : `<tr style={{display:"none"}}></tr>`
-           }
+                : `<tr style={{display:"none"}}></tr>`
+              }
         </table><br />`;
           })
           .join(" ");
-
-        // let finalMeetingLink = null;
-        // let meetingLinkCode = null;
-        // if (isUpdated) {
-        //   finalMeetingLink =
-        //     isUpdated?.hostDetails?.hostType === "ZOOM"
-        //       ? isUpdated?.hostDetails?.hostLink?.split("?")[0]
-        //       : isUpdated?.link;
-        //   meetingLinkCode = isUpdated?.hostDetails?.hostingPassword
-        //     ? isUpdated?.hostDetails?.hostingPassword
-        //     : null;
-        // }
-
-        // //  console.log("updatedMeeting==============", updatedMeeting);
-        // console.log("finalMeetingLink==============", finalMeetingLink);
-        // console.log("meetingLinkCode==============", meetingLinkCode);
 
         let finalMeetingLink = null;
         let meetingLinkCode = null;
@@ -2394,18 +2367,9 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
           ? isUpdated?.hostDetails?.hostingPassword
           : null;
 
-        // console.log("meeting==============", meeting);
-        // console.log("updatedMeeting==============", updatedMeeting);
         console.log("finalMeetingLink==============", finalMeetingLink);
         console.log("meetingLinkCode==============", meetingLinkCode);
 
-        //  const hostKey =
-        //         meeting?.createdById?.toString() ==
-        //           attendeeData?._id?.toString() &&
-        //         singleMeetingDetails?.hostDetails?.hostLink
-        //           ? singleMeetingDetails?.hostDetails?.hostLink?.split("?")[0]
-        //
-        //         : singleMeetingDetails?.link;
         let hostKey = null;
 
         const attendeeDetails = await Employee.findOne(
@@ -2437,8 +2401,6 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
         }
         console.log("hostKey==============", hostKey);
 
-     
-
         const mailData =
           await emailTemplates.sendReScheduledMeetingEmailTemplate(
             meetingDetails,
@@ -2449,6 +2411,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
             attendee,
             meetingLinkCode,
             finalMeetingLink,
+            userData,
             hostKey
           );
         // const emailSubject = await emailConstants.reScheduleMeetingSubject(
@@ -2460,7 +2423,8 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
           attendee.email,
           "Meeting Rescheduled",
           emailSubject,
-          mailBody
+          mailBody,
+         // mailData
         );
       });
     }
@@ -3887,13 +3851,15 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
       // const emailSubject = await emailConstants.scheduleMeetingSubject(
       //   meetingDetails
       // );
+
       const { emailSubject, mailData: mailBody } = mailData;
 
       emailService.sendEmail(
         attendee.email,
         "Meeting Scheduled",
         emailSubject,
-        mailBody
+        mailBody,
+      //  mailData
       );
     });
     return true;
