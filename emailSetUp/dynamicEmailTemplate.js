@@ -209,7 +209,7 @@ const sendScheduledMeetingEmailTemplate = async (
       .replace("{userManualLink}", process.env.USER_MANUAL_LINK)
       .replace("{meetingMode}",commonHelper.convertFirstLetterToCapital(meetingData.mode))
       .replace("{meetingId}", meetingData?.meetingId)
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingLink}", link)
       .replace(
         "{meetingLocation}",
@@ -240,7 +240,7 @@ const sendScheduledMeetingEmailTemplate = async (
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
     subject = subject
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingDate}", new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime)
@@ -324,7 +324,7 @@ const sendReScheduledMeetingEmailTemplate = async (
         "{name}",
         commonHelper.convertFirstLetterOfFullNameToCapital(attendeeName)
       )
-      .replace(/{meetingTitle}/g, meetingData.title)
+      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
       .replace(/{meetingId}/g, meetingData.meetingId)
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace(/{fromTime}/g, meetingData.fromTime)
@@ -381,7 +381,7 @@ const sendReScheduledMeetingEmailTemplate = async (
       .replace(/{createdByEmail}/g, meetingData.createdByDetail?.email);
 
     subject = subject
-      .replace(/{meetingTitle}/g, meetingData.title)
+      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime);
@@ -1550,7 +1550,7 @@ const reSendScheduledMeetingEmailTemplate = async (
           commonHelper.convertFirstLetterToCapital(meetingData.mode)
         )
         .replace(/{meetingId}/g, meetingData?.meetingId)
-        .replace(/{meetingTitle}/g, meetingData.title)
+        .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
         .replace(/{meetingLink}/g, link)
         .replace(/{attendees}/g, attendeeData)
         .replace(/{agenda}/g, agendaData)
@@ -1565,10 +1565,7 @@ const reSendScheduledMeetingEmailTemplate = async (
             meetingData?.roomDetail[0]?.location
             : meetingData?.locationDetails?.location
         )
-        .replace(
-          /{organizerName}/g,
-          userData.name
-        )
+        .replace(/{organizerName}/g, meetingData.createdByDetail.name)
 
         .replace(/{organizerEmail}/g, meetingData.createdByDetail.email)
         .replace(
@@ -1619,11 +1616,11 @@ const reSendScheduledMeetingEmailTemplate = async (
         );
 
       subject = subject
-        .replace("{meetingTitle}", meetingData.title)
+        .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
         .replace("{meetingDate}", new Date(meetingData.date).toDateString())
         .replace("{fromTime}", meetingData.fromTime)
         .replace("{toTime}", meetingData.toTime)
-        .replace("{organizerEmail}", userData.email);
+        .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
       mailBody =
         `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +

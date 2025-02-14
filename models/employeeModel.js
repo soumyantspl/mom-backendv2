@@ -11,10 +11,6 @@ const employeeSchema = new mongoose.Schema(
       type: String,
       index: true,
     },
-    profilePicture:{
-      type:String,
-      default:''
-    },
     email: {
       type: String,
       validate: {
