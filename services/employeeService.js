@@ -8,10 +8,10 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const commonHelper = require("../helpers/commonHelper");
 const emailConstants = require("../constants/emailConstants");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const Joi = require("joi");
-const bcrypt = require('bcrypt');
 
 
 /**FUNC- CREATE EMPLOYEE */
@@ -81,14 +81,16 @@ const createEmployee = async (userId, data, ipAddress) => {
         logo,
         data
       );
-      const emailSubject = await emailConstants.createEmployeeSubject(
-        adminDetails
-      );
+      // const emailSubject = await emailConstants.createEmployeeSubject(
+      //   adminDetails
+      // );
+      const { emailSubject, mailData: mailBody } = mailData;
       emailService.sendEmail(
         data.email,
         "Employee Created",
         emailSubject,
-        mailData
+        mailBody,
+      //  mailData
       );
     }
     ////////////////////LOGER START
@@ -590,71 +592,40 @@ const importEmployee = async (data) => {
     name: Joi.string()
       .trim()
       .pattern(regularExpression)
-      .required()
       .messages({
         "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
-        "any.required": "Name is required."
       }),
     email: Joi.string()
       .trim()
       .email()
-      .required()
       .messages({
         "string.email": `Invalid email format.`,
-        "any.required": "Email is required."
       }),
     empId: Joi.string()
       .trim()
       .pattern(regularExpression)
-      .required()
       .messages({
         "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
-        "any.required": "Employee Id is required."
       }),
-    designation: Joi.string()
-      .trim()
-      .required()  // Mark designation as required
-      .pattern(regularExpression)
-      .messages({
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
-        "any.required": "Designation is required."
-      }),
-    department: Joi.string()
-      .trim()
-      .required()  // Mark department as required
-      .pattern(regularExpression)
-      .messages({
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
-        "any.required": "Department is required."
-      }),
-    unitName: Joi.string()
-      .trim()
-      .required()  // Mark unitName as required
-      .pattern(regularExpression)
-      .messages({
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
-        "any.required": "Unit Name is required."
-      }),
-    unitAddress: Joi.string()
-      .trim()
-      .pattern(regularExpression)
-      .allow('') // optional field
-      .messages({
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
-      }),
-    organizationId: Joi.string()
-      .required()
-      .messages({
-        "any.required": `Organization ID is required.`,
-      }),
+    designation: Joi.string().trim().pattern(regularExpression).messages({
+      "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
+    }),
+    department: Joi.string().trim().pattern(regularExpression).messages({
+      "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
+    }),
+    unitName: Joi.string().trim().pattern(regularExpression).messages({
+      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
+    }),
+    unitAddress: Joi.string().trim().pattern(regularExpression).messages({
+      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
+    }),
+    organizationId: Joi.string().required().messages({
+      "any.required": `Organization ID is required.`,
+    }),
+    isAdmin: Joi.boolean().strict(),
   });
 
-
   for (const record of data) {
-    if (record.email) {
-      record.email = record.email.toLowerCase();
-    }
-
     const duplicateFields = {};
     const existingByEmail = await Employee.findOne({ email: record.email });
     const existingByEmpId = await Employee.findOne({ empId: record.empId });
@@ -671,12 +642,11 @@ const importEmployee = async (data) => {
       continue;
     }
 
-    const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
+    const { error } = employeeValidationSchema.validate(record);
     if (error) {
-      const combinedErrorMessage = error.details.map(detail => detail.message).join(" | ")
       validationErrors.push({
         record,
-        message: combinedErrorMessage,
+        message: error.details[0].message,
       });
       continue;
     }
@@ -748,87 +718,8 @@ const importEmployee = async (data) => {
     console.log("Saved Data--->>", savedRecord);
   }
 
-
   return { savedData, duplicateRecords, validationErrors };
 };
-
-const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
-  if (profilePicture && profilePicture.filename) {
-    const filePath = `/uploads/${profilePicture.filename}`;
-    data.profilePicture = filePath;
-  } else {
-    console.log("No new profile picture provided.");
-  }
-  
-
-  const employee = await Employee.findById(id);
-  if (!employee) {
-    return { error: "Employee not found." };
-  }
-
-  let logDetails = [];
-  const employeeName = employee.name || "Unknown Employee";
-  const email = employee.email || "Email not available";
-
-  if (data.password && data.confirmPassword) {
-    if (data.password.trim() !== data.confirmPassword.trim()) {
-      return { error: "New password and Confirm Password do not match." };
-    }
-
-    if (!employee.password) {
-      // First-time password setting
-      const hashedPassword = await bcrypt.hash(data.password, 10);
-      data.password = hashedPassword;
-      logDetails.push("Password was set successfully.");
-    } else {
-      if (!data.currentPassword) {
-        return { error: "Current password is required for updating password." };
-      }
-
-      // Compare entered current password with stored password
-      const isMatch = await bcrypt.compare(data.currentPassword, employee.password);
-
-      if (!isMatch) {
-        return { isMatch: false };
-      }
-
-      // Hash the new password before saving
-      const hashedPassword = await bcrypt.hash(data.password, 10);
-      data.password = hashedPassword;
-      logDetails.push("Password was updated successfully.");
-    }
-
-    delete data.confirmPassword;
-    delete data.currentPassword;
-  } else {
-    delete data.password;
-    delete data.confirmPassword;
-    delete data.currentPassword;
-  }
-
-  console.log("Data to update:", data);
-
-  const result = await Employee.findByIdAndUpdate(id, data, { new: true });
-  if (!result) {
-    return { error: "Update failed." };
-  }
-
-  if (result.name !== employee.name) {
-    logDetails.push(`Name changed from <strong>${employee.name}</strong> to <strong>${result.name}</strong>`);
-  }
-  if (result.email !== employee.email) {
-    logDetails.push(`Email changed from <strong>${employee.email}</strong> to <strong>${result.email}</strong>`);
-  }
-  if (result.empId !== employee.empId) {
-    logDetails.push(`Employee ID changed from <strong>${employee.empId}</strong> to <strong>${result.empId}</strong>`);
-  }
-  if (result.profilePicture !== employee.profilePicture) {
-    logDetails.push(`Profile Picture updated.`);
-  }
-
-  return { data: result, logs: logDetails };
-};
-
 
 
 
@@ -847,6 +738,5 @@ module.exports = {
   checkDuplicateUserEntry,
   createAttendees,
   getEmployeeListAsPerUnit,
-  importEmployee,
-  viewProfile
+  importEmployee
 };
