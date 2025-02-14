@@ -11,7 +11,8 @@ const logMessages = require("../constants/logsConstants");
 const logService = require("./logsService");
 const commonHelper = require("../helpers/commonHelper");
 const emailConstants = require("../constants/emailConstants");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const meetingService = require("../services/meetingService");
 const { pipeline } = require("nodemailer/lib/xoauth2");
@@ -109,18 +110,22 @@ const actionReassignRequest = async (
         logo,
         data.requestDetails,
         userData,
-        result
+        result,
+       
+        
       );
-      const emailSubject = await emailConstants.reassignRequestSubject(
-        meetingDetails
-      );
+      // const emailSubject = await emailConstants.reassignRequestSubject(
+      //   meetingDetails
+      // );
+      const { emailSubject, mailData: mailBody } = mailData;
       "sendOtpEmailTemplate-----------------------maildata", mailData;
       "sendOtpEmailTemplate-----------------------emailSubject", emailSubject;
       emailService.sendEmail(
         meetingDetails?.createdByDetail?.email,
         "Reassign Requested",
         emailSubject,
-        mailData
+        mailBody,
+       // mailData
       );
     }
     //////////////////////LOGER START
@@ -969,12 +974,14 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       userData,
       result
     );
-    const emailSubject = await emailConstants.reassignSubject(result);
+    // const emailSubject = await emailConstants.reassignSubject(result);
+    const { emailSubject, mailData: mailBody } = mailData;
+
     emailService.sendEmail(
       assignedUserDetail?.email,
       "Action Forwarded",
       emailSubject,
-      mailData
+      mailBody
     );
     const mailOldData =
       await emailTemplates.actionReassignEmailToOlAssignedUserTemplate(
@@ -986,14 +993,17 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
         userData,
         oldAssignedUserDetail,
       );
-    const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(
-      result
-    );
+    // const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(
+    //   result
+    // );
+
+    const { oldemailSubject, mailOldData: oldmailBody } = mailOldData;
+
     emailService.sendEmail(
       oldAssignedUserDetail?.email,
       "Action Forwarded",
-      emailSubjectForAccept,
-      mailOldData
+      oldemailSubject,
+      oldmailBody
     );
     ////////////////////LOGER START
     const logData = {
@@ -1719,7 +1729,9 @@ const updateAction = async (id, data, userId, userData, ipAddress) => {
     };
 
     if (meetingDetails) {
-      const logo = process.env.LOGO;
+       const logo = process.env.LOGO;
+
+ 
       const mailData = await emailTemplates.actionCompleteEmailTemplate(
         meetingDetails,
         logo,
@@ -1728,13 +1740,14 @@ const updateAction = async (id, data, userId, userData, ipAddress) => {
         userData,
         result
       );
-      const emailSubject = await emailConstants.actionCompleteSubject(result);
-      emailSubject;
+      const { emailSubject, mailData: mailBody } = mailData;
+      // const emailSubject = await emailConstants.actionCompleteSubject(result);
+      // emailSubject;
       emailService.sendEmail(
         meetingDetails?.createdByDetail?.email,
         "Action Completed",
         emailSubject,
-        mailData
+        mailBody
       );
       ////////////////////LOGER START
       const logData = {
@@ -1909,7 +1922,8 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
         data.remark,
         result
       );
-      const emailSubject = await emailConstants.actionApproveSubject(result);
+      // const emailSubject = await emailConstants.actionApproveSubject(result);
+      const { emailSubject, mailData: mailBody } = mailData;
       "actionApproveEmailTemplate-----------------------maildata", mailData;
       "actionApproveEmailTemplate-----------------------emailSubject",
         emailSubject;
@@ -1917,7 +1931,8 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
         data?.assignedUserDetails?.email,
         "Action Approved",
         emailSubject,
-        mailData
+        mailBody,
+       // mailData
       );
       ////////////////////LOGER START
       const logData = {
@@ -2003,13 +2018,14 @@ const reOpenAction = async (actionId, data, userId, ipAddress, userData) => {
       data.remark,
       result
     );
-    const emailSubject = await emailConstants.reOpenSubject(result);
+    // const emailSubject = await emailConstants.reOpenSubject(result);
+    const { emailSubject, mailData: mailBody } = mailData;
     emailSubject;
     emailService.sendEmail(
       data?.assignedUserDetails?.email,
       "Action Reopened",
       emailSubject,
-      mailData
+      mailBody
     );
     ////////////////////LOGER START
     const logData = {
@@ -2140,9 +2156,10 @@ const rejectReasignRequest = async (
           result
         );
 
-      const emailSubject = await emailConstants.rejectReassignRequestSubject(
-        result
-      );
+      // const emailSubject = await emailConstants.rejectReassignRequestSubject(
+      //   result
+      // );
+      const { emailSubject, mailData: mailBody } = mailData;
       "actionReassignRequestRejectEmailTemplate-----------------------maildata",
         mailData;
       "actionReassignRequestRejectEmailTemplate-----------------------emailSubject",
@@ -2151,7 +2168,8 @@ const rejectReasignRequest = async (
         assignedUserDetail?.email,
         "Action Reassign Request Rejected",
         emailSubject,
-        mailData
+        mailBody,
+       // mailData
       );
       ////////////////////LOGER START
       const logData = {
@@ -2259,16 +2277,16 @@ const cancelAction = async (actionId, userId, data, ipAddress, userData) => {
       // result
     );
     //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
-    const emailSubject = await emailConstants.cancelActionSubject(result);
+    const { emailSubject, mailData: mailBody } = mailData;
     "actionCancelEmailTemplate-----------------------maildata", mailData;
-    "actionCancelEmailTemplate-----------------------emailSubject",
-      emailSubject;
+    "actionCancelEmailTemplate-----------------------emailSubject", emailSubject;
+
     emailService.sendEmail(
       // meetingDetails?.createdByDetail?.email,
       data?.assignedUserDetails?.email,
       "Action Cancelled",
       emailSubject,
-      mailData
+      mailBody
     );
 
     ////////////////////LOGER START
@@ -2297,7 +2315,6 @@ const cancelAction = async (actionId, userId, data, ipAddress, userData) => {
 
   return result;
 };
-
 /**FUNC- TO VIEW ALL USER ACTIONS */
 const totalActionList = async (organizationId, userId, userData) => {
   let query = null;
