@@ -15,7 +15,6 @@ const columnMapping = {
   Department: "department",
   "Unit Name": "unitName",
   "Unit Address": "unitAddress",
-  "Admin": "isAdmin",
 };
 
 
@@ -310,6 +309,13 @@ const getEmployeeListAsPerUnit = async (req, res) => {
 const writeErrorFile = (duplicateRecords, validationErrors) => {
   const workbook = xlsx.utils.book_new();
 
+  // Create a reverse mapping from schema field to Excel column name.
+  const reverseMapping = {};
+  Object.entries(columnMapping).forEach(([excelKey, schemaField]) => {
+    reverseMapping[schemaField] = excelKey;
+  });
+
+  // Function to apply red styling (red background with white text)
   const applyRedStyle = (value) => ({
     v: value || "",
     s: {
@@ -318,30 +324,42 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
     },
   });
 
+  // Transform record keys: skip "isAdmin" and "status"
+  const transformRecordKeys = (record) => {
+    const transformed = {};
+    Object.keys(record).forEach((key) => {
+      if (key === "isAdmin" || key === "status") return;
+      const newKey = reverseMapping[key] || key;
+      transformed[newKey] = record[key];
+    });
+    return transformed;
+  };
+
   const formatValidationErrors = validationErrors.map((error) => {
     const { organizationId, ...filteredData } = error.record || {};
+    const transformedData = transformRecordKeys(filteredData);
     return {
-      ...filteredData,
+      ...transformedData,
       "Reason for Failure": applyRedStyle(error.message),
     };
   });
 
   const formatDuplicateRecords = duplicateRecords.map((record) => {
     const { organizationId, ...filteredData } = record || {};
+    const transformedData = transformRecordKeys(filteredData);
     return {
-      ...filteredData,
-      "Reason for Failure": applyRedStyle(messages.duplicateEntry),
+      ...transformedData,
+      "Reason for Failure": applyRedStyle("Duplicate entry"),
     };
   });
 
   if (formatValidationErrors.length > 0) {
     const errorSheet = xlsx.utils.json_to_sheet(formatValidationErrors);
-    xlsx.utils.book_append_sheet(workbook, errorSheet, messages.validationError);
-
+    xlsx.utils.book_append_sheet(workbook, errorSheet, "Validation Errors");
     errorSheet["!cols"] = Object.keys(formatValidationErrors[0] || {}).map((key) => ({
       wpx: Math.max(
         ...formatValidationErrors.map((record) => {
-          const cellValue = record[key]?.v || record[key] || "";
+          const cellValue = (record[key] && record[key].v) || record[key] || "";
           return cellValue.toString().length;
         }),
         key.length
@@ -352,11 +370,10 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
   if (formatDuplicateRecords.length > 0) {
     const duplicateSheet = xlsx.utils.json_to_sheet(formatDuplicateRecords);
     xlsx.utils.book_append_sheet(workbook, duplicateSheet, "Duplicate Records");
-
     duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0] || {}).map((key) => ({
       wpx: Math.max(
         ...formatDuplicateRecords.map((record) => {
-          const cellValue = record[key]?.v || record[key] || "";
+          const cellValue = (record[key] && record[key].v) || record[key] || "";
           return cellValue.toString().length;
         }),
         key.length
@@ -366,14 +383,12 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
 
   const fileName = `error_report_${Date.now()}.xlsx`;
   const errorFilePath = path.join(__dirname, "../Downloads", fileName);
-
   if (!fs.existsSync(path.join(__dirname, "../Downloads"))) {
     fs.mkdirSync(path.join(__dirname, "../Downloads"), { recursive: true });
   }
   xlsx.writeFile(workbook, errorFilePath);
   return errorFilePath;
 };
-
 
 
 
