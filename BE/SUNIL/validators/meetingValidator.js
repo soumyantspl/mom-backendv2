@@ -55,7 +55,7 @@ const createMeetingValidator = async (req, res, next) => {
           .required(),
       }),
       
-      isEncrypted: Joi.boolean().default(false), // 🔹 Add this new field
+      isEncrypted: Joi.boolean().default(false), 
       
       
 
