@@ -350,7 +350,7 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
     //   { meetingId: { $in: [...meetingsIds, ...meetingIds] } },
     // ];
     if (bodyData.actionStatus && bodyData.actionStatus == "COMPLETED") {
-    //  query["actionStatus"] = "COMPLETED";
+      //  query["actionStatus"] = "COMPLETED";
       query["actionStatus"] = {
         $in: ["APPROVED", "COMPLETED"],
       }; // Equivalent to OR condition
@@ -804,7 +804,7 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
 /**FUNC- TO RE-ASSIGN ACTIONS */
 const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   data, actionId;
-  let reassignedUserId = data.reAssignedId;
+  let reassignedUserId = data.attendeeData;
   let result = null;
   if (data.isNewUser) {
     const empData = await employeeService.createAttendee(
@@ -848,6 +848,8 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   const minuteDetails = await Minutes.findOne({
     _id: new ObjectId(actionId),
   });
+
+  console.log("Id Data-->",updateData.assignedUserId)
 
   let userIndex = 0;
   const newRequestDetails = minuteDetails.reassigneRequestDetails.map(
@@ -963,7 +965,7 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   if (meetingDetails) {
     const logo = process.env.LOGO;
     console.log("userData2-->", userData)
-  
+
     const mailData = await emailTemplates.actionReassignEmailTemplate(
       meetingDetails,
       logo,

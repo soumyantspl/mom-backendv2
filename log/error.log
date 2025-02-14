@@ -1351,6 +1351,7 @@ Stack Trace: ReferenceError: kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk is not defined
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async reAssignAction (E:\Ongoing\MOM3\mom-backend\controllers\actionController.js:100:20)
 <<<<<<< HEAD
+<<<<<<< HEAD
 Date: 10/02/2025, Time: 15:25
 Error: "empId" is required
 Stack Trace: ValidationError: "empId" is required
@@ -1494,3 +1495,5 @@ Stack Trace: MongoParseError: Invalid scheme, expected connection string to star
     at Object.<anonymous> (E:\Ongoing\V2\BE\TESTING\mom-backendv2\server.js:63:1)
     at Module._compile (node:internal/modules/cjs/loader:1358:14)
     at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
+=======
+>>>>>>> 3584bf3f654ee7d116d7e58a588149c50713f6c4

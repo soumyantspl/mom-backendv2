@@ -26,12 +26,12 @@ const fileFilter = (req, file, cb) => {
     cb(new Error("Only image files are allowed!"), false);
   }
 };
+
 const uploadpicture = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 }, 
 });
-
 
 /* CREATE EMPLOYEE  */
 router.post(
