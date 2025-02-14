@@ -44,24 +44,26 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
   }
 
 // rooms availability for meeting
-  const existingMeeting = await Meeting.findOne({
-    organizationId: data.organizationId,
-    date: new Date(data.date),
-    "locationDetails.roomId": data.locationDetails.roomId,
-    "locationDetails.isMeetingRoom": true,
-    $or: [
-      {
-        fromTime: { $lt: data.toTime },
-        toTime: { $gt: data.fromTime }
-      },
-      {
-        fromTime: { $gte: data.fromTime, $lt: data.toTime }
-      },
-      {
-        toTime: { $gt: data.fromTime, $lte: data.toTime }
-      }
-    ]
-  });
+const existingMeeting = await Meeting.findOne({
+  organizationId: data.organizationId,
+  date: new Date(data.date),
+  "locationDetails.roomId": data.locationDetails.roomId,
+  "locationDetails.isMeetingRoom": true,
+  isActive: true,
+  "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+  $or: [
+    {
+      fromTime: { $lt: data.toTime },
+      toTime: { $gt: data.fromTime }
+    },
+    {
+      fromTime: { $gte: data.fromTime, $lt: data.toTime }
+    },
+    {
+      toTime: { $gt: data.fromTime, $lte: data.toTime }
+    }
+  ]
+});
 
   if (existingMeeting) {
     return { roomUnavailable: true };
@@ -136,6 +138,60 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
   ///////////////////// LOGER END
   return newMeeting;
 };
+
+// check attendee availability
+const checkAttendeeAvailability = async (data, id) => {
+  console.log('checkAttendeeAvailability data-----', data)
+
+  let attendeeId;
+
+  if (data.email) {
+    const employee = await Employee.findOne({ email: data.email }, { _id: 1 });
+    console.log('employee id from employee table--check availability', employee)
+    if (employee) {
+      attendeeId = new ObjectId(employee._id);
+    } else {
+        console.log("Employee not found with email:", data.email);
+    }
+  }
+  if (data.attendeeId){
+    attendeeId = new ObjectId(data.attendeeId);
+  }
+  
+  const fromToTime = await Meetings.findOne(
+    { _id: new ObjectId(id) },
+    { date:1, fromTime: 1, toTime: 1, isActive:1, meetingStatus:1 }
+  );
+
+  console.log('From To Time----', fromToTime);
+
+  const existingAttendee = await Meetings.findOne({
+    date: fromToTime.date,
+    isActive: true,
+    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+    $or: [
+      {
+        fromTime: { $lt: fromToTime.toTime }, 
+        toTime: { $gt: fromToTime.fromTime }
+      },
+      {
+        fromTime: { $gte: fromToTime.fromTime, $lt: fromToTime.toTime }
+      },
+      {
+        toTime: { $gt: fromToTime.fromTime, $lte: fromToTime.toTime }
+      }
+    ],
+    attendees: { $elemMatch: { _id: { $in: attendeeId } } }
+  });
+
+  console.log('existingAttendee----', existingAttendee)
+
+  if (existingAttendee) {
+    return { attendeeUnavailable: true};
+  }
+}
+
+
 /**FUNC- UPDATE MEETING */
 const updateMeeting = async (data, id, userId, ipAddress) => {
   console.log("data99999999999999999999999-------------------", data);
@@ -4858,3 +4914,4 @@ exports.getCreatedByDetails = getCreatedByDetails;
 exports.getMeetingIdsOfCreatedById = getMeetingIdsOfCreatedById;
 exports.deleteZoomRecording = deleteZoomRecording;
 exports.downloadZoomRecordingsInZip = downloadZoomRecordingsInZip;
+exports.checkAttendeeAvailability = checkAttendeeAvailability;

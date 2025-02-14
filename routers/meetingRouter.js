@@ -228,4 +228,6 @@ router.post(
   meetingController.downloadZoomRecordingsInZip
 );
 
+router.post('/check-availability/:id', meetingController.checkAttendeeAvailability);
+
 module.exports = router;

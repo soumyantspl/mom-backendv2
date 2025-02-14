@@ -93,6 +93,41 @@ const updateRsvp = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+// attendee availability
+const checkAttendeeAvailability = async (req, res) => {
+  try{
+    const result = await meetingService.checkAttendeeAvailability(
+      req.body,
+      req.params.id
+    );
+    if (result?.attendeeUnavailable) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.attendeeUnavailable,
+        200
+      );
+    } 
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        { isScheduleUser: false },
+        messages.recordsNotFound,
+        200
+      );
+    }
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+  }
+  
+
+
 /**FUNC- TO UPDATE MEETING**/
 const updateMeeting = async (req, res) => {
   try {
@@ -1016,4 +1051,5 @@ module.exports = {
   getMeetingActionPriotityDetails,
   deleteZoomRecording,
   downloadZoomRecordingsInZip,
+  checkAttendeeAvailability
 };

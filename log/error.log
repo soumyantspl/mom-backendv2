@@ -1481,3 +1481,16 @@ Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out 
     at process.processTimers (node:internal/timers:529:7)
 =======
 >>>>>>> 34744d756504843da638dedc47cd0da49bf95468
+Date: 14/02/2025, Time: 10:31
+Error: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+Stack Trace: MongoParseError: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+    at new ConnectionString (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongodb-connection-string-url\lib\index.js:86:19)
+    at parseOptions (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\connection_string.js:203:17)
+    at new MongoClient (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\mongo_client.js:51:61)
+    at NativeConnection.createClient (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:328:14)
+    at NativeConnection.openUri (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\lib\connection.js:1060:34)
+    at Mongoose.connect (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\lib\mongoose.js:446:15)
+    at connectDB (E:\Ongoing\V2\BE\TESTING\mom-backendv2\dbLayer\connection.js:8:33)
+    at Object.<anonymous> (E:\Ongoing\V2\BE\TESTING\mom-backendv2\server.js:63:1)
+    at Module._compile (node:internal/modules/cjs/loader:1358:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
