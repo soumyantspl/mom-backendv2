@@ -255,75 +255,6 @@ const listOnlyEmployeeAsUnitValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error, 200);
   }
 };
-const viewProfileValidator = async (req, res, next) => {
-  try {
-    const headerSchema = Joi.object({
-      headers: Joi.object({
-        authorization: Joi.string().required(),
-        ip: Joi.string().optional(),
-      }).unknown(true),
-    });
-
-    const bodySchema = Joi.object({
-      name: Joi.string()
-        .trim()
-        .pattern(/^[0-9a-zA-Z -.(),-,_/]+$/)
-        .min(2)
-        .max(100)
-        .required()
-        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
-
-      isActive: Joi.boolean().strict().optional(),
-
-      empId: Joi.string()
-        .trim()
-        .pattern(/^[0-9a-zA-Z -.(),-,_/]+$/)
-        // .required()
-        .messages({
-          "string.pattern.base": "Allowed Inputs: a-z, A-Z, 0-9, space, comma, dash",
-          "string.empty": "Employee ID is required",
-        }),
-
-      profilePicture: Joi.string().optional(),
-
-      currentPassword: Joi.string().optional(),
-
-      password: Joi.string()
-        .allow('')
-        .pattern(/^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]+$/)
-        .messages({
-          "string.pattern.base": "Password contains invalid characters.",
-        })
-        .optional(),
-
-      confirmPassword: Joi.string()
-        .valid(Joi.ref('password'))
-        .optional()
-        .when('password', {
-          is: Joi.exist(),
-          then: Joi.required(),
-          otherwise: Joi.optional(),
-        })
-        .messages({
-          "any.only": "Confirm Password must match the Password.",
-        })
-    });
-
-    const paramsSchema = Joi.object({
-      id: Joi.string().trim().alphanum().required(),
-    });
-
-    await headerSchema.validateAsync({ headers: req.headers });
-    await paramsSchema.validateAsync(req.params);
-    await bodySchema.validateAsync(req.body);
-
-    next();
-  } catch (error) {
-    console.log("Validation Error:", error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error, 200);
-  }
-};
 module.exports = {
   viewEmployeeValidator,
   createEmployeeValidator,
@@ -335,5 +266,4 @@ module.exports = {
   checkDuplicateUser,
   listOnlyEmployeeValidator,
   listOnlyEmployeeAsUnitValidator,
-  viewProfileValidator
 };

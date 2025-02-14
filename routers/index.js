@@ -38,5 +38,4 @@ app.use(`/${BASE_PATH}/alert`, alertRouter);
 app.use(`/${BASE_PATH}/demo`,demoClient)
 app.use(`/${BASE_PATH}/hosting`,hostRouter)
 app.use(`/${BASE_PATH}/emailTemplate`,emailTemplateRouter);
-
 module.exports = app;
