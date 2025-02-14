@@ -77,5 +77,17 @@ router.post(
   upload.single("file"),
   employeeController.importEmployee
 );
+<<<<<<< HEAD
+/* VIEW PROFILE  */
+router.put(
+  "/viewProfile/:id",
+  uploadpicture.single("profilePicture"),
+  validator.viewProfileValidator,
+  authMiddleware.verifyUserToken,
+  employeeController.viewProfile
+);
+
+=======
+>>>>>>> cc4251e7b153b022a7a698422385dc8b29285487
 
 module.exports = router;
