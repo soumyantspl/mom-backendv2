@@ -60,8 +60,8 @@ const reScheduleMeetingSubject = (meetingData) => {
 };
 
 const createMinuteSubject = (meetingData) => {
-  return `MOM Created: (Meeting Title: ${meetingData.title
-    }, Held On: ${new Date(meetingData.date).toDateString()} 
+  return `MOM Created: (Meeting Title: ${meetingData.title},
+   Held On: ${new Date(meetingData.date).toDateString()} 
      ${meetingData.fromTime}
     -  ${meetingData.toTime})`;
 };

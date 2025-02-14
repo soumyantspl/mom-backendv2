@@ -578,8 +578,7 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
           Agenda Title
           </td>
-          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
-                }</td>
+          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)}</td>
           </tr>
           ${agenda.topic !== (null || "")
                   ? `<tr style="border: 1px solid black;border-collapse: collapse;">
@@ -705,7 +704,7 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
             <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
             Agenda Title
             </td>
-            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda?.title)
                 }</td>
             </tr>
             ${agenda.topic !== (null || "")
@@ -2306,7 +2305,7 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
         <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
         Agenda Title
         </td>
-        <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+        <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda?.title)
               }</td>
         </tr>
         ${agenda.topic !== (null || "")
@@ -3466,7 +3465,7 @@ const sendAlertTime = async () => {
               <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
               Agenda Title
               </td>
-              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                       }</td>
               </tr>
               ${agenda.topic !== (null || "")
@@ -3714,7 +3713,7 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
     <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
     Agenda Title
     </td>
-    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
             }</td>
     </tr>
     ${agenda.topic !== (null || "")
@@ -4165,7 +4164,8 @@ const newMeetingAsRescheduled = async (
       let emailSubject = null;
       const meeting = await viewMeeting(newUpdatedMeeting?._id, userId);
       if (meeting?.attendees?.length !== 0) {
-        emailSubject = await emailConstants.scheduleMeetingSubject(meeting);
+       // emailSubject = await emailConstants.scheduleMeetingSubject(meeting);
+       
 
         meeting?.attendees?.map(async (attendee) => {
           const logo = process.env.LOGO;
@@ -4181,7 +4181,7 @@ const newMeetingAsRescheduled = async (
         <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
         Agenda Title
         </td>
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commomHelper.decryptWithAES(agenda?.title)
                 }</td>
         </tr>
         ${agenda.topic !== (null || "")
@@ -4246,6 +4246,9 @@ const newMeetingAsRescheduled = async (
           // console.log("updatedMeeting==============", newUpdatedMeeting);
           console.log("finalMeetingLink==============", finalMeetingLink);
           console.log("meetingLinkCode==============", meetingLinkCode);
+
+          const { emailSubject, mailData: mailBody } = mailData;
+
           mailData = await emailTemplates.sendScheduledMeetingEmailTemplate(
             meeting,
             commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
@@ -4264,7 +4267,8 @@ const newMeetingAsRescheduled = async (
             attendee.email,
             "Meeting Scheduled",
             emailSubject,
-            mailData
+            mailBody,
+          //  mailData
           );
         });
         let allowedUsers = [new ObjectId(userId), meeting?.createdById];
