@@ -444,47 +444,6 @@ const importEmployee = async (req, res) => {
   }
 };
 
-const viewProfile = async (req, res) => {
-  try {
-    const ip = req.headers.ip || (await commonHelper.getIp(req));
-    const profilePicture = req.file;
-
-    console.log("Uploaded File:", profilePicture);
-    console.log("Request File:", req.body);
-
-    const result = await employeeService.viewProfile(
-      req.userId,
-      req.params.id,
-      req.body,
-      ip,
-      profilePicture
-    );
-
-
-    if (result.isMatch === false) {
-      return Responses.failResponse(req, res, null, messages.currentPasswordIncorrect, 200);
-    }
-
-
-    if (result.error) {
-      return Responses.failResponse(req, res, null, result.error, 200);
-    }
-
-    const message =
-      req.body.isActive === true
-        ? messages.active
-        : req.body.isActive === false
-        ? messages.deActive
-        : messages.updateSuccess;
-
-    console.log("Updated Profile Result:", result);
-
-    return Responses.successResponse(req, res, result, message, 200);
-  } catch (error) {
-    console.error("Controller Error:", error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
 
 
 
@@ -502,6 +461,5 @@ module.exports = {
   listOnlyEmployee,
   getEmployeeListAsPerUnit,
   importEmployee,
-  writeErrorFile,
-  viewProfile
+  writeErrorFile
 };

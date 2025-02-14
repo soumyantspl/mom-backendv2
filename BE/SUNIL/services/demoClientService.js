@@ -253,15 +253,20 @@ const saveContactUsDetails = async (data, ipAddress) => {
       const logo = process.env.LOGO;
       const emailType = "Demo Inquiry";
       const adminEmail = process.env.ADMIN_EMAIL;
-     // const emailSubject = emailConstants.contactUsSubject(data.name);
-     const { subject, mailBody } = await emailTemplates.sendContactUsEmailTemplate(
+      const emailSubject = emailConstants.contactUsSubject(data.name);
+      const mailData = await emailTemplates.sendContactUsEmailTemplate(
         data.name,
         data.email,
         data.phoneNo,
         data.message,
         logo
       );
-      await emailService.sendEmail(adminEmail, emailType, subject, mailBody);
+      await emailService.sendEmail(
+        adminEmail,
+        emailType,
+        emailSubject,
+        mailData
+      );
     }
     return result;
   } else {
@@ -299,7 +304,7 @@ const contactUsSendOtp = async (data, ipAddress) => {
       data.type === "contactus"
         ? emailConstants.contactUsMessage
         : emailConstants.requestDemoOtpMessage;
-        const { subject, mailBody } = await emailTemplates.sendOtpContactEmailTemplate(
+    const mailData = await emailTemplates.sendOtpDemoEmailTemplate(
       commonHelper.convertFirstLetterOfFullNameToCapital(name),
       otp,
       process.env.CHECK_OTP_VALIDATION_TIME,
@@ -307,7 +312,7 @@ const contactUsSendOtp = async (data, ipAddress) => {
       logo,
       typeMessage
     );
-    await emailService.sendEmail(email, emailType, subject, mailBody);
+    await emailService.sendEmail(email, emailType, emailSubject, mailData);
     return {
       data: {
         usedOtp: 1,
