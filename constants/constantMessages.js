@@ -116,6 +116,7 @@ const importSuccess = "Import completed successfully."
 const importFailed = "Import completed with errors.Please check Reason for Failed column"
 const importEroor = "Error in processing Excel file"
 const validationError = "Validation Errors"
+const validateGauthUrl="Please validate your application by this url"
 
 //Pratishruti//
 //view pRofile//
@@ -223,5 +224,6 @@ module.exports = {
   importEroor,
   validationError,
   currentPasswordIncorrect,
-  roomUnavailable
+  roomUnavailable,
+  validateGauthUrl
 };

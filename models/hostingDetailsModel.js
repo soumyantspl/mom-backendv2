@@ -42,6 +42,28 @@ const gMeetSchema = new mongoose.Schema({
     required: true,
     default: true,
   },
+  tokenData: {
+    accessToken: {
+      type: String,
+      required: true,
+    },
+    refreshToken: {
+      type: String,
+      required: true,
+    },
+    scope: {
+      type: [String], // Explicitly defining it as an array of strings
+      default: [],
+    },
+    tokenType: {
+      type: String,
+      required: true,
+    },
+    expiryDate: {
+      type: String,
+      required: true,
+    },
+  },
 });
 
 const msTeamSchema = new mongoose.Schema({

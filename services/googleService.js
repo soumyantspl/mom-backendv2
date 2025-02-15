@@ -2,20 +2,29 @@ const fs = require("fs");
 const { google } = require("googleapis");
 const { v4: uuidv4 } = require("uuid");
 const commonHelper = require("../helpers/commonHelper");
+const ObjectId = require("mongoose").Types.ObjectId;
+const HostingDetails = require("../models/hostingDetailsModel");
 // Load credentials
 const SCOPES = [
   "https://www.googleapis.com/auth/calendar.events",
   "https://www.googleapis.com/auth/calendar",
 ];
 
-const redirect_uris = ["https://mom.ntspl2222.co.in", "http://localhost222:3000"];
+const redirect_uris = [
+  "https://mom.ntspl2222.co.in",
+  "http://localhost222:3000",
+];
+const client_id =
+  "260087855691-e91cmkn3allf0gagu5sfas2jfifhv1in.apps.googleusercontent.com";
+
+const client_secret = "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";
 const code =
   "4/0ASVgi3LyrYaudzwBc-eqfSPpPyGaIvgHYEPubfWZFfO286eeMsguy4444fSfeeOnLWgRaQ";
 
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
   client_secret,
-  redirect_uris[0]
+  "http://localhost:3000/hosting-details"
 );
 
 // Generate an authentication URL
@@ -42,20 +51,19 @@ async function authenticate() {
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
-    redirect_uris[0]
+    "http://localhost:3000/hosting-details"
   );
 
   // Load previously stored token or generate new one
   const TOKEN_PATH = "token.json";
-  if (fs.existsSync(TOKEN_PATH)) {
+  if (!fs.existsSync(TOKEN_PATH)) {
     console.log("===========================================22222=");
 
     const token = JSON.parse(fs.readFileSync(TOKEN_PATH));
-    
-   
+
     console.log("===========================================3567=", token);
 
-    const newToken=await refreshAccessToken(token?.refresh_token)
+    const newToken = await refreshAccessToken(token?.refresh_token);
     oAuth2Client.setCredentials(newToken);
     // //  Listen for token refresh events and update the file
     // oAuth2Client.on("tokens", (newTokens) => {
@@ -82,13 +90,12 @@ async function authenticate() {
   return oAuth2Client;
 }
 
-
 const refreshAccessToken = async (refresh_token) => {
   oAuth2Client.setCredentials({
-    refresh_token
+    refresh_token,
   });
   const { credentials } = await oAuth2Client.refreshAccessToken();
-//  fs.writeFileSync("token.json", JSON.stringify(credentials));
+  //  fs.writeFileSync("token.json", JSON.stringify(credentials));
   console.log("New Access Token:", credentials);
   return credentials;
 };
@@ -358,4 +365,73 @@ const createGMeetingMOM = async (
   return response.data;
 };
 
-module.exports = { createGMeeting, addEvent, createGMeetingMOM };
+const googleMeetAuthUrl = async (organizationId) => {
+  const gmailCrtedentialsData = await HostingDetails.findOne(
+    { organizationId: new ObjectId(organizationId) },
+    { gMeetCredentials: 1, organizationId: 1 }
+  );
+  console.log("gmailCrtedentialsData=================", gmailCrtedentialsData);
+  if (gmailCrtedentialsData) {
+    const clientId = commonHelper?.decryptWithAES(
+      gmailCrtedentialsData?.gMeetCredentials?.clientId
+    );
+    const secretToken = commonHelper?.decryptWithAES(
+      gmailCrtedentialsData?.gMeetCredentials?.secretToken
+    );
+    console.log(clientId)
+    console.log(secretToken)
+    // Generate authentication URL
+    const oauth2Clients = new google.auth.OAuth2(
+      clientId,
+      secretToken,
+      "http://localhost:3000/hosting-details"
+    );
+    const authUrl = oauth2Clients.generateAuthUrl({
+      access_type: "offline",
+      scope: SCOPES,
+    });
+    return authUrl;
+  }
+  return false;
+};
+
+// Exchange code for tokens and save to MongoDB
+const getAccessTokens = async (code, organizationId) => {
+  const gmailCrtedentialsData = await HostingDetails.findOne(
+    { organizationId: new ObjectId(organizationId) },
+    { gMeetCredentials: 1, organizationId: 1 }
+  );
+
+  // Generate authentication URL
+  const oauth2Clients = new google.auth.OAuth2(
+    gmailCrtedentialsData?.gMeetCredentials?.clientId,
+    gmailCrtedentialsData?.gMeetCredentials?.secretToken,
+    "http://localhost:3000/hosting-details"
+  );
+  const { tokens } = await oauth2Clients.getToken(code);
+  oauth2Clients.setCredentials(tokens);
+
+  // SAVE ACCESS TOKEN IN HOSTING DETAILS GOOGLE MEET DATA
+  if (tokens) {
+    const tokenData = {
+      accessToken: tokens?.access_token,
+      refreshToken: tokens?.refresh_token,
+      scope: tokens?.scope,
+      tokenType: tokens?.token_type,
+      expiryDate: tokens?.expiryDate,
+    };
+    const saveToenInHostDetails = await HostingDetails.updateOne(
+      { organizationId: new ObjectId(organizationId) },
+      { $set: { "gMeetCredentials.tokenData": tokenData } }
+    );
+  }
+  return saveToenInHostDetails;
+};
+
+module.exports = {
+  createGMeeting,
+  addEvent,
+  createGMeetingMOM,
+  googleMeetAuthUrl,
+  getAccessTokens,
+};

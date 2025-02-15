@@ -30,4 +30,13 @@ router.put(
   hostController.updateHostStatus
 );
 
+
+/* GENERATE GMEET AUTH URL  */
+router.get(
+  "/googleMeetAuthUrl/:organizationId",
+  hostValidator.googleMeetAuthUrl,
+  authMiddleware.verifyUserToken,
+  hostController.googleMeetAuthUrl
+);
+
 module.exports = router;

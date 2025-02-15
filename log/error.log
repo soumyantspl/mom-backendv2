@@ -2139,3 +2139,134 @@ Stack Trace: ValidationError: "gaccountId" is required
 Date: 13/02/2025, Time: 17:29
 Error: "gaccountId" is required
 Stack Trace: ValidationError: "gaccountId" is required
+Date: 15/02/2025, Time: 12:25
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 15/02/2025, Time: 12:27
+Error: ObjectId is not defined
+Stack Trace: ReferenceError: ObjectId is not defined
+    at Object.googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\services\googleService.js:369:27)
+    at googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:141:41)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\mom-backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Ongoing\V2\mom-backend\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (E:\Ongoing\V2\mom-backend\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 15/02/2025, Time: 12:28
+Error: result is not defined
+Stack Trace: ReferenceError: result is not defined
+    at googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:155:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 15/02/2025, Time: 12:32
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:211:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 15/02/2025, Time: 12:32
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:211:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 15/02/2025, Time: 12:35
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:211:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 15/02/2025, Time: 12:41
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:211:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 15/02/2025, Time: 12:42
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:211:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 15/02/2025, Time: 12:43
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:211:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 15/02/2025, Time: 12:45
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:213:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 15/02/2025, Time: 12:46
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeeting (E:\Ongoing\V2\mom-backend\services\googleService.js:213:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createGMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:996:20)
+Date: 15/02/2025, Time: 12:49
+Error: gggggg is not defined
+Stack Trace: ReferenceError: gggggg is not defined
+    at Object.googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\services\googleService.js:376:1)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:141:21)
+Date: 15/02/2025, Time: 12:50
+Error: gggggg is not defined
+Stack Trace: ReferenceError: gggggg is not defined
+    at Object.googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\services\googleService.js:376:1)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:141:21)
+Date: 15/02/2025, Time: 12:50
+Error: gggggg is not defined
+Stack Trace: ReferenceError: gggggg is not defined
+    at Object.googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\services\googleService.js:376:1)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:141:21)
