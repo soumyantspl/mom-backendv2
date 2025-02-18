@@ -1,6 +1,5 @@
 const commonHelper = require("../helpers/commonHelper");
-//const emailTemplates = require("../emailSetUp/emailTemplates");
-const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailService = require("./emailService");
 const emailConstants = require("../constants/emailConstants");
 const otpDemoLogs = require("../models/otpDemoLogsModel");
@@ -46,8 +45,8 @@ const createDemoClient = async (data, ipAddress) => {
       await emailService.sendEmail(
         adminEmail,
         emailType,
-        mailData.subject, 
-        mailData.mailBody
+        emailSubject,
+        mailData
       );
     }
     return result;
@@ -90,7 +89,7 @@ const demoSendOtp = async (data, ipAddress) => {
       logo,
       typeMessage
     );
-    await emailService.sendEmail(email, emailType, mailData.subject, mailData.mailBody);
+    await emailService.sendEmail(email, emailType, emailSubject, mailData);
     return {
       data: {
         usedOtp: 1,

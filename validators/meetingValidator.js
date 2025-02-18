@@ -25,40 +25,15 @@ const createMeetingValidator = async (req, res, next) => {
     });
     const bodySchema = Joi.object({
       sendNotification: Joi.boolean(),
-      // title: Joi.string()
-      //   .trim()
-      //   .min(3)
-      //   .max(100)
-      //   .pattern(regularExpression)
-      //   .messages({
-      //     "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-      //   })
-      //   .required(),
-
-
-      title: Joi.any().when("isEncrypted", {
-        is: true,
-        then: Joi.string()
-          .trim()
-          // .min(10)
-          // .max(300)
-          //.pattern(/^[A-Za-z0-9+/=]+$/) ///  Ensure encrypted format (Base64-like)
-          .required(),
-        otherwise: Joi.string()
-          .trim()
-          .min(3)
-          .max(300)
-          .pattern(regularExpression)
-          .messages({
-            "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-          })
-          .required(),
-      }),
-      
-      isEncrypted: Joi.boolean().default(false), 
-      
-      
-
+      title: Joi.string()
+        .trim()
+        .min(3)
+        .max(100)
+        .pattern(regularExpression)
+        .messages({
+          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+        })
+        .required(),
       organizationId: Joi.string().trim().alphanum().required(),
       parentMeetingId: Joi.string().trim().alphanum(),
       mode: Joi.string().trim().valid("VIRTUAL", "PHYSICAL").required(),
@@ -164,12 +139,6 @@ const createMeetingValidator = async (req, res, next) => {
       }).required(),
     });
 
-    console.log("Received Body:", req.body);
-console.log("Title:", req.body.title);
-console.log("isEncrypted:", req.body.isEncrypted);
-
-
-
     await headerSchema.validateAsync({ headers: req.headers });
     await bodySchema.validateAsync(req.body);
     next();
@@ -217,33 +186,12 @@ const updateMeetingValidator = async (req, res, next) => {
       reScheduled: Joi.boolean(),
       isUpdate: Joi.boolean().required(),
       sendNotification: Joi.boolean().required(),
-      // title: Joi.string()
-      //   .trim()
-      //   .min(3)
-      //   .max(300)
-      //   .pattern(regularExpression)
-      //   .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
-
-      title: Joi.any().when("isEncrypted", {
-        is: true,
-        then: Joi.string()
-          .trim()
-          // .min(10)
-          // .max(300)
-          //.pattern(/^[A-Za-z0-9+/=]+$/) //  Ensure encrypted format (Base64-like)
-          .required(),
-        otherwise: Joi.string()
-          .trim()
-          .min(3)
-          .max(300)
-          .pattern(regularExpression)
-          .messages({
-            "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)`,
-          })
-          // .required(),
-      }),
-      
-      isEncrypted: Joi.boolean().default(false),
+      title: Joi.string()
+        .trim()
+        .min(3)
+        .max(100)
+        .pattern(regularExpression)
+        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
 
       organizationId: Joi.string().trim().alphanum().required(),
       mode: Joi.string().trim().valid("VIRTUAL", "PHYSICAL"),
@@ -1155,6 +1103,37 @@ const downloadZoomRecordingsInZipValidaor = async (req, res, next) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+const forChartClick = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+      }).unknown(true),
+    });
+
+    const bodySchema = Joi.object({
+      organizationId: Joi.string().trim().alphanum().required(),
+      meetingId:Joi.string().trim().required(),
+      searchKey: Joi.string()
+        .trim()
+        .pattern(regularExpression)
+        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+    });
+    const paramsSchema = Joi.object({
+      limit: Joi.number().required(),
+      page: Joi.number().required(),
+      order: Joi.number().required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await paramsSchema.validateAsync(req.query);
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+
 
 module.exports = {
   updateMeetingStatusValidator,
@@ -1185,4 +1164,5 @@ module.exports = {
   getMeetingActionPriotityDetailsValidator,
   deleteZoomRecordingValidator,
   downloadZoomRecordingsInZipValidaor,
+  forChartClick
 };

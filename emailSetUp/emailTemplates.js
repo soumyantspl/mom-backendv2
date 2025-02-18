@@ -463,7 +463,7 @@ const sendReScheduledMeetingEmailTemplate = async (
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Meeting Title</strong></p>' +
       `<p style="color: #000 !important;margin:0px;">
        
-          ${commonHelper.convertFirstLetterToCapital(commonHelper.decryptWithAES(meetingData.title))}(${
+          ${commonHelper.convertFirstLetterToCapital(meetingData?.title)}(${
         meetingData?.meetingId
       })
         </p>` +

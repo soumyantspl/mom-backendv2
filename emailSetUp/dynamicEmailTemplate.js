@@ -118,7 +118,7 @@ const sendCancelMeetingEmailTemplate = async (meetingData, attendeeName, logo) =
     
     body = body
       .replace('{attendeeName}', attendeeName)
-      .replace('{meetingTitle}', meetingData.title)
+      .replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title))
       .replace('{meetingId}', meetingData.meetingId)
       .replace('{meetingLink}', `${process.env.FRONTEND_URL}/view-meeting-details/${meetingData._id}`)
       .replace('{meetingDate}', new Date(meetingData.date).toDateString())
@@ -129,7 +129,7 @@ const sendCancelMeetingEmailTemplate = async (meetingData, attendeeName, logo) =
       .replace('{createdByEmail}', meetingData.createdByDetail.email);
 
     subject = subject
-      .replace('{meetingTitle}', meetingData.title)
+      .replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title))
       .replace('{meetingDate}', new Date(meetingData.date).toDateString())
       .replace('{fromTime}', meetingData.fromTime)
       .replace('{toTime}', meetingData.toTime)
@@ -456,7 +456,7 @@ const sendCreateMinutesEmailTemplate = async (
         "{name}",
         commonHelper.convertFirstLetterOfFullNameToCapital(attendeeName)
       )
-      .replace(/{meetingTitle}/g, meetingData.title)
+      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
       .replace(/{meetingId}/g, meetingData.meetingId)
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace(/{fromTime}/g, meetingData.fromTime)
@@ -483,7 +483,7 @@ const sendCreateMinutesEmailTemplate = async (
       );
 
     subject = subject
-      .replace(/{meetingTitle}/g, meetingData.title)
+      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace(
         /{meetingTime}/g,
@@ -543,7 +543,7 @@ const actionReassignEmailToOlAssignedUserTemplate = async (
         return reject(new Error(`No body found for template type: ACTIONREASSIGNTOOLDUSER`));
       }
 
-      subject = subject.replace(/{meetingTitle}/g, meetingData.title)
+      subject = subject.replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
         .replace(/{organizerEmail}/g, meetingData?.createdByDetail?.email)
 
       body = body
@@ -927,7 +927,7 @@ const acceptMinuteEmailTemplate = async (meetingData, attendeeDetails, logo) => 
         return reject(new Error(`No body found for template type: ACCEPTMINUTES`));
       }
 
-      subject = subject.replace(/{meetingTitle}/g, meetingData.title)
+      subject = subject.replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
         .replace(/{organizerEmail}/g, meetingData?.createdByDetail?.email)
         .replace(/{attendeeName}/g, attendeeDetails.name)
         .replace(/{attendeeEmail}/g, attendeeDetails.email)
@@ -1155,7 +1155,7 @@ const actionReassignRequestRejectEmailTemplate = async (
       .replace( "{actionlink}", `${process.env.FRONTEND_URL}/view-action-detail/${actionDetails?._id}`)
       .replace("{rejectReason}", remark)
 
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingId}", meetingData.meetingId)
       .replace("{description}", actionDetails?.description)
       .replace("{organizerName}", meetingData?.createdByDetail?.name)
@@ -1282,13 +1282,13 @@ const sendGiveWriteMOMPermissionEmailTemplate = async (meetingData, attendeeName
     
     body = body
     .replace('{attendeeName}', attendeeName)
-      .replace('{meetingTitle}', meetingData.title)
+      .replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title))
       .replace('{meetingId}', meetingData.meetingId)
       .replace('{meetingLink}', `${process.env.FRONTEND_URL}/view-meeting-details/${meetingData._id}`)
       .replace('{createdByName}', meetingData.createdByDetail.name)
       .replace('{createdByEmail}', meetingData.createdByDetail.email);
 
-    subject = subject.replace('{meetingTitle}', meetingData.title);
+    subject = subject.replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title));
 
     const mailBody =
       `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -1681,7 +1681,7 @@ const sendAttendanceDetailsEmailTemplate = async (
 
       .replace("{meetingMode}", commonHelper.convertFirstLetterToCapital(meetingData.mode))
       .replace("{meetingId}", meetingData?.meetingId)
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingDate}", new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime)
@@ -1692,7 +1692,7 @@ const sendAttendanceDetailsEmailTemplate = async (
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
     subject = subject
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingDate}", new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime)
@@ -2037,10 +2037,10 @@ const actionReassignRequestEmailTemplate = async (
 
     //  subject = subject.replace('{organizerName}', meetingData?.createdByDetail?.name);
     subject = subject
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
-    console.log("Meeting Tittle====", meetingData.title);
+    console.log("Meeting Tittle====", commonHelper.decryptWithAES(meetingData.title));
 
     mailBody =
       `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -2106,14 +2106,14 @@ const actionApproveEmailTemplate = async (
       .replace( "{actionlink}",`${process.env.FRONTEND_URL}/view-action-detail/${action._id}`)
       .replace("{actionDescription}", action?.description)
       .replace("{approvalRemark}", reason)
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingId}", meetingData.meetingId)
       .replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital(meetingData.createdByDetail.name))
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
     subject = subject.replace("{actionTitle}", action.title);
 
-    console.log("Meeting Tittle====", meetingData.title);
+    console.log("Meeting Tittle====", commonHelper.decryptWithAES(meetingData.title));
 
     mailBody =
       `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -2342,7 +2342,7 @@ const actionCancelEmailTemplate = async (
         )
         .replace(/{email}/g, attendeeDetails?.email)
         .replace("{description}", actionDetails?.description)
-        .replace("{meetingTitle}", meetingData?.title)
+        .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData?.title))
         .replace("{meetingId}", meetingData?.meetingId)
         .replace("{organizerEmail}", meetingData.createdByDetail.email)
         .replace(
