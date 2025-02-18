@@ -172,7 +172,7 @@ const insertOtp = async (
     userData.email,
     emailType,
     emailSubject,
-    mailBody
+    mailData
   );
   return data.otp;
 };

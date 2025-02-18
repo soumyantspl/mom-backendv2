@@ -111,6 +111,7 @@ const importedSuccess = "File imported successfully"
 const duplicateOrganizationCode = "The Organization Code is already exist, Please try another one!";
 const wrongZoomCredentials = "Please add correct credentials!";
 const recordingsDownloadedSuccessfully = "All recordings downloaded successfully."
+const MOMDownloadedSuccessfully = "MOM downloaded successfully."
 const importSuccess = "Import completed successfully."
 const importFailed = "Import completed with errors.Please check Reason for Failed column"
 const importEroor = "Error in processing Excel file"
@@ -120,12 +121,16 @@ const organizerUnavailable = "You already have a meeting scheduled on this date 
 
 ///Pratishruti//
 //view pRofile//
-const currentPasswordIncorrect ="Current Password is Incorrect"
-const MOMDownloadedSuccessfully="MOM downloaded successfully."
+
+
+//Pratishruti//
+//view pRofile//
+const currentPasswordIncorrect = "Current Password is Incorrect"
+
 const notificationSent = "Email sent successfully"
 const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater than Draft MeetingReminder Days"
-const draftDeleted ="Draft Meeting Deleted"
-const deleteDraftFailed ="Faild in Delete Draft Meeting"
+const draftDeleted = "Draft Meeting Deleted"
+const deleteDraftFailed = "Faild in Delete Draft Meeting"
 module.exports = {
   pleaseAddMinute,
   isDeleteNotAllowed,

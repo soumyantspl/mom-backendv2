@@ -73,8 +73,8 @@ router.get(
 /* MASTER DATA */
 router.get(
   "/masterData/:organizationId",
-  validator.masterDataValidator,
-  authMiddleware.verifyUserToken,
+  // validator.masterDataValidator,
+  // authMiddleware.verifyUserToken,
   employeeController.masterData
 );
 
