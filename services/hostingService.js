@@ -1,5 +1,6 @@
 const commonHelper = require("../helpers/commonHelper");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailService = require("./emailService");
 const emailConstants = require("../constants/emailConstants");
 const HostingDetails = require("../models/hostingDetailsModel");

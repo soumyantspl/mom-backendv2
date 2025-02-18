@@ -16,6 +16,10 @@ const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const meetingService = require("../services/meetingService");
 const { pipeline } = require("nodemailer/lib/xoauth2");
+
+const Organization = require("../models/organizationModel");
+const BASE_URL = process.env.BASE_URL;
+
 //FUCNTION TO CREATE COMMENTS
 const comments = async (userId, id, data, ipAddress = "1000") => {
   const inputData = {
@@ -104,7 +108,15 @@ const actionReassignRequest = async (
     console.log("meetingDetails rr-->", meetingDetails);
     console.log("userData-->", userData.name);
     if (meetingDetails) {
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+      const organization = await Organization.findOne({
+        _id: new ObjectId(result.organizationId),
+      });
+    
+      const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+      : process.env.LOGO;
+
       const mailData = await emailTemplates.actionReassignRequestEmailTemplate(
         meetingDetails,
         logo,
@@ -116,7 +128,6 @@ const actionReassignRequest = async (
       //   meetingDetails
       // );
 
-
       const { emailSubject, mailData: mailBody } = mailData;
       "sendOtpEmailTemplate-----------------------maildata", mailData;
       "sendOtpEmailTemplate-----------------------emailSubject", emailSubject;
@@ -125,7 +136,7 @@ const actionReassignRequest = async (
         "Reassign Requested",
         emailSubject,
         mailBody,
-       // mailData
+      //  mailData
       );
     }
     //////////////////////LOGER START
@@ -268,7 +279,6 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
       query["actionStatus"] = {
         $in: ["APPROVED", "COMPLETED"],
       }; // Equivalent to OR condition
-
     }
     if (
       bodyData.actionStatus &&
@@ -350,10 +360,7 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
     //   { meetingId: { $in: [...meetingsIds, ...meetingIds] } },
     // ];
     if (bodyData.actionStatus && bodyData.actionStatus == "COMPLETED") {
-    //  query["actionStatus"] = "COMPLETED";
-      query["actionStatus"] = {
-        $in: ["APPROVED", "COMPLETED"],
-      }; // Equivalent to OR condition
+      query["actionStatus"] = "COMPLETED";
     }
     if (
       bodyData.actionStatus &&
@@ -902,9 +909,7 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       },
       { isRead: true }
     );
-
   }
-
 
   const actionActivityObject = {
     activityDetails: data.reAssignReason,
@@ -914,7 +919,7 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     userId,
     status: "REASSIGNED",
     actionId: minuteDetails.minuteId,
-    isRead: true
+    isRead: true,
   };
   "activityObject-->", actionActivityObject;
   const actionActivitiesResult = await createActionActivity(
@@ -961,9 +966,17 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   );
 
   if (meetingDetails) {
-    const logo = process.env.LOGO;
-    console.log("userData2-->", userData)
+    // const logo = process.env.LOGO;
+    const organization = await Organization.findOne({
+      _id: new ObjectId(result.organizationId),
+    });
   
+    const logo = organization?.dashboardLogo
+    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+    : process.env.LOGO;
+
+    console.log("userData2-->", userData);
+
     const mailData = await emailTemplates.actionReassignEmailTemplate(
       meetingDetails,
       logo,
@@ -972,12 +985,14 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       userData,
       result
     );
-    const emailSubject = await emailConstants.reassignSubject(result);
+    // const emailSubject = await emailConstants.reassignSubject(result);
+    const { emailSubject, mailData: mailBody } = mailData;
+
     emailService.sendEmail(
       assignedUserDetail?.email,
       "Action Forwarded",
       emailSubject,
-      mailData
+      mailBody
     );
     const mailOldData =
       await emailTemplates.actionReassignEmailToOlAssignedUserTemplate(
@@ -987,16 +1002,18 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
         data.reAssignReason,
         result,
         userData,
-        oldAssignedUserDetail,
+        oldAssignedUserDetail
       );
-    const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(
-      result
-    );
+    // const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(
+    //   result
+    // );
+    const { oldemailSubject, mailOldData: oldmailBody } = mailOldData;
+
     emailService.sendEmail(
       oldAssignedUserDetail?.email,
       "Action Forwarded",
-      emailSubjectForAccept,
-      mailOldData
+      oldemailSubject,
+      oldmailBody
     );
     ////////////////////LOGER START
     const logData = {
@@ -1722,7 +1739,16 @@ const updateAction = async (id, data, userId, userData, ipAddress) => {
     };
 
     if (meetingDetails) {
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+
+      const organization = await Organization.findOne({
+        _id: new ObjectId(result.organizationId),
+      });
+
+      const logo = organization?.dashboardLogo
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : null;
+
       const mailData = await emailTemplates.actionCompleteEmailTemplate(
         meetingDetails,
         logo,
@@ -1731,13 +1757,14 @@ const updateAction = async (id, data, userId, userData, ipAddress) => {
         userData,
         result
       );
-      const emailSubject = await emailConstants.actionCompleteSubject(result);
-      emailSubject;
+      const { emailSubject, mailData: mailBody } = mailData;
+      // const emailSubject = await emailConstants.actionCompleteSubject(result);
+      // emailSubject;
       emailService.sendEmail(
         meetingDetails?.createdByDetail?.email,
         "Action Completed",
         emailSubject,
-        mailData
+        mailBody
       );
       ////////////////////LOGER START
       const logData = {
@@ -1776,7 +1803,7 @@ const createActionActivity = async (data) => {
     minuteId: data.minuteId,
     userId: data.userId,
     actionId: data.actionId,
-    isRead: data.isRead
+    isRead: data.isRead,
   };
   if (data.status) {
     inputData["status"] = data.status;
@@ -1904,7 +1931,15 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
       notificationData
     );
     if (meetingDetails) {
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+      const organization = await Organization.findOne({
+        _id: new ObjectId(result.organizationId),
+      });
+    
+      const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+      : process.env.LOGO;
+
       const mailData = await emailTemplates.actionApproveEmailTemplate(
         meetingDetails,
         logo,
@@ -1913,7 +1948,7 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
         result
       );
      // const emailSubject = await emailConstants.actionApproveSubject(result);
-     const { emailSubject, mailData: mailBody } = mailData;
+      const { emailSubject, mailData: mailBody } = mailData;
       "actionApproveEmailTemplate-----------------------maildata", mailData;
       "actionApproveEmailTemplate-----------------------emailSubject",
         emailSubject;
@@ -1922,7 +1957,7 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
         "Action Approved",
         emailSubject,
         mailBody,
-      // mailData
+      //  mailData
       );
       ////////////////////LOGER START
       const logData = {
@@ -2000,7 +2035,15 @@ const reOpenAction = async (actionId, data, userId, ipAddress, userData) => {
   );
 
   if (meetingDetails) {
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
+    const organization = await Organization.findOne({
+      _id: new ObjectId(result.organizationId),
+    });
+  
+    const logo = organization?.dashboardLogo
+    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+    : null;
+
     const mailData = await emailTemplates.actionReOpenEmailTemplate(
       meetingDetails,
       logo,
@@ -2008,13 +2051,15 @@ const reOpenAction = async (actionId, data, userId, ipAddress, userData) => {
       data.remark,
       result
     );
-    const emailSubject = await emailConstants.reOpenSubject(result);
+    // const emailSubject = await emailConstants.reOpenSubject(result);
+    const { emailSubject, mailData: mailBody } = mailData;
+
     emailSubject;
     emailService.sendEmail(
       data?.assignedUserDetails?.email,
       "Action Reopened",
       emailSubject,
-      mailData
+      mailBody
     );
     ////////////////////LOGER START
     const logData = {
@@ -2135,7 +2180,15 @@ const rejectReasignRequest = async (
     );
 
     if (meetingDetails) {
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+      const organization = await Organization.findOne({
+        _id: new ObjectId(result.organizationId),
+      });
+    
+      const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+      : null;
+
       const mailData =
         await emailTemplates.actionReassignRequestRejectEmailTemplate(
           meetingDetails,
@@ -2148,7 +2201,6 @@ const rejectReasignRequest = async (
       // const emailSubject = await emailConstants.rejectReassignRequestSubject(
       //   result
       // );
-
       const { emailSubject, mailData: mailBody } = mailData;
       "actionReassignRequestRejectEmailTemplate-----------------------maildata",
         mailData;
@@ -2267,16 +2319,16 @@ const cancelAction = async (actionId, userId, data, ipAddress, userData) => {
       // result
     );
     //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
-    const emailSubject = await emailConstants.cancelActionSubject(result);
+    const { emailSubject, mailData: mailBody } = mailData;
     "actionCancelEmailTemplate-----------------------maildata", mailData;
-    "actionCancelEmailTemplate-----------------------emailSubject",
-      emailSubject;
+    "actionCancelEmailTemplate-----------------------emailSubject", emailSubject;
+
     emailService.sendEmail(
       // meetingDetails?.createdByDetail?.email,
       data?.assignedUserDetails?.email,
       "Action Cancelled",
       emailSubject,
-      mailData
+      mailBody
     );
 
     ////////////////////LOGER START
@@ -2603,6 +2655,642 @@ const getUserActionPriotityDetails = async (
   };
 };
 
+const getAllActionData = async (bodyData, queryData, userId, userData) => {
+
+
+  // Initialize counters
+  let totalHighPriorityAction = 0;
+  let totalHighPriorityDueAction = 0;
+  let totalLowPriorityAction = 0;
+  let totalLowPriorityDueAction = 0;
+  let totalNormalPriorityAction = 0;
+  let totalNormalPriorityDueAction = 0;
+  const { order } = queryData;
+  const { organizationId, searchKey } = bodyData;
+  let query = null;
+
+  if (userData.isAdmin) {
+    query = searchKey
+      ? {
+        organizationId: new ObjectId(organizationId),
+        title: { $regex: searchKey, $options: "i" },
+        isActive: true,
+        isAction: true,
+      }
+      : {
+        organizationId: new ObjectId(organizationId),
+        isActive: true,
+        isAction: true,
+      };
+
+    if (bodyData.fromDate && bodyData.toDate) {
+      const fromDate = new Date(bodyData.fromDate);
+      const toDate = new Date(bodyData.toDate);
+      query.dueDate = {
+        $gte: new Date(fromDate.setDate(fromDate.getDate())),
+        $lt: new Date(toDate.setDate(toDate.getDate() + 1)),
+      };
+    }
+    if (bodyData.fromDate && !bodyData.toDate) {
+      const fromDate = new Date(bodyData.fromDate);
+      query.dueDate = {
+        $gte: new Date(fromDate.setDate(fromDate.getDate())),
+      };
+    }
+    if (!bodyData.fromDate && bodyData.toDate) {
+      const toDate = new Date(bodyData.toDate);
+      query.dueDate = {
+        $lt: new Date(toDate.setDate(toDate.getDate() + 1)),
+      };
+    }
+    if (bodyData.priority) {
+      if (bodyData.priority === "LOW") {
+        query["priority"] = "LOW";
+      } else if (bodyData.priority === "NORMAL") {
+        query["priority"] = "NORMAL";
+      } else if (bodyData.priority === "HIGH") {
+        query["priority"] = "HIGH";
+      }
+    }
+    if (bodyData.createdById) {
+      query["createdById"] = new ObjectId(bodyData.createdById);
+      // delete query.assignedUserId;
+    }
+    if (bodyData.assignedUserId) {
+      query["assignedUserId"] = new ObjectId(bodyData.assignedUserId);
+      // delete query.assignedUserId;
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "PENDING") {
+      // query["actionStatus"] = "PENDING";
+      query["actionStatus"] = {
+        $in: ["PENDING", "REQUESTFORREASSIGN", "REOPENED"],
+      }; // Equivalent to OR condition
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "COMPLETED") {
+      query["actionStatus"] = "COMPLETED";
+    }
+    if (
+      bodyData.actionStatus &&
+      bodyData.actionStatus == "REQUESTFORREASSIGN"
+    ) {
+      query["actionStatus"] = "REQUESTFORREASSIGN";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "REASSIGNED") {
+      query["actionStatus"] = "REASSIGNED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "REOPENED") {
+      query["actionStatus"] = "REOPENED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "APPROVED") {
+      query["actionStatus"] = "APPROVED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "CANCELLED") {
+      query["actionStatus"] = "CANCELLED";
+    }
+    if (bodyData.meetingId) {
+      query["meetingId"] = new ObjectId(bodyData.meetingId);
+    }
+  } else {
+    query = searchKey
+      ? {
+        organizationId: new ObjectId(organizationId),
+        title: { $regex: searchKey, $options: "i" },
+        isActive: true,
+        isAction: true,
+        //  assignedUserId: userId,
+      }
+      : {
+        organizationId: new ObjectId(organizationId),
+        isActive: true,
+        isAction: true,
+        // assignedUserId: userId,
+      };
+
+    if (bodyData.fromDate && bodyData.toDate) {
+      const fromDate = new Date(bodyData.fromDate);
+      const toDate = new Date(bodyData.toDate);
+      query.dueDate = {
+        $gte: new Date(fromDate.setDate(fromDate.getDate())),
+        $lt: new Date(toDate.setDate(toDate.getDate() + 1)),
+      };
+    }
+
+    if (bodyData.fromDate && !bodyData.toDate) {
+      const fromDate = new Date(bodyData.fromDate);
+      query.dueDate = {
+        $gte: new Date(fromDate.setDate(fromDate.getDate())),
+      };
+    }
+
+    if (!bodyData.fromDate && bodyData.toDate) {
+      const toDate = new Date(bodyData.toDate);
+      query.dueDate = {
+        $lt: new Date(toDate.setDate(toDate.getDate() + 1)),
+      };
+      if (bodyData.priority) {
+        if (bodyData.priority === "LOW") {
+          query["priority"] = "LOW";
+        } else if (bodyData.priority === "NORMAL") {
+          query["priority"] = "NORMAL";
+        } else if (bodyData.priority === "HIGH") {
+          query["priority"] = "HIGH";
+        }
+      }
+    }
+
+    if (bodyData.assignedUserId) {
+      query["assignedUserId"] = new ObjectId(bodyData.assignedUserId);
+      // delete query.assignedUserId;
+    }
+
+    if (bodyData.createdById) {
+      query["createdById"] = new ObjectId(bodyData.createdById);
+      // delete query.assignedUserId;
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "PENDING") {
+      query["actionStatus"] = {
+        $in: ["PENDING", "REQUESTFORREASSIGN", "REOPENED"],
+      }; // Equivalent to OR condition
+    }
+    // query["$or"] = [
+    //   // { assignedUserId: new ObjectId(userId) },
+    //   { createdById: new ObjectId(userId) },
+    //   { meetingId: { $in: [...meetingsIds, ...meetingIds] } },
+    // ];
+    if (bodyData.actionStatus && bodyData.actionStatus == "COMPLETED") {
+      query["actionStatus"] = "COMPLETED";
+    }
+    if (
+      bodyData.actionStatus &&
+      bodyData.actionStatus == "REQUESTFORREASSIGN"
+    ) {
+      query["actionStatus"] = "REQUESTFORREASSIGN";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "REASSIGNED") {
+      query["actionStatus"] = "REASSIGNED";
+    }
+
+    if (bodyData.actionStatus && bodyData.actionStatus == "REOPENED") {
+      query["actionStatus"] = "REOPENED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "APPROVED") {
+      query["actionStatus"] = "APPROVED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "CANCELLED") {
+      query["actionStatus"] = "CANCELLED";
+    }
+    if (bodyData.meetingId) {
+      query["meetingId"] = new ObjectId(bodyData.meetingId);
+    }
+    if (bodyData.meetingId) {
+      query["meetingId"] = new ObjectId(bodyData.meetingId);
+    }
+  }
+  var limit = parseInt(queryData.limit);
+  var skip = (parseInt(queryData.page) - 1) * parseInt(limit);
+  console.log("query==============================", query);
+  let pipeLine = [
+    {
+      $match: query,
+    },
+    {
+      $addFields: {
+        completedDate: {
+          $cond: {
+            if: {
+              $and: [
+                { $gt: [{ $arrayElemAt: ["$isCompleteDetails", -1] }, null] },
+                { $eq: ["$isReopened", false] },
+              ],
+            },
+            then: { $arrayElemAt: ["$isCompleteDetails.dateTime", -1] }, // Use last element of the array
+            //  then: { $arrayElemAt: ["$isCompleteDetails.dateTime", -1] }, // Use last element of the array
+            else: "$$NOW", // Set to null or a default value
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        completedDate: {
+          $dateTrunc: {
+            date: "$completedDate",
+            unit: "day",
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        delayCountInDays: {
+          $dateDiff: {
+            startDate: "$completedDate",
+            endDate: "$mainDueDate",
+            unit: "day",
+          },
+        },
+        isDelayed: {
+          $gt: [
+            {
+              $dateDiff: {
+                startDate: "$mainDueDate",
+                endDate: "$completedDate",
+                unit: "day",
+              },
+            },
+            0,
+          ],
+        },
+      },
+    },
+    // {
+    //   $addFields: {
+    //     isDelayed: {
+    //       $cond: {
+    //         if: { $eq: ["$isReopened", false] },
+    //         then: "$isDelayed", // Use last element of the array
+    //         else: true, // Set to null or a default value
+    //       },
+    //     },
+    //   },
+    // },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "createdById",
+        foreignField: "_id",
+        as: "userDetail",
+      },
+    },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "assignedUserId",
+        foreignField: "_id",
+        as: "assignedUserDetails",
+      },
+    },
+    {
+      $lookup: {
+        from: "meetings",
+        localField: "meetingId",
+        foreignField: "_id",
+        as: "meetingDetails",
+      },
+    },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "meetingDetails.attendees._id",
+        foreignField: "_id",
+        as: "attendeesDetail",
+      },
+    },
+    {
+      $project: {
+        createdById: 1,
+        completedDate: 1,
+        delayCountInDays: 1,
+        isDelayed: 1,
+        dueDate: 1,
+        isComplete: 1,
+        description: 1,
+        title: 1,
+        meetingId: 1,
+        priority: 1,
+        isActive: 1,
+        updatedAt: 1,
+        isReopened: 1,
+        isRequested: 1,
+        isPending: 1,
+        minuteId: 1,
+        isApproved: 1,
+        assignedUserId: 1,
+        organizationId: 1,
+        isAction: 1,
+        reassignDetails: 1,
+        reassigneRequestDetails: 1,
+        isCompleteDetails: 1,
+        actionStatus: 1,
+        mainDueDate: 1,
+        isCancelled: 1,
+        userDetail: {
+          name: 1,
+          _id: 1,
+        },
+        meetingDetails: {
+          title: 1,
+          meetingId: 1,
+          _id: 1,
+          attendees: 1,
+          date: 1,
+          createdById: 1,
+        },
+        assignedUserDetails: {
+          name: 1,
+          _id: 1,
+          email: 1,
+        },
+        attendeesDetail: {
+          name: 1,
+          _id: 1,
+          email: 1,
+        },
+      },
+    },
+    { $unwind: "$meetingDetails" },
+    { $unwind: "$assignedUserDetails" },
+    // {
+    //   $match: {
+    //     $expr: {
+    //       $gt: [
+    //         {
+    //           $dateDiff: {
+    //             // startDate: "$$NOW",
+    //             // endDate: "$dueDate",
+    //             startDate: "$$NOW",
+    //             endDate: "$mainDueDate",
+    //             unit: "day",
+    //           },
+    //         },
+    //         0,
+    //       ],
+    //     },
+    //   },
+    // },
+    {
+      $sort: { _id: -1 },
+    },
+    {
+      $group: {
+        _id: "$minuteId",
+        latestEntry: { $first: "$$ROOT" },
+      },
+    },
+    {
+      $replaceRoot: { newRoot: "$latestEntry" },
+    },
+  ];
+  console.log("userData============================>>>>>>>>>>", userData);
+
+  if (userData.isAdmin == false) {
+    const meetingIds = await meetingService.getMeetingIdsOfCreatedById(userId);
+    console.log("meetingIds============================>>>>>>>>>>", meetingIds);
+    if (bodyData.priority) {
+      pipeLine.push({
+        $match: {
+          ...query,
+          priority: bodyData.priority, // this will check for LOW, NORMAL, or HIGH
+        },
+      });
+    }
+    pipeLine.push({
+      $match: {
+        ...query,
+        // isCancelled: false,
+        isActive: true,
+        $or: [
+          { assignedUserId: new ObjectId(userId) },
+          { createdById: new ObjectId(userId) },
+          { meetingId: { $in: meetingIds } },
+        ],
+      },
+    });
+  }
+  if (userData.isAdmin == true) {
+    pipeLine.push({
+      $match: {
+        ...query,
+        isActive: true,
+      },
+    });
+  }
+
+  if (bodyData.actionStatus && bodyData.actionStatus == "NOTDELAYED") {
+    pipeLine.push({
+      $match: {
+        ...query,
+        actionStatus: { $ne: "CANCELLED" },
+        isDelayed: false,
+        // $expr: {
+        //   $gt: [
+        //     {
+        //       $dateDiff: {
+        //         // startDate: "$$NOW",
+        //         // endDate: "$dueDate",
+        //         startDate: "$$NOW",
+        //         endDate: "$mainDueDate",
+        //         unit: "day",
+        //       },
+        //     },
+        //     0,
+        //   ],
+        // },
+      },
+    });
+  }
+
+  if (bodyData.delayStatus == "NOTDELAYED") {
+    pipeLine.push({
+      $match: {
+        ...query,
+        actionStatus: { $ne: "CANCELLED" },
+        isDelayed: false,
+        // $expr: {
+        //   $gt: [
+        //     {
+        //       $dateDiff: {
+        //         // startDate: "$$NOW",
+        //         // endDate: "$dueDate",
+        //         startDate: "$$NOW",
+        //         endDate: "$mainDueDate",
+        //         unit: "day",
+        //       },
+        //     },
+        //     0,
+        //   ],
+        // },
+      },
+    });
+  }
+
+  if (bodyData.delayStatus == "DELAYED") {
+    pipeLine.push({
+      $match: {
+        ...query,
+        actionStatus: { $ne: "CANCELLED" },
+        isDelayed: true,
+        // $expr: {
+        //   $gt: [
+        //     {
+        //       $dateDiff: {
+        //         // startDate: "$$NOW",
+        //         // endDate: "$dueDate",
+        //         startDate: "$$NOW",
+        //         endDate: "$mainDueDate",
+        //         unit: "day",
+        //       },
+        //     },
+        //     0,
+        //   ],
+        // },
+      },
+    });
+  }
+
+  if (bodyData.actionStatus && bodyData.actionStatus == "DELAYED") {
+    pipeLine.push({
+      $match: {
+        ...query,
+        actionStatus: { $ne: "CANCELLED" },
+        isDelayed: true,
+        // $expr: {
+        //   $gt: [
+        //     {
+        //       $dateDiff: {
+        //         // startDate: "$$NOW",
+        //         // endDate: "$dueDate",
+        //         startDate: "$mainDueDate",
+        //         endDate: "$$NOW",
+        //         unit: "day",
+        //       },
+        //     },
+        //     0,
+        //   ],
+        // },
+      },
+    });
+  }
+  console.log(pipeLine);
+
+  console.log("query========================", query);
+  let totalCount = await Minutes.aggregate(pipeLine);
+  let actionDatas = await Minutes.aggregate(pipeLine)
+    .sort({ updatedAt: parseInt(order) })
+    .skip(skip)
+    .limit(limit);
+
+  console.log("actionDatas---------", actionDatas);
+
+  // Prioritize the filtering based on bodyData.priority
+  if (bodyData?.priority) {
+    actionDatas = actionDatas.filter(
+      (action) => action?.priority === bodyData.priority
+    );
+  }
+
+
+
+// Count priority-based actions (from original `actionDatas`)
+actionDatas.forEach((action) => {
+  if (action.priority === "HIGH") {
+    totalHighPriorityAction++;
+    if (!action.isComplete && !action.isCancelled) {
+      totalHighPriorityDueAction++;
+    }
+  }
+
+  if (action.priority === "LOW") {
+    totalLowPriorityAction++;
+    if (!action.isComplete && !action.isCancelled) {
+      totalLowPriorityDueAction++;
+    }
+  }
+
+  if (action.priority === "NORMAL") {
+    totalNormalPriorityAction++;
+    if (!action.isComplete && !action.isCancelled) {
+      totalNormalPriorityDueAction++;
+    }
+  }
+});
+
+// Map over filtered actions and update completionStatus
+// Filter only incomplete and not canceled actions (DO NOT override actionDatas)
+let filteredActionDatas = actionDatas.filter(
+  (action) => !action.isComplete && !action.isCancelled
+);
+
+
+
+// Count priority-based actions (from original `actionDatas`)
+actionDatas.forEach((action) => {
+  if (action.priority === "HIGH") {
+    totalHighPriorityAction++;
+    if (!action.isComplete && !action.isCancelled) {
+      totalHighPriorityDueAction++;
+    }
+  }
+
+  if (action.priority === "LOW") {
+    totalLowPriorityAction++;
+    if (!action.isComplete && !action.isCancelled) {
+      totalLowPriorityDueAction++;
+    }
+  }
+
+  if (action.priority === "NORMAL") {
+    totalNormalPriorityAction++;
+    if (!action.isComplete && !action.isCancelled) {
+      totalNormalPriorityDueAction++;
+    }
+  }
+});
+
+// Map over filtered actions and update completionStatus
+filteredActionDatas = filteredActionDatas.map((action) => {
+  let delayCount = action?.delayCountInDays;
+  let dayCount = Math.abs(delayCount) > 1 ? "days" : "day";
+
+  console.log("dayCount-------------", dayCount);
+  console.log("delayCount-------------", delayCount);
+  console.log("action.isDelayed-------------", action.isDelayed);
+  console.log("action.isComplete-------------", action.isComplete);
+
+  if (action?.isComplete) {
+    if (delayCount > 0 && !action.isDelayed) {
+      action["completionStatus"] = "Before " + Math.abs(delayCount) + " " + dayCount;
+    } else if (delayCount === 0 && !action.isDelayed) {
+      action["completionStatus"] = "On time";
+    } else {
+      action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+    }
+  } else {
+    if (delayCount > 0 && !action?.isDelayed) {
+      action["completionStatus"] = "Remaining " + Math.abs(delayCount) + " " + dayCount;
+    } else if (delayCount === 0) {
+      action["completionStatus"] = "Due today";
+    } else {
+      action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+    }
+  }
+
+  // Format due dates
+  action.dueDate = commonHelper.formatDateTimeFormat(action.dueDate).formattedDate;
+  action.mainDueDate = commonHelper.formatDateTimeFormat(action.mainDueDate).formattedDate;
+  // const totalCount =actionDatas.length;
+  // console.log("totalCount",totalCount);
+  
+  return action;
+});
+
+// Console logs
+// console.log("Total High Priority Actions:", totalHighPriorityAction);
+// console.log("Total High Priority Due Actions:", totalHighPriorityDueAction);
+// console.log("Total Low Priority Actions:", totalLowPriorityAction);
+// console.log("Total Low Priority Due Actions:", totalLowPriorityDueAction);
+// console.log("Total Normal Priority Actions:", totalNormalPriorityAction);
+// console.log("Total Normal Priority Due Actions:", totalNormalPriorityDueAction);
+// console.log("Filtered Actions:", filteredActionDatas);
+
+return {
+   totalCount: totalCount.length,
+  actionDatas: filteredActionDatas, 
+  type: bodyData.actionStatus,
+};
+}
+
+
 module.exports = {
   comments,
   viewActionComment,
@@ -2620,4 +3308,5 @@ module.exports = {
   cancelAction,
   totalActionList,
   getUserActionPriotityDetails,
+  getAllActionData,
 };

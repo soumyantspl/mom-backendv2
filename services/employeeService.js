@@ -8,11 +8,16 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const commonHelper = require("../helpers/commonHelper");
 const emailConstants = require("../constants/emailConstants");
-//const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailService = require("./emailService");
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
+
+
+const Organization = require("../models/organizationModel");
+const BASE_URL = process.env.BASE_URL;
+
 
 /**FUNC- CREATE EMPLOYEE */
 const createEmployee = async (userId, data, ipAddress) => {
@@ -46,6 +51,12 @@ const createEmployee = async (userId, data, ipAddress) => {
     };
     const empData = new Employee(inputData);
     const result = await empData.save();
+
+    const organization = await Organization.findOne({ _id: data.organizationId });
+    const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : process.env.LOGO;
+
     const adminResult = await Employee.aggregate([
       {
         $match: { _id: new ObjectId(userId) },
@@ -75,7 +86,7 @@ const createEmployee = async (userId, data, ipAddress) => {
     ]);
     if (adminResult.length !== 0) {
       const adminDetails = adminResult[0];
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
       const mailData = await emailTemplates.createNewEmployeeEmailTemplate(
         adminDetails,
         logo,

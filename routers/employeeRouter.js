@@ -7,6 +7,7 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const path=require('path')
 
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = path.join(__dirname, '../uploads'); 
@@ -26,6 +27,7 @@ const fileFilter = (req, file, cb) => {
     cb(new Error("Only image files are allowed!"), false);
   }
 };
+
 const uploadpicture = multer({
   storage: storage,
   fileFilter: fileFilter,
@@ -104,6 +106,7 @@ router.post(
   upload.single("file"),
   employeeController.importEmployee
 );
+
 /* VIEW PROFILE  */
 router.put(
   "/viewProfile/:id",

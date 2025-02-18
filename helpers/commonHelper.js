@@ -380,26 +380,13 @@ const convertFirstLetterOfFullNameToCapital = (textData) => {
   return convertedTextArray.join(" ");
 };
 
-// //The Function Below To Encrypt Text
-const encryptWithAES = (text) => {
-  const passphrase = process.env.PASSWORD_KEY;
-  console.log("Backend Key:", process.env.PASSWORD_KEY);
-  return CryptoJS.AES.encrypt(text, passphrase).toString();
-};
-
-
-// //The Function Below To Decrypt Text
+//The Function Below To Decrypt Text
 const decryptWithAES = (ciphertext) => {
   const passphrase = process.env.PASSWORD_KEY;
-  
   const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
   const originalText = bytes.toString(CryptoJS.enc.Utf8);
   return originalText;
 };
-
-
-
-
 
 const generateLogObjectForMeetingRoom = async (result, data) => {
   const details = [];
@@ -712,7 +699,11 @@ const camelToFlat = (camel) => {
     camelCase.toLowerCase().slice(1)
   );
 };
-
+//The Function Below To Encrypt Text
+const encryptWithAES = (text) => {
+  const passphrase = process.env.PASSWORD_KEY;
+  return CryptoJS.AES.encrypt(text, passphrase).toString();
+};
 
 const generateRandomSixDigitNumber = () => {
   return Math.floor(100000 + Math.random() * 900000); // Generates a number between 100000 and 999999

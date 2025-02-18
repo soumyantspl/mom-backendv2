@@ -11,9 +11,9 @@ const agendaService = require("./agendaService");
 const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const ObjectId = require("mongoose").Types.ObjectId;
-const emailService = require("./emailService");
-//const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+const emailService = require("./emailService");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailConstants = require("../constants/emailConstants");
 const commonHelper = require("../helpers/commonHelper");
 const employeeService = require("./employeeService");
@@ -26,7 +26,7 @@ const notificationService = require("./notificationService");
 const axios = require("axios");
 const JSZip = require("jszip");
 const path = require("path");
-const Configuration = require("../models/configurationModel");
+const Configuration = require("../models/configurationModel")
 process.env.TZ = "Asia/Calcutta";
 
 function convertTo12HourFormat(timeStr) {
@@ -73,6 +73,7 @@ const checkMeetingRoomAvailability = async(data)  => {
     };
   }  
   }
+const BASE_URL = process.env.BASE_URL;
 
 /**FUNC- CREATE MEETING */
 const createMeeting = async (data, userId, ipAddress = 1000) => {
@@ -107,9 +108,10 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
       inActiveOrganization: true,
     };
   }
+
   const inputData = {
     meetingId,
-    //title: commonHelper.encryptWithAES(data.title.trim()),
+    // title: commonHelper.encryptWithAES(data.title.trim()),
     title: data.title.trim(),
     mode: data.mode,
     link: data.link.trim(),
@@ -270,7 +272,7 @@ const checkAttendeeArrayAvailability = async(data) => {
 
 
 /**FUNC- UPDATE MEETING */
-const updateMeeting = async (data, id, userId, ipAddress) => {
+const updateMeeting = async (data, id, userId, userData, ipAddress) => {
   console.log("data99999999999999999999999-------------------", data);
   const { step } = data;
   let hostingPassword = null;
@@ -282,45 +284,73 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
   let mergedData = [];
   let finalAttendeeMessage = "NA";
   let finalAgendaMessage = "NA";
+  let getNewAttendees = [];
+  //dfsdfdfdasfd
   const stepCheck = data.step;
   if (data.step == 2) {
     const getExistingAttendees = await Meetings.findOne(
       { _id: new ObjectId(id) },
       { _id: 1, attendees: 1 }
     );
+    console.log('Get Existing Attendees----', getExistingAttendees);
+
     const newPeopleArray = data.attendees
       .filter((item) => item.isEmployee === false && item._id === undefined)
       .map((item) => {
         item.organizationId = data.organizationId;
         return item;
       });
+
+    console.log('New People Array-----', newPeopleArray);
+
+    const checkAttendeeAvailability = async (attendees, date, fromTime, toTime) => {
+      const conflicts = await Meetings.find({
+        "hostDetails.date": date,
+        $or: [
+          { "hostDetails.fromTime": { $lte: toTime }, "hostDetails.toTime": { $gte: fromTime } }
+        ],
+        attendees: { $elemMatch: { _id: { $in: attendees.map(a => new ObjectId(a._id)) } } }
+      });
+
+      return conflicts.map(meeting => meeting.attendees).flat();
+    };
+
+    const unavailableAttendees = await checkAttendeeAvailability(newPeopleArray, data.hostDetails.date, data.hostDetails.fromTime, data.hostDetails.toTime);
+
+    if (unavailableAttendees.length > 0) {
+      console.log("The following attendees are unavailable:", unavailableAttendees);
+      return res.status(400).json({
+        message: "Some attendees are already booked for another meeting",
+        unavailableAttendees
+      });
+    }
+
+
     if (newPeopleArray.length !== 0) {
       const newEmployee = await employeeService.createAttendees(newPeopleArray);
       mergedData = [...data.attendees, ...newEmployee]
         .filter((item) => item._id !== undefined)
         .map((item) => {
-          return { _id: item._id };
+          // return { _id: item._id };
+          return item;
         });
     }
     updateData = {
       attendees: mergedData.length !== 0 ? mergedData : data.attendees,
       step: data.step,
     };
-    console.log(updateData.attendees);
+    console.log('Updated Data attendees----', updateData.attendees);
 
-    ///////////////////////
-    // updateData.attendees = updateData.attendees.find(
-    //   (item) => item._id == userId
-    // )
-    //   ? updateData.attendees
-    //   : updateData.attendees.push(userId);
-    // console.log("updateData.attendees", updateData.attendees);
-    /////////////////////
-    const getNewAttendees = updateData?.attendees?.filter(function (o1) {
+    getNewAttendees = updateData?.attendees?.filter(function (o1) {
       return !getExistingAttendees?.attendees?.some(function (o2) {
         return o1._id.toString() == o2._id.toString();
       });
     });
+    console.log(
+      "getNewAttendees=======2222222222222222222222222222222222222222222222",
+      getNewAttendees
+    );
+
     const getRemovedAttendees = getExistingAttendees?.attendees.filter(
       function (o1) {
         return !updateData?.attendees?.some(function (o2) {
@@ -363,6 +393,10 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           ? newUserList.join("") + " added as new attendee "
           : newUserList.join(",") + " added as new attendees "
         : null;
+
+    console.log("New Attendees--->", getNewAttendees);
+    console.log("New Message--->", newMessage);
+
     finalAttendeeMessage =
       newMessage !== null && removeMessage !== null
         ? newMessage + "& " + removeMessage
@@ -456,7 +490,11 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
 
     delete updateData.step;
   }
-
+  console.log(
+    "updateData====================333333333333333333",
+    updateData,
+    id
+  );
   const meetingUpdate = await Meeting.findByIdAndUpdate(
     { _id: new ObjectId(id) },
     updateData,
@@ -466,6 +504,10 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
   );
   // const meeting = await Meeting.findOne({ _id: new ObjectId(id) });
   const meeting = await viewMeeting(id, userId);
+  console.log(
+    "meetingUpdate====================2222222222222222222",
+    meetingUpdate
+  );
 
   if (
     meeting?.hostDetails?.hostType === "ZOOM" &&
@@ -527,6 +569,7 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
     details = data.isUpdate ? "agendas modified by " : "meeting created by ";
   }
   console.log(data);
+  //hkghggyuguklyugkliu
   if (data.step === 3) {
     const notificationData = {
       title:
@@ -580,14 +623,13 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
         (item) => item.email
       );
       console.log(duration);
-      //   fffffffffffff
+
       let meetingHostData =
         await meetingStreamingService.createZoomMeetingForMOM(
           meeting?.title,
           Math.abs(duration),
           meeting?.date,
-          //agenda,
-          //password,
+
           process.env.TZ,
           attendeesEmailids,
           meeting
@@ -602,20 +644,11 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
         meetingLink = meetingHostData?.host_url?.split("?")[0];
         hostLink = meetingHostData?.meeting_url;
         const hostData = {
-          // hostLink: meetingHostData?.host_url,
           hostLink: meetingHostData?.meeting_url,
           hostingPassword,
           hostType: meeting?.hostDetails?.hostType,
         };
 
-        // hostingPassword = meetingHostData?.password;
-        // meetingLink = meetingHostData?.meeting_url;
-        // hostLink = meetingHostData?.meeting_url;
-        // const hostData = {
-        //   hostLink: meetingHostData?.meeting_url,
-        //   hostingPassword,
-        //   hostType: meeting?.hostDetails?.hostType,
-        // };
         console.log("hostData-------------", hostData);
         console.log(
           " meetingHostData?.meeting_url,-----------",
@@ -636,7 +669,7 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           }
         );
         console.log(updatedMeeting);
-        //ppppppppppppppppppppp;
+
         const meetingHostDeatils = {
           hostedBy: "zoom",
           meetingId: meeting._id,
@@ -647,14 +680,6 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           meetingLink: meetingHostData.meeting_url,
           purpose: meetingHostData.purpose,
           hostKey: meetingHostData?.hostKey,
-          // meeting_url: response_data.join_url,
-          // meetingTime: response_data.start_time,
-          // purpose: response_data.topic,
-          // duration: response_data.duration,
-          // message: "Success",
-          // status: 1,
-          // id: response_data.id,
-          // password: response_data.password,
         };
         const meetingHostDatas = new meetingHostDetails(meetingHostDeatils);
         await meetingHostDatas.save();
@@ -717,10 +742,17 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
     await logService.createLog(logData);
   }
   ///////////////////LOGER END
+  let attendeesData = meeting?.attendees;
+  if (data?.sendSingleNotification) {
+    attendeesData = getNewAttendees;
+    // emailSubject = await emailConstants.scheduleMeetingSubject(meeting);
+  }
+
+  console.log("attendeesData==========================", attendeesData);
+  //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   if (data.sendNotification) {
     let mailData = null;
     let emailSubject = null;
-
     if (meeting?.attendees?.length !== 0) {
       if (meetingUpdate.step == 3) {
         meeting?.attendees?.map(async (attendee) => {
@@ -736,7 +768,8 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
           Agenda Title
           </td>
-          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)}</td>
+          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+                }</td>
           </tr>
           ${agenda.topic !== (null || "")
                   ? `<tr style="border: 1px solid black;border-collapse: collapse;">
@@ -826,7 +859,12 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
           }
 
 
-          const logo = process.env.LOGO;
+          // const logo = process.env.LOGO;
+          const organizationDetails = await Organization.findOne({ _id: meeting?.organizationId });
+          const logo = organizationDetails?.dashboardLogo
+            ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+            : process.env.LOGO;
+
           const mailData = await emailTemplates.reSendScheduledMeetingEmailTemplate(
             meeting,
             commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
@@ -849,7 +887,12 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
         });
       } else {
         meeting?.attendees?.map(async (attendee) => {
-          const logo = process.env.LOGO;
+          // const logo = process.env.LOGO;
+          const organizationDetails = await Organization.findOne({ _id: meeting?.organizationId });
+          const logo = organizationDetails?.dashboardLogo
+            ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+            : null;
+
           const attendeeData = meeting?.attendees
             .map((attendee) => {
               return `${attendee.name}(${attendee.email})`;
@@ -862,7 +905,7 @@ const updateMeeting = async (data, id, userId, ipAddress) => {
             <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
             Agenda Title
             </td>
-            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda?.title)
+            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
                 }</td>
             </tr>
             ${agenda.topic !== (null || "")
@@ -1215,10 +1258,6 @@ const viewMeeting = async (meetingId, userId) => {
       "meetingDataObject--------------======================",
       meetingDataObject
     );
-    console.log("Decrypted Title-----", commonHelper.decryptWithAES(meetingDataObject.title));
-
-    
-
     meetingDataObject.attendees.map((item) => {
       const attendeeData = meetingDataObject.attendeesDetail.find(
         (attendee) => attendee._id == item._id.toString()
@@ -1647,7 +1686,6 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
       delete meetingDataObject.attendeesDetail;
     });
   }
-  
 
   return {
     totalCount,
@@ -1723,12 +1761,19 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
   const meetingDetails = await viewMeeting(id, userId);
   if (meetingDetails?.attendees?.length !== 0) {
     meetingDetails?.attendees?.map(async (attendee) => {
-      const logo = process.env.LOGO;
-      const mailData = await emailTemplates.sendCancelMeetingEmailTemplate(
-        meetingDetails,
-        attendee.name,
-        logo
-      );
+      // const logo = process.env.LOGO;
+
+      const organizationDetails = await Organization.findOne({ _id: meetingDetails.organizationId });
+      const logo = organizationDetails?.dashboardLogo
+        ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+        : process.env.LOGO;
+
+      // const { subject: emailSubject, mailBody } =
+        await emailTemplates.sendCancelMeetingEmailTemplate(
+          meetingDetails,
+          attendee.name,
+          logo
+        );
       // const emailSubject = await emailConstants.cancelMeetingSubject(
       //   meetingDetails
       // );
@@ -1737,9 +1782,7 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
         attendee.email,
         "Cancel Meeting",
         subject,
-        mailBody,
-       // mailData
-       
+        mailBody
       );
     });
   }
@@ -2025,7 +2068,12 @@ const updateMeetingAttendance = async (id, userId, data, ipAddress) => {
     console.log("emailIds==================", emailIds);
     if (emailIds.length !== 0) {
       const meetingDetails = await viewMeeting(id, userId);
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+
+      const organizationDetails = await Organization.findOne({ _id: meetingDetails.organizationId });
+      const logo = organizationDetails?.dashboardLogo
+        ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+        : process.env.LOGO;
 
       const attendanceData = `<table style="border: 1px solid black;border-collapse: collapse; width:100%;color:black;margin-top:5px;">
   <tr style="border: 1px solid black;border-collapse: collapse;" >
@@ -2109,6 +2157,7 @@ const updateMeetingAttendance = async (id, userId, data, ipAddress) => {
         //   meetingDetails
         // );
         const { emailSubject, mailData: mailBody } = mailData;
+
         emailService.sendEmail(email, "Add Attendance", emailSubject, mailBody);
       });
     }
@@ -2233,20 +2282,28 @@ const generateMOM = async (meetingId, userId, data, ipAddress = "1000") => {
     const meetingDetails = await viewMeeting(meetingId, userId);
     if (data.attendees?.length !== 0 && meetingDetails) {
       data.attendees.map(async (attendee) => {
-        const logo = process.env.LOGO;
+        // const logo = process.env.LOGO;
+        const organizationDetails = await Organization.findOne({
+          _id: meetingDetails.organizationId,
+        });
+        const logo = organizationDetails?.dashboardLogo
+          ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+          : process.env.LOGO;
+
         const mailData = await emailTemplates.sendCreateMinutesEmailTemplate(
           meetingDetails,
           attendee.name,
           logo
         );
-        const emailSubject = await emailConstants.createMinuteSubject(
-          meetingDetails
-        );
+        // const emailSubject = await emailConstants.createMinuteSubject(
+        //   meetingDetails
+        // );
+        const { emailSubject, mailData: mailBody } = mailData;
         emailService.sendEmail(
           attendee.email,
           "Create Meeting Minutes",
           emailSubject,
-          mailData,
+          mailBody,
           {
             filename: `MOM-${new Date().getDate()}-${new Date().getMonth()}-${new Date().getYear()}.pdf`,
             path: filePath,
@@ -2347,7 +2404,7 @@ const downloadMOM = async (meetingId, userId, ipAddress = "1000") => {
 };
 
 /**FUNC- TO RESCHEDULE MEETING */
-const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000") => {
+const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
   const updatedMeeting = null;
 
   const isUpdated = await Meeting.findOneAndUpdate(
@@ -2430,9 +2487,11 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
             _id: new ObjectId(updatedMeetingHostData.id),
             meetingId: new ObjectId(updatedMeeting?._id),
           },
+
           {
             $set: meetingHostDeatils,
           },
+
           {
             new: true,
           }
@@ -2442,7 +2501,14 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
 
     if (data.attendees?.length !== 0 && meetingDetails) {
       data.attendees.map(async (attendee) => {
-        const logo = process.env.LOGO;
+        // const logo = process.env.LOGO;
+        const organizationDetails = await Organization.findOne({
+          _id: meetingDetails.organizationId,
+        });
+        const logo = organizationDetails?.dashboardLogo
+          ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+          : process.env.LOGO;
+
         const attendeeData = meetingDetails?.attendees
           .map((attendee) => {
             return `${attendee.name}(${attendee.email})`;
@@ -2452,34 +2518,25 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
           .map((agenda) => {
             return `<table style="border: 1px solid black;border-collapse: collapse; width:100%;color:black;margin-top:5px;">
         <tr style="border: 1px solid black;border-collapse: collapse;" >
-        <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
+        <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
         Agenda Title
         </td>
-        <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda?.title)
+        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
               }</td>
         </tr>
         ${agenda.topic !== (null || "")
                 ? `<tr style="border: 1px solid black;border-collapse: collapse;">
               <td
                 style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                colspan="4"
+                colspan="6"
               >
                 Topic to Discuss
               </td>
               <td
-                colspan="8"
-                style="border: 1px solid black;border-collapse: collapse;width:50%;"
+                colspan="6"
+                style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
               >
-              
-               ${agenda.topic
-                  .replace(/<\/?h[1-6]>/g, (match) => {
-                    return match.startsWith("</")
-                      ? "</p>"
-                      : '<p style="margin:0px;padding:1px">';
-                  })
-                  .replace(/<br\s*\/?>/g, "")
-                  .replace(/<\/p>(?!.*<\/p>)/, "</span>")
-                  .replace(/<p>(?!.*<p>)/, "<span>")}
+                <p>${agenda.topic}</p>
               </td>
             </tr>`
                 : `<tr style={{display:"none"}}></tr>`
@@ -2488,12 +2545,12 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
                 ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
                  <td
                    style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
-                   colspan="4"
+                   colspan="6"
                  >
                    Timeline
                  </td>
                  <td
-                   colspan="8"
+                   colspan="6"
                    style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
                  >
                    ${agenda.timeLine} Mins
@@ -2504,6 +2561,22 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
         </table><br />`;
           })
           .join(" ");
+
+        // let finalMeetingLink = null;
+        // let meetingLinkCode = null;
+        // if (isUpdated) {
+        //   finalMeetingLink =
+        //     isUpdated?.hostDetails?.hostType === "ZOOM"
+        //       ? isUpdated?.hostDetails?.hostLink?.split("?")[0]
+        //       : isUpdated?.link;
+        //   meetingLinkCode = isUpdated?.hostDetails?.hostingPassword
+        //     ? isUpdated?.hostDetails?.hostingPassword
+        //     : null;
+        // }
+
+        // //  console.log("updatedMeeting==============", updatedMeeting);
+        // console.log("finalMeetingLink==============", finalMeetingLink);
+        // console.log("meetingLinkCode==============", meetingLinkCode);
 
         let finalMeetingLink = null;
         let meetingLinkCode = null;
@@ -2516,9 +2589,18 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
           ? isUpdated?.hostDetails?.hostingPassword
           : null;
 
+        // console.log("meeting==============", meeting);
+        // console.log("updatedMeeting==============", updatedMeeting);
         console.log("finalMeetingLink==============", finalMeetingLink);
         console.log("meetingLinkCode==============", meetingLinkCode);
 
+        //  const hostKey =
+        //         meeting?.createdById?.toString() ==
+        //           attendeeData?._id?.toString() &&
+        //         singleMeetingDetails?.hostDetails?.hostLink
+        //           ? singleMeetingDetails?.hostDetails?.hostLink?.split("?")[0]
+        //
+        //         : singleMeetingDetails?.link;
         let hostKey = null;
 
         const attendeeDetails = await Employee.findOne(
@@ -2550,6 +2632,36 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
         }
         console.log("hostKey==============", hostKey);
 
+        // mailData = await emailTemplates.sendScheduledMeetingEmailTemplate(
+        //   meeting,
+        //   commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
+        //   logo,
+        //   agendaData,
+        //   attendeeData,
+        //   attendee,
+        //    meetingLinkCode,
+        //   finalMeetingLink,
+        //   hostKey
+        //   // (meetingLink =
+        //   //   meeting?.createdById?.toString() == attendee?._id?.toString()
+        //   //     ? hostLink
+        //   //     : meetingLink)
+        // );
+
+        // const logo = process.env.LOGO;
+        // const mailData = await emailTemplates.reSendScheduledMeetingEmailTemplate(
+        //   meetingDetails,
+        //   commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
+        //   logo,
+        //   agendaData,
+        //   attendeeData,
+        //   attendee,
+        //   attendee?.rsvp,
+        //   meetingLinkCode,
+        //   finalMeetingLink,
+        //   hostKey
+        // );
+
         const mailData =
           await emailTemplates.sendReScheduledMeetingEmailTemplate(
             meetingDetails,
@@ -2560,7 +2672,6 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
             attendee,
             meetingLinkCode,
             finalMeetingLink,
-            userData,
             hostKey
           );
         // const emailSubject = await emailConstants.reScheduleMeetingSubject(
@@ -2572,8 +2683,7 @@ const rescheduleMeeting = async (id, userId, data, userData, ipAddress = "1000")
           attendee.email,
           "Meeting Rescheduled",
           emailSubject,
-          mailBody,
-         // mailData
+          mailBody
         );
       });
     }
@@ -3543,7 +3653,7 @@ const sendAlertTime = async () => {
                 });
                 const createdByName = createdByDetail.name;
                 const attendeeDetails = empDetails;
-                const logo = process.env.LOGO;
+                // const logo = process.env.LOGO;
                 const singleMeetingDetails = await viewMeeting(
                   meeting?._id,
                   userId
@@ -3615,7 +3725,7 @@ const sendAlertTime = async () => {
               <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
               Agenda Title
               </td>
-              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
+              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
                       }</td>
               </tr>
               ${agenda.topic !== (null || "")
@@ -3752,14 +3862,13 @@ const viewMeetingDetailsForRsvp = async (meetingId, userId) => {
       meeting.organizationEmail = meeting?.organizationDetails?.email;
       meeting.organizationDashboardLogo =
         baseUrl + meeting?.organizationDetails?.dashboardLogo;
-      meeting.organizationLoginLogo = process.env.logo;
+      meeting.organizationLoginLogo = baseUrl + meeting?.organizationDetails?.loginLogo;
       delete meeting.organizationDetails;
       return meeting;
     });
     return meetingObject[0];
   }
-  return false;
-};
+}
 
 /**FUNC- TO UPDATE RSVP SECTION BY EMAIL */
 const updateRsvpByEmail = async (id, userId, data, userData, ipAddress = "1000") => {
@@ -3863,7 +3972,7 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
     <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
     Agenda Title
     </td>
-    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
+    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
             }</td>
     </tr>
     ${agenda.topic !== (null || "")
@@ -3983,7 +4092,11 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
       //   //     : meetingLink)
       // );
 
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+      const logo = organizationDetails?.dashboardLogo
+        ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+        : process.env.LOGO;
+
       const mailData = await emailTemplates.reSendScheduledMeetingEmailTemplate(
         meetingDetails,
         commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
@@ -4000,15 +4113,13 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
       // const emailSubject = await emailConstants.scheduleMeetingSubject(
       //   meetingDetails
       // );
-
       const { emailSubject, mailData: mailBody } = mailData;
 
       emailService.sendEmail(
         attendee.email,
         "Meeting Scheduled",
         emailSubject,
-        mailBody,
-      //  mailData
+        mailBody
       );
     });
     return true;
@@ -4314,11 +4425,10 @@ const newMeetingAsRescheduled = async (
       let emailSubject = null;
       const meeting = await viewMeeting(newUpdatedMeeting?._id, userId);
       if (meeting?.attendees?.length !== 0) {
-       // emailSubject = await emailConstants.scheduleMeetingSubject(meeting);
-       
+        emailSubject = await emailConstants.scheduleMeetingSubject(meeting);
 
         meeting?.attendees?.map(async (attendee) => {
-          const logo = process.env.LOGO;
+          // const logo = process.env.LOGO;
           const attendeeData = meeting?.attendees
             .map((attendee) => {
               return `${attendee.name}(${attendee.email})`;
@@ -4331,7 +4441,7 @@ const newMeetingAsRescheduled = async (
         <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
         Agenda Title
         </td>
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commomHelper.decryptWithAES(agenda?.title)
+        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
                 }</td>
         </tr>
         ${agenda.topic !== (null || "")
@@ -4396,9 +4506,6 @@ const newMeetingAsRescheduled = async (
           // console.log("updatedMeeting==============", newUpdatedMeeting);
           console.log("finalMeetingLink==============", finalMeetingLink);
           console.log("meetingLinkCode==============", meetingLinkCode);
-
-          const { emailSubject, mailData: mailBody } = mailData;
-
           mailData = await emailTemplates.sendScheduledMeetingEmailTemplate(
             meeting,
             commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
@@ -4417,8 +4524,7 @@ const newMeetingAsRescheduled = async (
             attendee.email,
             "Meeting Scheduled",
             emailSubject,
-            mailBody,
-          //  mailData
+            mailData
           );
         });
         let allowedUsers = [new ObjectId(userId), meeting?.createdById];
@@ -4867,6 +4973,8 @@ const getMeetingActionPriotityDetails = async (
   };
 };
 
+
+
 const getCreatedByDetails = async (meetingId, userId) => {
   console.log("meetingId===============", meetingId);
   const meetingData = await Meeting.findOne(
@@ -4934,6 +5042,456 @@ const downloadZoomRecordingsInZip = async (bodyData, userId) => {
   return result;
 };
 
+
+const notifyMeetingCreatorAboutDraft = async (meetingId) => {
+  console.log("Starting draft meetings notification process...");
+
+  const config = await Configuration.findOne();
+
+  const reminderDays = config?.draftMeetingReminderDays;
+  console.log(`draftMeetingReminderDays: ${reminderDays}`);
+
+  const reminderDate = new Date();
+  reminderDate.setDate(reminderDate.getDate() - reminderDays);
+
+  console.log(`Searching for draft meetings from: ${reminderDate.toISOString()} to: ${new Date().toISOString()}`);
+
+  const draftMeetings = await Meeting.find({
+    "meetingStatus.status": "draft",
+    createdAt: {
+      $gte: reminderDate,
+      $lte: new Date(),
+    },
+  });
+
+  console.log(`Found ${draftMeetings.length} draft meetings.`);
+
+  if (!draftMeetings.length) {
+    console.log(`No draft meetings found in the past ${reminderDays} days.`);
+    return null;
+  }
+
+  const meetingsByCreator = draftMeetings.reduce((acc, meeting) => {
+    if (!acc[meeting.createdById]) acc[meeting.createdById] = [];
+    acc[meeting.createdById].push(meeting);
+    return acc;
+  }, {});
+
+  const creatorIds = Object.keys(meetingsByCreator);
+  const creators = await Employee.find({ _id: { $in: creatorIds } });
+
+  const notificationDetails = [];
+
+  for (const creator of creators) {
+    const meetings = meetingsByCreator[creator._id];
+    if (!meetings || meetings.length === 0) continue;
+
+    console.log(`Sending notification to: ${creator.name} (${creator.email})`);
+    meetings.forEach((meeting) => {
+      console.log(`Meeting title: ${meeting.title}`);
+    });
+
+    const organizationDetails = await Organization.findOne({ _id: meetings[0].organizationId });
+    const BASE_URL = process.env.BASE_URL || "";
+    const logo = organizationDetails?.dashboardLogo
+      ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+      : process.env.LOGO;
+
+    const mailData = await emailTemplates.sendDraftMeetingNotification(meetings, creator, logo);
+    const { emailSubject, mailBody } = mailData;
+
+
+    await emailService.sendEmail(creator.email, "Draft Meetings Reminder", emailSubject, mailBody);
+
+    console.log(`Email successfully sent to ${creator.email}`);
+    console.log(`Processed ${meetings.length} draft meetings for ${creator.name}`);
+
+
+    notificationDetails.push({
+      creatorName: creator.name,
+      creatorEmail: creator.email,
+      meetingCount: meetings.length,
+      meetings: meetings.map((meeting) => ({
+        title: meeting.title,
+        meetingId: meeting._id,
+        createdAt: meeting.createdAt,
+      })),
+    });
+  }
+
+  console.log(`Successfully processed ${draftMeetings.length} draft meetings.`);
+  return notificationDetails;
+};
+
+
+
+const deleteOldDraftMeetings = async () => {
+  console.log("Starting old draft meetings cleanup process...");
+
+  const config = await Configuration.findOne();
+  if (!config) {
+    console.error("Configuration not found!");
+    return { success: false, message: "Configuration not found" };
+  }
+  console.log("Config Data:", config);
+
+  const draftMeetingReminderDays = config.draftMeetingReminderDays;
+  const draftMeetingCleanupDays = config.draftMeetingCleanupDays;
+
+  console.log(`draftMeetingReminderDays: ${draftMeetingReminderDays}`);
+  console.log(`draftMeetingCleanupDays: ${draftMeetingCleanupDays}`);
+
+
+  if (draftMeetingReminderDays + 1 > draftMeetingCleanupDays) {
+    console.error("Error: Cleanup days must be at least 1 day greater than reminder days.");
+    return {
+      success: false,
+      message: "Cleanup days must be at least 1 day greater than reminder days.",
+    };
+  }
+
+
+  const cleanupDate = new Date();
+  cleanupDate.setDate(cleanupDate.getDate() - draftMeetingCleanupDays);
+  cleanupDate.setHours(0, 0, 0, 0);
+
+  console.log("Cleaning up meetings before:", cleanupDate);
+
+
+  const meetingsToDelete = await Meeting.find({
+    "meetingStatus.status": "draft",
+    createdAt: { $lt: cleanupDate },
+    isDeleted: { $ne: true },
+  });
+
+
+  if (meetingsToDelete.length === 0) {
+    console.log("No old draft meetings to delete.");
+    return {
+      success: false,
+      message: "No old draft meetings to delete.",
+    };
+  }
+
+
+  const meetingsByCreator = meetingsToDelete.reduce((acc, meeting) => {
+    if (!acc[meeting.createdById]) acc[meeting.createdById] = [];
+    acc[meeting.createdById].push(meeting);
+    return acc;
+  }, {});
+
+
+  const creatorIds = Object.keys(meetingsByCreator);
+  const creators = await Employee.find({ _id: { $in: creatorIds } });
+
+
+  const creatorDeletions = creators.map(creator => {
+    const deletedMeetings = meetingsByCreator[creator._id];
+    return {
+      creatorName: creator.name,
+      creatorEmail: creator.email,
+      deletedMeetingsCount: deletedMeetings.length,
+      deletedMeetings: deletedMeetings.map(meeting => ({
+        title: meeting.title,
+        meetingId: meeting._id,
+        createdAt: meeting.createdAt,
+      })),
+    };
+  });
+//soft delete
+  const result = await Meeting.updateMany(
+    {
+      "meetingStatus.status": "draft",
+      createdAt: { $lt: cleanupDate },
+      isDeleted: { $ne: true }
+    },
+    { $set: { isDeleted: true } }
+  );
+
+  console.log(`Soft deleted ${result.modifiedCount} old draft meetings.`);
+
+
+  return {
+    success: true,
+    message: `Soft deleted ${result.modifiedCount} old draft meetings.`,
+    meetingCount: result.modifiedCount,
+    creatorDeletions: creatorDeletions,
+  };
+};
+
+
+
+
+
+
+const getMeetingActionPriorityDetailsforChart = async (
+  queryData,
+  bodyData,
+  userId,
+  userData
+) => {
+  const { order } = queryData;
+  const { organizationId, searchKey, meetingId } = bodyData;
+
+  let query = {
+    organizationId: new ObjectId(organizationId),
+    isActive: true,
+    $and: [
+      {
+        $or: [
+          { "meetingStatus.status": "scheduled" },
+          { "meetingStatus.status": "closed" },
+          { "meetingStatus.status": "rescheduled" },
+        ],
+      },
+    ],
+  };
+
+  let minuteQuery = {
+    isActive: true,
+    isAction: true,
+  };
+
+
+  if (meetingId) {
+    query.meetingId = meetingId;
+  }
+
+  if (searchKey) {
+    query["$and"].push({
+      $or: [
+        { title: { $regex: searchKey, $options: "i" } },
+        { meetingId: { $regex: searchKey, $options: "i" } },
+      ],
+    });
+  }
+
+  if (!userData?.isAdmin) {
+    const meetingIds = await meetingService.getMeetingIdsOfCreatedById(userId);
+    query["$or"] = [
+      { "attendees._id": new ObjectId(userId) },
+      { createdById: new ObjectId(userId) },
+    ];
+    minuteQuery["$or"] = [
+      { assignedUserId: new ObjectId(userId) },
+      { createdById: new ObjectId(userId) },
+      { meetingId: { $in: meetingIds } },
+    ];
+  }
+
+  const limit = parseInt(queryData.limit);
+  const skip = (parseInt(queryData.page) - 1) * limit;
+
+  const pipeLine = [
+    { $match: query },
+    {
+      $lookup: {
+        from: "minutes",
+        localField: "_id",
+        foreignField: "meetingId",
+        pipeline: [
+          { $match: { isActive: true, isComplete: false, isAction: true, actionStatus: { $ne: "REASSIGNED" } } },
+          { $sort: { _id: -1 } },
+          { $group: { _id: "$minuteId", latestEntry: { $first: "$$ROOT" } } },
+          { $replaceRoot: { newRoot: "$latestEntry" } },
+          { $match: minuteQuery },
+        ],
+        as: "minutesDetail",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        meetingId: 1,
+        title: 1,
+        date: 1,
+        fromTime: 1,
+        meetingStatus: 1,
+        minutesDetail: {
+          $filter: {
+            input: "$minutesDetail",
+            as: "minutesDetailss",
+            cond: {
+              $and: [
+                { $eq: ["$$minutesDetailss.isComplete", false] },
+                { $eq: ["$$minutesDetailss.isCancelled", false] },
+                { $eq: ["$$minutesDetailss.isAction", true] },
+                { $ne: ["$$minutesDetailss.actionStatus", "REASSIGNED"] },
+              ],
+            },
+          },
+        },
+      },
+    },
+    { $addFields: { activeMinutesCount: { $size: "$minutesDetail" } } },
+    { $match: { activeMinutesCount: { $gt: 0 } } },
+    { $sort: { activeMinutesCount: -1 } },
+    { $skip: skip },
+    { $limit: limit },
+  ];
+
+  const meetingData = await Meeting.aggregate(pipeLine);
+
+  const totalCount = await Meeting.aggregate([
+    { $match: query },
+    {
+      $lookup: {
+        from: "minutes",
+        localField: "_id",
+        foreignField: "meetingId",
+        pipeline: [
+          { $match: { isActive: true, isComplete: false, isAction: true } },
+          { $sort: { _id: -1 } },
+          { $group: { _id: "$minuteId", latestEntry: { $first: "$$ROOT" } } },
+          { $replaceRoot: { newRoot: "$latestEntry" } },
+          { $match: minuteQuery },
+        ],
+        as: "minutesDetail",
+      },
+    },
+    { $addFields: { activeMinutesCount: { $size: "$minutesDetail" } } },
+    { $match: { activeMinutesCount: { $gt: 0 } } },
+  ]);
+
+  let meetingsData = meetingData.map((meeting) => {
+    // Sort the minutesDetail array by priority (HIGH > NORMAL > LOW)
+    let sortedMinutesDetail = meeting.minutesDetail.sort((a, b) => {
+      const priorityOrder = { HIGH: 3, NORMAL: 2, LOW: 1 };
+      return priorityOrder[b.priority] - priorityOrder[a.priority]; // Sort descending
+    });
+
+    let totalDueAction = sortedMinutesDetail.length;
+    let totalHighPriorityDueAction = sortedMinutesDetail.filter(action => action.priority === "HIGH").length;
+    let totalLowPriorityDueAction = sortedMinutesDetail.filter(action => action.priority === "LOW").length;
+    let totalMediumPriorityDueAction = sortedMinutesDetail.filter(action => action.priority === "NORMAL").length;
+
+    return {
+      meetingTitle: meeting.title,
+      meetingId: meeting.meetingId,
+      totalDueAction,
+      totalHighPriorityDueAction,
+      totalLowPriorityDueAction,
+      totalMediumPriorityDueAction,
+      actionDetails: sortedMinutesDetail,
+    };
+  });
+
+  return {
+    meetingsData,
+    totalCount: totalCount.length,
+  };
+};
+
+// const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
+//   const meeting = await Meeting.findOne({ _id: new ObjectId(id) });
+
+//   if (!meeting) {
+//     throw new Error("Meeting not found.");
+//   }
+  
+
+//   if (meeting.createdById.toString() !== userId.toString()) {
+//     throw new Error("Only the meeting creator can delete the draft.");
+//   }
+
+  
+//   const result = await Meeting.findOneAndUpdate(
+//     { _id: new ObjectId(id) },
+//     {
+//       $set: {
+//         "meetingStatus.status": "deleted",  
+//         "meetingStatus.remarks": data.remarks,
+//         "isDeleted": true, 
+//       },
+//     },
+//     { new: true }  
+//   );
+
+
+//   const details = await commonHelper.generateLogObject(
+//     { status: "deleted" },
+//     userId,
+//     { status: "draft deleted" }
+//   );
+
+//   if (details.length !== 0) {
+//     const logData = {
+//       moduleName: logMessages.Meeting.moduleName,
+//       userId,
+//       action: logMessages.Meeting.deleteDraftMeeting,
+//       ipAddress,
+//       details: commonHelper.convertFirstLetterToCapital(details.join(" , ")),
+//       subDetails: `Meeting Title: ${result.title} (${result.meetingId})`,
+//       organizationId: result.organizationId,
+//     };
+//     await logService.createLog(logData);
+//   }
+
+//   return result; 
+// };
+
+const deleteDraftMeeting = async (id, createdById, data, ipAddress) => {
+
+  const meeting = await Meeting.find({ 
+    _id: new ObjectId(id),
+    "meetingStatus.status": "draft", 
+    createdById: new ObjectId(createdById) 
+  });
+
+  if (!meeting) {
+    throw new Error("Meeting not found or you are not the creator of this draft.");
+  }
+
+  const draftCount = await Meeting.countDocuments({
+    "meetingStatus.status": "draft",
+    createdById: new ObjectId(createdById)
+  });
+  console.log(`${draftCount} draft meeting(s) found for user ${createdById}`);
+
+  // Soft delete the draft meeting by updating its status and setting isDeleted flag
+  const result = await Meeting.findOneAndUpdate(
+    { _id: new ObjectId(id) },
+    {
+      $set: {
+        "meetingStatus.status": "deleted",  // Mark as deleted
+        "meetingStatus.remarks": data.remarks,
+        "isDeleted": true, // Soft delete flag
+      },
+    },
+    { new: true }  // Return the updated meeting
+  );
+
+  // Generate log details for the action
+  const details = await commonHelper.generateLogObject(
+    { status: "deleted" },
+    createdById,  // Use createdById for logging
+    { status: "draft deleted" }
+  );
+
+  if (details.length !== 0) {
+    const logData = {
+      moduleName: logMessages.Meeting.moduleName,
+      userId: createdById,  // Log the user's ID
+      action: logMessages.Meeting.deleteDraftMeeting,
+      ipAddress,
+      details: commonHelper.convertFirstLetterToCapital(details.join(" , ")),
+      //subDetails: `Meeting Title: (${result.meetingId})`,
+      organizationId: result.organizationId,
+    };
+    await logService.createLog(logData);
+  }
+
+  return result; 
+};
+
+
+
+
+
+
+
+
+
 exports.viewMeeting = viewMeeting;
 exports.createMeeting = createMeeting;
 exports.updateRsvp = updateRsvp;
@@ -4970,3 +5528,7 @@ exports.downloadZoomRecordingsInZip = downloadZoomRecordingsInZip;
 exports.checkAttendeeAvailability = checkAttendeeAvailability;
 exports.checkMeetingRoomAvailability = checkMeetingRoomAvailability;
 exports.checkAttendeeArrayAvailability = checkAttendeeArrayAvailability;
+exports.notifyMeetingCreatorAboutDraft = notifyMeetingCreatorAboutDraft;
+exports.deleteOldDraftMeetings = deleteOldDraftMeetings;
+exports.getMeetingActionPriorityDetailsforChart = getMeetingActionPriorityDetailsforChart;
+exports.deleteDraftMeeting = deleteDraftMeeting;

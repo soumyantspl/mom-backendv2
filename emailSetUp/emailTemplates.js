@@ -9,25 +9,24 @@ const addComma = (array, index) => {
 const signInByOtpEmail = async (userData, otp) =>
   new Promise((resolve, reject) => {
     const myvar =
-      `${
-        "<!DOCTYPE html>" +
-        '<html lang="en">' +
-        "  <head>" +
-        '    <meta charset="utf-8" />' +
-        "    <title>MOM Management </title>" +
-        "    <link" +
-        '      rel="stylesheet"' +
-        '      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>' +
-        '    <style type="text/css">' +
-        "      body {" +
-        "        font-family: Arial, sans-serif !important;" +
-        "        color: #222222;" +
-        "      }" +
-        "    </style>" +
-        "  </head>" +
-        "<body>" +
-        '<p style="font-size: 30px; color: #464646;margin-bottom: 0;">' +
-        "              Welcome <b>"
+      `${"<!DOCTYPE html>" +
+      '<html lang="en">' +
+      "  <head>" +
+      '    <meta charset="utf-8" />' +
+      "    <title>MOM Management </title>" +
+      "    <link" +
+      '      rel="stylesheet"' +
+      '      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>' +
+      '    <style type="text/css">' +
+      "      body {" +
+      "        font-family: Arial, sans-serif !important;" +
+      "        color: #222222;" +
+      "      }" +
+      "    </style>" +
+      "  </head>" +
+      "<body>" +
+      '<p style="font-size: 30px; color: #464646;margin-bottom: 0;">' +
+      "              Welcome <b>"
       }${userData.name} </b> your otp is ${otp}` +
       "            </p>" +
       "  </body>" +
@@ -38,25 +37,24 @@ const signInByOtpEmail = async (userData, otp) =>
 const sampleTest = async (attendeeName) =>
   new Promise((resolve, reject) => {
     const myvar =
-      `${
-        "<!DOCTYPE html>" +
-        '<html lang="en">' +
-        "  <head>" +
-        '    <meta charset="utf-8" />' +
-        "    <title>MOM Management </title>" +
-        "    <link" +
-        '      rel="stylesheet"' +
-        '      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>' +
-        '    <style type="text/css">' +
-        "      body {" +
-        "        font-family: Arial, sans-serif !important;" +
-        "        color: #222222;" +
-        "      }" +
-        "    </style>" +
-        "  </head>" +
-        "<body>" +
-        '<p style="font-size: 30px; color: #464646;margin-bottom: 0;">' +
-        "              Welcome <b>"
+      `${"<!DOCTYPE html>" +
+      '<html lang="en">' +
+      "  <head>" +
+      '    <meta charset="utf-8" />' +
+      "    <title>MOM Management </title>" +
+      "    <link" +
+      '      rel="stylesheet"' +
+      '      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>' +
+      '    <style type="text/css">' +
+      "      body {" +
+      "        font-family: Arial, sans-serif !important;" +
+      "        color: #222222;" +
+      "      }" +
+      "    </style>" +
+      "  </head>" +
+      "<body>" +
+      '<p style="font-size: 30px; color: #464646;margin-bottom: 0;">' +
+      "              Welcome <b>"
       }${attendeeName}` +
       "            </p>" +
       "  </body>" +
@@ -67,25 +65,24 @@ const sampleTest = async (attendeeName) =>
 const updateMeeting = async (action) =>
   new Promise((resolve, reject) => {
     const myvar =
-      `${
-        "<!DOCTYPE html>" +
-        '<html lang="en">' +
-        "  <head>" +
-        '    <meta charset="utf-8" />' +
-        "    <title>MOM Management </title>" +
-        "    <link" +
-        '      rel="stylesheet"' +
-        '      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>' +
-        '    <style type="text/css">' +
-        "      body {" +
-        "        font-family: Arial, sans-serif !important;" +
-        "        color: #222222;" +
-        "      }" +
-        "    </style>" +
-        "  </head>" +
-        "<body>" +
-        '<p style="font-size: 30px; color: #464646;margin-bottom: 0;">' +
-        "             Meeting is <b>"
+      `${"<!DOCTYPE html>" +
+      '<html lang="en">' +
+      "  <head>" +
+      '    <meta charset="utf-8" />' +
+      "    <title>MOM Management </title>" +
+      "    <link" +
+      '      rel="stylesheet"' +
+      '      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>' +
+      '    <style type="text/css">' +
+      "      body {" +
+      "        font-family: Arial, sans-serif !important;" +
+      "        color: #222222;" +
+      "      }" +
+      "    </style>" +
+      "  </head>" +
+      "<body>" +
+      '<p style="font-size: 30px; color: #464646;margin-bottom: 0;">' +
+      "             Meeting is <b>"
       }${action} </b>` +
       "            </p>" +
       "  </body>" +
@@ -96,41 +93,40 @@ const updateMeeting = async (action) =>
 const sendOtpEmailTemplate = async (userData, otp, time, supportData, logo) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        `<p style="color: #000 !important">Dear ${userData.name},</p>` +
-        '<p style="color: #000 !important">To ensure your accounts security and proceed with the login process, we require verification of your identity.</p>' +
-        '<p style="color: #000 !important"> Please use the following OTP (One-Time Password) to verify your MinutesVault account.</p>' +
-        '<p style="color: #000 !important"> OTP:<strong>'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      `<p style="color: #000 !important">Dear ${userData.name},</p>` +
+      '<p style="color: #000 !important">To ensure your accounts security and proceed with the login process, we require verification of your identity.</p>' +
+      '<p style="color: #000 !important"> Please use the following OTP (One-Time Password) to verify your MinutesVault account.</p>' +
+      '<p style="color: #000 !important"> OTP:<strong>'
       } ${otp}</strong></p>` +
       `<p style="color: #000 !important">Please enter this OTP in the designated field within ${time} minutes to complete the verification process.</p>` +
       "<br />" +
@@ -170,38 +166,37 @@ const sendCancelMeetingEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:5px;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear Attendee'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:5px;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear Attendee'
       },</p>` +
       '<p style="color: #000 !important">This is to inform you that the meeting below has been cancelled. Please visit the below link for more details.</p>' +
       `<p style="color: #000 !important; margin:0px;">${process.env.FRONTEND_URL}/view-meeting-details/${meetingData?._id}</p>` +
@@ -262,47 +257,46 @@ const sendScheduledMeetingEmailTemplate = async (
 
     if (meetingLink) {
       link = meetingLink;
-      console.log("meetingLink --->", meetingLink);
+      console.log("meetingLink --->", meetingLink)
     } else {
       if (meetingData?.link) {
         link = meetingData?.link;
-        console.log("meetingLink --->", link);
+        console.log("meetingLink --->", link)
       }
     }
 
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear Attendee'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear Attendee'
       },</p>` +
       '<p style="color: #000 !important">We hope this message finds you well. This is to inform you that a meeting has been scheduled through our MinutesVault application. </p>' +
       '<p style="color: #000 !important">Please make sure to mark your calendar accordingly. If you have any conflicts or questions regarding this meeting, feel free to reach out to the meeting organizer.</p>' +
@@ -329,30 +323,26 @@ const sendScheduledMeetingEmailTemplate = async (
         meetingData.mode
       )}</p>` +
       '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link</strong></p>' +
-      `${
-        link == null || ""
-          ? `<p style="color: #000 !important;margin:0px;">Not Available</p>`
-          : `<a style="margin:0px;" href="${link}">Click to join metting</a>`
+      `${link == null || ""
+        ? `<p style="color: #000 !important;margin:0px;">Not Available</p>`
+        : `<a style="margin:0px;" href="${link}">Click to join metting</a>`
       }` +
-      `${
-        hostingPassword !== null || ""
-          ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link Password</strong></p>' +
-            `<p style="color: #000 !important;margin:0px;">${hostingPassword}</p>`
-          : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
+      `${hostingPassword !== null || ""
+        ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link Password</strong></p>' +
+        `<p style="color: #000 !important;margin:0px;">${hostingPassword}</p>`
+        : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
       }` +
-      `${
-        hostKey !== null || ""
-          ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Meeting Host Key</strong></p>' +
-            `<p style="color: #000 !important;margin:0px;">${hostKey}</p>`
-          : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
+      `${hostKey !== null || ""
+        ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Meeting Host Key</strong></p>' +
+        `<p style="color: #000 !important;margin:0px;">${hostKey}</p>`
+        : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
       }` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Location</strong></p>' +
-      `<p style="color: #000 !important;margin:0px;">${
-        meetingData.locationDetails?.isMeetingRoom === true
-          ? meetingData?.roomDetail[0]?.title +
-            " , " +
-            meetingData?.roomDetail[0]?.location
-          : meetingData?.locationDetails?.location
+      `<p style="color: #000 !important;margin:0px;">${meetingData.locationDetails?.isMeetingRoom === true
+        ? meetingData?.roomDetail[0]?.title +
+        " , " +
+        meetingData?.roomDetail[0]?.location
+        : meetingData?.locationDetails?.location
       }</p>` +
       '<p style="color: #000 !important;margin-bottom:0px"><strong>Attendees</strong></p>' +
       `<p style="color: #000 !important;margin:0px">${attendeeData}</p>` +
@@ -412,49 +402,48 @@ const sendReScheduledMeetingEmailTemplate = async (
 
     if (meetingLink) {
       link = meetingLink;
-      console.log("meetingLink --->", link);
+      console.log("meetingLink --->", link)
     } else {
       if (meetingData?.link) {
         link = meetingData?.link;
-        console.log("meetingLink --->", link);
+        console.log("meetingLink --->", link)
       }
     }
 
-    console.log("meeting3Link --->", link);
+    console.log("meeting3Link --->", link)
 
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear Attendee'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear Attendee'
       },</p>` +
       '<p style="color: #000 !important">This is to inform you that a meeting has been rescheduled.</p>' +
       '<p style="color: #000 !important"> Please find the updated details below:</p>' +
@@ -463,8 +452,7 @@ const sendReScheduledMeetingEmailTemplate = async (
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Meeting Title</strong></p>' +
       `<p style="color: #000 !important;margin:0px;">
        
-          ${commonHelper.convertFirstLetterToCapital(commonHelper.decryptWithAES(meetingData.title))}(${
-        meetingData?.meetingId
+          ${commonHelper.convertFirstLetterToCapital(meetingData?.title)}(${meetingData?.meetingId
       })
         </p>` +
       '<p style="color: #000 !important; margin-bottom:0px"><strong>When (Rescheduled)</strong></p>' +
@@ -484,30 +472,26 @@ const sendReScheduledMeetingEmailTemplate = async (
         meetingData.mode
       )}</p>` +
       '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link</strong></p>' +
-      `${
-        link !== null || undefined || ""
-          ? `<a style="margin:0px;" href="${link}">Click to join metting</a>`
-          : '<p style="color: #000 !important;margin:0px;">Not Available</p>'
+      `${link !== null || undefined || ""
+        ? `<a style="margin:0px;" href="${link}">Click to join metting</a>`
+        : '<p style="color: #000 !important;margin:0px;">Not Available</p>'
       }` +
-      `${
-        hostingPassword !== null || undefined || ""
-          ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Meeting Link Password</strong></p>' +
-            `<p style="color: #000 !important;margin:0px;">${hostingPassword}</p>`
-          : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
+      `${hostingPassword !== null || undefined || ""
+        ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Meeting Link Password</strong></p>' +
+        `<p style="color: #000 !important;margin:0px;">${hostingPassword}</p>`
+        : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
       }` +
-      `${
-        hostKey !== null || ""
-          ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Meeting Host Key</strong></p>' +
-            `<p style="color: #000 !important;margin:0px;">${hostKey}</p>`
-          : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
+      `${hostKey !== null || ""
+        ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Meeting Host Key</strong></p>' +
+        `<p style="color: #000 !important;margin:0px;">${hostKey}</p>`
+        : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
       }` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Location</strong></p>' +
-      `<p style="color: #000 !important;margin:0px;">${
-        meetingData.locationDetails?.isMeetingRoom === true
-          ? meetingData?.roomDetail[0]?.title +
-            " , " +
-            meetingData?.roomDetail[0]?.location
-          : meetingData?.locationDetails?.location
+      `<p style="color: #000 !important;margin:0px;">${meetingData.locationDetails?.isMeetingRoom === true
+        ? meetingData?.roomDetail[0]?.title +
+        " , " +
+        meetingData?.roomDetail[0]?.location
+        : meetingData?.locationDetails?.location
       }</p>` +
       '<p style="color: #000 !important;margin-bottom:0px"><strong>Attendees</strong></p>' +
       `<p style="color: #000 !important;margin:0px">${attendeeData}</p>` +
@@ -553,11 +537,9 @@ const sendReScheduledMeetingEmailTemplate = async (
 const sendCreateMinutesEmailTemplate = async (
   meetingData,
   attendeeName,
-  momAcceptanceRejectionEndtime,
   logo
 ) =>
   new Promise((resolve, reject) => {
-    console.log("configTime-->", momAcceptanceRejectionEndtime)
     const attendeeData = meetingData?.attendees
       .map((attendee) => {
         return `${attendee.name}(${attendee.email})`;
@@ -569,38 +551,37 @@ const sendCreateMinutesEmailTemplate = async (
     }
 
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear Attendee,'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear Attendee,'
       }</p>` +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
       //   meetingData.title
@@ -614,8 +595,8 @@ const sendCreateMinutesEmailTemplate = async (
       -  ${meetingData.toTime}, titled "${meetingData.title}"</p>` +
       // '<p style="color: #000 !important">We request you to kindly review the minutes and take necessary actions like accept or reject or request for amendment if any.We would like to mention that the action window will be open for the next 12 hours and post that all minutes will be treated as accepted.</p>' +
       // '<p style="color: #000 !important">Please log in with the below URL to view the minutes of the meeting.</p>' +
-      `<p style="color: #000 !important">We kindly request you to review the minutes and provide your acceptance. Please note that the action window is open for the next ${momAcceptanceRejectionEndtime}  hours. After this period, all minutes will be considered accepted.</p>` +
-      `<p style="color: #000 !important">Please log in with the below URL to view the minutes of the meeting or check the attached MOM.</p>` +
+      '<p style="color: #000 !important">We kindly request you to review the minutes and provide your acceptance. Please note that the action window is open for the next 12 hours. After this period, all minutes will be considered accepted.</p>' +
+      '<p style="color: #000 !important">Please log in with the below URL to view the minutes of the meeting or check the attached MOM.</p>' +
       `<p style="color: #000 !important">${process.env.FRONTEND_URL}/view-minute-detail/${meetingData?._id}</p>` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Meeting Title</strong></p>' +
       `<p style="color: #000 !important;margin:0px;">${meetingData?.title} (${meetingData?.meetingId})</p>` +
@@ -629,18 +610,16 @@ const sendCreateMinutesEmailTemplate = async (
         meetingData.mode
       )}</p>` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Meeting Link</strong></p>' +
-      `${
-        link !== null || ""
-          ? `<a style="color: #000 !important;margin:0px;" href="${link}">${link}</a>`
-          : '<p style="color: #000 !important;margin:0px;">Not Available</p>'
+      `${link !== null || ""
+        ? `<a style="color: #000 !important;margin:0px;" href="${link}">${link}</a>`
+        : '<p style="color: #000 !important;margin:0px;">Not Available</p>'
       }` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Location</strong></p>' +
-      `<p style="color: #000 !important;margin:0px;">${
-        meetingData.locationDetails?.isMeetingRoom === true
-          ? meetingData?.roomDetail[0]?.title +
-            ", " +
-            meetingData?.roomDetail[0]?.location
-          : meetingData?.locationDetails?.location
+      `<p style="color: #000 !important;margin:0px;">${meetingData.locationDetails?.isMeetingRoom === true
+        ? meetingData?.roomDetail[0]?.title +
+        ", " +
+        meetingData?.roomDetail[0]?.location
+        : meetingData?.locationDetails?.location
       }</p>` +
       '<p style="color: #000 !important;margin-bottom:0px"><strong>Attendees</strong></p>' +
       `<p style="color: #000 !important;margin:0px">${attendeeData}</p>` +
@@ -684,38 +663,37 @@ const actionReassignRequestEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${meetingData?.createdByDetail?.name},</p>` +
       '<p style="color: #000 !important">I hope this email finds you well.</p>' +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
@@ -772,42 +750,42 @@ const actionReassignEmailToOlAssignedUserTemplate = async (
   reason,
   action,
   userData,
-  oldAssignedUserDetails
+  oldAssignedUserDetails,
+
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${commonHelper.convertFirstLetterOfFullNameToCapital(
         oldAssignedUserDetails?.name
       )},</p>` +
@@ -870,40 +848,39 @@ const actionReassignEmailTemplate = async (
   action
 ) =>
   new Promise((resolve, reject) => {
-    console.log("userData2-->", userData);
+    console.log("userData2-->", userData)
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${commonHelper.convertFirstLetterOfFullNameToCapital(
         assignedUserDetails?.name
       )},</p>` +
@@ -962,41 +939,41 @@ const actionAssignEmailTemplate = async (
   userData
 ) =>
   new Promise((resolve, reject) => {
-    console.log("meetingData Template", meetingData);
+
+    console.log("meetingData Template", meetingData)
 
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${commonHelper.convertFirstLetterOfFullNameToCapital(
         assignedUserDetails?.name
       )},</p>` +
@@ -1054,38 +1031,37 @@ const actionReOpenEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${commonHelper.convertFirstLetterOfFullNameToCapital(
         assignedUserDetails?.name
       )},</p>` +
@@ -1147,38 +1123,37 @@ const actionApproveEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${commonHelper.convertFirstLetterOfFullNameToCapital(
         assignedUserDetails?.name
       )},</p>` +
@@ -1197,11 +1172,10 @@ const actionApproveEmailTemplate = async (
       `<p style="color: #000 !important; margin:0px;">${meetingData?.title} (${meetingData?.meetingId})</p>` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Action Title</strong></p>' +
       `<p style="color: #000 !important; margin:0px;">${action?.title}</p>` +
-      `${
-        reason !== (null || " " || undefined)
-          ? '<p style="color: #000 !important;margin-bottom:0px;"><strong>Remark of Approval</strong></p>' +
-            `<p style="color: #000 !important; margin:0px;">${reason}</p>`
-          : null
+      `${reason !== (null || " " || undefined)
+        ? '<p style="color: #000 !important;margin-bottom:0px;"><strong>Remark of Approval</strong></p>' +
+        `<p style="color: #000 !important; margin:0px;">${reason}</p>`
+        : null
       }` +
       '<p style="color: #000 !important;margin-bottom:0px;" >Your prompt attention to these action items is greatly appreciated.</p>' +
       `<p style="color: #000 !important;margin:0px;">Thank you for your co-operation.</p>` +
@@ -1244,38 +1218,37 @@ const sendAmendmentCreatedEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${meetingData?.createdByDetail?.name},</p>` +
       '<p style="color: #000 !important">I hope this email finds you well.</p>' +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
@@ -1327,38 +1300,37 @@ const sendAmendmentCreatedEmailTemplate = async (
 const acceptMinuteEmailTemplate = async (meetingData, attendeeDetails, logo) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${meetingData?.createdByDetail?.name},</p>` +
       '<p style="color: #000 !important">I hope this email finds you well.</p>' +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
@@ -1436,38 +1408,37 @@ const meetingRemindersEmailTemplate = async (
     console.log("meetingLink-----------------------", meetingLink, link);
     console.log("link-----------------------", link);
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${empDetails?.name},</p>` +
       '<p style="color: #000 !important">You have an upcoming meeting scheduled.</p>' +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
@@ -1481,46 +1452,40 @@ const meetingRemindersEmailTemplate = async (
       `<p style="color: #000 !important; margin:0px;">${process.env.FRONTEND_URL}/view-meeting-details/${meetingData?._id}</p>` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Meeting Id</strong></p>' +
       `<p style="color: #000 !important;margin:0px;">${meetingData?.meetingId}</p>` +
-      `<p style="color: #000 !important;margin-bottom:0px;"><strong>When${
-        meetingData?.meetingStatus?.status == "rescheduled"
-          ? "(Rescheduled)"
-          : "<span style='display:none'>(Rescheduled)</span>"
+      `<p style="color: #000 !important;margin-bottom:0px;"><strong>When${meetingData?.meetingStatus?.status == "rescheduled"
+        ? "(Rescheduled)"
+        : "<span style='display:none'>(Rescheduled)</span>"
       }</strong></p>` +
       `<p style="color: #000 !important; margin:0px;">${new Date(
         meetingData.date
       ).toDateString()}, ${meetingData.fromTime}
   -  ${meetingData.toTime}</p>` +
-      `${
-        meetingData?.meetingStatus?.status == "rescheduled"
-          ? '<p style="color: #000 !important;margin-bottom:0px;"><strong>Reason of Reschedule</strong></p>'
-          : "<span style='display:none'>(Rescheduled)</span>"
+      `${meetingData?.meetingStatus?.status == "rescheduled"
+        ? '<p style="color: #000 !important;margin-bottom:0px;"><strong>Reason of Reschedule</strong></p>'
+        : "<span style='display:none'>(Rescheduled)</span>"
       }` +
-      `${
-        meetingData?.meetingStatus?.status == "rescheduled"
-          ? `<p style="color: #000 !important; margin:0px;">${meetingData?.meetingStatus?.remarks}</p>`
-          : "<span style='display:none'>(Rescheduled)</span>"
+      `${meetingData?.meetingStatus?.status == "rescheduled"
+        ? `<p style="color: #000 !important; margin:0px;">${meetingData?.meetingStatus?.remarks}</p>`
+        : "<span style='display:none'>(Rescheduled)</span>"
       }` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Meeting Mode</strong></p>' +
       `<p style="color: #000 !important; margin:0px;">${meetingData?.mode}</p>` +
       '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link</strong></p>' +
-      `${
-        link == undefined || link == null || link == ""
-          ? '<p style="color: #000 !important;margin:0px;">Not Available</p>'
-          : `<a style="margin:0px;" href="${link}">Click to join metting</a>`
+      `${link == undefined || link == null || link == ""
+        ? '<p style="color: #000 !important;margin:0px;">Not Available</p>'
+        : `<a style="margin:0px;" href="${link}">Click to join metting</a>`
       }` +
-      `${
-        meetingData?.hostDetails?.hostingPassword !== undefined || null || ""
-          ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link Password</strong></p>' +
-            `<p style="color: #000 !important;margin:0px;">${meetingData?.hostDetails?.hostingPassword}</p>`
-          : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
+      `${meetingData?.hostDetails?.hostingPassword !== undefined || null || ""
+        ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link Password</strong></p>' +
+        `<p style="color: #000 !important;margin:0px;">${meetingData?.hostDetails?.hostingPassword}</p>`
+        : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
       }` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Location</strong></p>' +
-      `<p style="color: #000 !important;margin:0px;">${
-        meetingData.locationDetails?.isMeetingRoom === true
-          ? meetingData?.roomDetail[0]?.title +
-            " , " +
-            meetingData?.roomDetail[0]?.location
-          : meetingData?.locationDetails?.location
+      `<p style="color: #000 !important;margin:0px;">${meetingData.locationDetails?.isMeetingRoom === true
+        ? meetingData?.roomDetail[0]?.title +
+        " , " +
+        meetingData?.roomDetail[0]?.location
+        : meetingData?.locationDetails?.location
       }</p>` +
       '<p style="color: #000 !important;margin-bottom:0px"><strong>Attendees</strong></p>' +
       `<p style="color: #000 !important;margin:0px">${attendeeData}</p>` +
@@ -1571,38 +1536,37 @@ const actionCancelEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${attendeeDetails.name},</p>` +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
       //   meetingData.title
@@ -1665,38 +1629,37 @@ const actionCompleteEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${meetingData.createdByDetail.name},</p>` +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
       //   meetingData.title
@@ -1759,38 +1722,37 @@ const actionReassignRequestRejectEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${attendeeDetails.name},</p>` +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
       //   meetingData.title
@@ -1801,10 +1763,9 @@ const actionReassignRequestRejectEmailTemplate = async (
 
       `<p style="color: #000 !important">We would like to inform you that the Forward request has been rejected.</p>` +
       '<p style="color: #000 !important; margin-bottom:0px;"><strong>Rejection Details</strong></p>' +
-      `${
-        remark !== null || ""
-          ? `<p style="color: #000 !important; margin:0px;">${remark}</p>`
-          : '<p style="color: #000 !important;margin:0px;">Not Available</p>'
+      `${remark !== null || ""
+        ? `<p style="color: #000 !important; margin:0px;">${remark}</p>`
+        : '<p style="color: #000 !important;margin:0px;">Not Available</p>'
       }` +
       '<p style="color: #000 !important; margin-bottom:0px;"><strong>Action Details</strong></p>' +
       `<p style="color: #000 !important; margin:0px;">${process.env.FRONTEND_URL}/view-action-detail/${actionDetails?._id}</p>` +
@@ -1852,38 +1813,37 @@ const actionReassignRequestRejectEmailTemplate = async (
 const createNewEmployeeEmailTemplate = async (adminDetails, logo, empData) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${empData.name},</p>` +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
       //   meetingData.title
@@ -1947,38 +1907,37 @@ const sendGiveWriteMOMPermissionEmailTemplate = async (
     }
 
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${attendeeName},</p>` +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
       //   meetingData.title
@@ -2034,38 +1993,37 @@ const actionReassignForOlAssigneeEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${commonHelper.convertFirstLetterOfFullNameToCapital(
         assignedUserDetails?.name
       )},</p>` +
@@ -2124,38 +2082,37 @@ const sendActionDueReminderEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear Attendee'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear Attendee'
       } </p>` +
       // `<p style="color: #000 !important">As a follow-up to our recent meeting, I am pleased to provide the confirmed meeting minutes for ${
       //   meetingData.title
@@ -2229,38 +2186,37 @@ const reSendScheduledMeetingEmailTemplate = async (
     }
 
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear Attendee'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear Attendee'
       },</p>` +
       '<p style="color: #000 !important">We hope this message finds you well. This is to inform you that a meeting has been scheduled through our Meeting Minutes application. </p>' +
       '<p style="color: #000 !important">Please make sure to mark your calendar accordingly. If you have any conflicts or questions regarding this meeting, feel free to reach out to the meeting organizer.</p>' +
@@ -2287,30 +2243,26 @@ const reSendScheduledMeetingEmailTemplate = async (
         meetingData.mode
       )}</p>` +
       '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link</strong></p>' +
-      `${
-        link !== null || ""
-          ? `<a style="color: #000 !important;margin:0px;" href="${link}">${link}</a>`
-          : '<p style="color: #000 !important;margin:0px;">Not Available</p>'
+      `${link !== null || ""
+        ? `<a style="color: #000 !important;margin:0px;" href="${link}">${link}</a>`
+        : '<p style="color: #000 !important;margin:0px;">Not Available</p>'
       }` +
-      `${
-        hostingPassword !== null || ""
-          ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link Password</strong></p>' +
-            `<p style="color: #000 !important;margin:0px;">${hostingPassword}</p>`
-          : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
+      `${hostingPassword !== null || ""
+        ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Joining Link Password</strong></p>' +
+        `<p style="color: #000 !important;margin:0px;">${hostingPassword}</p>`
+        : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
       }` +
-      `${
-        hostKey !== null || ""
-          ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Meeting Host Key</strong></p>' +
-            `<p style="color: #000 !important;margin:0px;">${hostKey}</p>`
-          : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
+      `${hostKey !== null || ""
+        ? '<p style="color: #000 !important; margin-bottom:0px;"><strong>Meeting Host Key</strong></p>' +
+        `<p style="color: #000 !important;margin:0px;">${hostKey}</p>`
+        : `<p style="color: #000 !important;margin:0px;display:none;">NA</p>`
       }` +
       '<p style="color: #000 !important;margin-bottom:0px;"><strong>Location</strong></p>' +
-      `<p style="color: #000 !important;margin:0px;">${
-        meetingData.locationDetails?.isMeetingRoom === true
-          ? meetingData?.roomDetail[0]?.title +
-            " , " +
-            meetingData?.roomDetail[0]?.location
-          : meetingData?.locationDetails?.location
+      `<p style="color: #000 !important;margin:0px;">${meetingData.locationDetails?.isMeetingRoom === true
+        ? meetingData?.roomDetail[0]?.title +
+        " , " +
+        meetingData?.roomDetail[0]?.location
+        : meetingData?.locationDetails?.location
       }</p>` +
       '<p style="color: #000 !important;margin-bottom:0px"><strong>Attendees</strong></p>' +
       `<p style="color: #000 !important;margin:0px">${attendeeData}</p>` +
@@ -2318,24 +2270,18 @@ const reSendScheduledMeetingEmailTemplate = async (
       `${agendaData}` +
       '<p style="color: #000 !important;margin-bottom:0px"><strong>Reply</strong></p>' +
       '<p style="color: #000 !important; margin:0px">' +
-      `<a style="margin-right:10px;" href=${process.env.FRONTEND_URL}/login/${
-        meetingData?._id
-      }/YES/${attendee?._id}><button style="${
-        rsvpStatus === "YES"
-          ? "background-color: rgb(2, 2, 187);color: #fff;"
-          : ""
-      }">Yes</button></a><a style="margin-right:10px;" href=${
-        process.env.FRONTEND_URL
-      }/login/${meetingData?._id}/NO/${attendee?._id}><button style="${
-        rsvpStatus === "NO"
-          ? "background-color: rgb(2, 2, 187);color: #fff;"
-          : ""
-      }">No</button></a><a href=${process.env.FRONTEND_URL}/login/${
-        meetingData?._id
-      }/MAYBE/${attendee?._id}><button style="${
-        rsvpStatus === "MAYBE"
-          ? "background-color: rgb(2, 2, 187);color: #fff;"
-          : ""
+      `<a style="margin-right:10px;" href=${process.env.FRONTEND_URL}/login/${meetingData?._id
+      }/YES/${attendee?._id}><button style="${rsvpStatus === "YES"
+        ? "background-color: rgb(2, 2, 187);color: #fff;"
+        : ""
+      }">Yes</button></a><a style="margin-right:10px;" href=${process.env.FRONTEND_URL
+      }/login/${meetingData?._id}/NO/${attendee?._id}><button style="${rsvpStatus === "NO"
+        ? "background-color: rgb(2, 2, 187);color: #fff;"
+        : ""
+      }">No</button></a><a href=${process.env.FRONTEND_URL}/login/${meetingData?._id
+      }/MAYBE/${attendee?._id}><button style="${rsvpStatus === "MAYBE"
+        ? "background-color: rgb(2, 2, 187);color: #fff;"
+        : ""
       }">May Be</button></a>` +
       "</p>" +
       `<br />` +
@@ -2379,40 +2325,39 @@ const sendOtpDemoEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        `<p style="color: #000 !important">Dear ${name},</p>` +
-        `<p style="color: #000 !important">${typeMessage}</p>` +
-        '<p style="color: #000 !important"> OTP:<strong>'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      `<p style="color: #000 !important">Dear ${name},</p>` +
+      `<p style="color: #000 !important">${typeMessage}</p>` +
+      '<p style="color: #000 !important"> OTP:<strong>'
       } ${otp}</strong></p>` +
       `<p style="color: #000 !important">Please enter this OTP in the designated field within ${time} minutes to complete the verification process.</p>` +
       '<p style="color: #000 !important">If you didn’t request this, please disregard this email.</p>' +
@@ -2449,39 +2394,38 @@ const sendOtpDemoEmailTemplate = async (
 const organizationRegistrationSendOtpTemplate = async (name, otp, time, logo) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        `<p style="color: #000 !important">Dear ${name},</p>` +
-        '<p style="color: #000 !important"> OTP:<strong>'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      `<p style="color: #000 !important">Dear ${name},</p>` +
+      '<p style="color: #000 !important"> OTP:<strong>'
       } ${otp}</strong></p>` +
       `<p style="color: #000 !important">Please enter this OTP in the designated field within ${time} minutes to complete the verification process.</p>` +
       '<p style="color: #000 !important">If you didn’t request this, please disregard this email.</p>' +
@@ -2521,6 +2465,9 @@ const sendAttendanceDetailsEmailTemplate = async (
   logo,
   attendeeEmail
 ) =>
+
+
+
   new Promise((resolve, reject) => {
     let userType = null;
     if (meetingData.createdByDetail.email == attendeeEmail) {
@@ -2528,40 +2475,39 @@ const sendAttendanceDetailsEmailTemplate = async (
     } else {
       userType = "Attendee";
     }
-    console.log(attendeeEmail, userType);
+    console.log(attendeeEmail, userType)
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        `<p style="color: #000 !important">Dear ${userType}`
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      `<p style="color: #000 !important">Dear ${userType}`
       },</p>` +
       '<p style="color: #000 !important">We hope this message finds you well. This is to inform you that a meeting has been finished through our MinutesVault application. </p>' +
       '<p style="color: #000 !important">Thank you, and we look forward to your participation in further meetings. Below are the Meeting with attendance details:</p>' +
@@ -2619,38 +2565,37 @@ const sendDemoInquiryEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear Admin'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear Admin'
       },</p>` +
       '<p style="color: #000 !important">A new demo inquiry has been received for the MinutesVault application. Please find the customer details below.</p>' +
       '<p style="color: #000 !important"><strong>Customer Details</strong></p>' +
@@ -2707,38 +2652,37 @@ const sendContactUsEmailTemplate = async (
 ) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear Admin'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear Admin'
       },</p>` +
       '<p style="color: #000 !important">A new contact inquiry has been received for the MinutesVault application. Please find the customer details below.</p>' +
       '<p style="color: #000 !important"><strong>Customer Details</strong></p>' +
@@ -2790,38 +2734,37 @@ const sendContactUsEmailTemplate = async (
 const organizationRegistration = async (name, logo) =>
   new Promise((resolve, reject) => {
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        `<p style="color: #000 !important">Dear ${name},</p>`
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;"src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      `<p style="color: #000 !important">Dear ${name},</p>`
       }</p>` +
       '<p style="color: #000 !important">Welcome to the MinutesVault application. Please find the login credential below.</p>' +
       `<table style="border: 1px solid black;border-collapse: collapse; width:100%;color:black;margin-top:5px;">` +
@@ -2857,6 +2800,7 @@ const organizationRegistration = async (name, logo) =>
       "</div>";
     resolve(myVar);
   });
+
 
 const registrationWelcomeMail = async (name, logo) =>
   new Promise((resolve, reject) => {
@@ -2922,6 +2866,7 @@ const registrationWelcomeMail = async (name, logo) =>
     resolve(myVar);
   });
 
+
 const actionAssignAdminEmailTemplate = async (
   meetingData,
   logo,
@@ -2930,41 +2875,41 @@ const actionAssignAdminEmailTemplate = async (
   userData
 ) =>
   new Promise((resolve, reject) => {
-    console.log("meetingData Template", meetingData);
+
+    console.log("meetingData Template", meetingData)
 
     const myVar =
-      `${
-        '<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
-        '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
-        '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
-        "</tr>" +
-        "</tbody>" +
-        "</table>" +
-        '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
-        "<tbody>" +
-        "<tr>" +
-        "<td>" +
-        '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
-        "<tbody>" +
-        "<tr>" +
-        '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
-        "<span>" +
-        `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
-        `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
-        "</a>" +
-        "</span>" +
-        "</td>" +
-        "</tr>" +
-        "<tr>" +
-        '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
-        '<p style="color: #000 !important">Dear'
+      `${'<div style="background-color: #e9f3ff;margin:0;padding:0; width:100%;">' +
+      '<div style="background-color: #e9f3ff; width:100%;padding-bottom:60px">' +
+      '<table style="margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;width:100%;max-width:640px" align="center" cellpadding="0" cellspacing="0" border="0">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td valign="middle" align="center" height="60" style="border-collapse:collapse"></td>' +
+      "</tr>" +
+      "</tbody>" +
+      "</table>" +
+      '<table cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF">' +
+      "<tbody>" +
+      "<tr>" +
+      "<td>" +
+      '<table border="0" style="margin:0 auto" cellspacing="0" cellpadding="0" width="100%" bgcolor="#FFFFFF" valign="center" align="center">' +
+      "<tbody>" +
+      "<tr>" +
+      '<td style="padding: 30px 0px 30px;color:#545d5e;font-family:Helvetica;font-size:12px;line-height:180%;vertical-align:top;text-align:center">' +
+      "<span>" +
+      `<a href=${process.env.TARGET_WEBSITE} style="widht: 100%; text-align: center;">` +
+      `<img style="float: none; margin: 0 auto; display: block;" src=${logo}>` +
+      "</a>" +
+      "</span>" +
+      "</td>" +
+      "</tr>" +
+      "<tr>" +
+      '<td valign="center" cellpadding="0" align="center" bgcolor="#FFFFFF" style="border-collapse:collapse;color:#545d5e;font-family:Arial,Tahoma,Verdana,sans-serif;font-size:14px;margin:0;text-align:left;line-height:165%;letter-spacing:0;padding-top:20px;padding-bottom:30px;padding-left: 30px;padding-right: 30px;">' +
+      '<p style="color: #000 !important">Dear'
       } ${commonHelper.convertFirstLetterOfFullNameToCapital(
         meetingData.createdByDetail.name
       )},</p>` +
@@ -2974,11 +2919,7 @@ const actionAssignAdminEmailTemplate = async (
       //   meetingData.date
       // ).toDateString()} ${meetingData.fromTime}
       // -  ${meetingData.toTime}.</p>` +
-      `<p style="color: #000 !important">An action has been assigned to ${commonHelper.convertFirstLetterOfFullNameToCapital(
-        assignedUserDetails?.name
-      )} by ${commonHelper.convertFirstLetterOfFullNameToCapital(
-        userData.name
-      )}. Please visit the link below to view the meeting and action details.
+      `<p style="color: #000 !important">An action has been assigned to ${commonHelper.convertFirstLetterOfFullNameToCapital(assignedUserDetails?.name)} by ${commonHelper.convertFirstLetterOfFullNameToCapital(userData.name)}. Please visit the link below to view the meeting and action details.
     </p>` +
       // '<p style="color: #000 !important">We request you to kindly review the minutes and take necessary actions like accept or reject or request for amendment if any.We would like to mention that the action window will be open for the next 12 hours and post that all minutes will be treated as accepted.</p>' +
       // '<p style="color: #000 !important">Please log in with the below URL to view the minutes of the meeting.</p>' +
@@ -3018,6 +2959,7 @@ const actionAssignAdminEmailTemplate = async (
     resolve(myVar);
   });
 
+
 module.exports = {
   //signInByOtpEmail,
   //updateMeeting,
@@ -3052,5 +2994,7 @@ module.exports = {
   organizationRegistration,
   actionAssignEmailTemplate,
   registrationWelcomeMail,
-  actionAssignAdminEmailTemplate,
+  actionAssignAdminEmailTemplate
 };
+
+
