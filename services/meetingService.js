@@ -303,29 +303,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
 
     console.log('New People Array-----', newPeopleArray);
 
-    const checkAttendeeAvailability = async (attendees, date, fromTime, toTime) => {
-      const conflicts = await Meetings.find({
-        "hostDetails.date": date,
-        $or: [
-          { "hostDetails.fromTime": { $lte: toTime }, "hostDetails.toTime": { $gte: fromTime } }
-        ],
-        attendees: { $elemMatch: { _id: { $in: attendees.map(a => new ObjectId(a._id)) } } }
-      });
-
-      return conflicts.map(meeting => meeting.attendees).flat();
-    };
-
-    const unavailableAttendees = await checkAttendeeAvailability(newPeopleArray, data.hostDetails.date, data.hostDetails.fromTime, data.hostDetails.toTime);
-
-    if (unavailableAttendees.length > 0) {
-      console.log("The following attendees are unavailable:", unavailableAttendees);
-      return res.status(400).json({
-        message: "Some attendees are already booked for another meeting",
-        unavailableAttendees
-      });
-    }
-
-
     if (newPeopleArray.length !== 0) {
       const newEmployee = await employeeService.createAttendees(newPeopleArray);
       mergedData = [...data.attendees, ...newEmployee]

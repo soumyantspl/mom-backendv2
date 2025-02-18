@@ -1772,3 +1772,30 @@ Stack Trace: ValidationError: organizations validation failed: organizationCode:
     at E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\lib\document.js:3095:17
     at E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
     at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+Date: 18/02/2025, Time: 19:07
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:474:13)
+    at Writable.end (node:internal/streams/writable:814:17)
+    at Immediate.<anonymous> (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:478:21)
+Date: 18/02/2025, Time: 19:09
+Error: emailLogs validation failed: subject: Path `subject` is required.
+Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subject` is required.
+    at Document.invalidate (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\lib\document.js:3334:32)
+    at E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\lib\document.js:3095:17
+    at E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+Date: 18/02/2025, Time: 19:11
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (E:\Ongoing\V2\BE\TESTING\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
