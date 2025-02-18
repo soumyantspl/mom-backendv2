@@ -484,71 +484,6 @@ const getUserActionPriotityDetails = async (req, res) => {
   }
 };
 
-const getMeetingDueActionPriorityDetails = async (req, res) => {
-  try {
-    const { query, body, userId, userData } = req;  
-
-    const result = await actionService.getMeetingDueActionPriorityDetailsforChart(
-      query,     
-      body,       
-      userId,     
-      userData   
-    );
-    if (!result) {
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        messages.recordsNotFound,
-        200
-      );
-    }
-    return Responses.successResponse(
-      req,
-      res,
-      result,
-      messages.recordsFound,
-      200
-    );
-  } catch (error) {
-    console.log("Controller error:", error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
-const getAttendeeDueActionPriorityDetails = async (req, res) => {
-  try {
-    const { query, body, userId, userData } = req;  
-
-    const result = await actionService.getAttendeesWithPendingActions(
-      query,     
-      body,       
-      userId,     
-      userData   
-    );
-    if (!result) {
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        messages.recordsNotFound,
-        200
-      );
-    }
-    return Responses.successResponse(
-      req,
-      res,
-      result,
-      messages.recordsFound,
-      200
-    );
-  } catch (error) {
-    console.log("Controller error:", error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
-
 module.exports = {
   actionCommentsCreate,
   actionReassignRequest,
@@ -565,7 +500,4 @@ module.exports = {
   cancelAction,
   totalActionList,
   getUserActionPriotityDetails,
-  //PRATISHRUTI ----- Action Rechartbar Click
-  getMeetingDueActionPriorityDetails,
-  getAttendeeDueActionPriorityDetails
 };
