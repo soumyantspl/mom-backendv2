@@ -108,29 +108,27 @@ const createEmployee = async (userId, data, ipAddress) => {
 };
 /**FUNC- TO FETCH MASTER DATA*/
 const masterData = async (organizationId) => {
-  let query = { organizationId: organizationId, isDelete: false };
-  const designationList = await Designations.find(query, {
-    name: 1,
-    isActive: 1,
-    isDelete: 1,
-  });
-  const departmentList = await Department.find(query, {
-    name: 1,
-    isActive: 1,
-    isDelete: 1,
-  });
-  const unitList = await Units.find(query, {
-    name: 1,
-    isActive: 1,
-    isDelete: 1,
-  });
-  const message = `${designationList.length} designation found , ${departmentList.length} department found &  ${unitList.length} unit found `;
-  const masterData = { designationList, departmentList, unitList };
-  return {
-    message,
-    masterData,
-  };
+  try {
+    let query = { organizationId, isDelete: false };
+
+    const [designationList, departmentList, unitList] = await Promise.all([
+      Designations.find(query, { name: 1, isActive: 1 }),
+      Department.find(query, { name: 1, isActive: 1 }),
+      Units.find(query, { name: 1, isActive: 1 }),
+    ]);
+
+    const message = `${designationList.length} designation(s) found, ${departmentList.length} department(s) found & ${unitList.length} unit(s) found`;
+
+    return {
+      message,
+      masterData: { designationList, departmentList, unitList },
+    };
+  } catch (error) {
+    console.error("Error fetching master data:", error);
+    throw new Error("Failed to fetch master data.");
+  }
 };
+
 
 /**FUNC- TO DELETE AN EMPLOYEE */
 const deleteEmploye = async (userId, id, ipAddress) => {
@@ -579,12 +577,13 @@ const getEmployeeListAsPerUnit = async (unitId) => {
 };
 
 
-const importEmployee = async (data) => {
+const importEmployee = async (data, organizationId) => {
   const savedData = [];
   const duplicateRecords = [];
   const validationErrors = [];
 
   const regularExpression = /^[0-9a-zA-Z -.(),-,_/]+$/;
+  console.log("organizationId", organizationId);
 
   const employeeValidationSchema = Joi.object({
     name: Joi.string()
@@ -592,54 +591,55 @@ const importEmployee = async (data) => {
       .pattern(regularExpression)
       .required()
       .messages({
+        "any.required": `Name is required.`,
         "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
-        "any.required": "Name is required."
       }),
     email: Joi.string()
       .trim()
       .email()
       .required()
       .messages({
+        "any.required": `Email is required.`,
         "string.email": `Invalid email format.`,
-        "any.required": "Email is required."
       }),
     empId: Joi.string()
       .trim()
-      .pattern(regularExpression)
       .required()
       .messages({
+        "any.required": `Employee ID is required.`,
         "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
-        "any.required": "Employee Id is required."
-      }),
+      })
+      .pattern(regularExpression),
     designation: Joi.string()
       .trim()
-      .required()  // Mark designation as required
+      .required()
       .pattern(regularExpression)
       .messages({
+        "any.required": `Designation is required.`,
         "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
-        "any.required": "Designation is required."
       }),
     department: Joi.string()
       .trim()
-      .required()  // Mark department as required
+      .required()
       .pattern(regularExpression)
       .messages({
+        "any.required": `Department is required.`,
         "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
-        "any.required": "Department is required."
       }),
     unitName: Joi.string()
       .trim()
-      .required()  // Mark unitName as required
+      .required()
       .pattern(regularExpression)
       .messages({
+        "any.required": `Unit Name is required.`,
         "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
-        "any.required": "Unit Name is required."
       }),
     unitAddress: Joi.string()
       .trim()
+      .required()
       .pattern(regularExpression)
-      .allow('') // optional field
       .messages({
+        "any.required": `Unit Address is required.`,
         "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
       }),
     organizationId: Joi.string()
@@ -651,32 +651,42 @@ const importEmployee = async (data) => {
 
 
   for (const record of data) {
-    if (record.email) {
-      record.email = record.email.toLowerCase();
-    }
+    const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
 
-    const duplicateFields = {};
-    const existingByEmail = await Employee.findOne({ email: record.email });
-    const existingByEmpId = await Employee.findOne({ empId: record.empId });
-
-    if (existingByEmail) {
-      duplicateFields.email = record.email;
-    }
-    if (existingByEmpId) {
-      duplicateFields.empId = record.empId;
-    }
-
-    if (Object.keys(duplicateFields).length > 0) {
-      duplicateRecords.push(duplicateFields);
+    if (error) {
+      validationErrors.push({
+        record,
+        messages: error.details.map(err => err.message),
+      });
       continue;
     }
 
-    const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
-    if (error) {
-      const combinedErrorMessage = error.details.map(detail => detail.message).join(" | ")
-      validationErrors.push({
-        record,
-        message: combinedErrorMessage,
+    const duplicateFields = {};
+    const existingByEmail = await Employee.findOne({
+      email: record.email,
+      organizationId: organizationId
+    });
+
+    const existingByEmpId = await Employee.findOne({ empId: record.empId, organizationId: organizationId });
+
+    if (existingByEmail) {
+      duplicateFields.email = true;
+    }
+    if (existingByEmpId) {
+      duplicateFields.empId = true;
+    }
+
+    if (duplicateFields.email || duplicateFields.empId) {
+      let reasonMessages = [];
+      if (duplicateFields.email) {
+        reasonMessages.push("Email already exists.");
+      }
+      if (duplicateFields.empId) {
+        reasonMessages.push("Employee ID already exists.");
+      }
+      duplicateRecords.push({
+        ...record,
+        reason: reasonMessages.join(" ")
       });
       continue;
     }
@@ -748,9 +758,10 @@ const importEmployee = async (data) => {
     console.log("Saved Data--->>", savedRecord);
   }
 
-
   return { savedData, duplicateRecords, validationErrors };
 };
+
+
 
 const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
   if (profilePicture && profilePicture.filename) {
@@ -759,7 +770,7 @@ const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
   } else {
     console.log("No new profile picture provided.");
   }
-  
+
 
   const employee = await Employee.findById(id);
   if (!employee) {

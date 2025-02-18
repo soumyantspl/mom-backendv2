@@ -309,60 +309,56 @@ const getEmployeeListAsPerUnit = async (req, res) => {
 const writeErrorFile = (duplicateRecords, validationErrors) => {
   const workbook = xlsx.utils.book_new();
 
-  // Create a reverse mapping from schema field to Excel column name.
   const reverseMapping = {};
-  Object.entries(columnMapping).forEach(([excelKey, schemaField]) => {
-    reverseMapping[schemaField] = excelKey;
+  Object.entries(columnMapping).forEach(([excelCol, schemaField]) => {
+    reverseMapping[schemaField] = excelCol;
   });
 
-  // Function to apply red styling (red background with white text)
-  const applyRedStyle = (value) => ({
-    v: value || "",
-    s: {
-      fill: { fgColor: { rgb: "FF0000" } },
-      font: { color: { rgb: "FFFFFF" } },
-    },
-  });
+  const buildRowObject = (recordData) => {
+    const rowObject = {
+      "Employee Id": recordData.empId || "",
+      Email: recordData.email || "",
+    };
 
-  // Transform record keys: skip "isAdmin" and "status"
-  const transformRecordKeys = (record) => {
-    const transformed = {};
-    Object.keys(record).forEach((key) => {
-      if (key === "isAdmin" || key === "status") return;
-      const newKey = reverseMapping[key] || key;
-      transformed[newKey] = record[key];
+    Object.keys(recordData).forEach((schemaField) => {
+      if (schemaField === "email" || schemaField === "empId") return;
+      const excelCol = reverseMapping[schemaField] || schemaField;
+      rowObject[excelCol] = recordData[schemaField];
     });
-    return transformed;
+    return rowObject;
   };
 
-  const formatValidationErrors = validationErrors.map((error) => {
-    const { organizationId, ...filteredData } = error.record || {};
-    const transformedData = transformRecordKeys(filteredData);
-    return {
-      ...transformedData,
-      "Reason for Failure": applyRedStyle(error.message),
-    };
+
+  const formatValidationErrors = validationErrors.map((errorItem) => {
+    const { organizationId, ...data } = errorItem.record || {};
+    return buildRowObject(data, errorItem.messages.join(', '));
   });
 
-  const formatDuplicateRecords = duplicateRecords.map((record) => {
-    const { organizationId, ...filteredData } = record || {};
-    const transformedData = transformRecordKeys(filteredData);
-    return {
-      ...transformedData,
-      "Reason for Failure": applyRedStyle("Duplicate entry"),
-    };
+
+  const formatDuplicateRecords = duplicateRecords.map((dupObj) => {
+    const { organizationId, ...data } = dupObj || {};
+    console.log("data", data);
+    let reason = "";
+    if (dupObj.email) reason += "Email already exists. ";
+    if (dupObj.empId) reason += "Employee ID already exists.";
+    reason = reason.trim() || "Duplicate entry";
+
+    return buildRowObject(data, reason);
   });
+
+
 
   if (formatValidationErrors.length > 0) {
     const errorSheet = xlsx.utils.json_to_sheet(formatValidationErrors);
     xlsx.utils.book_append_sheet(workbook, errorSheet, "Validation Errors");
-    errorSheet["!cols"] = Object.keys(formatValidationErrors[0] || {}).map((key) => ({
+    errorSheet["!cols"] = Object.keys(formatValidationErrors[0]).map((colKey) => ({
       wpx: Math.max(
-        ...formatValidationErrors.map((record) => {
-          const cellValue = (record[key] && record[key].v) || record[key] || "";
-          return cellValue.toString().length;
+        ...formatValidationErrors.map((row) => {
+          const val = row[colKey];
+          const strVal = (val && val.v) || val || "";
+          return strVal.toString().length;
         }),
-        key.length
+        colKey.length
       ) * 10,
     }));
   }
@@ -370,29 +366,32 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
   if (formatDuplicateRecords.length > 0) {
     const duplicateSheet = xlsx.utils.json_to_sheet(formatDuplicateRecords);
     xlsx.utils.book_append_sheet(workbook, duplicateSheet, "Duplicate Records");
-    duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0] || {}).map((key) => ({
+
+    duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0]).map((colKey) => ({
       wpx: Math.max(
-        ...formatDuplicateRecords.map((record) => {
-          const cellValue = (record[key] && record[key].v) || record[key] || "";
-          return cellValue.toString().length;
+        ...formatDuplicateRecords.map((row) => {
+          const val = row[colKey];
+          const strVal = (val && val.v) || val || "";
+          return strVal.toString().length;
         }),
-        key.length
+        colKey.length
       ) * 10,
     }));
   }
 
   const fileName = `error_report_${Date.now()}.xlsx`;
   const errorFilePath = path.join(__dirname, "../Downloads", fileName);
+
   if (!fs.existsSync(path.join(__dirname, "../Downloads"))) {
     fs.mkdirSync(path.join(__dirname, "../Downloads"), { recursive: true });
   }
   xlsx.writeFile(workbook, errorFilePath);
+
   return errorFilePath;
 };
 
 
-
-
+//Import Employee Controller
 const importEmployee = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded." });
@@ -423,20 +422,11 @@ const importEmployee = async (req, res) => {
     });
 
     console.log("Transformed Data:", transformedData[0]);
-    const { savedData, duplicateRecords, validationErrors } = await employeeService.importEmployee(transformedData);
+    const { savedData, duplicateRecords, validationErrors } = await employeeService.importEmployee(transformedData, organizationId);
     fs.unlinkSync(filePath);
 
     if (duplicateRecords.length > 0 || validationErrors.length > 0) {
       const errorFilePath = writeErrorFile(duplicateRecords, validationErrors);
-
-      // return Responses.failResponse(
-      //   req,
-      //   res,
-      //   { errorFileUrl: `/Downloads/${path.basename(errorFilePath)}` },
-      //   messages.importFailed,
-      //   200
-      // );
-
       return res.status(200).json({
         message: "Import completed with errors.",
         errorFileUrl: `/Downloads/${path.basename(errorFilePath)}`,
@@ -459,7 +449,6 @@ const importEmployee = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 const viewProfile = async (req, res) => {
   try {
     const ip = req.headers.ip || (await commonHelper.getIp(req));
@@ -490,8 +479,8 @@ const viewProfile = async (req, res) => {
       req.body.isActive === true
         ? messages.active
         : req.body.isActive === false
-        ? messages.deActive
-        : messages.updateSuccess;
+          ? messages.deActive
+          : messages.updateSuccess;
 
     console.log("Updated Profile Result:", result);
 
@@ -501,13 +490,6 @@ const viewProfile = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
-=======
-
-
-
-
-
->>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 
 
 
@@ -525,10 +507,6 @@ module.exports = {
   listOnlyEmployee,
   getEmployeeListAsPerUnit,
   importEmployee,
-<<<<<<< HEAD
   writeErrorFile,
   viewProfile
-=======
-  writeErrorFile
->>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 };

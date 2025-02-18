@@ -118,7 +118,7 @@ const reAssignActionValidator = async (req, res, next) => {
       reAssignReason: Joi.string().trim().pattern(regularExpression).messages({
         "string.pattern.base": `HTML tags & Special letters are not allowed!`,
       }),
-      reAssigned: Joi.array()
+      reAssignedUsers: Joi.array()
         .items(
           Joi.object({
             email: Joi.string().email().required(),
