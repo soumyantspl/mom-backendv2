@@ -8,10 +8,15 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const commonHelper = require("../helpers/commonHelper");
 const emailConstants = require("../constants/emailConstants");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailService = require("./emailService");
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
+
+
+const Organization = require("../models/organizationModel");
+const BASE_URL = process.env.BASE_URL;
 
 
 /**FUNC- CREATE EMPLOYEE */
@@ -46,6 +51,12 @@ const createEmployee = async (userId, data, ipAddress) => {
     };
     const empData = new Employee(inputData);
     const result = await empData.save();
+
+    const organization = await Organization.findOne({ _id: data.organizationId });
+    const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : process.env.LOGO;
+
     const adminResult = await Employee.aggregate([
       {
         $match: { _id: new ObjectId(userId) },
@@ -75,20 +86,22 @@ const createEmployee = async (userId, data, ipAddress) => {
     ]);
     if (adminResult.length !== 0) {
       const adminDetails = adminResult[0];
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
       const mailData = await emailTemplates.createNewEmployeeEmailTemplate(
         adminDetails,
         logo,
         data
       );
-      const emailSubject = await emailConstants.createEmployeeSubject(
-        adminDetails
-      );
+      // const emailSubject = await emailConstants.createEmployeeSubject(
+      //   adminDetails
+      // );
+      const { emailSubject, mailData: mailBody } = mailData;
       emailService.sendEmail(
         data.email,
         "Employee Created",
         emailSubject,
-        mailData
+        mailBody,
+      //  mailData
       );
     }
     ////////////////////LOGER START
@@ -589,7 +602,6 @@ const importEmployee = async (data, organizationId) => {
     name: Joi.string()
       .trim()
       .pattern(regularExpression)
-      .required()
       .messages({
         "any.required": `Name is required.`,
         "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
@@ -597,7 +609,6 @@ const importEmployee = async (data, organizationId) => {
     email: Joi.string()
       .trim()
       .email()
-      .required()
       .messages({
         "any.required": `Email is required.`,
         "string.email": `Invalid email format.`,
@@ -647,8 +658,23 @@ const importEmployee = async (data, organizationId) => {
       .messages({
         "any.required": `Organization ID is required.`,
       }),
+    designation: Joi.string().trim().pattern(regularExpression).messages({
+      "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
+    }),
+    department: Joi.string().trim().pattern(regularExpression).messages({
+      "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
+    }),
+    unitName: Joi.string().trim().pattern(regularExpression).messages({
+      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
+    }),
+    unitAddress: Joi.string().trim().pattern(regularExpression).messages({
+      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
+    }),
+    organizationId: Joi.string().required().messages({
+      "any.required": `Organization ID is required.`,
+    }),
+    isAdmin: Joi.boolean().strict(),
   });
-
 
   for (const record of data) {
     const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
@@ -839,10 +865,6 @@ const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
 
   return { data: result, logs: logDetails };
 };
-
-
-
-
 
 
 module.exports = {

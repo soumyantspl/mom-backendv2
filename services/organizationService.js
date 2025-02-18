@@ -147,7 +147,8 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     const otpData = new organizationOtp({ otp, email });
     await otpData.save();
 
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
+    const logo = data.dashboardLogo;
     const emailType = "Send OTP";
     const emailSubject = "Organization Registration";
     const mailData =
@@ -193,7 +194,8 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     { new: true }
   );
 
-  const logo = process.env.LOGO;
+  // const logo = process.env.LOGO;
+  const logo = data.dashboardLogo;
   const emailType = "Send OTP";
   const emailSubject = "Organization Registration";
   const mailData = await emailTemplates.organizationRegistrationSendOtpTemplate(

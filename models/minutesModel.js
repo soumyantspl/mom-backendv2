@@ -72,13 +72,9 @@ const minutesSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       required: true,
     },
-    // assignedUserId: {
-    //   type: mongoose.Schema.ObjectId,
-    // },
-    assignedUserId: [{
+    assignedUserId: {
       type: mongoose.Schema.ObjectId,
-      required: true
-    }],
+    },
     reassignedUserId: {
       type: mongoose.Schema.ObjectId,
     },
