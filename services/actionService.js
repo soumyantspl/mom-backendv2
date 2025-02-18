@@ -112,10 +112,10 @@ const actionReassignRequest = async (
       const organization = await Organization.findOne({
         _id: new ObjectId(result.organizationId),
       });
-    
+
       const logo = organization?.dashboardLogo
-      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
-      : process.env.LOGO;
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : process.env.LOGO;
 
       const mailData = await emailTemplates.actionReassignRequestEmailTemplate(
         meetingDetails,
@@ -136,7 +136,7 @@ const actionReassignRequest = async (
         "Reassign Requested",
         emailSubject,
         mailBody,
-      //  mailData
+        //  mailData
       );
     }
     //////////////////////LOGER START
@@ -981,10 +981,10 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     const organization = await Organization.findOne({
       _id: new ObjectId(result.organizationId),
     });
-  
+
     const logo = organization?.dashboardLogo
-    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
-    : process.env.LOGO;
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : process.env.LOGO;
 
     console.log("userData2-->", userData);
 
@@ -1003,15 +1003,6 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       emailService.sendEmail(user.email, "Action Forwarded", emailSubject, mailBody);
     });
 
-    const mailOldData = await emailTemplates.actionReassignEmailToOlAssignedUserTemplate(
-      meetingDetails,
-      logo,
-      assignedUserDetail,
-      data.reAssignReason,
-      result,
-      userData,
-      oldAssignedUserDetail
-    );
     const mailOldData =
       await emailTemplates.actionReassignEmailToOlAssignedUserTemplate(
         meetingDetails,
@@ -1939,10 +1930,10 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
       const organization = await Organization.findOne({
         _id: new ObjectId(result.organizationId),
       });
-    
+
       const logo = organization?.dashboardLogo
-      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
-      : process.env.LOGO;
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : process.env.LOGO;
 
       const mailData = await emailTemplates.actionApproveEmailTemplate(
         meetingDetails,
@@ -1951,7 +1942,7 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
         data.remark,
         result
       );
-     // const emailSubject = await emailConstants.actionApproveSubject(result);
+      // const emailSubject = await emailConstants.actionApproveSubject(result);
       const { emailSubject, mailData: mailBody } = mailData;
       "actionApproveEmailTemplate-----------------------maildata", mailData;
       "actionApproveEmailTemplate-----------------------emailSubject",
@@ -1961,7 +1952,7 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
         "Action Approved",
         emailSubject,
         mailBody,
-      //  mailData
+        //  mailData
       );
       ////////////////////LOGER START
       const logData = {
@@ -2043,10 +2034,10 @@ const reOpenAction = async (actionId, data, userId, ipAddress, userData) => {
     const organization = await Organization.findOne({
       _id: new ObjectId(result.organizationId),
     });
-  
+
     const logo = organization?.dashboardLogo
-    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
-    : null;
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : null;
 
     const mailData = await emailTemplates.actionReOpenEmailTemplate(
       meetingDetails,
@@ -2188,10 +2179,10 @@ const rejectReasignRequest = async (
       const organization = await Organization.findOne({
         _id: new ObjectId(result.organizationId),
       });
-    
+
       const logo = organization?.dashboardLogo
-      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
-      : null;
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : null;
 
       const mailData =
         await emailTemplates.actionReassignRequestRejectEmailTemplate(
@@ -2215,7 +2206,7 @@ const rejectReasignRequest = async (
         "Action Reassign Request Rejected",
         emailSubject,
         mailBody,
-      //  mailData
+        //  mailData
       );
       ////////////////////LOGER START
       const logData = {
@@ -3185,113 +3176,113 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
 
 
 
-// Count priority-based actions (from original `actionDatas`)
-actionDatas.forEach((action) => {
-  if (action.priority === "HIGH") {
-    totalHighPriorityAction++;
-    if (!action.isComplete && !action.isCancelled) {
-      totalHighPriorityDueAction++;
+  // Count priority-based actions (from original `actionDatas`)
+  actionDatas.forEach((action) => {
+    if (action.priority === "HIGH") {
+      totalHighPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalHighPriorityDueAction++;
+      }
     }
-  }
 
-  if (action.priority === "LOW") {
-    totalLowPriorityAction++;
-    if (!action.isComplete && !action.isCancelled) {
-      totalLowPriorityDueAction++;
+    if (action.priority === "LOW") {
+      totalLowPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalLowPriorityDueAction++;
+      }
     }
-  }
 
-  if (action.priority === "NORMAL") {
-    totalNormalPriorityAction++;
-    if (!action.isComplete && !action.isCancelled) {
-      totalNormalPriorityDueAction++;
+    if (action.priority === "NORMAL") {
+      totalNormalPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalNormalPriorityDueAction++;
+      }
     }
-  }
-});
+  });
 
-// Map over filtered actions and update completionStatus
-// Filter only incomplete and not canceled actions (DO NOT override actionDatas)
-let filteredActionDatas = actionDatas.filter(
-  (action) => !action.isComplete && !action.isCancelled
-);
-
+  // Map over filtered actions and update completionStatus
+  // Filter only incomplete and not canceled actions (DO NOT override actionDatas)
+  let filteredActionDatas = actionDatas.filter(
+    (action) => !action.isComplete && !action.isCancelled
+  );
 
 
-// Count priority-based actions (from original `actionDatas`)
-actionDatas.forEach((action) => {
-  if (action.priority === "HIGH") {
-    totalHighPriorityAction++;
-    if (!action.isComplete && !action.isCancelled) {
-      totalHighPriorityDueAction++;
+
+  // Count priority-based actions (from original `actionDatas`)
+  actionDatas.forEach((action) => {
+    if (action.priority === "HIGH") {
+      totalHighPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalHighPriorityDueAction++;
+      }
     }
-  }
 
-  if (action.priority === "LOW") {
-    totalLowPriorityAction++;
-    if (!action.isComplete && !action.isCancelled) {
-      totalLowPriorityDueAction++;
+    if (action.priority === "LOW") {
+      totalLowPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalLowPriorityDueAction++;
+      }
     }
-  }
 
-  if (action.priority === "NORMAL") {
-    totalNormalPriorityAction++;
-    if (!action.isComplete && !action.isCancelled) {
-      totalNormalPriorityDueAction++;
+    if (action.priority === "NORMAL") {
+      totalNormalPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalNormalPriorityDueAction++;
+      }
     }
-  }
-});
+  });
 
-// Map over filtered actions and update completionStatus
-filteredActionDatas = filteredActionDatas.map((action) => {
-  let delayCount = action?.delayCountInDays;
-  let dayCount = Math.abs(delayCount) > 1 ? "days" : "day";
+  // Map over filtered actions and update completionStatus
+  filteredActionDatas = filteredActionDatas.map((action) => {
+    let delayCount = action?.delayCountInDays;
+    let dayCount = Math.abs(delayCount) > 1 ? "days" : "day";
 
-  console.log("dayCount-------------", dayCount);
-  console.log("delayCount-------------", delayCount);
-  console.log("action.isDelayed-------------", action.isDelayed);
-  console.log("action.isComplete-------------", action.isComplete);
+    console.log("dayCount-------------", dayCount);
+    console.log("delayCount-------------", delayCount);
+    console.log("action.isDelayed-------------", action.isDelayed);
+    console.log("action.isComplete-------------", action.isComplete);
 
-  if (action?.isComplete) {
-    if (delayCount > 0 && !action.isDelayed) {
-      action["completionStatus"] = "Before " + Math.abs(delayCount) + " " + dayCount;
-    } else if (delayCount === 0 && !action.isDelayed) {
-      action["completionStatus"] = "On time";
+    if (action?.isComplete) {
+      if (delayCount > 0 && !action.isDelayed) {
+        action["completionStatus"] = "Before " + Math.abs(delayCount) + " " + dayCount;
+      } else if (delayCount === 0 && !action.isDelayed) {
+        action["completionStatus"] = "On time";
+      } else {
+        action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+      }
     } else {
-      action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+      if (delayCount > 0 && !action?.isDelayed) {
+        action["completionStatus"] = "Remaining " + Math.abs(delayCount) + " " + dayCount;
+      } else if (delayCount === 0) {
+        action["completionStatus"] = "Due today";
+      } else {
+        action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+      }
     }
-  } else {
-    if (delayCount > 0 && !action?.isDelayed) {
-      action["completionStatus"] = "Remaining " + Math.abs(delayCount) + " " + dayCount;
-    } else if (delayCount === 0) {
-      action["completionStatus"] = "Due today";
-    } else {
-      action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
-    }
-  }
 
-  // Format due dates
-  action.dueDate = commonHelper.formatDateTimeFormat(action.dueDate).formattedDate;
-  action.mainDueDate = commonHelper.formatDateTimeFormat(action.mainDueDate).formattedDate;
-  // const totalCount =actionDatas.length;
-  // console.log("totalCount",totalCount);
-  
-  return action;
-});
+    // Format due dates
+    action.dueDate = commonHelper.formatDateTimeFormat(action.dueDate).formattedDate;
+    action.mainDueDate = commonHelper.formatDateTimeFormat(action.mainDueDate).formattedDate;
+    // const totalCount =actionDatas.length;
+    // console.log("totalCount",totalCount);
 
-// Console logs
-// console.log("Total High Priority Actions:", totalHighPriorityAction);
-// console.log("Total High Priority Due Actions:", totalHighPriorityDueAction);
-// console.log("Total Low Priority Actions:", totalLowPriorityAction);
-// console.log("Total Low Priority Due Actions:", totalLowPriorityDueAction);
-// console.log("Total Normal Priority Actions:", totalNormalPriorityAction);
-// console.log("Total Normal Priority Due Actions:", totalNormalPriorityDueAction);
-// console.log("Filtered Actions:", filteredActionDatas);
+    return action;
+  });
 
-return {
-   totalCount: totalCount.length,
-  actionDatas: filteredActionDatas, 
-  type: bodyData.actionStatus,
-};
+  // Console logs
+  // console.log("Total High Priority Actions:", totalHighPriorityAction);
+  // console.log("Total High Priority Due Actions:", totalHighPriorityDueAction);
+  // console.log("Total Low Priority Actions:", totalLowPriorityAction);
+  // console.log("Total Low Priority Due Actions:", totalLowPriorityDueAction);
+  // console.log("Total Normal Priority Actions:", totalNormalPriorityAction);
+  // console.log("Total Normal Priority Due Actions:", totalNormalPriorityDueAction);
+  // console.log("Filtered Actions:", filteredActionDatas);
+
+  return {
+    totalCount: totalCount.length,
+    actionDatas: filteredActionDatas,
+    type: bodyData.actionStatus,
+  };
 }
 
 
