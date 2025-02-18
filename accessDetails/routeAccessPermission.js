@@ -1,5 +1,5 @@
 const organiserAccessUrls = [
-  ///MEETING URLS
+  //MEETING URLS
   "/createMeeting",
   "/viewAllMeetings",
   "/updateMeeting",

@@ -8,8 +8,7 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const commonHelper = require("../helpers/commonHelper");
 const emailConstants = require("../constants/emailConstants");
-//const emailTemplates = require("../emailSetUp/emailTemplates");
-const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailService = require("./emailService");
 const Joi = require("joi");
 
@@ -81,16 +80,14 @@ const createEmployee = async (userId, data, ipAddress) => {
         logo,
         data
       );
-      // const emailSubject = await emailConstants.createEmployeeSubject(
-      //   adminDetails
-      // );
-      const { emailSubject, mailData: mailBody } = mailData;
+      const emailSubject = await emailConstants.createEmployeeSubject(
+        adminDetails
+      );
       emailService.sendEmail(
         data.email,
         "Employee Created",
         emailSubject,
-        mailBody,
-      //  mailData
+        mailData
       );
     }
     ////////////////////LOGER START
@@ -720,6 +717,8 @@ const importEmployee = async (data) => {
 
   return { savedData, duplicateRecords, validationErrors };
 };
+
+
 
 
 

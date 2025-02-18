@@ -1,5 +1,3 @@
-const commonHelper = require("../helpers/commonHelper");
-
 const requestDemoOtpMessage =
   "Thank you for your interest in scheduling a demo with MinutesVault! Before we proceed, please verify your email address by using the following One-Time Password (OTP).";
 const contactUsMessage =
@@ -34,8 +32,7 @@ const cancelMeetingSubject = async (meetingData) => {
 };
 
 const scheduleMeetingSubject = (meetingData) => {
-  
-  return `Invitation : ${commonHelper.decryptWithAES(meetingData.title)} @ ${new Date(
+  return `Invitation : ${meetingData.title} @ ${new Date(
     meetingData.date
   ).toDateString()} 
       ${meetingData.fromTime}
@@ -53,15 +50,15 @@ const editMeetingSubject = (meetingData) => {
 };
 
 const reScheduleMeetingSubject = (meetingData) => {
-  return `Meeting Rescheduled : (Meeting Title: ${commonHelper.decryptWithAES(meetingData.title)}, 
-  Rescheduled On: ${new Date(meetingData.date).toDateString()} 
+  return `Meeting Rescheduled : (Meeting Title: ${meetingData.title
+    }, Rescheduled On: ${new Date(meetingData.date).toDateString()} 
      ${meetingData.fromTime}
     -  ${meetingData.toTime})`;
 };
 
 const createMinuteSubject = (meetingData) => {
-  return `MOM Created: (Meeting Title: ${meetingData.title},
-   Held On: ${new Date(meetingData.date).toDateString()} 
+  return `MOM Created: (Meeting Title: ${meetingData.title
+    }, Held On: ${new Date(meetingData.date).toDateString()} 
      ${meetingData.fromTime}
     -  ${meetingData.toTime})`;
 };

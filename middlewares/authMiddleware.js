@@ -4,7 +4,7 @@ const messages = require("../constants/constantMessages");
 const employeeService = require("../services/employeeService");
 const accessDetails = require("../accessDetails/routeAccessPermission");
 const { errorLog } = require("../middlewares/errorLog");
-//*FUNC TO GENERATE NEW TOKEN FOR USER*/
+/*FUNC TO GENERATE NEW TOKEN FOR USER*/
 const generateUserToken = async (data) => {
   token = jwt.sign(data, process.env.JWT_USER_SECRET, {
     expiresIn: "365d", 
