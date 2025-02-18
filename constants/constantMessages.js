@@ -109,13 +109,22 @@ const updateAttendanceSuccess = " Attendance updated successfully";
 const emailAlreadyUsed = "This Email is already in use by an Employee"
 const importedSuccess = "File imported successfully"
 const duplicateOrganizationCode = "The Organization Code is already exist, Please try another one!";
-const wrongZoomCredentials="Please add correct credentials!";
-const recordingsDownloadedSuccessfully="All recordings downloaded successfully."
-const MOMDownloadedSuccessfully="MOM downloaded successfully."
+const wrongZoomCredentials = "Please add correct credentials!";
+const recordingsDownloadedSuccessfully = "All recordings downloaded successfully."
+const MOMDownloadedSuccessfully = "MOM downloaded successfully."
+const importSuccess = "Import completed successfully."
+const importFailed = "Import completed with errors.Please check Reason for Failed column"
+const importEroor = "Error in processing Excel file"
+const validationError = "Validation Errors"
+
+//Pratishruti//
+//view pRofile//
+const currentPasswordIncorrect = "Current Password is Incorrect"
+
 const notificationSent = "Email sent successfully"
 const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater than Draft MeetingReminder Days"
-const draftDeleted ="Draft Meeting Deleted"
-const deleteDraftFailed ="Faild in Delete Draft Meeting"
+const draftDeleted = "Draft Meeting Deleted"
+const deleteDraftFailed = "Faild in Delete Draft Meeting"
 module.exports = {
   pleaseAddMinute,
   isDeleteNotAllowed,
@@ -213,6 +222,11 @@ module.exports = {
   rejectedSuccess,
   MOMDownloadedSuccessfully,
   recordingsDownloadedSuccessfully,
+  importSuccess,
+  importFailed,
+  importEroor,
+  validationError,
+  currentPasswordIncorrect,
   roomUnavailable,
   notificationSent,
   notValid,

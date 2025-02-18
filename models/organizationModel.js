@@ -20,8 +20,17 @@ const organizationSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
+    contactPersonName: {
+      type: String,
+    },
     phoneNo: {
       type: Number,
+    },
+    contactPersonPhNo: {
+      type: Number
+    },
+    contactPersonWhatsAppNo: {
+      type: Number
     },
     isActive: {
       type: Boolean,

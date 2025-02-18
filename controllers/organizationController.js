@@ -7,11 +7,9 @@ const commonHelper = require("../helpers/commonHelper");
 /**FUNC- TO CREATE ORGANIZATION **/
 const organizationRegistrationController = async (req, res) => {
   try {
-    console.log("File -->", req.files)
-    console.log("Body ->", req.body)
-    const duplicateResult =
-      await organizationService.checkDuplicateOrganization(req.body.email);
-    console.log("Duplicate Result-->", duplicateResult)
+    // Check for duplicate organization based on email
+    const duplicateResult = await organizationService.checkDuplicateOrganization(req.body.email);
+    console.log("Duplicate Result:", duplicateResult);
     if (duplicateResult) {
       return Responses.failResponse(
         req,
@@ -21,29 +19,16 @@ const organizationRegistrationController = async (req, res) => {
         200
       );
     }
-    const duplicateOrganizationCodeResult = await organizationService.checkDuplicateOrganizationCode(req.body.organizationCode)
-    console.log("Duplicate Org code-->", duplicateOrganizationCodeResult)
-    if (duplicateOrganizationCodeResult) {
-      return Responses.failResponse(req,
-        res,
-        null,
-        messages.duplicateOrganizationCode,
-        200)
-    }
     const data = {
       name: req.body.name,
       email: req.body.email,
       phoneNo: req.body.phoneNo,
-      organizationCode: req.body.organizationCode,
+      contactPersonName: req.body.contactPersonName,
+      contactPersonPhNo: req.body.contactPersonPhNo,
+      contactPersonWhatsAppNo: req.body.contactPersonWhatsAppNo
     };
-    if (req.files) {
-      if (req.files["dashboardLogo"]) {
-        data.dashboardLogo = req.files["dashboardLogo"][0].path;
-      }
-      if (req.files["loginLogo"]) {
-        data.loginLogo = req.files["loginLogo"][0].path;
-      }
-    }
+    console.log("data--", data)
+    // Call the service to register the organization
     const result = await organizationService.organizationRegistrationService(data);
     return Responses.successResponse(
       req,
@@ -195,10 +180,14 @@ const viewSingleOrganizationController = async (req, res) => {
 /**FUNC- TO EDIT ORGANIZATION **/
 const editOrganizationController = async (req, res) => {
   try {
+    const organizationId = req.params.organizationId
     const data = {
       name: req.body.name,
       email: req.body.email,
       phoneNo: req.body.phoneNo,
+      contactPersonName: req.body.contactPersonName,
+      contactPersonPhNo: req.body.contactPersonPhNo,
+      contactPersonWhatsAppNo: req.body.contactPersonWhatsAppNo,
       organizationCode: req.body.organizationCode,
     };
 
@@ -220,15 +209,15 @@ const editOrganizationController = async (req, res) => {
       ip
     );
 
-    if (result?.error === "Organization code already exists.") {
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        messages.duplicateOrganizationCode,
-        200
-      );
-    }
+    // if (result?.error === "Organization code already exists.") {
+    //   return Responses.failResponse(
+    //     req,
+    //     res,
+    //     null,
+    //     messages.duplicateOrganizationCode,
+    //     200
+    //   );
+    // }
 
     if (!result) {
       return Responses.failResponse(
