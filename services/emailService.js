@@ -1,5 +1,6 @@
 const { transporter, mailOptions } = require("../emailSetUp/mailSetup");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailConstants = require("../constants/emailConstants");
 const EmailLogs = require("../models/emailLogsModel");
 /**FUNC- TO SEND  OTP TO EMAIL USER */

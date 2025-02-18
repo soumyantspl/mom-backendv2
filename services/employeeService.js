@@ -8,9 +8,15 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const commonHelper = require("../helpers/commonHelper");
 const emailConstants = require("../constants/emailConstants");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailService = require("./emailService");
 const Joi = require("joi");
+const bcrypt = require('bcrypt');
+
+
+const Organization = require("../models/organizationModel");
+const BASE_URL = process.env.BASE_URL;
 
 
 /**FUNC- CREATE EMPLOYEE */
@@ -45,6 +51,12 @@ const createEmployee = async (userId, data, ipAddress) => {
     };
     const empData = new Employee(inputData);
     const result = await empData.save();
+
+    const organization = await Organization.findOne({ _id: data.organizationId });
+    const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : process.env.LOGO;
+
     const adminResult = await Employee.aggregate([
       {
         $match: { _id: new ObjectId(userId) },
@@ -74,20 +86,22 @@ const createEmployee = async (userId, data, ipAddress) => {
     ]);
     if (adminResult.length !== 0) {
       const adminDetails = adminResult[0];
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
       const mailData = await emailTemplates.createNewEmployeeEmailTemplate(
         adminDetails,
         logo,
         data
       );
-      const emailSubject = await emailConstants.createEmployeeSubject(
-        adminDetails
-      );
+      // const emailSubject = await emailConstants.createEmployeeSubject(
+      //   adminDetails
+      // );
+      const { emailSubject, mailData: mailBody } = mailData;
       emailService.sendEmail(
         data.email,
         "Employee Created",
         emailSubject,
-        mailData
+        mailBody,
+      //  mailData
       );
     }
     ////////////////////LOGER START
@@ -718,8 +732,82 @@ const importEmployee = async (data) => {
   return { savedData, duplicateRecords, validationErrors };
 };
 
+const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
+  if (profilePicture && profilePicture.filename) {
+    const filePath = `/uploads/${profilePicture.filename}`;
+    data.profilePicture = filePath;
+  } else {
+    console.log("No new profile picture provided.");
+  }
+  
 
+  const employee = await Employee.findById(id);
+  if (!employee) {
+    return { error: "Employee not found." };
+  }
 
+  let logDetails = [];
+  const employeeName = employee.name || "Unknown Employee";
+  const email = employee.email || "Email not available";
+
+  if (data.password && data.confirmPassword) {
+    if (data.password.trim() !== data.confirmPassword.trim()) {
+      return { error: "New password and Confirm Password do not match." };
+    }
+
+    if (!employee.password) {
+      // First-time password setting
+      const hashedPassword = await bcrypt.hash(data.password, 10);
+      data.password = hashedPassword;
+      logDetails.push("Password was set successfully.");
+    } else {
+      if (!data.currentPassword) {
+        return { error: "Current password is required for updating password." };
+      }
+
+      // Compare entered current password with stored password
+      const isMatch = await bcrypt.compare(data.currentPassword, employee.password);
+
+      if (!isMatch) {
+        return { isMatch: false };
+      }
+
+      // Hash the new password before saving
+      const hashedPassword = await bcrypt.hash(data.password, 10);
+      data.password = hashedPassword;
+      logDetails.push("Password was updated successfully.");
+    }
+
+    delete data.confirmPassword;
+    delete data.currentPassword;
+  } else {
+    delete data.password;
+    delete data.confirmPassword;
+    delete data.currentPassword;
+  }
+
+  console.log("Data to update:", data);
+
+  const result = await Employee.findByIdAndUpdate(id, data, { new: true });
+  if (!result) {
+    return { error: "Update failed." };
+  }
+
+  if (result.name !== employee.name) {
+    logDetails.push(`Name changed from <strong>${employee.name}</strong> to <strong>${result.name}</strong>`);
+  }
+  if (result.email !== employee.email) {
+    logDetails.push(`Email changed from <strong>${employee.email}</strong> to <strong>${result.email}</strong>`);
+  }
+  if (result.empId !== employee.empId) {
+    logDetails.push(`Employee ID changed from <strong>${employee.empId}</strong> to <strong>${result.empId}</strong>`);
+  }
+  if (result.profilePicture !== employee.profilePicture) {
+    logDetails.push(`Profile Picture updated.`);
+  }
+
+  return { data: result, logs: logDetails };
+};
 
 
 module.exports = {
@@ -735,5 +823,6 @@ module.exports = {
   checkDuplicateUserEntry,
   createAttendees,
   getEmployeeListAsPerUnit,
-  importEmployee
+  importEmployee,
+  viewProfile
 };

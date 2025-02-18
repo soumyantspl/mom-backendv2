@@ -118,7 +118,7 @@ const sendCancelMeetingEmailTemplate = async (meetingData, attendeeName, logo) =
     
     body = body
       .replace('{attendeeName}', attendeeName)
-      .replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title))
+      .replace('{meetingTitle}', meetingData.title)
       .replace('{meetingId}', meetingData.meetingId)
       .replace('{meetingLink}', `${process.env.FRONTEND_URL}/view-meeting-details/${meetingData._id}`)
       .replace('{meetingDate}', new Date(meetingData.date).toDateString())
@@ -129,7 +129,7 @@ const sendCancelMeetingEmailTemplate = async (meetingData, attendeeName, logo) =
       .replace('{createdByEmail}', meetingData.createdByDetail.email);
 
     subject = subject
-      .replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title))
+      .replace('{meetingTitle}', meetingData.title)
       .replace('{meetingDate}', new Date(meetingData.date).toDateString())
       .replace('{fromTime}', meetingData.fromTime)
       .replace('{toTime}', meetingData.toTime)
@@ -209,7 +209,7 @@ const sendScheduledMeetingEmailTemplate = async (
       .replace("{userManualLink}", process.env.USER_MANUAL_LINK)
       .replace("{meetingMode}",commonHelper.convertFirstLetterToCapital(meetingData.mode))
       .replace("{meetingId}", meetingData?.meetingId)
-      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
+      .replace("{meetingTitle}", meetingData.title)
       .replace("{meetingLink}", link)
       .replace(
         "{meetingLocation}",
@@ -240,7 +240,7 @@ const sendScheduledMeetingEmailTemplate = async (
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
     subject = subject
-      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
+      .replace("{meetingTitle}", meetingData.title)
       .replace("{meetingDate}", new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime)
@@ -324,7 +324,7 @@ const sendReScheduledMeetingEmailTemplate = async (
         "{name}",
         commonHelper.convertFirstLetterOfFullNameToCapital(attendeeName)
       )
-      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
+      .replace(/{meetingTitle}/g, meetingData.title)
       .replace(/{meetingId}/g, meetingData.meetingId)
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace(/{fromTime}/g, meetingData.fromTime)
@@ -381,7 +381,7 @@ const sendReScheduledMeetingEmailTemplate = async (
       .replace(/{createdByEmail}/g, meetingData.createdByDetail?.email);
 
     subject = subject
-      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
+      .replace(/{meetingTitle}/g, meetingData.title)
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime);
@@ -456,7 +456,7 @@ const sendCreateMinutesEmailTemplate = async (
         "{name}",
         commonHelper.convertFirstLetterOfFullNameToCapital(attendeeName)
       )
-      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
+      .replace(/{meetingTitle}/g, meetingData.title)
       .replace(/{meetingId}/g, meetingData.meetingId)
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace(/{fromTime}/g, meetingData.fromTime)
@@ -483,7 +483,7 @@ const sendCreateMinutesEmailTemplate = async (
       );
 
     subject = subject
-      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
+      .replace(/{meetingTitle}/g, meetingData.title)
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace(
         /{meetingTime}/g,
@@ -543,7 +543,7 @@ const actionReassignEmailToOlAssignedUserTemplate = async (
         return reject(new Error(`No body found for template type: ACTIONREASSIGNTOOLDUSER`));
       }
 
-      subject = subject.replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
+      subject = subject.replace(/{meetingTitle}/g, meetingData.title)
         .replace(/{organizerEmail}/g, meetingData?.createdByDetail?.email)
 
       body = body
@@ -659,10 +659,8 @@ const actionAssignEmailTemplate = async (
   meetingData,
   logo,
   assignedUserDetails,
-  userData,
-  action
-  
-  
+  action,
+  userData
 ) => {
   console.log("meetingData Template", meetingData)
   return new Promise(async (resolve, reject) => {
@@ -691,8 +689,6 @@ const actionAssignEmailTemplate = async (
         );
       }
 
-      subject = subject.replace("{actionTitle}", action.title);
-      
       body = body
         .replace(
           "{actionlink}",
@@ -706,8 +702,8 @@ const actionAssignEmailTemplate = async (
             assignedUserDetails?.name
           )
         )
-      .replace("{organizerEmail}", userData.email);
-     
+        .replace("{organizerEmail}", userData.email);
+      subject = subject.replace("{actionTitle}", action.title);
 
       mailBody =
         `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -927,7 +923,7 @@ const acceptMinuteEmailTemplate = async (meetingData, attendeeDetails, logo) => 
         return reject(new Error(`No body found for template type: ACCEPTMINUTES`));
       }
 
-      subject = subject.replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
+      subject = subject.replace(/{meetingTitle}/g, meetingData.title)
         .replace(/{organizerEmail}/g, meetingData?.createdByDetail?.email)
         .replace(/{attendeeName}/g, attendeeDetails.name)
         .replace(/{attendeeEmail}/g, attendeeDetails.email)
@@ -1151,16 +1147,16 @@ const actionReassignRequestRejectEmailTemplate = async (
 
   //  salutation = salutation.replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital(attendeeDetails.name));
     body = body
-      .replace(/{assignedUserName}/g , commonHelper.convertFirstLetterOfFullNameToCapital(attendeeDetails.name))
+      .replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital(attendeeDetails.name))
       .replace( "{actionlink}", `${process.env.FRONTEND_URL}/view-action-detail/${actionDetails?._id}`)
       .replace("{rejectReason}", remark)
 
-      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
+      .replace("{meetingTitle}", meetingData.title)
       .replace("{meetingId}", meetingData.meetingId)
       .replace("{description}", actionDetails?.description)
       .replace("{organizerName}", meetingData?.createdByDetail?.name)
       .replace("{organizerEmail}", meetingData?.createdByDetail?.email)
-     //.replace(/{assignedUserName}/g , attendeeDetails.name)
+    //  .replace("{assignedUserName}", attendeeDetails.name)
       .replace("{assignedUserEmail}", attendeeDetails.email);
 
     //  subject = subject.replace('{organizerName}', meetingData?.createdByDetail?.name);
@@ -1282,13 +1278,13 @@ const sendGiveWriteMOMPermissionEmailTemplate = async (meetingData, attendeeName
     
     body = body
     .replace('{attendeeName}', attendeeName)
-      .replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title))
+      .replace('{meetingTitle}', meetingData.title)
       .replace('{meetingId}', meetingData.meetingId)
       .replace('{meetingLink}', `${process.env.FRONTEND_URL}/view-meeting-details/${meetingData._id}`)
       .replace('{createdByName}', meetingData.createdByDetail.name)
       .replace('{createdByEmail}', meetingData.createdByDetail.email);
 
-    subject = subject.replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title));
+    subject = subject.replace('{meetingTitle}', meetingData.title);
 
     const mailBody =
       `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -1550,7 +1546,7 @@ const reSendScheduledMeetingEmailTemplate = async (
           commonHelper.convertFirstLetterToCapital(meetingData.mode)
         )
         .replace(/{meetingId}/g, meetingData?.meetingId)
-        .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
+        .replace(/{meetingTitle}/g, meetingData.title)
         .replace(/{meetingLink}/g, link)
         .replace(/{attendees}/g, attendeeData)
         .replace(/{agenda}/g, agendaData)
@@ -1565,7 +1561,10 @@ const reSendScheduledMeetingEmailTemplate = async (
             meetingData?.roomDetail[0]?.location
             : meetingData?.locationDetails?.location
         )
-        .replace(/{organizerName}/g, meetingData.createdByDetail.name)
+        .replace(
+          /{organizerName}/g,
+          userData.name
+        )
 
         .replace(/{organizerEmail}/g, meetingData.createdByDetail.email)
         .replace(
@@ -1616,11 +1615,11 @@ const reSendScheduledMeetingEmailTemplate = async (
         );
 
       subject = subject
-        .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
+        .replace("{meetingTitle}", meetingData.title)
         .replace("{meetingDate}", new Date(meetingData.date).toDateString())
         .replace("{fromTime}", meetingData.fromTime)
         .replace("{toTime}", meetingData.toTime)
-        .replace("{organizerEmail}", meetingData.createdByDetail.email);
+        .replace("{organizerEmail}", userData.email);
 
       mailBody =
         `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -1681,7 +1680,7 @@ const sendAttendanceDetailsEmailTemplate = async (
 
       .replace("{meetingMode}", commonHelper.convertFirstLetterToCapital(meetingData.mode))
       .replace("{meetingId}", meetingData?.meetingId)
-      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
+      .replace("{meetingTitle}", meetingData.title)
       .replace("{meetingDate}", new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime)
@@ -1692,7 +1691,7 @@ const sendAttendanceDetailsEmailTemplate = async (
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
     subject = subject
-      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
+      .replace("{meetingTitle}", meetingData.title)
       .replace("{meetingDate}", new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime)
@@ -1996,9 +1995,8 @@ const actionReassignRequestEmailTemplate = async (
   meetingData,
   logo,
   requestDetails,
-  userData,
   actionDetails,
-//  assignedUserDetail
+  assignedUserDetail
 ) => {
   try {
     const template = await EmailTemplate.findOne({
@@ -2029,18 +2027,17 @@ const actionReassignRequestEmailTemplate = async (
   //  salutation = salutation.replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital( meetingData?.createdByDetail?.name));
     body = body
     .replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital( meetingData?.createdByDetail?.name))
-   // .replace("{organizerEmail}", meetingData.createdByDetail.email)
       .replace( "{actionlink}",`${process.env.FRONTEND_URL}/view-action-detail/${actionDetails._id}`)
       .replace("{requestDetails}", requestDetails)
-      .replace('{assignedUserName}', userData.name)
-      .replace("{assignedUserEmail}", userData.email);
+      .replace('{assignedUserName}', assignedUserDetail.name)
+      .replace("{assignedUserEmail}", assignedUserDetail.email);
 
     //  subject = subject.replace('{organizerName}', meetingData?.createdByDetail?.name);
     subject = subject
-      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
+      .replace("{meetingTitle}", meetingData.title)
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
-    console.log("Meeting Tittle====", commonHelper.decryptWithAES(meetingData.title));
+    console.log("Meeting Tittle====", meetingData.title);
 
     mailBody =
       `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -2106,14 +2103,14 @@ const actionApproveEmailTemplate = async (
       .replace( "{actionlink}",`${process.env.FRONTEND_URL}/view-action-detail/${action._id}`)
       .replace("{actionDescription}", action?.description)
       .replace("{approvalRemark}", reason)
-      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
+      .replace("{meetingTitle}", meetingData.title)
       .replace("{meetingId}", meetingData.meetingId)
       .replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital(meetingData.createdByDetail.name))
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
     subject = subject.replace("{actionTitle}", action.title);
 
-    console.log("Meeting Tittle====", commonHelper.decryptWithAES(meetingData.title));
+    console.log("Meeting Tittle====", meetingData.title);
 
     mailBody =
       `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -2342,7 +2339,7 @@ const actionCancelEmailTemplate = async (
         )
         .replace(/{email}/g, attendeeDetails?.email)
         .replace("{description}", actionDetails?.description)
-        .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData?.title))
+        .replace("{meetingTitle}", meetingData?.title)
         .replace("{meetingId}", meetingData?.meetingId)
         .replace("{organizerEmail}", meetingData.createdByDetail.email)
         .replace(
@@ -2566,7 +2563,11 @@ const actionAssignAdminEmailTemplate = async (
           )
         )
         .replace(
-          /{organizerName}/g,commonHelper.convertFirstLetterOfFullNameToCapital(userData.name))
+          /{organizerName}/g,
+          commonHelper.convertFirstLetterOfFullNameToCapital(
+            userData.name
+          )
+        )
         .replace(/{organizerEmail}/g, userData.email)
         .replace(
           /{assignedUserName}/g,
@@ -2599,111 +2600,65 @@ const actionAssignAdminEmailTemplate = async (
   });
 }
 
-//pratishrutii
-// const sendDraftMeetingNotification = async (meeting, creator, logo) => {
-//   console.log("Generating draft meeting notification email...",creator);
 
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       let subject = `Reminder: Your Draft Meeting - ${meeting.title}`;
-//       let body = `
-//         <p>Dear ${creator},</p>
-//         <p>You have a draft meeting titled <strong>${meeting.title}</strong> that has not been finalized.</p>
-//         <p>Please complete or schedule your meeting at your earliest convenience.</p>
-//         <p><a href="${process.env.FRONTEND_URL}/view-meeting-details/${meeting._id}">View Meeting</a></p>
-//         <p>Best regards,<br>Meeting Scheduler Team</p>
-//       `;
-
-//       let mailBody = `
-//         <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
-//           <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
-//             <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
-//               <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
-//                 <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
-//               </a>
-//               ${body}
-//             </div>
-//           </div>
-//         </div>
-//       `;
-
-//       resolve({
-//         emailSubject:subject,
-//         mailData: mailBody,
-//       });
-//     } catch (error) {
-//       console.error("Error generating draft meeting email template:", error);
-//       reject(error);
-//     }
-//   });
-// };
 const sendDraftMeetingNotification = async (meetings, creator, logo) => {
-  try {
-    console.log("Generating draft meeting notification email for:", creator.name);
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log("Generating draft meeting notification email for:", creator.name);
 
-    if (!Array.isArray(meetings)) {
-      console.error("Error: meetings is not an array", meetings);
-      throw new Error("meetings must be an array");
-    }
+      if (!Array.isArray(meetings)) {
+        console.error("Error: meetings is not an array", meetings);
+        return reject(new Error("meetings must be an array"));
+      }
 
-    let subject = `Reminder: Your Draft Meetings - ${meetings.length} Pending`;
+      let subject = `Reminder: Your Draft Meetings - ${meetings.length} Pending`;
 
-    let meetingsList = meetings
-      .map(
-        (meeting) => `
-        <li>
-          <strong>${meeting.title}</strong> (Created: ${new Date(meeting.createdAt).toDateString()})<br>
-          <a href="${process.env.FRONTEND_URL}/view-meeting-details/${meeting._id}">View Meeting</a>
-        </li>
-      `
-      )
-      .join("");
+      let meetingsList = meetings
+        .map(
+          (meeting) => `
+            <li>
+              <strong>${meeting.title}</strong> (Created: ${new Date(meeting.createdAt).toDateString()})<br>
+              <a href="${process.env.FRONTEND_URL}/view-meeting-details/${meeting._id}">View Meeting</a>
+            </li>
+          `
+        )
+        .join("");
 
-    let body = `
-      <p>Dear ${creator.name},</p>
-      <p>You have the following draft meetings that have not been finalized:</p>
-      <ul>${meetingsList}</ul>
-      <p>Please complete or schedule them at your earliest convenience.</p>
-      <p>Best regards,<br>Meeting Scheduler Team</p>
-    `;
+      let body = `
+        <p>Dear ${creator.name},</p>
+        <p>You have the following draft meetings that have not been finalized:</p>
+        <ul>${meetingsList}</ul>
+        <p>Please complete or schedule them at your earliest convenience.</p>
+        <p>Best regards,<br>Meeting Scheduler Team</p>
+      `;
 
-    let mailBody = `
-      <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
-        <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
-          <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
-            <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
-              <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
-            </a>
-            ${body}
+      let mailBody = `
+        <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
+          <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
+            <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
+              <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
+                <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
+              </a>
+              ${body}
+            </div>
           </div>
         </div>
-      </div>
-    `;
-    console.log("Mailbody-------",mailBody);
-    
+      `;
 
-    return {
-      emailSubject: subject,
-      mailBody: mailBody,
-    };
-  } catch (error) {
-    console.error("Error generating draft meeting email template:", error);
-    throw error;
-  }
+      //console.log("Mailbody-------", mailBody);
+
+      resolve({
+        emailSubject: subject,
+        mailBody: mailBody,
+      });
+    } catch (error) {
+      console.error("Error generating draft meeting email template:", error);
+      reject(error);
+    }
+  });
 };
 
-const checkDraftMeetingsCron = () => {
-  try {
-    cron.schedule("0 * * * *", async () => { // Runs every hour
-      console.log("Running checkDraftMeetings cron job...");
-      await notifyMeetingCreatorAboutDraft();
-    });
 
-    console.log("checkDraftMeetingsCron scheduled to run every hour.");
-  } catch (error) {
-    console.error("Error in checkDraftMeetingsCron:", error);
-  }
-};
 
 
 
@@ -2731,13 +2686,13 @@ module.exports = {
   sendCancelMeetingEmailTemplate,//c
 
   //Monalisa
-  sendOtpEmailTemplate,  // c --done  ----
-  actionReassignEmailTemplate, //c  (action forward)---done ---
+  sendOtpEmailTemplate,  // c --done
+  actionReassignEmailTemplate, //c  (action forward)---done
   actionAssignEmailTemplate, //c -- done
-  organizationRegistrationSendOtpTemplate, //c (organization-signup-otp) -- done ---
+  organizationRegistrationSendOtpTemplate, //c (organization-signup-otp) -- done
   actionReOpenEmailTemplate, // c  (closed meeting) -- done
   reSendScheduledMeetingEmailTemplate, //c   --- (update)--- done
-  acceptMinuteEmailTemplate, //c -- closed meeting-> view minute -----done
+  acceptMinuteEmailTemplate, //c -- done
   actionReassignEmailToOlAssignedUserTemplate, //c  --- done
   actionAssignAdminEmailTemplate,  //c
 

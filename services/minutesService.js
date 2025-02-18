@@ -13,13 +13,15 @@ const fileService = require("./fileService");
 const Meetings = require("../models/meetingModel");
 const Employee = require("../models/employeeModel");
 const ObjectId = require("mongoose").Types.ObjectId;
-const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
 const meetingService = require("../services/meetingService");
 const actionService = require("../services/actionService");
 const emailConstants = require("../constants/emailConstants");
 const emailService = require("./emailService");
 const commonHelper = require("../helpers/commonHelper");
 const Config = require("../models/configurationModel");
+const Organization = require("../models/organizationModel");
 //FUNCTION TO ACCEPT OR REJECT MINUTES
 const acceptRejectMinutes = async (data, minuteId, userId) => {
   const result = await Minutes.findOneAndUpdate(
@@ -107,6 +109,12 @@ const createMinutes = async (
       organizationId: data.organizationId,
       subDetails: ` Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
     };
+
+    const organization = await Organization.findOne({ email: data.email }); 
+    const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : process.env.LOGO;
+
     if (data.isNewUser) {
       const empData = await employeeService.createAttendee(
         data.name,
@@ -170,7 +178,7 @@ const createMinutes = async (
         { _id: new ObjectId(data?.assignedUserId) },
         { email: 1, name: 1, _id: 1 }
       );
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
       const mailData = await emailTemplates.actionAssignEmailTemplate(
         meetingDetails,
         logo,
@@ -178,14 +186,16 @@ const createMinutes = async (
         userData,
         newMinutes,
       );
-      const emailSubject = await emailConstants.assignSubject(newMinutes);
+      // const emailSubject = await emailConstants.assignSubject(newMinutes);
+      const { emailSubject, mailData: mailBody } = mailData;
+
       console.log("userData->", userData)
       if (assignedUserDetail) {
         emailService.sendEmail(
           assignedUserDetail?.email,
           "Action Created",
           emailSubject,
-          mailData
+          mailBody
         );
       }
 
@@ -197,7 +207,8 @@ const createMinutes = async (
           newMinutes,
           userData
         );
-        const emailSubject = await emailConstants.assignSubject(newMinutes);
+        // const emailSubject = await emailConstants.assignSubject(newMinutes);
+        const { emailSubject, mailData: mailBody } = mailData;
         console.log("userData->", userData)
         console.log("emailSubject->", emailSubject)
         console.log("Meeting details start", meetingDetails)
@@ -206,7 +217,7 @@ const createMinutes = async (
           meetingDetails.createdByDetail.email,
           "Action Created",
           emailSubject,
-          mailData
+          mailBody
         );
       }
     }
@@ -570,6 +581,11 @@ const createAmendmentRequest = async (data, minuteId, userId) => {
     }
   );
 
+  const organization = await Organization.findOne({ email: data.email });
+  const logo = organization?.dashboardLogo
+    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+    : process.env.LOGO;
+
   if (result) {
     const activityObject = {
       activityDetails: data.details,
@@ -589,7 +605,7 @@ const createAmendmentRequest = async (data, minuteId, userId) => {
       const attendeeDetails = meetingDetails.attendees.find(
         (item) => item._id.toString() === userId.toString()
       );
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
       const mailData = await emailTemplates.sendAmendmentCreatedEmailTemplate(
         meetingDetails,
         attendeeDetails,
@@ -932,7 +948,7 @@ const updateMinute = async (data, minuteId, userId, userData, ipAddress = "1000"
         { _id: new ObjectId(data?.assignedUserId) },
         { email: 1, name: 1, _id: 1 }
       );
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
       const mailData = await emailTemplates.actionAssignEmailTemplate(
         meetingDetails,
         logo,
@@ -940,14 +956,15 @@ const updateMinute = async (data, minuteId, userId, userData, ipAddress = "1000"
         result,
         userData
       );
-      const emailSubject = await emailConstants.assignSubject(result);
+      // const emailSubject = await emailConstants.assignSubject(result);
+      const { emailSubject, mailData: mailBody } = mailData;
 
       if (assignedUserDetail) {
         emailService.sendEmail(
           assignedUserDetail?.email,
           "Action Created",
           emailSubject,
-          mailData
+          mailBody
         );
 
       }
@@ -960,7 +977,8 @@ const updateMinute = async (data, minuteId, userId, userData, ipAddress = "1000"
           result,
           userData
         );
-        const emailSubject = await emailConstants.assignSubject(result);
+        // const emailSubject = await emailConstants.assignSubject(result);
+        const { emailSubject, mailData: mailBody } = mailData;
         console.log("userData->", userData)
         console.log("emailSubject->", emailSubject)
         console.log("Meeting details start", meetingDetails)
@@ -969,7 +987,7 @@ const updateMinute = async (data, minuteId, userId, userData, ipAddress = "1000"
           meetingDetails.createdByDetail.email,
           "Action Created",
           emailSubject,
-          mailData
+          mailBody
         );
       }
 
@@ -1191,21 +1209,24 @@ const acceptMinutes = async (data, meetingId, userId, ipAddress = "1000") => {
       (item) => item._id.toString() === userId.toString()
     );
 
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
 
     const mailData = await emailTemplates.acceptMinuteEmailTemplate(
       meetingDetails,
       attendeeDetails,
       logo
     );
-    const emailSubject = await emailConstants.acceptMinuteSubject(
-      meetingDetails
-    );
+    // const emailSubject = await emailConstants.acceptMinuteSubject(
+    //   meetingDetails
+    // );
+
+    const { emailSubject, mailData: mailBody } = mailData;
+
     emailService.sendEmail(
       meetingDetails?.createdByDetail?.email,
       "Create Minutes Amendment",
       emailSubject,
-      mailData
+      mailBody
     );
   }
   return acceptDetails;
@@ -1396,7 +1417,13 @@ const chaseOfActionService = async () => {
             { _id: new ObjectId(minute.assignedUserId) },
             { _id: 1, email: 1, name: 1 }
           );
-          const logo = process.env.LOGO;
+          // const logo = process.env.LOGO;
+          const organizationDetails = await Organization.findOne(
+            { _id: new ObjectId(data.organizationId) },
+            { dashboardLogo: 1, loginLogo: 1 }
+          );
+          const logo = organizationDetails?.dashboardLogo;
+
           const mailData =
             await emailTemplates.sendActionDueReminderEmailTemplate(
               meetingDetails,
@@ -1487,11 +1514,17 @@ const generateMinutesPdftest = async (meetingId, userId) => {
 
 
   // console.log("isActionAvailable========================", isActionAvailable);
+  const organizationDetails = await Organization.findOne(
+    { _id: new ObjectId(meetingAllData?.meetingDetail?.organizationId) },
+    { dashboardLogo: 1, loginLogo: 1 }
+  );
+  const logo = organizationDetails?.dashboardLogo;
+
   const reportHtml = await ejs.renderFile("./views/pdfData.ejs", {
     meetingData: meetingAllData,
    // parentMeetingAgendaData: viewParentAgendas?.length !== 0 ? viewParentAgendas : [],
     commonHelper,
-    logo: process.env.logo,
+    logo,
     momCreationDate
   });
 

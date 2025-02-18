@@ -5,12 +5,17 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const emailService = require("./emailService");
 const authMiddleware = require("../middlewares/authMiddleware");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailConstants = require("../constants/emailConstants");
 const ObjectId = require("mongoose").Types.ObjectId;
 const axios = require("axios");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.CLIENT_ID);
+
+const Organization = require("../models/organizationModel");
+const BASE_URL = process.env.BASE_URL;
+
 /**FUNC- TO VERIFY VALID EMAIL USER */
 const verifyEmail = async (email) => {
   "----------------------33333", email;
@@ -142,7 +147,15 @@ const insertOtp = async (
   await otpData.save();
   "-------------------------------1", userData, data.otp;
   const supportData = "support@ntspl.co.in";
-  const logo = process.env.LOGO;
+  // const logo = process.env.LOGO;
+  const organization = await Organization.findOne({
+    _id: new ObjectId(userData.organizationId),
+  });
+
+  const logo = organization?.dashboardLogo
+  ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+  : null;
+
   const mailData = await emailTemplates.sendOtpEmailTemplate(
     userData,
     data.otp,
@@ -151,13 +164,15 @@ const insertOtp = async (
     logo
   );
   //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
-  const emailSubject = emailConstants.signInOtpsubject;
+  // const emailSubject = emailConstants.signInOtpsubject;
+  const { emailSubject, mailData: mailBody } = mailData;
+
   "sendOtpEmailTemplate-----------------------maildata", mailData;
   await emailService.sendEmail(
     userData.email,
     emailType,
     emailSubject,
-    mailData
+    mailBody
   );
   return data.otp;
 };
