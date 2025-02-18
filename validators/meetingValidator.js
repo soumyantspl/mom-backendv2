@@ -1103,6 +1103,7 @@ const downloadZoomRecordingsInZipValidaor = async (req, res, next) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
 const forChartClick = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
@@ -1134,8 +1135,8 @@ const forChartClick = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
+  forChartClick,
   updateMeetingStatusValidator,
   createMeetingValidator,
   updateMeetingValidator,
@@ -1164,5 +1165,4 @@ module.exports = {
   getMeetingActionPriotityDetailsValidator,
   deleteZoomRecordingValidator,
   downloadZoomRecordingsInZipValidaor,
-  forChartClick
 };

@@ -28,9 +28,35 @@ const chaseOfActionCron = () => {
     console.log(error);
   }
 };
+const checkDraftMeetingsCron = () => {
+  try {
+    cron.schedule("0 0 * * *", async () => { 
+      console.log("Running checkDraftMeetings cron job...");
+      await meetingService.notifyMeetingCreatorAboutDraft();
+    });
+
+    console.log("checkDraftMeetingsCron scheduled to run every midnight.");
+  } catch (error) {
+    console.error("Error in checkDraftMeetingsCron:", error);
+  }
+};
+
+
+
+const scheduleDraftMeetingCleanup = () => {
+  cron.schedule("0 0 * * *", async () => { 
+    console.log("Running deleteOldDraftMeetings cron job...");
+    await meetingService.deleteOldDraftMeetings();
+  });
+
+  console.log("Scheduled deleteOldDraftMeetings to run daily at midnight.");
+};
 
 module.exports = {
   acceptAllPendingMomsCronJob,
   alertsCron,
   chaseOfActionCron,
+  checkDraftMeetingsCron,
+  scheduleDraftMeetingCleanup
+  
 };

@@ -15,7 +15,7 @@ const statusEnumData = [
 const delayStatusEnumData = ["DELAYED", "NOTDELAYED"];
 //const regularExpression = /^[0-9a-zA-Z ,/-]+$/;
 const enumPriorityValues = ["HIGH", "LOW", "NORMAL"];
-const regularExpression = /^[0-9a-zA-Z .,:;()/\-_\n]+$/;
+const regularExpression = /^[0-9a-zA-Z .(),/-]+$/;
 const actionCommentsValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
@@ -131,7 +131,7 @@ const reAssignActionValidator = async (req, res, next) => {
       designation: Joi.string().trim().allow(null, ""),
       companyName: Joi.string().trim().allow(null, ""),
       organizationId: Joi.string().trim().alphanum().required(),
-      lastActionActivityId: Joi.string().trim().alphanum().allow(null, ""),
+      lastActionActivityId:Joi.string().trim().alphanum().allow(null, ""),
       reAssignReason: Joi.string().trim().pattern(regularExpression).messages({
         "string.pattern.base": `HTML tags & Special letters are not allowed!`,
       }),
@@ -444,49 +444,54 @@ const totalActionList = async (req, res, next) => {
 // ACTION STATUS DATA
 const getUserActionPriotityDetailsValidator = async (req, res, next) => {
   try {
-    const headerSchema = Joi.object({
-      headers: Joi.object({
-        authorization: Joi.required(),
-      }).unknown(true),
-    });
-
-    const bodySchema = Joi.object({
-      organizationId: Joi.string().trim().alphanum().required(),
-      searchKey: Joi.string()
-        .trim()
-        .pattern(regularExpression)
-        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
-    });
-    const paramsSchema = Joi.object({
-      limit: Joi.number().required(),
-      page: Joi.number().required(),
-      order: Joi.number().required(),
-    });
-    await headerSchema.validateAsync({ headers: req.headers });
-    await paramsSchema.validateAsync(req.query);
-    await bodySchema.validateAsync(req.body);
-    next();
-  } catch (error) {
-    console.log(error);
-    return Responses.errorResponse(req, res, error, 200);
-  }
+     const headerSchema = Joi.object({
+       headers: Joi.object({
+         authorization: Joi.required(),
+       }).unknown(true),
+     });
+ 
+     const bodySchema = Joi.object({
+       organizationId: Joi.string().trim().alphanum().required(),
+       searchKey: Joi.string()
+       .trim()
+       .pattern(regularExpression)
+       .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+     });
+     const paramsSchema = Joi.object({
+       limit: Joi.number().required(),
+       page: Joi.number().required(),
+       order: Joi.number().required(),
+     });
+     await headerSchema.validateAsync({ headers: req.headers });
+     await paramsSchema.validateAsync(req.query);
+     await bodySchema.validateAsync(req.body);
+     next();
+   } catch (error) {
+     console.log(error);
+     return Responses.errorResponse(req, res, error, 200);
+   }
 };
 
-const ChartbarClickforalldata = async (req, res, next) => {
+const priorityWiseAllActionsValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
       headers: Joi.object({
         authorization: Joi.required(),
       }).unknown(true),
     });
-
     const bodySchema = Joi.object({
+      searchKey: Joi.string().trim().pattern(regularExpression).messages({
+        "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+      }),
+      createdById: Joi.string().trim().alphanum(),
+      assignedUserId: Joi.string().trim().alphanum(),
+      priority:Joi.string().valid(...enumPriorityValues),
+      meetingId: Joi.string().trim().alphanum(),
+      actionStatus: Joi.string().valid(...statusEnumData),
+      delayStatus: Joi.string().valid(...delayStatusEnumData),
+      fromDate: Joi.date().iso(),
+      toDate: Joi.date().iso(),
       organizationId: Joi.string().trim().alphanum().required(),
-      meetingId:Joi.string().trim().required(),
-      searchKey: Joi.string()
-        .trim()
-        .pattern(regularExpression)
-        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
     });
     const paramsSchema = Joi.object({
       limit: Joi.number().required(),
@@ -499,39 +504,8 @@ const ChartbarClickforalldata = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    return Responses.errorResponse(req, res, error, 200);
-  }
-};
-
-const ChartbarClickattendee = async (req, res, next) => {
-  try {
-    const headerSchema = Joi.object({
-      headers: Joi.object({
-        authorization: Joi.required(),
-      }).unknown(true),
-    });
-
-    const bodySchema = Joi.object({
-      organizationId: Joi.string().trim().alphanum().required(),
-      meetingId:Joi.string().trim(),
-      assignedUserId:Joi.string().trim(),
-      searchKey: Joi.string()
-        .trim()
-        .pattern(regularExpression)
-        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
-    });
-    const paramsSchema = Joi.object({
-      limit: Joi.number().required(),
-      page: Joi.number().required(),
-      order: Joi.number().required(),
-    });
-    await headerSchema.validateAsync({ headers: req.headers });
-    await paramsSchema.validateAsync(req.query);
-    await bodySchema.validateAsync(req.body);
-    next();
-  } catch (error) {
-    console.log(error);
-    return Responses.errorResponse(req, res, error, 200);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
   }
 };
 
@@ -551,6 +525,5 @@ module.exports = {
   rejectReasignRequestValidator,
   totalActionList,
   getUserActionPriotityDetailsValidator,
-  ChartbarClickforalldata,
-  ChartbarClickattendee
+  priorityWiseAllActionsValidator
 };

@@ -15,6 +15,7 @@ const logRouter = require("./logRouter");
 const notificationRouter=require("./notificationRouter")
 const demoClient = require("./demoClientRouter")
 const hostRouter = require("./hostRouter")
+const emailTemplateRouter = require("./emailTemplateRouter")
 const express = require("express");
 const app = express();
 const BASE_PATH = "V1";
@@ -36,4 +37,5 @@ app.use(`/${BASE_PATH}/notification`, notificationRouter);
 app.use(`/${BASE_PATH}/alert`, alertRouter);
 app.use(`/${BASE_PATH}/demo`,demoClient)
 app.use(`/${BASE_PATH}/hosting`,hostRouter)
+app.use(`/${BASE_PATH}/emailTemplate`,emailTemplateRouter);
 module.exports = app;

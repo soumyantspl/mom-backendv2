@@ -210,6 +210,13 @@ router.post(
   meetingController.getMeetingActionPriotityDetails
 );
 
+router.post(
+  "/chart",
+  meetingValidator.forChartClick,
+  authMiddleware.verifyUserToken,
+  meetingController.getMeetingActionPriorityDetailsController
+);
+
 
 /* DELETE ZOOM RECORDING  */
 router.post(
@@ -227,6 +234,23 @@ router.post(
   authMiddleware.verifyUserToken,
   meetingController.downloadZoomRecordingsInZip
 );
+
+// Route to notify the meeting creator about a draft meeting
+router.post('/notify-draft/:meetingId',
+  authMiddleware.verifyUserToken,
+  meetingController.notifyMeetingCreatorAboutDraft
+);
+
+router.post('/delete-draft/:meetingId',
+  authMiddleware.verifyUserToken,
+  meetingController.deleteDraftMeeting
+);
+router.post("/deleteDraftMeeting/:createdById", 
+  authMiddleware.verifyUserToken, 
+  meetingController.draftMeetingdelete
+);
+
+
 
 
 module.exports = router;
