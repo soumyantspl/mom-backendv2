@@ -444,7 +444,6 @@ const importEmployee = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 const viewProfile = async (req, res) => {
   try {
     const ip = req.headers.ip || (await commonHelper.getIp(req));
@@ -486,8 +485,6 @@ const viewProfile = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
-=======
->>>>>>> cc4251e7b153b022a7a698422385dc8b29285487
 
 
 
@@ -505,10 +502,6 @@ module.exports = {
   listOnlyEmployee,
   getEmployeeListAsPerUnit,
   importEmployee,
-<<<<<<< HEAD
   writeErrorFile,
   viewProfile
-=======
-  writeErrorFile
->>>>>>> cc4251e7b153b022a7a698422385dc8b29285487
 };

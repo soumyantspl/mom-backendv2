@@ -29,9 +29,74 @@ const path = require("path");
 const Configuration = require("../models/configurationModel");
 process.env.TZ = "Asia/Calcutta";
 
+function convertTo12HourFormat(timeStr) {
+  const [hours, minutes] = timeStr.split(":");
+  const date = new Date();
+  date.setHours(Number(hours), Number(minutes), 0);
+
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
+// meeting room availability
+const checkMeetingRoomAvailability = async(data)  => {
+  console.log("data of Meeting Room-------------------", data);
+  const existingMeeting = await Meeting.findOne({
+    organizationId: data.organizationId,
+    date: new Date(data.date),
+    "locationDetails.roomId": data.roomId,
+    "locationDetails.isMeetingRoom": true,
+    isActive: true,
+    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+    $or: [
+      {
+        fromTime: { $lt: data.toTime },
+        toTime: { $gt: data.fromTime }
+      },
+      {
+        fromTime: { $gte: data.fromTime, $lt: data.toTime }
+      },
+      {
+        toTime: { $gt: data.fromTime, $lte: data.toTime }
+      }
+    ]
+  });
+  if (existingMeeting) {
+    const fromTimeFormatted = convertTo12HourFormat(existingMeeting.fromTime);
+    const toTimeFormatted = convertTo12HourFormat(existingMeeting.toTime);
+    return { 
+      roomUnavailable: true,
+      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
+    };
+  }  
+  }
+
 /**FUNC- CREATE MEETING */
 const createMeeting = async (data, userId, ipAddress = 1000) => {
   console.log("data99999999999999999999999-------------------", data);
+
+  // meeting organizer validation
+  const existingUserMeeting = await Meeting.findOne({
+    createdById: new ObjectId(userId),
+    date: new Date(data.date),
+    fromTime: { $lt: data.toTime },  
+    toTime: { $gt: data.fromTime },
+    isActive: true,
+    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+  });
+  
+  if (existingUserMeeting) {
+    const fromTimeFormatted = convertTo12HourFormat(existingUserMeeting.fromTime);
+    const toTimeFormatted = convertTo12HourFormat(existingUserMeeting.toTime);
+    return {
+      organizerUnavailable: true,
+      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
+    };
+  }
+
   let parentMeetingData = null;
   const meetingId = await commonHelper.customMeetingId(
     data.date,
@@ -65,6 +130,7 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
       },
     ],
   };
+  
   if (data.parentMeetingId) {
     inputData.parentMeetingId = data.parentMeetingId;
     const lastFollowOnMeetingDetails = await Meeting.find(
@@ -111,6 +177,98 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
   ///////////////////// LOGER END
   return newMeeting;
 };
+
+// attendee availability checking
+const checkAttendeeAvailability = async (data, id) => {
+  console.log('checkAttendeeAvailability data-----', data)
+
+  let attendeeIds;
+
+  if (data.email) {
+    const employee = await Employee.findOne({ email: data.email }, { _id: 1 });
+    if (employee) {
+      attendeeIds = new ObjectId(employee._id);
+    } else {
+        console.log("Employee not found with email:", data.email);
+    }
+  }
+  if (data.attendeeId){
+    attendeeIds = new ObjectId(data.attendeeId);
+  }
+  
+  const fromToTime = await Meetings.findOne(
+    { _id: new ObjectId(id) },
+    { date:1, fromTime: 1, toTime: 1, isActive:1, meetingStatus:1 }
+  );
+
+  console.log('From To Time----', fromToTime);
+
+  const existingAttendee = await Meetings.findOne({
+    date: fromToTime.date,
+    isActive: true,
+    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+    $or: [
+      {
+        fromTime: { $lt: fromToTime.toTime }, 
+        toTime: { $gt: fromToTime.fromTime }
+      },
+      {
+        fromTime: { $gte: fromToTime.fromTime, $lt: fromToTime.toTime }
+      },
+      {
+        toTime: { $gt: fromToTime.fromTime, $lte: fromToTime.toTime }
+      }
+    ],
+    attendees: { $elemMatch: { _id: { $in: attendeeIds } } }
+  });
+
+  console.log('existingAttendee----', existingAttendee)
+
+  if (existingAttendee) {
+    const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
+    const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
+    return { 
+      attendeeUnavailable: true, 
+      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
+    };
+  }
+}
+
+/// attendee array availability
+const checkAttendeeArrayAvailability = async(data) => {
+  console.log('data check Attendee Array Availability data-----', data)
+  const existingAttendee = await Meetings.find({
+    date: data.date,
+    isActive: true,
+    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+    $or: [
+      {
+        fromTime: { $lt: data.toTime }, 
+        toTime: { $gt: data.fromTime }
+      },
+      {
+        fromTime: { $gte: data.fromTime, $lt: data.toTime }
+      },
+      {
+        toTime: { $gt: data.fromTime, $lte: data.toTime }
+      }
+    ],
+    attendees: { $elemMatch: { _id: { $in: data.attendees } } }
+  });
+
+  console.log('check Attendee ArrayAvailability----', existingAttendee)
+
+  if (existingAttendee.length !==0) {
+    const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
+    const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
+    return { 
+      attendeeUnavailable: true, 
+      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
+    };
+  }
+}
+
+
 /**FUNC- UPDATE MEETING */
 const updateMeeting = async (data, id, userId, ipAddress) => {
   console.log("data99999999999999999999999-------------------", data);
@@ -1571,14 +1729,17 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
         attendee.name,
         logo
       );
-      const emailSubject = await emailConstants.cancelMeetingSubject(
-        meetingDetails
-      );
+      // const emailSubject = await emailConstants.cancelMeetingSubject(
+      //   meetingDetails
+      // );
+      const { subject, mailBody } = mailData;
       emailService.sendEmail(
         attendee.email,
         "Cancel Meeting",
-        emailSubject,
-        mailData
+        subject,
+        mailBody,
+       // mailData
+       
       );
     });
   }
@@ -4806,3 +4967,6 @@ exports.getCreatedByDetails = getCreatedByDetails;
 exports.getMeetingIdsOfCreatedById = getMeetingIdsOfCreatedById;
 exports.deleteZoomRecording = deleteZoomRecording;
 exports.downloadZoomRecordingsInZip = downloadZoomRecordingsInZip;
+exports.checkAttendeeAvailability = checkAttendeeAvailability;
+exports.checkMeetingRoomAvailability = checkMeetingRoomAvailability;
+exports.checkAttendeeArrayAvailability = checkAttendeeArrayAvailability;

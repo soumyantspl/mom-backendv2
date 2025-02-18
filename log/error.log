@@ -1576,3 +1576,19 @@ Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out 
     at Timeout.<anonymous> (D:\MinutesVault\Ongoing\V2SHARE\mom-backend\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
     at listOnTimeout (node:internal/timers:594:17)
     at process.processTimers (node:internal/timers:529:7)
+Date: 14/02/2025, Time: 15:27
+Error: "name" is required
+Stack Trace: ValidationError: "name" is required
+Date: 18/02/2025, Time: 16:11
+Error: existingAttendee is not defined
+Stack Trace: ReferenceError: existingAttendee is not defined
+    at Object.checkAttendeeArrayAvailability (E:\Ongoing\V2\BE\TESTING\mom-backendv2\services\meetingService.js:241:3)
+    at checkAttendeeArrayAvailability (E:\Ongoing\V2\BE\TESTING\mom-backendv2\controllers\meetingController.js:110:43)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:175:3)

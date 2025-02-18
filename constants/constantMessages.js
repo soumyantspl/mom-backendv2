@@ -115,14 +115,14 @@ const importSuccess = "Import completed successfully."
 const importFailed = "Import completed with errors.Please check Reason for Failed column"
 const importEroor = "Error in processing Excel file"
 const validationError = "Validation Errors"
-<<<<<<< HEAD
+const attendeeUnavailable = "This attendee is already scheduled for a meeting at the same date and time "
+const roomUnavailable = "The room is already booked for the selected date and time ";
+const organizerUnavailable = "You already have a meeting scheduled on this date from "
 
 ///Pratishruti//
 //view pRofile//
 const currentPasswordIncorrect ="Current Password is Incorrect"
 
-=======
->>>>>>> cc4251e7b153b022a7a698422385dc8b29285487
 module.exports = {
   pleaseAddMinute,
   isDeleteNotAllowed,
@@ -224,9 +224,8 @@ module.exports = {
   importFailed,
   importEroor,
   validationError,
-<<<<<<< HEAD
   currentPasswordIncorrect,
-  roomUnavailable
-=======
->>>>>>> cc4251e7b153b022a7a698422385dc8b29285487
+  attendeeUnavailable,
+  roomUnavailable,
+  organizerUnavailable
 };

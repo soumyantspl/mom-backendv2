@@ -219,7 +219,6 @@ router.post(
   meetingController.deleteZoomRecording
 );
 
-
 /* DOWNLOAD ALL ZOOM RECORDING  */
 router.post(
   "/downloadZoomRecordingsInZip",
@@ -227,5 +226,13 @@ router.post(
   authMiddleware.verifyUserToken,
   meetingController.downloadZoomRecordingsInZip
 );
+
+router.post('/check-availability/:id', meetingController.checkAttendeeAvailability);
+
+//check room availability
+router.post('/check-meetingroom-availability', meetingController.checkMeetingRoomAvailability);
+
+// check attendee availability in edit-meeting
+router.post('/check-attendee-availability', meetingController.checkAttendeeArrayAvailability);
 
 module.exports = router;
