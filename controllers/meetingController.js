@@ -977,10 +977,6 @@ const downloadZoomRecordingsInZip = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
-
-
-
-
 module.exports = {
   createMeeting,
   updateRsvp,
@@ -1011,5 +1007,4 @@ module.exports = {
   getMeetingActionPriotityDetails,
   deleteZoomRecording,
   downloadZoomRecordingsInZip,
-
 };

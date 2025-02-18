@@ -228,5 +228,4 @@ router.post(
   meetingController.downloadZoomRecordingsInZip
 );
 
-
 module.exports = router;

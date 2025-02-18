@@ -26,7 +26,6 @@ const axios = require("axios");
 const JSZip = require("jszip");
 const path = require("path");
 const Configuration = require("../models/configurationModel");
-const { log } = require("console");
 process.env.TZ = "Asia/Calcutta";
 
 /**FUNC- CREATE MEETING */
@@ -4707,13 +4706,6 @@ const downloadZoomRecordingsInZip = async (bodyData, userId) => {
   return result;
 };
 
-
-
-
-
-
-
-
 exports.viewMeeting = viewMeeting;
 exports.createMeeting = createMeeting;
 exports.updateRsvp = updateRsvp;
@@ -4747,4 +4739,3 @@ exports.getCreatedByDetails = getCreatedByDetails;
 exports.getMeetingIdsOfCreatedById = getMeetingIdsOfCreatedById;
 exports.deleteZoomRecording = deleteZoomRecording;
 exports.downloadZoomRecordingsInZip = downloadZoomRecordingsInZip;
-
