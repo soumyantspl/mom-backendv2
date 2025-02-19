@@ -240,4 +240,5 @@ module.exports = {
   notValid,
   deleteDraftFailed,
   draftDeleted
+  ///////////////////
 };
