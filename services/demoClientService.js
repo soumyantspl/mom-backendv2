@@ -7,6 +7,10 @@ const otpDemoLogs = require("../models/otpDemoLogsModel");
 const otpContactUsLogs = require("../models/contactUsOtpLogs");
 const DemoClient = require("../models/demoClientsSchema");
 const contactUs = require("../models/contactUsModel");
+
+const Organization = require("../models/organizationModel");
+const BASE_URL = process.env.BASE_URL;
+
 //FUCNTION TO CREATE DEPARTMENT
 const createDemoClient = async (data, ipAddress) => {
   const isOtpVerified = await otpDemoLogs.findOne({
@@ -32,10 +36,15 @@ const createDemoClient = async (data, ipAddress) => {
     const demoData = new DemoClient(newData);
     const result = await demoData.save();
     if (result) {
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+      const organization = await Organization.findOne({ email: data.email });
+      const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+      : null;
+
       const emailType = "Demo Inquiry";
       const adminEmail = process.env.ADMIN_EMAIL;
-      const emailSubject = emailConstants.demoServeySubject(data.name);
+     // const emailSubject = emailConstants.demoServeySubject(data.name);
       const mailData = await emailTemplates.sendDemoInquiryEmailTemplate(
         data.name,
         data.email,
@@ -71,11 +80,16 @@ const demoSendOtp = async (data, ipAddress) => {
         1000 * 60 * process.env.CHECK_OTP_VALIDATION_TIME,
     },
   });
+  const organization = await Organization.findOne({ email }); 
+    const logo = organization?.dashboardLogo
+    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+    : null;
+
   if (!otpLogsData) {
     const otpData = new otpDemoLogs({ otp, email });
     await otpData.save();
     const supportData = "support@ntspl.co.in";
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
     const emailType = "Send OTP";
     const emailSubject = emailConstants.organizationRegistrationOtpSubject;
     const typeMessage =
@@ -122,7 +136,7 @@ const demoSendOtp = async (data, ipAddress) => {
       { new: true }
     );
     const supportData = "support@ntspl.co.in";
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
     const emailType = "Send OTP";
     const emailSubject =
       data.type === "contactus"
@@ -250,18 +264,22 @@ const saveContactUsDetails = async (data, ipAddress) => {
     const contactUsData = new contactUs(newData);
     const result = await contactUsData.save();
     if (result) {
-      const logo = process.env.LOGO;
-      const emailType = "Demo Inquiry";
+      // const logo = process.env.LOGO;
+      const organization = await Organization.findOne({ email: data.email });
+      const logo = organization?.dashboardLogo
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : process.env.LOGO;
+      const emailType = "Contact Us";
       const adminEmail = process.env.ADMIN_EMAIL;
-     // const emailSubject = emailConstants.contactUsSubject(data.name);
-     const { subject, mailBody } = await emailTemplates.sendContactUsEmailTemplate(
+      // const emailSubject = emailConstants.contactUsSubject(data.name);
+      const { subject, mailBody } = await emailTemplates.sendContactUsEmailTemplate(
         data.name,
         data.email,
         data.phoneNo,
         data.message,
         logo
       );
-      await emailService.sendEmail(adminEmail, emailType, subject, mailBody);
+    await emailService.sendEmail(adminEmail, emailType, subject, mailBody);
     }
     return result;
   } else {
@@ -285,16 +303,22 @@ const contactUsSendOtp = async (data, ipAddress) => {
         1000 * 60 * process.env.CHECK_OTP_VALIDATION_TIME,
     },
   });
+
+  const organization = await Organization.findOne({ email: data.email });
+  const logo = organization?.dashboardLogo
+    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+    : process.env.LOGO;
+
   if (!otpLogsData) {
     const otpData = new otpContactUsLogs({ otp, email });
     await otpData.save();
     const supportData = "support@ntspl.co.in";
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
     const emailType = "Send OTP";
-    const emailSubject =
-      data.type === "contactus"
-        ? emailConstants.contactUsOtpSubject
-        : emailConstants.requestDemoOtpSubject;
+    // const emailSubject =
+    //   data.type === "contactus"
+    //     ? emailConstants.contactUsOtpSubject
+    //     : emailConstants.requestDemoOtpSubject;
     const typeMessage =
       data.type === "contactus"
         ? emailConstants.contactUsMessage
@@ -339,7 +363,7 @@ const contactUsSendOtp = async (data, ipAddress) => {
       { new: true }
     );
     const supportData = "support@ntspl.co.in";
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
     const emailType = "Send OTP";
     const emailSubject =
       data.type === "contactus"

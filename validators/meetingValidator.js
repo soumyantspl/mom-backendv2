@@ -1104,7 +1104,39 @@ const downloadZoomRecordingsInZipValidaor = async (req, res, next) => {
   }
 };
 
+const forChartClick = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+      }).unknown(true),
+    });
+
+    const bodySchema = Joi.object({
+      organizationId: Joi.string().trim().alphanum().required(),
+      meetingId:Joi.string().trim().required(),
+      searchKey: Joi.string()
+        .trim()
+        .pattern(regularExpression)
+        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+    });
+    const paramsSchema = Joi.object({
+      limit: Joi.number().required(),
+      page: Joi.number().required(),
+      order: Joi.number().required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await paramsSchema.validateAsync(req.query);
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+
 module.exports = {
+  forChartClick,
   updateMeetingStatusValidator,
   createMeetingValidator,
   updateMeetingValidator,

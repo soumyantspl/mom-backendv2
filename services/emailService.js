@@ -1,5 +1,6 @@
 const { transporter, mailOptions } = require("../emailSetUp/mailSetup");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailConstants = require("../constants/emailConstants");
 const EmailLogs = require("../models/emailLogsModel");
 /**FUNC- TO SEND  OTP TO EMAIL USER */
@@ -23,14 +24,14 @@ const sendSignInOtpEmail = async (userData, otp, emailType) => {
   return await saveEmailLogs(emailLogData);
 };
 /**FUNC- TO SEND EMAIL TO USER */
-const sendEmail = async (email, emailType, emailSubject, mailData,attachedFileDetails=[]) => {
-  console.log("email sendddddddddddddddddddddddd====================",email)
+const sendEmail = async (email, emailType, emailSubject, mailData, attachedFileDetails = []) => {
+  console.log("email sendddddddddddddddddddddddd====================", email, emailType, emailSubject, mailData)
   const mailOptionsInfo = {
     from: mailOptions.from,
     to: email,
     subject: emailSubject,
     html: mailData,
-    attachments:attachedFileDetails 
+    attachments: attachedFileDetails
   };
   const isSuccess = await transporter.sendMail(mailOptionsInfo);
   const emailLogData = {

@@ -7,6 +7,7 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const path=require('path')
 
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = path.join(__dirname, '../uploads'); 
@@ -26,6 +27,7 @@ const fileFilter = (req, file, cb) => {
     cb(new Error("Only image files are allowed!"), false);
   }
 };
+
 const uploadpicture = multer({
   storage: storage,
   fileFilter: fileFilter,
@@ -71,8 +73,8 @@ router.get(
 /* MASTER DATA */
 router.get(
   "/masterData/:organizationId",
-  validator.masterDataValidator,
-  authMiddleware.verifyUserToken,
+  // validator.masterDataValidator,
+  // authMiddleware.verifyUserToken,
   employeeController.masterData
 );
 
@@ -104,7 +106,7 @@ router.post(
   upload.single("file"),
   employeeController.importEmployee
 );
-<<<<<<< HEAD
+
 /* VIEW PROFILE  */
 router.put(
   "/viewProfile/:id",
@@ -113,8 +115,5 @@ router.put(
   authMiddleware.verifyUserToken,
   employeeController.viewProfile
 );
-
-=======
->>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 
 module.exports = router;

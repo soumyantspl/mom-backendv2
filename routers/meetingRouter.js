@@ -210,6 +210,13 @@ router.post(
   meetingController.getMeetingActionPriotityDetails
 );
 
+router.post(
+  "/chart",
+  meetingValidator.forChartClick,
+  authMiddleware.verifyUserToken,
+  meetingController.getMeetingActionPriorityDetailsController
+);
+
 
 /* DELETE ZOOM RECORDING  */
 router.post(
@@ -219,7 +226,6 @@ router.post(
   meetingController.deleteZoomRecording
 );
 
-
 /* DOWNLOAD ALL ZOOM RECORDING  */
 router.post(
   "/downloadZoomRecordingsInZip",
@@ -227,5 +233,30 @@ router.post(
   authMiddleware.verifyUserToken,
   meetingController.downloadZoomRecordingsInZip
 );
+
+router.post('/check-availability/:id', meetingController.checkAttendeeAvailability);
+
+//check room availability
+router.post('/check-meetingroom-availability', meetingController.checkMeetingRoomAvailability);
+
+// check attendee availability in edit-meeting
+router.post('/check-attendee-availability', meetingController.checkAttendeeArrayAvailability);
+// Route to notify the meeting creator about a draft meeting
+router.post('/notify-draft/:meetingId',
+  authMiddleware.verifyUserToken,
+  meetingController.notifyMeetingCreatorAboutDraft
+);
+
+router.post('/delete-draft/:meetingId',
+  authMiddleware.verifyUserToken,
+  meetingController.deleteDraftMeeting
+);
+router.post("/deleteDraftMeeting/:createdById", 
+  authMiddleware.verifyUserToken, 
+  meetingController.draftMeetingdelete
+);
+
+
+
 
 module.exports = router;

@@ -255,6 +255,7 @@ const listOnlyEmployeeAsUnitValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error, 200);
   }
 };
+
 const viewProfileValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
@@ -272,9 +273,7 @@ const viewProfileValidator = async (req, res, next) => {
         .max(100)
         .required()
         .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
-
       isActive: Joi.boolean().strict().optional(),
-
       empId: Joi.string()
         .trim()
         .pattern(/^[0-9a-zA-Z -.(),-,_/]+$/)

@@ -484,6 +484,38 @@ const getUserActionPriotityDetails = async (req, res) => {
   }
 };
 
+
+const getAllActions = async (req, res) => {
+  try {
+    const result = await actionService.getAllActionData(
+      req.body,
+      req.query,
+      req.userId,
+      req.userData
+    );
+    if (result.totalCount == 0) {
+      return Responses.failResponse(
+        req,
+        res,
+        result,
+        messages.recordsNotFound,
+        200
+      );
+    }
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.recordsFound,
+      200
+    );
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
 module.exports = {
   actionCommentsCreate,
   actionReassignRequest,
@@ -500,4 +532,5 @@ module.exports = {
   cancelAction,
   totalActionList,
   getUserActionPriotityDetails,
+  getAllActions
 };

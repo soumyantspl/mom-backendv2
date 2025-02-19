@@ -310,56 +310,73 @@ const getEmployeeListAsPerUnit = async (req, res) => {
 const writeErrorFile = (duplicateRecords, validationErrors) => {
   const workbook = xlsx.utils.book_new();
 
-  const applyRedStyle = (value) => ({
-    v: value || "",
-    s: {
-      fill: { fgColor: { rgb: "FF0000" } },
-      font: { color: { rgb: "FFFFFF" } },
-    },
+  const reverseMapping = {};
+  Object.entries(columnMapping).forEach(([excelCol, schemaField]) => {
+    reverseMapping[schemaField] = excelCol;
   });
 
-  const formatValidationErrors = validationErrors.map((error) => {
-    const { organizationId, ...filteredData } = error.record || {};
-    return {
-      ...filteredData,
-      "Reason for Failure": applyRedStyle(error.message),
+  const buildRowObject = (recordData) => {
+    const rowObject = {
+      "Employee Id": recordData.empId || "",
+      Email: recordData.email || "",
     };
+
+    Object.keys(recordData).forEach((schemaField) => {
+      if (schemaField === "email" || schemaField === "empId") return;
+      const excelCol = reverseMapping[schemaField] || schemaField;
+      rowObject[excelCol] = recordData[schemaField];
+    });
+    return rowObject;
+  };
+
+
+  const formatValidationErrors = validationErrors.map((errorItem) => {
+    const { organizationId, ...data } = errorItem.record || {};
+    return buildRowObject(data, errorItem.messages.join(', '));
   });
 
-  const formatDuplicateRecords = duplicateRecords.map((record) => {
-    const { organizationId, ...filteredData } = record || {};
-    return {
-      ...filteredData,
-      "Reason for Failure": applyRedStyle(messages.duplicateEntry),
-    };
+
+  const formatDuplicateRecords = duplicateRecords.map((dupObj) => {
+    const { organizationId, ...data } = dupObj || {};
+    console.log("data", data);
+    let reason = "";
+    if (dupObj.email) reason += "Email already exists. ";
+    if (dupObj.empId) reason += "Employee ID already exists.";
+    reason = reason.trim() || "Duplicate entry";
+
+    return buildRowObject(data, reason);
   });
+
+
 
   if (formatValidationErrors.length > 0) {
     const errorSheet = xlsx.utils.json_to_sheet(formatValidationErrors);
-    xlsx.utils.book_append_sheet(workbook, errorSheet, messages.validationError);
-
-    errorSheet["!cols"] = Object.keys(formatValidationErrors[0] || {}).map((key) => ({
+    xlsx.utils.book_append_sheet(workbook, errorSheet, "Validation Errors");
+    errorSheet["!cols"] = Object.keys(formatValidationErrors[0]).map((colKey) => ({
       wpx: Math.max(
-        ...formatValidationErrors.map((record) => {
-          const cellValue = record[key]?.v || record[key] || "";
-          return cellValue.toString().length;
+        ...formatValidationErrors.map((row) => {
+          const val = row[colKey];
+          const strVal = (val && val.v) || val || "";
+          return strVal.toString().length;
         }),
-        key.length
+        colKey.length
       ) * 10,
     }));
   }
 
-  if (formatDuplicateRecords.length > 0) {
-    const duplicateSheet = xlsx.utils.json_to_sheet(formatDuplicateRecords);
+  // Create Duplicate Records sheet (if any)
+  if (formattedDuplicates.length > 0) {
+    const duplicateSheet = xlsx.utils.json_to_sheet(formattedDuplicates);
     xlsx.utils.book_append_sheet(workbook, duplicateSheet, "Duplicate Records");
 
-    duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0] || {}).map((key) => ({
+    duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0]).map((colKey) => ({
       wpx: Math.max(
-        ...formatDuplicateRecords.map((record) => {
-          const cellValue = record[key]?.v || record[key] || "";
-          return cellValue.toString().length;
+        ...formatDuplicateRecords.map((row) => {
+          const val = row[colKey];
+          const strVal = (val && val.v) || val || "";
+          return strVal.toString().length;
         }),
-        key.length
+        colKey.length
       ) * 10,
     }));
   }
@@ -370,18 +387,21 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
   if (!fs.existsSync(path.join(__dirname, "../Downloads"))) {
     fs.mkdirSync(path.join(__dirname, "../Downloads"), { recursive: true });
   }
+
   xlsx.writeFile(workbook, errorFilePath);
+
   return errorFilePath;
 };
 
 
-
-
-
+//Import Employee Controller
 const importEmployee = async (req, res) => {
+  console.log("Import Employee");
+
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded." });
   }
+
   const filePath = req.file.path;
   try {
     const organizationId = req.params.organizationId;
@@ -390,10 +410,13 @@ const importEmployee = async (req, res) => {
     if (!organizationId) {
       return res.status(400).json({ message: "Organization ID is required in the request parameters." });
     }
+
+    // Read uploaded Excel file
     const workbook = xlsx.readFile(filePath);
     const sheetName = workbook.SheetNames[0];
     const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
+    // Map Excel data to database schema fields
     const transformedData = sheetData.map((row) => {
       const transformedRow = {};
       for (const [excelColumn, schemaField] of Object.entries(columnMapping)) {
@@ -408,43 +431,33 @@ const importEmployee = async (req, res) => {
     });
 
     console.log("Transformed Data:", transformedData[0]);
-    const { savedData, duplicateRecords, validationErrors } = await employeeService.importEmployee(transformedData);
+    const { savedData, duplicateRecords, validationErrors } = await employeeService.importEmployee(transformedData, organizationId);
     fs.unlinkSync(filePath);
 
+    // If there are duplicates or validation errors, create an error report
     if (duplicateRecords.length > 0 || validationErrors.length > 0) {
       const errorFilePath = writeErrorFile(duplicateRecords, validationErrors);
-
-      // return Responses.failResponse(
-      //   req,
-      //   res,
-      //   { errorFileUrl: `/Downloads/${path.basename(errorFilePath)}` },
-      //   messages.importFailed,
-      //   200
-      // );
-
       return res.status(200).json({
         message: "Import completed with errors.",
-        errorFileUrl: `/Downloads/${path.basename(errorFilePath)}`,
+        errorFileUrl: `/Downloads/${path.basename(errorFilePath)}`, // Link to download error report
       });
-
     }
-    return Responses.successResponse(
-      req,
-      res,
+
+    // If successful, return success message
+    return res.status(201).json({
+      message: "Import completed successfully.",
       savedData,
-      messages.importSuccess,
-      200
-    );
+    });
+
   } catch (error) {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
     console.error("Error during Excel import:", error.message);
-    return Responses.errorResponse(req, res, error)
+    return res.status(500).json({ message: "Error processing Excel file", error: error.message });
   }
 };
 
-<<<<<<< HEAD
 const viewProfile = async (req, res) => {
   try {
     const ip = req.headers.ip || (await commonHelper.getIp(req));
@@ -463,7 +476,7 @@ const viewProfile = async (req, res) => {
 
 
     if (result.isMatch === false) {
-      return Responses.failResponse(req, res, null, messages.currentPasswordIncorrect, 200);
+      return Responses.failResponse(req, res, null, messages.CurrentPasswordIncorrect, 200);
     }
 
 
@@ -475,8 +488,8 @@ const viewProfile = async (req, res) => {
       req.body.isActive === true
         ? messages.active
         : req.body.isActive === false
-        ? messages.deActive
-        : messages.updateSuccess;
+          ? messages.deActive
+          : messages.updateSuccess;
 
     console.log("Updated Profile Result:", result);
 
@@ -486,13 +499,6 @@ const viewProfile = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
-=======
-
-
-
-
-
->>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 
 
 
@@ -510,10 +516,6 @@ module.exports = {
   listOnlyEmployee,
   getEmployeeListAsPerUnit,
   importEmployee,
-<<<<<<< HEAD
   writeErrorFile,
   viewProfile
-=======
-  writeErrorFile
->>>>>>> 34744d756504843da638dedc47cd0da49bf95468
 };

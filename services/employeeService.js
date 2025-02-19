@@ -8,10 +8,15 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const commonHelper = require("../helpers/commonHelper");
 const emailConstants = require("../constants/emailConstants");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailService = require("./emailService");
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
+
+
+const Organization = require("../models/organizationModel");
+const BASE_URL = process.env.BASE_URL;
 
 
 /**FUNC- CREATE EMPLOYEE */
@@ -46,6 +51,12 @@ const createEmployee = async (userId, data, ipAddress) => {
     };
     const empData = new Employee(inputData);
     const result = await empData.save();
+
+    const organization = await Organization.findOne({ _id: data.organizationId });
+    const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : process.env.LOGO;
+
     const adminResult = await Employee.aggregate([
       {
         $match: { _id: new ObjectId(userId) },
@@ -75,20 +86,22 @@ const createEmployee = async (userId, data, ipAddress) => {
     ]);
     if (adminResult.length !== 0) {
       const adminDetails = adminResult[0];
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
       const mailData = await emailTemplates.createNewEmployeeEmailTemplate(
         adminDetails,
         logo,
         data
       );
-      const emailSubject = await emailConstants.createEmployeeSubject(
-        adminDetails
-      );
+      // const emailSubject = await emailConstants.createEmployeeSubject(
+      //   adminDetails
+      // );
+      const { emailSubject, mailData: mailBody } = mailData;
       emailService.sendEmail(
         data.email,
         "Employee Created",
         emailSubject,
-        mailData
+        mailBody,
+      //  mailData
       );
     }
     ////////////////////LOGER START
@@ -108,29 +121,27 @@ const createEmployee = async (userId, data, ipAddress) => {
 };
 /**FUNC- TO FETCH MASTER DATA*/
 const masterData = async (organizationId) => {
-  let query = { organizationId: organizationId, isDelete: false };
-  const designationList = await Designations.find(query, {
-    name: 1,
-    isActive: 1,
-    isDelete: 1,
-  });
-  const departmentList = await Department.find(query, {
-    name: 1,
-    isActive: 1,
-    isDelete: 1,
-  });
-  const unitList = await Units.find(query, {
-    name: 1,
-    isActive: 1,
-    isDelete: 1,
-  });
-  const message = `${designationList.length} designation found , ${departmentList.length} department found &  ${unitList.length} unit found `;
-  const masterData = { designationList, departmentList, unitList };
-  return {
-    message,
-    masterData,
-  };
+  try {
+    let query = { organizationId, isDelete: false };
+
+    const [designationList, departmentList, unitList] = await Promise.all([
+      Designations.find(query, { name: 1, isActive: 1 }),
+      Department.find(query, { name: 1, isActive: 1 }),
+      Units.find(query, { name: 1, isActive: 1 }),
+    ]);
+
+    const message = `${designationList.length} designation(s) found, ${departmentList.length} department(s) found & ${unitList.length} unit(s) found`;
+
+    return {
+      message,
+      masterData: { designationList, departmentList, unitList },
+    };
+  } catch (error) {
+    console.error("Error fetching master data:", error);
+    throw new Error("Failed to fetch master data.");
+  }
 };
+
 
 /**FUNC- TO DELETE AN EMPLOYEE */
 const deleteEmploye = async (userId, id, ipAddress) => {
@@ -579,31 +590,73 @@ const getEmployeeListAsPerUnit = async (unitId) => {
 };
 
 
-const importEmployee = async (data) => {
+const importEmployee = async (data, organizationId) => {
   const savedData = [];
   const duplicateRecords = [];
   const validationErrors = [];
 
   const regularExpression = /^[0-9a-zA-Z -.(),-,_/]+$/;
+  console.log("organizationId", organizationId);
 
   const employeeValidationSchema = Joi.object({
     name: Joi.string()
       .trim()
       .pattern(regularExpression)
       .messages({
+        "any.required": `Name is required.`,
         "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
       }),
     email: Joi.string()
       .trim()
       .email()
       .messages({
+        "any.required": `Email is required.`,
         "string.email": `Invalid email format.`,
       }),
     empId: Joi.string()
       .trim()
+      .required()
+      .messages({
+        "any.required": `Employee ID is required.`,
+        "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
+      })
+      .pattern(regularExpression),
+    designation: Joi.string()
+      .trim()
+      .required()
       .pattern(regularExpression)
       .messages({
-        "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
+        "any.required": `Designation is required.`,
+        "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
+      }),
+    department: Joi.string()
+      .trim()
+      .required()
+      .pattern(regularExpression)
+      .messages({
+        "any.required": `Department is required.`,
+        "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
+      }),
+    unitName: Joi.string()
+      .trim()
+      .required()
+      .pattern(regularExpression)
+      .messages({
+        "any.required": `Unit Name is required.`,
+        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
+      }),
+    unitAddress: Joi.string()
+      .trim()
+      .required()
+      .pattern(regularExpression)
+      .messages({
+        "any.required": `Unit Address is required.`,
+        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
+      }),
+    organizationId: Joi.string()
+      .required()
+      .messages({
+        "any.required": `Organization ID is required.`,
       }),
     designation: Joi.string().trim().pattern(regularExpression).messages({
       "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
@@ -624,27 +677,42 @@ const importEmployee = async (data) => {
   });
 
   for (const record of data) {
-    const duplicateFields = {};
-    const existingByEmail = await Employee.findOne({ email: record.email });
-    const existingByEmpId = await Employee.findOne({ empId: record.empId });
+    const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
 
-    if (existingByEmail) {
-      duplicateFields.email = record.email;
-    }
-    if (existingByEmpId) {
-      duplicateFields.empId = record.empId;
-    }
-
-    if (Object.keys(duplicateFields).length > 0) {
-      duplicateRecords.push(duplicateFields);
-      continue;
-    }
-
-    const { error } = employeeValidationSchema.validate(record);
     if (error) {
       validationErrors.push({
         record,
-        message: error.details[0].message,
+        messages: error.details.map(err => err.message),
+      });
+      continue;
+    }
+
+    const duplicateFields = {};
+    const existingByEmail = await Employee.findOne({
+      email: record.email,
+      organizationId: organizationId
+    });
+
+    const existingByEmpId = await Employee.findOne({ empId: record.empId, organizationId: organizationId });
+
+    if (existingByEmail) {
+      duplicateFields.email = true;
+    }
+    if (existingByEmpId) {
+      duplicateFields.empId = true;
+    }
+
+    if (duplicateFields.email || duplicateFields.empId) {
+      let reasonMessages = [];
+      if (duplicateFields.email) {
+        reasonMessages.push("Email already exists.");
+      }
+      if (duplicateFields.empId) {
+        reasonMessages.push("Employee ID already exists.");
+      }
+      duplicateRecords.push({
+        ...record,
+        reason: reasonMessages.join(" ")
       });
       continue;
     }
@@ -719,6 +787,8 @@ const importEmployee = async (data) => {
   return { savedData, duplicateRecords, validationErrors };
 };
 
+
+
 const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
   if (profilePicture && profilePicture.filename) {
     const filePath = `/uploads/${profilePicture.filename}`;
@@ -726,7 +796,7 @@ const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
   } else {
     console.log("No new profile picture provided.");
   }
-  
+
 
   const employee = await Employee.findById(id);
   if (!employee) {
@@ -795,10 +865,6 @@ const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
 
   return { data: result, logs: logDetails };
 };
-
-
-
-
 
 
 module.exports = {

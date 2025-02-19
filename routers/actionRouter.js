@@ -124,4 +124,13 @@ router.post(
   authMiddleware.verifyUserToken,
   actionController.getUserActionPriotityDetails
 );
+
+//prority wise data fetch
+router.post(
+  "/getAllActions",
+  actionValidator.priorityWiseAllActionsValidator,
+  authMiddleware.verifyUserToken,
+  actionController.getAllActions
+);
+
 module.exports = router;

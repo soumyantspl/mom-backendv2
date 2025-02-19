@@ -32,6 +32,7 @@ const duplicateEmpCode = "Duplicate employee id found!";
 const duplicateEmail = "This Email is already exist!!";
 const expiredOtp =
   "The OTP you entered has been expired. Please use resend otp!";
+const roomUnavailable = "The room is already booked for the selected date and time range.";
 const invaliToken = "Invalid token";
 const invalidUser =
   "Your account is not currently active. Please contact your adminstrator.";
@@ -71,7 +72,7 @@ const otpResendMessage = async (attemptNumbar, email) => {
 };
 const otpResendMaxLimitCrossed = `Sorry! You have reached the maximum limit of 3 OTP resend attempts. Please try again after ${process.env.OTP_MAX_RESEND_TIMEINMINUTES} minutes.`;
 const momGeneratedSuccessfully =
-  "MOM generated Successfully & notification sent to all attendees.";
+  "MOM generated succeffully & notification sent to all attendees.";
 const pleaseAddAttendance = "Please add attendance.";
 const configCreatedSuccess = "Configuration Created successfully!";
 const configUpdateSuccess = "Configuration Updated successfully!";
@@ -89,7 +90,6 @@ const isUnread = "Marked as unread";
 const isImportant = "Marked as important";
 const isDelete = "Deleted successfully";
 const pleaseAddMinute = "Please add minute.";
-const roomUnavailable = "The room is already booked for the selected date and time range.";
 const inActiveOrganization =
   "The Organization has been deactivated, please contact adminstration";
 const isMaxOtpSendOvered = `You have sent maximum number of OTP, Please try after ${process.env.CHECK_OTP_VALIDATION_TIME} minutes`;
@@ -116,14 +116,21 @@ const importSuccess = "Import completed successfully."
 const importFailed = "Import completed with errors.Please check Reason for Failed column"
 const importEroor = "Error in processing Excel file"
 const validationError = "Validation Errors"
-<<<<<<< HEAD
+const attendeeUnavailable = "This attendee is already scheduled for a meeting at the same date and time "
+const organizerUnavailable = "You already have a meeting scheduled on this date from "
+
+///Pratishruti//
+//view pRofile//
+
 
 //Pratishruti//
 //view pRofile//
-const currentPasswordIncorrect ="Current Password is Incorrect"
+const currentPasswordIncorrect = "Current Password is Incorrect"
 
-=======
->>>>>>> 34744d756504843da638dedc47cd0da49bf95468
+const notificationSent = "Email sent successfully"
+const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater than Draft MeetingReminder Days"
+const draftDeleted = "Draft Meeting Deleted"
+const deleteDraftFailed = "Faild in Delete Draft Meeting"
 module.exports = {
   pleaseAddMinute,
   isDeleteNotAllowed,
@@ -225,9 +232,12 @@ module.exports = {
   importFailed,
   importEroor,
   validationError,
-<<<<<<< HEAD
   currentPasswordIncorrect,
-  roomUnavailable
-=======
->>>>>>> 34744d756504843da638dedc47cd0da49bf95468
+  attendeeUnavailable,
+  roomUnavailable,
+  organizerUnavailable,
+  notificationSent,
+  notValid,
+  deleteDraftFailed,
+  draftDeleted
 };

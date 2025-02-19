@@ -15,7 +15,7 @@ const statusEnumData = [
 const delayStatusEnumData = ["DELAYED", "NOTDELAYED"];
 //const regularExpression = /^[0-9a-zA-Z ,/-]+$/;
 const enumPriorityValues = ["HIGH", "LOW", "NORMAL"];
-const regularExpression = /^[0-9a-zA-Z .,:;()/\-_\n]+$/;
+const regularExpression = /^[0-9a-zA-Z .(),/-]+$/;
 const actionCommentsValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
@@ -105,42 +105,31 @@ const reAssignActionValidator = async (req, res, next) => {
         ip: Joi.string(),
       }).unknown(true),
     });
+
     const bodySchema = Joi.object({
       priority: Joi.string()
         .valid(...enumPriorityValues)
         .required(),
-      isNewUser: Joi.boolean().required(),
       dueDate: Joi.date(),
-      // reassignedUserName: Joi.when("isNewUser", {
-      //   is: Joi.boolean().valid(false),
-      //   then: Joi.string().required(),
-      //   otherwise: Joi.string(),
-      // }),
-      name: Joi.when("isNewUser", {
-        is: Joi.boolean().valid(true),
-        then: Joi.string().alphanum().required(),
-        otherwise: Joi.string().alphanum(),
-      }),
-      email: Joi.when("isNewUser", {
-        is: Joi.boolean().valid(true),
-        then: Joi.string()
-          .email({ tlds: { allow: false } })
-          .required(),
-        otherwise: Joi.string().email({ tlds: { allow: false } }),
-      }),
       designation: Joi.string().trim().allow(null, ""),
       companyName: Joi.string().trim().allow(null, ""),
       organizationId: Joi.string().trim().alphanum().required(),
-      lastActionActivityId: Joi.string().trim().alphanum().allow(null, ""),
+      lastActionActivityId:Joi.string().trim().alphanum().allow(null, ""),
       reAssignReason: Joi.string().trim().pattern(regularExpression).messages({
         "string.pattern.base": `HTML tags & Special letters are not allowed!`,
       }),
-      reAssignedId: Joi.when("isNewUser", {
-        is: Joi.boolean().valid(true),
-        then: Joi.string().alphanum().allow(null, ""),
-        otherwise: Joi.string().alphanum().required(),
-      }),
+      reAssignedUsers: Joi.array()
+        .items(
+          Joi.object({
+            email: Joi.string().email().required(),
+            name: Joi.string().min(3).max(50).required(),
+            userId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).optional(),
+          })
+        )
+        .min(1) // Ensures at least one reassigned user
+        .required(),
     });
+
     const paramsSchema = Joi.object({
       id: Joi.string().trim().alphanum().required(),
     });
@@ -148,6 +137,7 @@ const reAssignActionValidator = async (req, res, next) => {
     await headerSchema.validateAsync({ headers: req.headers });
     await paramsSchema.validateAsync(req.params);
     await bodySchema.validateAsync(req.body);
+
     next();
   } catch (error) {
     console.log(error);
@@ -155,6 +145,7 @@ const reAssignActionValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
 
 // VIEW ALL ACTION LIST VALIDATOR
 const viewAllActionsValidator = async (req, res, next) => {
@@ -444,18 +435,54 @@ const totalActionList = async (req, res, next) => {
 // ACTION STATUS DATA
 const getUserActionPriotityDetailsValidator = async (req, res, next) => {
   try {
+     const headerSchema = Joi.object({
+       headers: Joi.object({
+         authorization: Joi.required(),
+       }).unknown(true),
+     });
+ 
+     const bodySchema = Joi.object({
+       organizationId: Joi.string().trim().alphanum().required(),
+       searchKey: Joi.string()
+       .trim()
+       .pattern(regularExpression)
+       .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+     });
+     const paramsSchema = Joi.object({
+       limit: Joi.number().required(),
+       page: Joi.number().required(),
+       order: Joi.number().required(),
+     });
+     await headerSchema.validateAsync({ headers: req.headers });
+     await paramsSchema.validateAsync(req.query);
+     await bodySchema.validateAsync(req.body);
+     next();
+   } catch (error) {
+     console.log(error);
+     return Responses.errorResponse(req, res, error, 200);
+   }
+};
+
+const priorityWiseAllActionsValidator = async (req, res, next) => {
+  try {
     const headerSchema = Joi.object({
       headers: Joi.object({
         authorization: Joi.required(),
       }).unknown(true),
     });
-
     const bodySchema = Joi.object({
+      searchKey: Joi.string().trim().pattern(regularExpression).messages({
+        "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+      }),
+      createdById: Joi.string().trim().alphanum(),
+      assignedUserId: Joi.string().trim().alphanum(),
+      priority:Joi.string().valid(...enumPriorityValues),
+      meetingId: Joi.string().trim().alphanum(),
+      actionStatus: Joi.string().valid(...statusEnumData),
+      delayStatus: Joi.string().valid(...delayStatusEnumData),
+      fromDate: Joi.date().iso(),
+      toDate: Joi.date().iso(),
       organizationId: Joi.string().trim().alphanum().required(),
-      searchKey: Joi.string()
-        .trim()
-        .pattern(regularExpression)
-        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
     });
     const paramsSchema = Joi.object({
       limit: Joi.number().required(),
@@ -468,11 +495,10 @@ const getUserActionPriotityDetailsValidator = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    return Responses.errorResponse(req, res, error, 200);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
   }
 };
-
-
 
 
 module.exports = {
@@ -489,5 +515,6 @@ module.exports = {
   cancelActionValidator,
   rejectReasignRequestValidator,
   totalActionList,
-  getUserActionPriotityDetailsValidator
+  getUserActionPriotityDetailsValidator,
+  priorityWiseAllActionsValidator
 };
