@@ -251,11 +251,12 @@ router.post('/delete-draft/:meetingId',
   authMiddleware.verifyUserToken,
   meetingController.deleteDraftMeeting
 );
-router.post("/deleteDraftMeeting/:createdById", 
-  authMiddleware.verifyUserToken, 
+router.delete(
+  "/deleteDraftMeeting/:id",
+  //meetingValidator.cancelMeetingValidator,
+  authMiddleware.verifyUserToken,
   meetingController.draftMeetingdelete
 );
-
 
 
 

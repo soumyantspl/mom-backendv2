@@ -5359,107 +5359,46 @@ const getMeetingActionPriorityDetailsforChart = async (
   };
 };
 
-// const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
-//   const meeting = await Meeting.findOne({ _id: new ObjectId(id) });
 
-//   if (!meeting) {
-//     throw new Error("Meeting not found.");
-//   }
-  
-
-//   if (meeting.createdById.toString() !== userId.toString()) {
-//     throw new Error("Only the meeting creator can delete the draft.");
-//   }
-
-  
-//   const result = await Meeting.findOneAndUpdate(
-//     { _id: new ObjectId(id) },
-//     {
-//       $set: {
-//         "meetingStatus.status": "deleted",  
-//         "meetingStatus.remarks": data.remarks,
-//         "isDeleted": true, 
-//       },
-//     },
-//     { new: true }  
-//   );
-
-
-//   const details = await commonHelper.generateLogObject(
-//     { status: "deleted" },
-//     userId,
-//     { status: "draft deleted" }
-//   );
-
-//   if (details.length !== 0) {
-//     const logData = {
-//       moduleName: logMessages.Meeting.moduleName,
-//       userId,
-//       action: logMessages.Meeting.deleteDraftMeeting,
-//       ipAddress,
-//       details: commonHelper.convertFirstLetterToCapital(details.join(" , ")),
-//       subDetails: `Meeting Title: ${result.title} (${result.meetingId})`,
-//       organizationId: result.organizationId,
-//     };
-//     await logService.createLog(logData);
-//   }
-
-//   return result; 
-// };
-
-const deleteDraftMeeting = async (id, createdById, data, ipAddress) => {
-
-  const meeting = await Meeting.find({ 
-    _id: new ObjectId(id),
-    "meetingStatus.status": "draft", 
-    createdById: new ObjectId(createdById) 
-  });
-
-  if (!meeting) {
-    throw new Error("Meeting not found or you are not the creator of this draft.");
-  }
-
-  const draftCount = await Meeting.countDocuments({
-    "meetingStatus.status": "draft",
-    createdById: new ObjectId(createdById)
-  });
-  console.log(`${draftCount} draft meeting(s) found for user ${createdById}`);
-
-  // Soft delete the draft meeting by updating its status and setting isDeleted flag
-  const result = await Meeting.findOneAndUpdate(
+const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
+  const result = await Meeting.findByIdAndUpdate(
     { _id: new ObjectId(id) },
     {
       $set: {
-        "meetingStatus.status": "deleted",  // Mark as deleted
+        "meetingStatus.status": "draft",
         "meetingStatus.remarks": data.remarks,
-        "isDeleted": true, // Soft delete flag
+        isDeleted: true, 
       },
     },
-    { new: true }  // Return the updated meeting
+    { new: true }
   );
+  if (!result) {
+    return null; 
+  }
+  console.log(`Meeting with ID: ${id} marked as deleted (soft delete).`);
 
-  // Generate log details for the action
   const details = await commonHelper.generateLogObject(
     { status: "deleted" },
-    createdById,  // Use createdById for logging
+    userId,
     { status: "draft deleted" }
   );
-
   if (details.length !== 0) {
     const logData = {
       moduleName: logMessages.Meeting.moduleName,
-      userId: createdById,  // Log the user's ID
-      action: logMessages.Meeting.deleteDraftMeeting,
+      userId,
+      action: logMessages.Meeting.updateRSVP,
       ipAddress,
       details: commonHelper.convertFirstLetterToCapital(details.join(" , ")),
-      //subDetails: `Meeting Title: (${result.meetingId})`,
+      subDetails: ` Meeting Title: ${result.title} (${result.meetingId})`,
       organizationId: result.organizationId,
     };
     await logService.createLog(logData);
   }
 
-  return result; 
+  return result;
 };
+
+
 
 
 

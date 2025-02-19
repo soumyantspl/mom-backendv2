@@ -1160,25 +1160,18 @@ const getMeetingActionPriorityDetailsController = async (req, res) => {
 
 const draftMeetingdelete = async (req, res) => {
   try {
-
-    console.log("Request Body:", req.body);
-
-
-    console.log("Received createdById:", req.body.createdById);
-
+    console.log("Request Data ");
+    
     let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
-
-    const result = await meetingService.deleteDraftMeeting(
-      req.body.createdById,  
-      req.createdById,       
+    const result = meetingService.deleteDraftMeeting(
+      req.params.id,
+      req.userId,
       req.body,
       ip
     );
-
     if (!result) {
-      return Responses.failResponse(req, res, null, messages.deleteDraftFailed, 409);
+      return Responses.failResponse(req, res, null, messages.cancelFailed, 409);
     }
-
     return Responses.successResponse(
       req,
       res,
@@ -1187,14 +1180,12 @@ const draftMeetingdelete = async (req, res) => {
       201
     );
   } catch (error) {
-    // Log the error for debugging purposes
-    console.log("Controller error in deleting draft meeting:", error);
+    console.log("Controller error:", error);
     errorLog(error);
-
-    // Return an error response if something goes wrong
     return Responses.errorResponse(req, res, error);
   }
 };
+
 
 
 
