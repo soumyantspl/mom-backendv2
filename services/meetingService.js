@@ -28,7 +28,7 @@ const JSZip = require("jszip");
 const path = require("path");
 const Configuration = require("../models/configurationModel")
 process.env.TZ = "Asia/Calcutta";
-
+const BASE_URL = process.env.BASE_URL || "";
 function convertTo12HourFormat(timeStr) {
   const [hours, minutes] = timeStr.split(":");
   const date = new Date();
@@ -64,6 +64,7 @@ const checkMeetingRoomAvailability = async(data)  => {
       }
     ]
   });
+  console.log('date-', new Date(data.date))
   if (existingMeeting) {
     const fromTimeFormatted = convertTo12HourFormat(existingMeeting.fromTime);
     const toTimeFormatted = convertTo12HourFormat(existingMeeting.toTime);
@@ -73,7 +74,7 @@ const checkMeetingRoomAvailability = async(data)  => {
     };
   }  
   }
-const BASE_URL = process.env.BASE_URL;
+
 
 /**FUNC- CREATE MEETING */
 const createMeeting = async (data, userId, ipAddress = 1000) => {
@@ -237,38 +238,51 @@ const checkAttendeeAvailability = async (data, id) => {
 }
 
 /// attendee array availability
-const checkAttendeeArrayAvailability = async(data) => {
-  console.log('data check Attendee Array Availability data-----', data)
-  const existingAttendee = await Meetings.find({
-    date: data.date,
-    isActive: true,
-    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
-    $or: [
-      {
-        fromTime: { $lt: data.toTime }, 
-        toTime: { $gt: data.fromTime }
-      },
-      {
-        fromTime: { $gte: data.fromTime, $lt: data.toTime }
-      },
-      {
-        toTime: { $gt: data.fromTime, $lte: data.toTime }
+const checkAttendeeArrayAvailability = async (data) => { 
+  console.log("Data inside attendee array-----", data);
+  let attendeeAvailability = [];
+    data.attendees.map(async (a) => {
+      console.log(a._id, new Date(data.date))
+      const meetings = await Meetings.find({
+        "attendees._id": new ObjectId(a._id),
+         date: new Date(data.date),
+         isActive: true,
+        // "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+        // $or: [
+        //   {
+        //     fromTime: { $lt: data.toTime }, 
+        //     toTime: { $gt: data.fromTime }
+        //   },
+        //   {
+        //     fromTime: { $gte: data.fromTime, $lt: data.toTime }
+        //   },
+        //   {
+        //     toTime: { $gt: data.fromTime, $lte: data.toTime }
+        //   }
+        // ],
+      }, { fromTime: 1, toTime: 1, _id: 1 } );
+
+      console.log("Meetings in attendee array-----", meetings);
+      console.log('Meetings attendee array count', meetings.length);
+
+      if (meetings.length > 0) {
+        const employee = await Employee.findOne({ _id: new ObjectId(a._id)}, { name: 1 });
+        console.log("Employee in attendee array-----", employee);
+
+        meetings.forEach((meeting) => {
+          attendeeAvailability.push({
+            attendeeId: a._id,
+            name: employee?.name,
+            meetingId: meeting._id,
+            fromTime: convertTo12HourFormat(meeting.fromTime),
+            toTime: convertTo12HourFormat(meeting.toTime),
+          });
+        });
       }
-    ],
-    attendees: { $elemMatch: { _id: { $in: data.attendees } } }
-  });
-
-  console.log('check Attendee ArrayAvailability----', existingAttendee)
-
-  if (existingAttendee.length !==0) {
-    const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
-    const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
-    return { 
-      attendeeUnavailable: true, 
-      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
-    };
-  }
-}
+    })
+    console.log('Attendee--Availability Array-555------', attendeeAvailability)
+    return attendeeAvailability;
+};
 
 
 /**FUNC- UPDATE MEETING */
@@ -745,7 +759,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
           <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
           Agenda Title
           </td>
-          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                 }</td>
           </tr>
           ${agenda.topic !== (null || "")
@@ -760,7 +774,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
                   colspan="6"
                   style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
                 >
-                  ${agenda.topic}
+                  ${commonHelper.decryptWithAES(agenda.topic)}
                 </td>
               </tr>`
                   : `<tr style={{display:"none"}}></tr>`
@@ -882,7 +896,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
             <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
             Agenda Title
             </td>
-            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                 }</td>
             </tr>
             ${agenda.topic !== (null || "")
@@ -897,7 +911,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
                     colspan="6"
                     style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
                   >
-                    ${agenda.topic}
+                    ${commonHelper.decryptWithAES(agenda.topic)}
                   </td>
                 </tr>`
                   : `<tr style={{display:"none"}}></tr>`
@@ -2498,7 +2512,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
         <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
         Agenda Title
         </td>
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
               }</td>
         </tr>
         ${agenda.topic !== (null || "")
@@ -2513,7 +2527,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
                 colspan="6"
                 style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
               >
-                <p>${agenda.topic}</p>
+                <p>${commonHelper.decryptWithAES(agenda.topic)}</p>
               </td>
             </tr>`
                 : `<tr style={{display:"none"}}></tr>`
@@ -3702,7 +3716,7 @@ const sendAlertTime = async () => {
               <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
               Agenda Title
               </td>
-              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                       }</td>
               </tr>
               ${agenda.topic !== (null || "")
@@ -3949,7 +3963,7 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
     <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
     Agenda Title
     </td>
-    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
             }</td>
     </tr>
     ${agenda.topic !== (null || "")
@@ -4070,6 +4084,8 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
       // );
 
       // const logo = process.env.LOGO;
+      const organizationDetails = await Organization.findOne({ _id: meetings[0].organizationId });
+    
       const logo = organizationDetails?.dashboardLogo
         ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
         : process.env.LOGO;
@@ -4418,7 +4434,7 @@ const newMeetingAsRescheduled = async (
         <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
         Agenda Title
         </td>
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                 }</td>
         </tr>
         ${agenda.topic !== (null || "")
@@ -4430,7 +4446,7 @@ const newMeetingAsRescheduled = async (
                 Topic to Discuss
               </td>
               <td colspan="6" style="border: 1px solid black; border-collapse: collapse; width: 50%; padding: 3px;">
-                <p>${agenda?.topic ? parse(agenda?.topic) : ""}</p>
+                <p>${agenda?.topic ? parse(commonHelper.decryptWithAES(agenda?.topic)) : ""}</p>
               </td>
             </tr>`
                   : `<tr style={{display:"none"}}></tr>`

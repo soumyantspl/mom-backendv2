@@ -515,6 +515,70 @@ const getAllActions = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+const getMeetingDueActionPriorityDetails = async (req, res) => {
+  try {
+    const { query, body, userId, userData } = req;  
+
+    const result = await actionService.getMeetingDueActionPriorityDetailsforChart(
+      query,     
+      body,       
+      userId,     
+      userData   
+    );
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.recordsFound,
+      200
+    );
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+const getAttendeeDueActionPriorityDetails = async (req, res) => {
+  try {
+    const { query, body, userId, userData } = req;  
+
+    const result = await actionService.getAttendeesWithPendingActions(
+      query,     
+      body,       
+      userId,     
+      userData   
+    );
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.recordsFound,
+      200
+    );
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 
 module.exports = {
   actionCommentsCreate,
@@ -532,5 +596,8 @@ module.exports = {
   cancelAction,
   totalActionList,
   getUserActionPriotityDetails,
-  getAllActions
+  getAllActions,
+   //PRATISHRUTI ----- Action Rechartbar Click
+   getMeetingDueActionPriorityDetails,
+   getAttendeeDueActionPriorityDetails
 };
