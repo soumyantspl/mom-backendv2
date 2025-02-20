@@ -133,4 +133,20 @@ router.post(
   actionController.getAllActions
 );
 
+//PRATISHRUTI
+///VIEW ALL DUEACTION PRORITY WISE ON RECHARTS BAR ??
+router.post(
+  "/prioritywiseactionduelist",
+  actionValidator.ChartbarClickforalldata,
+  authMiddleware.verifyUserToken,
+  actionController.getMeetingDueActionPriorityDetails
+);
+///VIEW ALL DUEACTION PRORITY WISE ON RECHARTS BAR ??
+router.post(
+  "/attendeeprioritywiseactionduelist",
+  actionValidator.ChartbarClickattendee,
+  authMiddleware.verifyUserToken,
+  actionController.getAttendeeDueActionPriorityDetails
+);
+
 module.exports = router;

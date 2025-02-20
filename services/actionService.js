@@ -3269,14 +3269,7 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
     return action;
   });
 
-  // Console logs
-  // console.log("Total High Priority Actions:", totalHighPriorityAction);
-  // console.log("Total High Priority Due Actions:", totalHighPriorityDueAction);
-  // console.log("Total Low Priority Actions:", totalLowPriorityAction);
-  // console.log("Total Low Priority Due Actions:", totalLowPriorityDueAction);
-  // console.log("Total Normal Priority Actions:", totalNormalPriorityAction);
-  // console.log("Total Normal Priority Due Actions:", totalNormalPriorityDueAction);
-  // console.log("Filtered Actions:", filteredActionDatas);
+
 
   return {
     totalCount: totalCount.length,

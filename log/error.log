@@ -1834,3 +1834,68 @@ Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
 Date: 19/02/2025, Time: 14:54
 Error: HTML tags & Special letters are not allowed!
 Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 19/02/2025, Time: 17:50
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\query.js:4897:12)
+    at Query._castConditions (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\query.js:2306:10)
+    at model.Query._findOne (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\query.js:2630:8)
+    at model.Query.exec (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\query.js:4446:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.checkMeetingRoomAvailability (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\services\meetingService.js:47:27)
+Date: 20/02/2025, Time: 11:08
+Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029897173.xlsx'
+Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029897173.xlsx'
+    at Object.openSync (node:fs:573:18)
+    at Object.writeFileSync (node:fs:2381:35)
+    at write_dl (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:3109:112)
+    at write_zip_denouement (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23784:31)
+    at write_zip_type (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23754:9)
+    at writeSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23891:22)
+    at Object.writeFileSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23914:9)
+    at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
+    at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 20/02/2025, Time: 11:08
+Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029906149.xlsx'
+Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029906149.xlsx'
+    at Object.openSync (node:fs:573:18)
+    at Object.writeFileSync (node:fs:2381:35)
+    at write_dl (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:3109:112)
+    at write_zip_denouement (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23784:31)
+    at write_zip_type (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23754:9)
+    at writeSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23891:22)
+    at Object.writeFileSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23914:9)
+    at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
+    at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 20/02/2025, Time: 11:08
+Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029913973.xlsx'
+Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029913973.xlsx'
+    at Object.openSync (node:fs:573:18)
+    at Object.writeFileSync (node:fs:2381:35)
+    at write_dl (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:3109:112)
+    at write_zip_denouement (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23784:31)
+    at write_zip_type (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23754:9)
+    at writeSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23891:22)
+    at Object.writeFileSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23914:9)
+    at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
+    at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 20/02/2025, Time: 11:08
+Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029927339.xlsx'
+Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029927339.xlsx'
+    at Object.openSync (node:fs:573:18)
+    at Object.writeFileSync (node:fs:2381:35)
+    at write_dl (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:3109:112)
+    at write_zip_denouement (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23784:31)
+    at write_zip_type (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23754:9)
+    at writeSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23891:22)
+    at Object.writeFileSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23914:9)
+    at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
+    at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
