@@ -14,7 +14,7 @@ const meetingStatusValues = [
   "draft",
 ];
 const attendanceTypeValues = ["FULL", "PARTIAL"];
-// CREATE MEETING VALIDATOR ///////////
+// CREATE MEETING VALIDATOR
 const createMeetingValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
@@ -1298,6 +1298,7 @@ module.exports = {
   totalMeetingListForChartValidator,
   getMeetingActionPriotityDetailsValidator,
   deleteZoomRecordingValidator,
+  forChartClick,
   downloadZoomRecordingsInZipValidaor,
   checkAttendeeAvailabilityValidator,
   checkRoomAvailabilityValidator,

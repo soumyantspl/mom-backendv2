@@ -15,7 +15,6 @@ const columnMapping = {
   Department: "department",
   "Unit Name": "unitName",
   "Unit Address": "unitAddress",
-  "Admin": "isAdmin",
 };
 
 
@@ -194,6 +193,7 @@ const viewSingleEmploye = async (req, res) => {
   }
 };
 /**FUNC- TO VIEW MASTER DATA OF EMPLOYEE**/
+
 const masterData = async (req, res) => {
   try {
     const result = await employeeService.masterData(req.params.organizationId);
@@ -219,6 +219,62 @@ const masterData = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+// const masterData = async (req, res) => {
+//   try {
+//     const result = await employeeService.masterData(req.params.organizationId);
+//     if (!result) {
+//       return Responses.failResponse(
+//         req,
+//         res,
+//         null,
+//         messages.recordsNotFound,
+//         200
+//       );
+//     }
+//     return Responses.successResponse(
+//       req,
+//       res,
+//       result.masterData,
+//       result.message,
+//       200
+//     );
+//   } catch (error) {
+//     console.log("Controller error:", error);
+//     errorLog(error);
+//     return Responses.errorResponse(req, res, error);
+//   }
+// };
+
+const masterDataXLSX = async (req, res) => {
+  try {
+    const excelBuffer = await employeeService.masterDataXLSX(req.params.organizationId);
+
+    if (!excelBuffer) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+
+    res.setHeader("Content-Disposition", "attachment; filename=MasterData.xlsx");
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    return res.send(excelBuffer);
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
 /**FUNC- TO CHECK DUPLICATE USER**/
 const checkDuplicateUser = async (req, res) => {
   try {
@@ -365,8 +421,8 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
   }
 
   // Create Duplicate Records sheet (if any)
-  if (formattedDuplicates.length > 0) {
-    const duplicateSheet = xlsx.utils.json_to_sheet(formattedDuplicates);
+  if (formatDuplicateRecords.length > 0) {
+    const duplicateSheet = xlsx.utils.json_to_sheet(formatDuplicateRecords);
     xlsx.utils.book_append_sheet(workbook, duplicateSheet, "Duplicate Records");
 
     duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0]).map((colKey) => ({
@@ -438,25 +494,36 @@ const importEmployee = async (req, res) => {
     if (duplicateRecords.length > 0 || validationErrors.length > 0) {
       const errorFilePath = writeErrorFile(duplicateRecords, validationErrors);
       return res.status(200).json({
-        message: "Import completed with errors.",
+        message: messages.importFailed,
         errorFileUrl: `/Downloads/${path.basename(errorFilePath)}`, // Link to download error report
       });
     }
 
     // If successful, return success message
-    return res.status(201).json({
-      message: "Import completed successfully.",
+    // return res.status(201).json({
+    //   message: "Import completed successfully.",
+    //   savedData,
+    // });
+
+    return Responses.successResponse(
+      req,
+      res,
       savedData,
-    });
+      messages.importSuccess,
+      201
+    );
 
   } catch (error) {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
     console.error("Error during Excel import:", error.message);
-    return res.status(500).json({ message: "Error processing Excel file", error: error.message });
+    // return res.status(500).json({ message: "Error processing Excel file", error: error.message });
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
   }
 };
+
 
 const viewProfile = async (req, res) => {
   try {
@@ -502,9 +569,6 @@ const viewProfile = async (req, res) => {
 
 
 
-
-
-
 module.exports = {
   createEmployee,
   editEmployee,
@@ -512,6 +576,7 @@ module.exports = {
   listEmployee,
   viewSingleEmploye,
   masterData,
+  masterDataXLSX,
   checkDuplicateUser,
   listOnlyEmployee,
   getEmployeeListAsPerUnit,

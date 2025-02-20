@@ -180,14 +180,15 @@ const viewSingleOrganizationController = async (req, res) => {
 /**FUNC- TO EDIT ORGANIZATION **/
 const editOrganizationController = async (req, res) => {
   try {
-    const organizationId = req.params.organizationId
+    const organizationId = req.params.organizationId;
+
     const data = {
       name: req.body.name,
       email: req.body.email,
       phoneNo: req.body.phoneNo,
       contactPersonName: req.body.contactPersonName,
-      contactPersonPhNo: req.body.contactPersonPhNo,
-      contactPersonWhatsAppNo: req.body.contactPersonWhatsAppNo,
+      contactPersonPhNo: req.body.contactPersonPhNo ? Number(req.body.contactPersonPhNo) || null : null,
+      contactPersonWhatsAppNo: req.body.contactPersonWhatsAppNo ? Number(req.body.contactPersonWhatsAppNo) || null : null,
       organizationCode: req.body.organizationCode,
     };
 
@@ -209,16 +210,6 @@ const editOrganizationController = async (req, res) => {
       ip
     );
 
-    // if (result?.error === "Organization code already exists.") {
-    //   return Responses.failResponse(
-    //     req,
-    //     res,
-    //     null,
-    //     messages.duplicateOrganizationCode,
-    //     200
-    //   );
-    // }
-
     if (!result) {
       return Responses.failResponse(
         req,
@@ -229,7 +220,6 @@ const editOrganizationController = async (req, res) => {
       );
     }
 
-    // Successful update response
     return Responses.successResponse(
       req,
       res,
@@ -243,6 +233,7 @@ const editOrganizationController = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
 
 
 
