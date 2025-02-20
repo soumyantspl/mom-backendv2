@@ -13,8 +13,8 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const ObjectId = require("mongoose").Types.ObjectId;
 const emailService = require("./emailService");
-const emailTemplates = require("../emailSetUp/emailTemplates");
-//const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+//const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailConstants = require("../constants/emailConstants");
 const commonHelper = require("../helpers/commonHelper");
 const employeeService = require("./employeeService");
@@ -937,7 +937,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
       }
     }
     if (
-      meeting?.hostDetails?.hostType === "GMEET" &&
+      meeting?.hostDetails?.hostType !== "GMEET" &&
       data.step === 3 &&
       ((data.isUpdate === false && data.isEditMeeting === true) ||
         (data.isUpdate === false && data.isEditMeeting === false))
@@ -949,7 +949,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
       await googleService?.addEventForMOM(meeting, process.env.TZ);
     }
     if (
-      meeting?.hostDetails?.hostType === "GMEET" &&
+      meeting?.hostDetails?.hostType !== "GMEET" &&
       data.isUpdate === true &&
       data.isEditMeeting === true
     ) {
@@ -957,12 +957,9 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
         "inside my code==================================================================2========"
       );
 
-      await googleService?.updateEventForMOM(
-        meeting,
-        attendeesEmailids,
-        process.env.TZ
-      );
+      await googleService?.updateEventForMOM(meeting, process.env.TZ);
     }
+
     return meeting;
   } else {
     return meeting;
@@ -2354,7 +2351,13 @@ const downloadMOM = async (meetingId, userId, ipAddress = "1000") => {
 };
 
 /**FUNC- TO RESCHEDULE MEETING */
-const rescheduleMeeting = async (id, userId, data,userData, ipAddress = "1000") => {
+const rescheduleMeeting = async (
+  id,
+  userId,
+  data,
+  userData,
+  ipAddress = "1000"
+) => {
   const updatedMeeting = null;
 
   const isUpdated = await Meeting.findOneAndUpdate(
@@ -2377,7 +2380,7 @@ const rescheduleMeeting = async (id, userId, data,userData, ipAddress = "1000") 
     const meetingDetails = await viewMeeting(id, userId);
 
     if (meetingDetails?.hostDetails?.hostType === "ZOOM") {
-      console.log("1111111111111111111111")
+      console.log("1111111111111111111111");
       const attendeesEmailids = meetingDetails?.attendees.map((item) => {
         return {
           email: item.email,
@@ -2401,14 +2404,12 @@ const rescheduleMeeting = async (id, userId, data,userData, ipAddress = "1000") 
       console.log("updatedMeetingHostData============", updatedMeetingHostData);
 
       if (updatedMeetingHostData) {
-      
         console.log(isUpdated);
 
         const meetingHostDeatils = {
           meetingDateTime: updatedMeetingHostData.startTime,
           // meetingLink: meetingHostData.meeting_url,
         };
-       
 
         await meetingHostDetails.findOneAndUpdate(
           {
@@ -2427,18 +2428,14 @@ const rescheduleMeeting = async (id, userId, data,userData, ipAddress = "1000") 
       }
     }
 
-    
     if (meetingDetails?.hostDetails?.hostType === "GMEET") {
-     console.log("222222222222222222")
+      console.log("222222222222222222");
       let updatedMeetingHostData = await googleService.updateGMeetingMOM(
         meetingDetails,
         process.env.TZ
       );
-     
 
       if (updatedMeetingHostData) {
-       
-
         const meetingHostDeatils = {
           meetingDateTime: updatedMeetingHostData?.start?.dateTime,
           // meetingLink: meetingHostData.meeting_url,
@@ -2506,22 +2503,6 @@ const rescheduleMeeting = async (id, userId, data,userData, ipAddress = "1000") 
           })
           .join(" ");
 
-        // let finalMeetingLink = null;
-        // let meetingLinkCode = null;
-        // if (isUpdated) {
-        //   finalMeetingLink =
-        //     isUpdated?.hostDetails?.hostType === "ZOOM"
-        //       ? isUpdated?.hostDetails?.hostLink?.split("?")[0]
-        //       : isUpdated?.link;
-        //   meetingLinkCode = isUpdated?.hostDetails?.hostingPassword
-        //     ? isUpdated?.hostDetails?.hostingPassword
-        //     : null;
-        // }
-
-        // //  console.log("updatedMeeting==============", updatedMeeting);
-        // console.log("finalMeetingLink==============", finalMeetingLink);
-        // console.log("meetingLinkCode==============", meetingLinkCode);
-
         let finalMeetingLink = null;
         let meetingLinkCode = null;
 
@@ -2533,18 +2514,6 @@ const rescheduleMeeting = async (id, userId, data,userData, ipAddress = "1000") 
           ? isUpdated?.hostDetails?.hostingPassword
           : null;
 
-        // console.log("meeting==============", meeting);
-        // console.log("updatedMeeting==============", updatedMeeting);
-        console.log("finalMeetingLink==============", finalMeetingLink);
-        console.log("meetingLinkCode==============", meetingLinkCode);
-
-        //  const hostKey =
-        //         meeting?.createdById?.toString() ==
-        //           attendeeData?._id?.toString() &&
-        //         singleMeetingDetails?.hostDetails?.hostLink
-        //           ? singleMeetingDetails?.hostDetails?.hostLink?.split("?")[0]
-        //
-        //         : singleMeetingDetails?.link;
         let hostKey = null;
 
         const attendeeDetails = await Employee.findOne(
@@ -2589,17 +2558,18 @@ const rescheduleMeeting = async (id, userId, data,userData, ipAddress = "1000") 
             userData,
             hostKey
           );
-        const emailSubject = await emailConstants.reScheduleMeetingSubject(
-          meetingDetails
-        );
-        //const { emailSubject, mailData: mailBody } = mailData;
-
-        emailService.sendEmail(
-          attendee.email,
-          "Meeting Rescheduled",
-          emailSubject,
-          mailData
-        );
+        // const emailSubject = await emailConstants.reScheduleMeetingSubject(
+        //   meetingDetails
+        // );
+        const { emailSubject, mailData: mailBody } = mailData;
+        if (emailSubject && mailBody) {
+          emailService.sendEmail(
+            attendee.email,
+            "Meeting Rescheduled",
+            emailSubject,
+            mailBody
+          );
+        }
       });
     }
 

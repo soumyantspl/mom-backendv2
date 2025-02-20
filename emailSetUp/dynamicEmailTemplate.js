@@ -290,20 +290,20 @@ const sendReScheduledMeetingEmailTemplate = async (
       isActive: true,
     });
 
-    if (!template) {
-      throw new Error("No active template found for type: RESCHEDULE");
-    }
+    // if (!template) {
+    //   throw new Error("No active template found for type: RESCHEDULE");
+    // }
 
   //  let salutation = "";
     let body = "";
     let subject = "";
 
-    if (template.rescheduleCredentials) {
+    if (template?.rescheduleCredentials) {
     //  salutation = template.dear;
       body = template.rescheduleCredentials.body;
       subject = template.subject;
     } else {
-      throw new Error("No body found for template type: RESCHEDULE");
+      //throw new Error("No body found for template type: RESCHEDULE");
     }
 
     const meetingLinkUrl = meetingLink || meetingData?.link || "Not Available";
