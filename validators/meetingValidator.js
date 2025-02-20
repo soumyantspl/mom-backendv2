@@ -25,15 +25,40 @@ const createMeetingValidator = async (req, res, next) => {
     });
     const bodySchema = Joi.object({
       sendNotification: Joi.boolean(),
-      title: Joi.string()
-        .trim()
-        .min(3)
-        .max(100)
-        .pattern(regularExpression)
-        .messages({
-          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-        })
-        .required(),
+      // title: Joi.string()
+      //   .trim()
+      //   .min(3)
+      //   .max(100)
+      //   .pattern(regularExpression)
+      //   .messages({
+      //     "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+      //   })
+      //   .required(),
+
+
+      title: Joi.any().when("isEncrypted", {
+        is: true,
+        then: Joi.string()
+          .trim()
+          // .min(10)
+          // .max(300)
+          //.pattern(/^[A-Za-z0-9+/=]+$/) ///  Ensure encrypted format (Base64-like)
+          .required(),
+        otherwise: Joi.string()
+          .trim()
+          .min(3)
+          // .max(300)
+          // .pattern(regularExpression)
+          // .messages({
+          //   "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+          // })
+          .required(),
+      }),
+      
+      isEncrypted: Joi.boolean().default(false), 
+      
+      
+
       organizationId: Joi.string().trim().alphanum().required(),
       parentMeetingId: Joi.string().trim().alphanum(),
       mode: Joi.string().trim().valid("VIRTUAL", "PHYSICAL").required(),
@@ -139,6 +164,12 @@ const createMeetingValidator = async (req, res, next) => {
       }).required(),
     });
 
+    console.log("Received Body:", req.body);
+console.log("Title:", req.body.title);
+console.log("isEncrypted:", req.body.isEncrypted);
+
+
+
     await headerSchema.validateAsync({ headers: req.headers });
     await bodySchema.validateAsync(req.body);
     next();
@@ -186,12 +217,33 @@ const updateMeetingValidator = async (req, res, next) => {
       reScheduled: Joi.boolean(),
       isUpdate: Joi.boolean().required(),
       sendNotification: Joi.boolean().required(),
-      title: Joi.string()
-        .trim()
-        .min(3)
-        .max(100)
-        .pattern(regularExpression)
-        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+      // title: Joi.string()
+      //   .trim()
+      //   .min(3)
+      //   .max(300)
+      //   .pattern(regularExpression)
+      //   .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+
+      title: Joi.any().when("isEncrypted", {
+        is: true,
+        then: Joi.string()
+          .trim()
+          // .min(10)
+          // .max(300)
+          //.pattern(/^[A-Za-z0-9+/=]+$/) //  Ensure encrypted format (Base64-like)
+          .required(),
+        otherwise: Joi.string()
+          .trim()
+          .min(3)
+          .max(300)
+          .pattern(regularExpression)
+          .messages({
+            "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)`,
+          })
+          // .required(),
+      }),
+      
+      isEncrypted: Joi.boolean().default(false),
 
       organizationId: Joi.string().trim().alphanum().required(),
       mode: Joi.string().trim().valid("VIRTUAL", "PHYSICAL"),
@@ -1161,7 +1213,6 @@ const draftMeetingValidator = async (req, res, next) => {
 };
 
 module.exports = {
-  forChartClick,
   updateMeetingStatusValidator,
   createMeetingValidator,
   updateMeetingValidator,
@@ -1190,5 +1241,6 @@ module.exports = {
   getMeetingActionPriotityDetailsValidator,
   deleteZoomRecordingValidator,
   downloadZoomRecordingsInZipValidaor,
-  draftMeetingValidator
+  forChartClick,
+  draftMeetingValidator,
 };
