@@ -384,52 +384,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
 
   ///////////////START OF UPDATE GOOGLE MEET///////////////
 
-  if (
-    meeting?.hostDetails?.hostType === "GMEET" &&
-    meeting?.hostDetails?.hostLink &&
-    data.step == 2
-  ) {
-    const attendeesEmailids = meeting?.attendees.map((item) => {
-      return {
-        email: item.email,
-      };
-    });
-    const duration =
-      (parseFloat(meeting?.toTime.split(":").join(".")) -
-        parseFloat(meeting?.fromTime.split(":").join("."))) *
-      60;
-    let updatedMeetingHostData =
-      await meetingStreamingService.updateZoomMeetingForMOM(
-        meeting?.title,
-        Math.abs(duration),
-        meeting?.date,
-        process.env.TZ,
-        attendeesEmailids,
-        meeting
-      );
-    console.log("updatedMeetingHostData============", updatedMeetingHostData);
-
-    if (updatedMeetingHostData) {
-      const meetingHostDeatils = {
-        meetingDateTime: updatedMeetingHostData.startTime,
-      };
-
-      await meetingHostDetails.findByIdAndUpdate(
-        {
-          _id: new ObjectId(updatedMeetingHostData.id),
-          meetingId: new ObjectId(meeting?._id),
-        },
-
-        {
-          $set: meetingHostDeatils,
-        },
-
-        {
-          new: true,
-        }
-      );
-    }
-  }
   ///////////////END OF UPDATE GOOGLE MEET///////////////
   let allowedUsers = [new ObjectId(userId), meeting?.createdById];
   let details = null;
@@ -695,24 +649,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
             agenda.title
           }</td>
           </tr>
-          ${
-            agenda.topic !== (null || "")
-              ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-                <td
-                  style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                  colspan="6"
-                >
-                  Topic to Discuss
-                </td>
-                <td
-                  colspan="6"
-                  style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-                >
-                  ${agenda.topic}
-                </td>
-              </tr>`
-              : `<tr style={{display:"none"}}></tr>`
-          }
              ${
                agenda.timeLine !== (null || "" || 0)
                  ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
@@ -802,13 +738,26 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
               finalMeetingLink,
               hostKey
             );
-          const { emailSubject, mailData: mailBody } = mailData;
+
+          if (meetingUpdate.step == 3) {
+            emailSubject = await emailConstants.editMeetingSubject(meeting);
+          } else {
+            emailSubject = await emailConstants.scheduleMeetingSubject(meeting);
+          }
           emailService.sendEmail(
             attendee.email,
             "Meeting Updated",
             emailSubject,
-            mailBody
+            mailData
           );
+
+          // const { emailSubject, mailData: mailBody } = mailData;
+          // emailService.sendEmail(
+          //   attendee.email,
+          //   "Meeting Updated",
+          //   emailSubject,
+          //   mailBody
+          // );
         });
       } else {
         meeting?.attendees?.map(async (attendee) => {
@@ -829,24 +778,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
               agenda.title
             }</td>
             </tr>
-            ${
-              agenda.topic !== (null || "")
-                ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-                  <td
-                    style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                    colspan="6"
-                  >
-                    Topic to Discuss
-                  </td>
-                  <td
-                    colspan="6"
-                    style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-                  >
-                    ${agenda.topic}
-                  </td>
-                </tr>`
-                : `<tr style={{display:"none"}}></tr>`
-            }
                ${
                  agenda.timeLine !== (null || "" || 0)
                    ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
@@ -1005,13 +936,28 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
         });
       }
     }
-    if (meeting?.hostDetails?.hostType !== "GMEET" && data.isUpdate === false) {
-      const attendeesEmailids = meeting?.attendees.map((item) => {
-        return {
-          email: item.email,
-        };
-      });
-      await googleService?.addEventForMOM(
+    if (
+      meeting?.hostDetails?.hostType === "GMEET" &&
+      data.step === 3 &&
+      ((data.isUpdate === false && data.isEditMeeting === true) ||
+        (data.isUpdate === false && data.isEditMeeting === false))
+    ) {
+      console.log(
+        "inside my code===============================================================1==========="
+      );
+
+      await googleService?.addEventForMOM(meeting, process.env.TZ);
+    }
+    if (
+      meeting?.hostDetails?.hostType === "GMEET" &&
+      data.isUpdate === true &&
+      data.isEditMeeting === true
+    ) {
+      console.log(
+        "inside my code==================================================================2========"
+      );
+
+      await googleService?.updateEventForMOM(
         meeting,
         attendeesEmailids,
         process.env.TZ
@@ -2408,7 +2354,7 @@ const downloadMOM = async (meetingId, userId, ipAddress = "1000") => {
 };
 
 /**FUNC- TO RESCHEDULE MEETING */
-const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
+const rescheduleMeeting = async (id, userId, data,userData, ipAddress = "1000") => {
   const updatedMeeting = null;
 
   const isUpdated = await Meeting.findOneAndUpdate(
@@ -2431,6 +2377,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
     const meetingDetails = await viewMeeting(id, userId);
 
     if (meetingDetails?.hostDetails?.hostType === "ZOOM") {
+      console.log("1111111111111111111111")
       const attendeesEmailids = meetingDetails?.attendees.map((item) => {
         return {
           email: item.email,
@@ -2454,42 +2401,55 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
       console.log("updatedMeetingHostData============", updatedMeetingHostData);
 
       if (updatedMeetingHostData) {
-        // hostingPassword = updatedMeetingHostData?.password;
-        // meetingLink = updatedMeetingHostData?.meeting_url?.split("?")[0];
-        // hostLink = updatedMeetingHostData?.host_url;
-
-        // updatedMeeting = await Meeting.findByIdAndUpdate(
-        //   { _id: new ObjectId(id) },
-
-        //   {
-        //     $set: {
-        //       link: updatedMeetingHostData?.meeting_url,
-        //       hostDetails: {
-        //         hostLink: updatedMeetingHostData?.host_url,
-        //         hostingPassword,
-        //         hostType: meetingDetails?.hostDetails?.hostType,
-        //       },
-        //       // linkType,
-        //     },
-        //   },
-
-        //   {
-        //     new: true,
-        //   }
-        // );
-        console.log(updatedMeeting);
+      
+        console.log(isUpdated);
 
         const meetingHostDeatils = {
           meetingDateTime: updatedMeetingHostData.startTime,
           // meetingLink: meetingHostData.meeting_url,
         };
+       
+
+        await meetingHostDetails.findOneAndUpdate(
+          {
+            hostMeetingId: updatedMeetingHostData.id,
+            meetingId: new ObjectId(isUpdated?._id),
+          },
+
+          {
+            $set: meetingHostDeatils,
+          },
+
+          {
+            new: true,
+          }
+        );
+      }
+    }
+
+    
+    if (meetingDetails?.hostDetails?.hostType === "GMEET") {
+     console.log("222222222222222222")
+      let updatedMeetingHostData = await googleService.updateGMeetingMOM(
+        meetingDetails,
+        process.env.TZ
+      );
+     
+
+      if (updatedMeetingHostData) {
+       
+
+        const meetingHostDeatils = {
+          meetingDateTime: updatedMeetingHostData?.start?.dateTime,
+          // meetingLink: meetingHostData.meeting_url,
+        };
         // const meetingHostDatas = new meetingHostDetails(meetingHostDeatils);
         // await meetingHostDatas.save();
 
-        await meetingHostDetails.findByIdAndUpdate(
+        await meetingHostDetails.findOneAndUpdate(
           {
-            _id: new ObjectId(updatedMeetingHostData.id),
-            meetingId: new ObjectId(updatedMeeting?._id),
+            hostMeetingId: updatedMeetingHostData.id,
+            meetingId: new ObjectId(isUpdated?._id),
           },
 
           {
@@ -2523,24 +2483,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
           agenda.title
         }</td>
         </tr>
-        ${
-          agenda.topic !== (null || "")
-            ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-              <td
-                style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                colspan="6"
-              >
-                Topic to Discuss
-              </td>
-              <td
-                colspan="6"
-                style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-              >
-                <p>${agenda.topic}</p>
-              </td>
-            </tr>`
-            : `<tr style={{display:"none"}}></tr>`
-        }
+       
            ${
              agenda.timeLine !== (null || "" || 0)
                ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
@@ -2643,18 +2586,19 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
             attendee,
             meetingLinkCode,
             finalMeetingLink,
+            userData,
             hostKey
           );
-        // const emailSubject = await emailConstants.reScheduleMeetingSubject(
-        //   meetingDetails
-        // );
-        const { emailSubject, mailData: mailBody } = mailData;
+        const emailSubject = await emailConstants.reScheduleMeetingSubject(
+          meetingDetails
+        );
+        //const { emailSubject, mailData: mailBody } = mailData;
 
         emailService.sendEmail(
           attendee.email,
           "Meeting Rescheduled",
           emailSubject,
-          mailBody
+          mailData
         );
       });
     }
