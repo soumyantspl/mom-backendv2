@@ -39,4 +39,12 @@ router.get(
   hostController.googleMeetAuthUrl
 );
 
+
+/* UPDATE HOST STATUS */
+router.post(
+  "/getAccessToken",
+  hostValidator.getAccessToken,
+  authMiddleware.verifyUserToken,
+  hostController.getAccessToken
+);
 module.exports = router;

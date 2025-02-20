@@ -2270,3 +2270,338 @@ Stack Trace: ReferenceError: gggggg is not defined
     at Object.googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\services\googleService.js:376:1)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async googleMeetAuthUrl (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:141:21)
+Date: 15/02/2025, Time: 14:45
+Error: invalid_client
+Stack Trace: Error: invalid_client
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:411:22)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 14:46
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 14:46
+Error: invalid_client
+Stack Trace: Error: invalid_client
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:411:22)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 14:46
+Error: invalid_client
+Stack Trace: Error: invalid_client
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:411:22)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 14:46
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 14:50
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 14:52
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 14:53
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 14:55
+Error: saveToenInHostDetails is not defined
+Stack Trace: ReferenceError: saveToenInHostDetails is not defined
+    at Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:438:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 14:55
+Error: saveToenInHostDetails is not defined
+Stack Trace: ReferenceError: saveToenInHostDetails is not defined
+    at Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:438:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 14:55
+Error: saveToenInHostDetails is not defined
+Stack Trace: ReferenceError: saveToenInHostDetails is not defined
+    at Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:438:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 14:55
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 14:55
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 14:56
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:01
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:02
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:03
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:03
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:04
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:04
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:04
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:420:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:06
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:06
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:07
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:08
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:09
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:09
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:09
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 15/02/2025, Time: 15:10
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:10
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:10
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:10
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:10
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:11
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:11
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:11
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 15:14
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 15/02/2025, Time: 16:40
+Error: invalid_grant
+Stack Trace: Error: invalid_grant
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.getTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:158:21)
+    at async Object.getAccessTokens (E:\Ongoing\V2\mom-backend\services\googleService.js:421:24)
+    at async getAccessToken (E:\Ongoing\V2\mom-backend\controllers\hostingController.js:184:20)
+Date: 20/02/2025, Time: 10:22
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:357:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:26
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:357:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:28
+Error: No access, refresh token, API key or refresh handler callback is set.
+Stack Trace: Error: No access, refresh token, API key or refresh handler callback is set.
+    at OAuth2Client.getRequestMetadataAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:307:19)
+    at OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:418:34)
+    at OAuth2Client.request (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:412:25)
+    at createAPIRequestAsync (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:303:31)
+    at createAPIRequest (E:\Ongoing\V2\mom-backend\node_modules\googleapis-common\build\src\apirequest.js:52:16)
+    at Resource$Events.insert (E:\Ongoing\V2\mom-backend\node_modules\googleapis\build\src\apis\calendar\v3.js:895:65)
+    at Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:357:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:39
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.refreshAccessTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:247:30)
+    at OAuth2Client.refreshAccessToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:243:25)
+    at authenticateData (E:\Ongoing\V2\mom-backend\services\googleService.js:439:49)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:320:16)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:40
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.refreshAccessTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:247:30)
+    at OAuth2Client.refreshAccessToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:243:25)
+    at authenticateData (E:\Ongoing\V2\mom-backend\services\googleService.js:440:49)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:320:16)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:42
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.refreshAccessTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:247:30)
+    at OAuth2Client.refreshAccessToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:243:25)
+    at authenticateData (E:\Ongoing\V2\mom-backend\services\googleService.js:440:49)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:320:16)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:43
+Error: newToken is not defined
+Stack Trace: ReferenceError: newToken is not defined
+    at authenticateData (E:\Ongoing\V2\mom-backend\services\googleService.js:456:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:320:16)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:44
+Error: No refresh token is set.
+Stack Trace: Error: No refresh token is set.
+    at OAuth2Client.refreshTokenNoCache (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:200:19)
+    at OAuth2Client.refreshToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:180:25)
+    at OAuth2Client.refreshAccessTokenAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:247:30)
+    at OAuth2Client.refreshAccessToken (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:243:25)
+    at authenticateData (E:\Ongoing\V2\mom-backend\services\googleService.js:440:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:320:16)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:44
+Error: newTokenData is not defined
+Stack Trace: ReferenceError: newTokenData is not defined
+    at authenticateData (E:\Ongoing\V2\mom-backend\services\googleService.js:446:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:320:16)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:46
+Error: newToken is not defined
+Stack Trace: ReferenceError: newToken is not defined
+    at authenticateData (E:\Ongoing\V2\mom-backend\services\googleService.js:456:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:320:16)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:47
+Error: Login Required.
+Stack Trace: Error: Login Required.
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:357:20)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 20/02/2025, Time: 10:51
+Error: Login Required.
+Stack Trace: Error: Login Required.
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:357:20)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)

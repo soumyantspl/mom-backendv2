@@ -72,7 +72,7 @@ const updateHostDetails = async (req, res, next) => {
         otherwise: Joi.string().trim().allow(null, ""),
         //.allow(null, ""),
       }),
-   
+
       msclientId: Joi.any().when("hostType", {
         is: "MSTEAMS",
         then: Joi.string().trim().required(),
@@ -115,7 +115,9 @@ const updateHostStatus = async (req, res, next) => {
       organizationId: Joi.string().trim().alphanum().required(),
     });
     const bodySchema = Joi.object({
-      hostType: Joi.string().valid(...hostTypeValues).required(),
+      hostType: Joi.string()
+        .valid(...hostTypeValues)
+        .required(),
       isActive: Joi.boolean().required().strict(),
     });
     await headerSchema.validateAsync({ headers: req.headers });
@@ -149,9 +151,32 @@ const googleMeetAuthUrl = async (req, res, next) => {
   }
 };
 
+const getAccessToken = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+        ip: Joi.string(),
+      }).unknown(true),
+    });
+
+    const bodySchema = Joi.object({
+      code: Joi.string().required(),
+      organizationId: Joi.string().trim().alphanum().required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 module.exports = {
   updateHostDetails,
   getHostDetails,
   updateHostStatus,
-  googleMeetAuthUrl
+  googleMeetAuthUrl,
+  getAccessToken,
 };

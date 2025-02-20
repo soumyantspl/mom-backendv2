@@ -56,6 +56,19 @@ const updateHostDetails = async (req, res) => {
         409
       );
     }
+
+    if (req.body.hostType === "GMEET") {
+
+  const authUrl = await googleService.googleMeetAuthUrl(req.params.organizationId);
+  return Responses.successResponse(
+    req,
+    res,
+    authUrl,
+    messages.validateGauthUrl,
+    200
+  );
+}
+
     return Responses.successResponse(
       req,
       res,
@@ -164,9 +177,40 @@ const googleMeetAuthUrl = async (req, res) => {
 };
 
 
+/**FUNC- TO VIEW HOST DETAILS **/
+const getAccessToken = async (req, res) => {
+  try {
+  
+    const result = await googleService.getAccessTokens(req.body.code,req.body.organizationId);
+    console.log(result);
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.tokenSavedSuccess,
+      200
+    );
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
 module.exports = {
   updateHostDetails,
   getHostDetails,
   updateHostStatus,
-  googleMeetAuthUrl
+  googleMeetAuthUrl,
+  getAccessToken
 };

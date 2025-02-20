@@ -69,6 +69,8 @@ const updateHostDetails = async (organizationId, data, userId, ipAddress) => {
     { upsert: true, new: true }
   );
   console.log("result---------------", result);
+
+
   // if (result) {
   //   ////////////////////LOGER START
   //   const logData = {
