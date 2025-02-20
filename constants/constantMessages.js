@@ -32,7 +32,6 @@ const duplicateEmpCode = "Duplicate employee id found!";
 const duplicateEmail = "This Email is already exist!!";
 const expiredOtp =
   "The OTP you entered has been expired. Please use resend otp!";
-const roomUnavailable = "The room is already booked for the selected date and time range.";
 const invaliToken = "Invalid token";
 const invalidUser =
   "Your account is not currently active. Please contact your adminstrator.";
@@ -117,6 +116,7 @@ const importFailed = "Import completed with errors.Please check Reason for Faile
 const importEroor = "Error in processing Excel file"
 const validationError = "Validation Errors"
 const attendeeUnavailable = "This attendee is already scheduled for a meeting at the same date and time "
+const roomUnavailable = "The room is already booked for the selected date and time ";
 const organizerUnavailable = "You already have a meeting scheduled on this date from "
 
 ///Pratishruti//

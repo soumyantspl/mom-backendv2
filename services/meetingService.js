@@ -43,7 +43,6 @@ function convertTo12HourFormat(timeStr) {
 
 // meeting room availability
 const checkMeetingRoomAvailability = async(data)  => {
-  console.log("data of Meeting Room-------------------", data);
   const existingMeeting = await Meeting.findOne({
     organizationId: data.organizationId,
     date: new Date(data.date),
@@ -72,7 +71,8 @@ const checkMeetingRoomAvailability = async(data)  => {
       bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
     };
   }  
-  }
+}
+
 const BASE_URL = process.env.BASE_URL;
 
 /**FUNC- CREATE MEETING */
@@ -182,10 +182,7 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
 
 // attendee availability checking
 const checkAttendeeAvailability = async (data, id) => {
-  console.log('checkAttendeeAvailability data-----', data)
-
   let attendeeIds;
-
   if (data.email) {
     const employee = await Employee.findOne({ email: data.email }, { _id: 1 });
     if (employee) {
@@ -196,15 +193,11 @@ const checkAttendeeAvailability = async (data, id) => {
   }
   if (data.attendeeId){
     attendeeIds = new ObjectId(data.attendeeId);
-  }
-  
+  } 
   const fromToTime = await Meetings.findOne(
     { _id: new ObjectId(id) },
     { date:1, fromTime: 1, toTime: 1, isActive:1, meetingStatus:1 }
   );
-
-  console.log('From To Time----', fromToTime);
-
   const existingAttendee = await Meetings.findOne({
     date: fromToTime.date,
     isActive: true,
@@ -223,9 +216,6 @@ const checkAttendeeAvailability = async (data, id) => {
     ],
     attendees: { $elemMatch: { _id: { $in: attendeeIds } } }
   });
-
-  console.log('existingAttendee----', existingAttendee)
-
   if (existingAttendee) {
     const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
     const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
@@ -237,38 +227,41 @@ const checkAttendeeAvailability = async (data, id) => {
 }
 
 /// attendee array availability
-const checkAttendeeArrayAvailability = async(data) => {
-  console.log('data check Attendee Array Availability data-----', data)
-  const existingAttendee = await Meetings.find({
-    date: data.date,
-    isActive: true,
-    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
-    $or: [
+const checkAttendeeArrayAvailability = async (data) => { 
+  let attendeeAvailability = [];
+  for (const a of data.attendees) {
+    const meetings = await Meetings.find(
       {
-        fromTime: { $lt: data.toTime }, 
-        toTime: { $gt: data.fromTime }
+        "attendees._id": new ObjectId(a._id),
+        date: new Date(data.date),
+        isActive: true,
+        "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+        $or: [
+          { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
+          { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
+          { toTime: { $gt: data.fromTime, $lte: data.toTime } }
+        ],
       },
-      {
-        fromTime: { $gte: data.fromTime, $lt: data.toTime }
-      },
-      {
-        toTime: { $gt: data.fromTime, $lte: data.toTime }
-      }
-    ],
-    attendees: { $elemMatch: { _id: { $in: data.attendees } } }
-  });
-
-  console.log('check Attendee ArrayAvailability----', existingAttendee)
-
-  if (existingAttendee.length !==0) {
-    const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
-    const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
-    return { 
-      attendeeUnavailable: true, 
-      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
-    };
+      { fromTime: 1, toTime: 1, _id: 1, meetingId:1 }
+    ); 
+    if (meetings.length > 0) {
+      const employee = await Employee.findOne(
+        { _id: new ObjectId(a._id) },
+        { name: 1 }
+      );  
+      meetings.forEach((meeting) => {
+        attendeeAvailability.push({
+          attendeeId: new ObjectId(a._id),
+          name: employee?.name,
+          meetingId: meeting.meetingId,
+          fromTime: convertTo12HourFormat(meeting.fromTime),
+          toTime: convertTo12HourFormat(meeting.toTime),
+        });
+      });
+    }
   }
-}
+  return attendeeAvailability;
+};
 
 
 /**FUNC- UPDATE MEETING */
@@ -292,17 +285,12 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
       { _id: new ObjectId(id) },
       { _id: 1, attendees: 1 }
     );
-    console.log('Get Existing Attendees----', getExistingAttendees);
-
     const newPeopleArray = data.attendees
       .filter((item) => item.isEmployee === false && item._id === undefined)
       .map((item) => {
         item.organizationId = data.organizationId;
         return item;
       });
-
-    console.log('New People Array-----', newPeopleArray);
-
     if (newPeopleArray.length !== 0) {
       const newEmployee = await employeeService.createAttendees(newPeopleArray);
       mergedData = [...data.attendees, ...newEmployee]
