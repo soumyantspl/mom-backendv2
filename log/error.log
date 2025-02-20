@@ -1937,3 +1937,12 @@ Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/D
     at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
 >>>>>>> a89935f78282b2e6cd48fdadb6ed6c855605fb11
+Date: 20/02/2025, Time: 18:51
+Error: "reAssignedUsers" is required
+Stack Trace: ValidationError: "reAssignedUsers" is required
+Date: 20/02/2025, Time: 18:54
+Error: "reAssignedUsers" is required
+Stack Trace: ValidationError: "reAssignedUsers" is required
+Date: 20/02/2025, Time: 18:57
+Error: "reAssignedUsers" is required
+Stack Trace: ValidationError: "reAssignedUsers" is required

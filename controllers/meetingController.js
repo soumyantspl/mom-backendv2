@@ -1150,7 +1150,36 @@ const deleteDraftMeeting = async (req, res) => {
   }
 };
 
+const draftMeetingdelete = async (req, res) => {
+  try {
+   // console.log("Request Data:", req.params.meetingId); 
+    
+    let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
 
+    const result = await meetingService.deleteDraftMeeting(
+      req.params.meetingId, 
+      req.userId, 
+      req.body, 
+      ip
+    );
+
+    if (!result) {
+      return Responses.failResponse(req, res, null, messages.draftFailed, 409);
+    }
+
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.draftDeleted,
+      200
+    );
+  } catch (error) {
+    console.error("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 
 module.exports = {
   createMeeting,
@@ -1186,6 +1215,7 @@ module.exports = {
   checkMeetingRoomAvailability,
   checkAttendeeArrayAvailability,
   deleteDraftMeeting,
+  draftMeetingdelete,
   notifyMeetingCreatorAboutDraft,
   getMeetingActionPriorityDetailsController,
 

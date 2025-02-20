@@ -1,7 +1,8 @@
 const Organization = require("../models/organizationModel");
 const Configuration = require("../models/configurationModel");
 const emailConstants = require("../constants/emailConstants");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
@@ -150,7 +151,8 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     // const logo = process.env.LOGO;
     const logo = data.dashboardLogo;
     const emailType = "Send OTP";
-    const emailSubject = "Organization Registration";
+    // const emailSubject = "Organization Registration";
+    const { emailSubject, mailData: mailBody } = mailData;
     const mailData =
       await emailTemplates.organizationRegistrationSendOtpTemplate(
         commonHelper.convertFirstLetterOfFullNameToCapital(name),
@@ -159,7 +161,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
         logo
       );
 
-    await emailService.sendEmail(email, emailType, emailSubject, mailData);
+    await emailService.sendEmail(email, emailType, emailSubject, mailBody);
     return {
       data: {
         usedOtp: 1,
@@ -197,7 +199,8 @@ const organizationSendOtp = async (id, data, ipAddress) => {
   // const logo = process.env.LOGO;
   const logo = data.dashboardLogo;
   const emailType = "Send OTP";
-  const emailSubject = "Organization Registration";
+  // const emailSubject = "Organization Registration";
+  const { emailSubject, mailData: mailBody } = mailData;
   const mailData = await emailTemplates.organizationRegistrationSendOtpTemplate(
     commonHelper.convertFirstLetterOfFullNameToCapital(name),
     otp,
@@ -205,7 +208,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     logo
   );
 
-  await emailService.sendEmail(email, emailType, emailSubject, mailData);
+  await emailService.sendEmail(email, emailType, emailSubject, mailBody);
   return {
     data: {
       usedOtp: otpLogsData.otpCount + 1,
