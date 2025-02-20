@@ -5361,13 +5361,13 @@ const getMeetingActionPriorityDetailsforChart = async (
 
 
 const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
-  const result = await Meeting.findByIdAndUpdate(
+  const result = await Meeting.findByIdAndDelete(
     { _id: new ObjectId(id) },
     {
       $set: {
         "meetingStatus.status": "draft",
-        "meetingStatus.remarks": data.remarks,
-        isDeleted: true, 
+        //"meetingStatus.remarks": data.remarks,
+        //isDeleted: true, 
       },
     },
     { new: true }
@@ -5375,7 +5375,7 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
   if (!result) {
     return null; 
   }
-  console.log(`Meeting with ID: ${id} marked as deleted (soft delete).`);
+  //console.log(`Meeting with ID: ${id} marked as deleted (soft delete).`);
 
   const details = await commonHelper.generateLogObject(
     { status: "deleted" },
@@ -5392,6 +5392,7 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
       subDetails: ` Meeting Title: ${result.title} (${result.meetingId})`,
       organizationId: result.organizationId,
     };
+    //console.log("Logdata------------",logData)
     await logService.createLog(logData);
   }
 

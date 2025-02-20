@@ -1135,6 +1135,31 @@ const forChartClick = async (req, res, next) => {
   }
 };
 
+// DRAFT MEETING VALIDATOR
+const draftMeetingValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+        ip: Joi.string(),
+      }).unknown(true),
+    });
+    const paramsSchema = Joi.object({
+      id: Joi.string().trim().alphanum().required(),
+    });
+    const bodySchema = Joi.object({
+      remarks: Joi.string().trim(),
+    }).required();
+    await bodySchema.validateAsync(req.body);
+    await headerSchema.validateAsync({ headers: req.headers });
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
 module.exports = {
   forChartClick,
   updateMeetingStatusValidator,
@@ -1165,4 +1190,5 @@ module.exports = {
   getMeetingActionPriotityDetailsValidator,
   deleteZoomRecordingValidator,
   downloadZoomRecordingsInZipValidaor,
+  draftMeetingValidator
 };

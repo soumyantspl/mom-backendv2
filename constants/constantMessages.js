@@ -120,7 +120,8 @@ const attendeeUnavailable = "This attendee is already scheduled for a meeting at
 const organizerUnavailable = "You already have a meeting scheduled on this date from "
 
 ///Pratishruti//
-//view pRofile//
+//Draft Delete//
+const draftFailed= "Draft Failed";
 
 
 //Pratishruti//
@@ -239,7 +240,8 @@ module.exports = {
   notificationSent,
   notValid,
   deleteDraftFailed,
-  draftDeleted
+  draftDeleted,
+  draftFailed
   ///////////////////
   //////////////////
 };

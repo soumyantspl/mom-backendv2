@@ -1830,3 +1830,30 @@ Stack Trace: TypeError: Cannot read properties of null (reading 'organizationId'
     at Object.deleteDraftMeeting (D:\MinutesVault V2\mom-backendv2\services\meetingService.js:5409:30)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async draftMeetingdelete (D:\MinutesVault V2\mom-backendv2\controllers\meetingController.js:1171:20)
+Date: 20/02/2025, Time: 11:12
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 20/02/2025, Time: 11:13
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 20/02/2025, Time: 11:25
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 20/02/2025, Time: 11:26
+Error: invalid token
+Stack Trace: JsonWebTokenError: invalid token
+    at module.exports [as verify] (D:\MinutesVault V2\mom-backendv2\node_modules\jsonwebtoken\verify.js:82:17)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:21:25)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at draftMeetingValidator (D:\MinutesVault V2\mom-backendv2\validators\meetingValidator.js:1155:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/02/2025, Time: 11:28
+Error: invalid token
+Stack Trace: JsonWebTokenError: invalid token
+    at module.exports [as verify] (D:\MinutesVault V2\mom-backendv2\node_modules\jsonwebtoken\verify.js:82:17)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:21:25)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at draftMeetingValidator (D:\MinutesVault V2\mom-backendv2\validators\meetingValidator.js:1155:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

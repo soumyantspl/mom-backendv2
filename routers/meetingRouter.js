@@ -252,8 +252,8 @@ router.post('/delete-draft/:meetingId',
   meetingController.deleteDraftMeeting
 );
 router.delete(
-  "/deleteDraftMeeting/:id",
-  //meetingValidator.cancelMeetingValidator,
+  "/deleteDraftMeeting/:meetingId",
+  meetingValidator.draftMeetingValidator,
   authMiddleware.verifyUserToken,
   meetingController.draftMeetingdelete
 );
