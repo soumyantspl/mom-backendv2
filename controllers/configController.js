@@ -4,58 +4,7 @@ const messages = require("../constants/constantMessages");
 const { errorLog } = require("../middlewares/errorLog");
 const commonHelper = require("../helpers/commonHelper");
 
-/**FUNC- TO CREATE CONFIGURATION**/
-// const createConfig = async (req, res) => {
-//   try {
-//     let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
-//     const result = await configService.createConfig(req.userId, req.body, ip);
-//     if (req.body.isAlert == false) {
-//       if (result?.isUpdated) {
-//         return Responses.successResponse(
-//           req,
-//           res,
-//           result.data,
-//           messages.configUpdateSuccess,
-//           200
-//         );
-//       }
-//       req.app
-//         .get("io")
-//         .emit("notification", "calling from backend controller ");
-//       return Responses.successResponse(
-//         req,
-//         res,
-//         result.data,
-//         messages.configCreatedSuccess,
-//         201
-//       );
-//     } else {
-//       if (result?.isUpdated) {
-//         return Responses.successResponse(
-//           req,
-//           res,
-//           result.data,
-//           messages.alertUpdateSuccess,
-//           200
-//         );
-//       }
-//       req.app
-//         .get("io")
-//         .emit("notification", "calling from backend controller ");
-//       return Responses.successResponse(
-//         req,
-//         res,
-//         result.data,
-//         messages.alertCreatedSuccess,
-//         201
-//       );
-//     }
-//   } catch (error) {
-//     console.log("Controller error:", error);
-//     errorLog(error);
-//     return Responses.errorResponse(req, res, error);
-//   }
-// };
+
 
 const createConfig = async (req, res) => {
   try {

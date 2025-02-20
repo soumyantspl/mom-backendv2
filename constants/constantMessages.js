@@ -118,15 +118,12 @@ const validationError = "Validation Errors"
 const attendeeUnavailable = "This attendee is already scheduled for a meeting at the same date and time "
 const roomUnavailable = "The room is already booked for the selected date and time ";
 const organizerUnavailable = "You already have a meeting scheduled on this date from "
-
+const attendeesFound = "Busy attendees found"
 ///Pratishruti//
 //view pRofile//
-
-
 //Pratishruti//
 //view pRofile//
 const currentPasswordIncorrect = "Current Password is Incorrect"
-
 const notificationSent = "Email sent successfully"
 const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater than Draft MeetingReminder Days"
 const draftDeleted = "Draft Meeting Deleted"
@@ -239,5 +236,6 @@ module.exports = {
   notificationSent,
   notValid,
   deleteDraftFailed,
-  draftDeleted
+  draftDeleted,
+  attendeesFound
 };

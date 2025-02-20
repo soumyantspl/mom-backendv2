@@ -83,8 +83,11 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
   const existingUserMeeting = await Meeting.findOne({
     createdById: new ObjectId(userId),
     date: new Date(data.date),
-    fromTime: { $lt: data.toTime },  
-    toTime: { $gt: data.fromTime },
+    $or: [ 
+      { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } }, 
+      { fromTime: { $gte: data.fromTime, $lt: data.toTime } }, 
+      { toTime: { $gt: data.fromTime, $lte: data.toTime } } 
+    ],
     isActive: true,
     "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
   });
@@ -733,7 +736,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
           <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
           Agenda Title
           </td>
-          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                 }</td>
           </tr>
           ${agenda.topic !== (null || "")
@@ -748,7 +751,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
                   colspan="6"
                   style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
                 >
-                  ${agenda.topic}
+                  ${commonHelper.decryptWithAES(agenda.topic)}
                 </td>
               </tr>`
                   : `<tr style={{display:"none"}}></tr>`
@@ -870,7 +873,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
             <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
             Agenda Title
             </td>
-            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                 }</td>
             </tr>
             ${agenda.topic !== (null || "")
@@ -885,7 +888,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
                     colspan="6"
                     style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
                   >
-                    ${agenda.topic}
+                    ${commonHelper.decryptWithAES(agenda.topic)}
                   </td>
                 </tr>`
                   : `<tr style={{display:"none"}}></tr>`
@@ -2486,7 +2489,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
         <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
         Agenda Title
         </td>
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
               }</td>
         </tr>
         ${agenda.topic !== (null || "")
@@ -2501,7 +2504,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
                 colspan="6"
                 style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
               >
-                <p>${agenda.topic}</p>
+                <p>${commonHelper.decryptWithAES(agenda.topic)}</p>
               </td>
             </tr>`
                 : `<tr style={{display:"none"}}></tr>`
@@ -3690,7 +3693,7 @@ const sendAlertTime = async () => {
               <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
               Agenda Title
               </td>
-              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                       }</td>
               </tr>
               ${agenda.topic !== (null || "")
@@ -3937,7 +3940,7 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
     <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
     Agenda Title
     </td>
-    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
             }</td>
     </tr>
     ${agenda.topic !== (null || "")
@@ -4058,6 +4061,8 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
       // );
 
       // const logo = process.env.LOGO;
+      const organizationDetails = await Organization.findOne({ _id: meetings[0].organizationId });
+    
       const logo = organizationDetails?.dashboardLogo
         ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
         : process.env.LOGO;
@@ -4406,7 +4411,7 @@ const newMeetingAsRescheduled = async (
         <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
         Agenda Title
         </td>
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title
+        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                 }</td>
         </tr>
         ${agenda.topic !== (null || "")
@@ -4418,7 +4423,7 @@ const newMeetingAsRescheduled = async (
                 Topic to Discuss
               </td>
               <td colspan="6" style="border: 1px solid black; border-collapse: collapse; width: 50%; padding: 3px;">
-                <p>${agenda?.topic ? parse(agenda?.topic) : ""}</p>
+                <p>${agenda?.topic ? parse(commonHelper.decryptWithAES(agenda?.topic)) : ""}</p>
               </td>
             </tr>`
                   : `<tr style={{display:"none"}}></tr>`
