@@ -13,8 +13,7 @@ const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const Joi = require("joi");
 const bcrypt = require('bcrypt');
-
-
+const XLSX = require("xlsx");
 const Organization = require("../models/organizationModel");
 const BASE_URL = process.env.BASE_URL;
 
@@ -101,7 +100,7 @@ const createEmployee = async (userId, data, ipAddress) => {
         "Employee Created",
         emailSubject,
         mailBody,
-      //  mailData
+        //  mailData
       );
     }
     ////////////////////LOGER START
@@ -120,27 +119,198 @@ const createEmployee = async (userId, data, ipAddress) => {
   return false;
 };
 /**FUNC- TO FETCH MASTER DATA*/
+// const masterData = async (organizationId) => {
+//   try {
+//     let query = { organizationId, isDelete: false };
+
+//     const [designationList, departmentList, unitList] = await Promise.all([
+//       Designations.find(query, { name: 1, isActive: 1 }),
+//       Department.find(query, { name: 1, isActive: 1 }),
+//       Units.find(query, { name: 1, isActive: 1 }),
+//     ]);
+
+//     // const message = `${designationList.length} designation(s) found, ${departmentList.length} department(s) found & ${unitList.length} unit(s) found`;
+
+//     const ws = XLSX.utils.json_to_sheet([
+//       { Title: "Designation" },
+//       ...designationList.map((d) => {
+//         ({ Name: d.name, ID: _id })
+//       }),
+
+
+//       { Title: "Department" },
+//       ...departmentList.map((d) => {
+//         ({ Name: d.name, ID: _id })
+//       }),
+
+//       { Title: "Units" },
+//       ...unitList.map((u) => ({ Name: u.name, ID: _id })),
+
+//     ])
+//     console.log("Master Data->", designationList, departmentList, unitList)
+
+
+//     const wb = XLSX.utils.book_new();
+//     XLSX.utils.book_append_sheet(wb, ws, "MasterData")
+
+//     const excelBuffer = XLSX.write(wb, { type: "buffer", bookType: "xlsx" })
+
+//     FD
+//     res.setHeader(
+//       "Content-Disposition",
+//       "attachment; filename=MasterData.xlsx"
+//     );
+//     res.setHeader(
+//       "Content-Type",
+//       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+//     );
+
+//     return excelBuffer
+//   } catch (error) {
+//     console.error("Error fetching master data:", error);
+//     throw new Error("Failed to fetch master data.");
+//   }
+// };
+
+
+
 const masterData = async (organizationId) => {
-  try {
-    let query = { organizationId, isDelete: false };
-
-    const [designationList, departmentList, unitList] = await Promise.all([
-      Designations.find(query, { name: 1, isActive: 1 }),
-      Department.find(query, { name: 1, isActive: 1 }),
-      Units.find(query, { name: 1, isActive: 1 }),
-    ]);
-
-    const message = `${designationList.length} designation(s) found, ${departmentList.length} department(s) found & ${unitList.length} unit(s) found`;
-
-    return {
-      message,
-      masterData: { designationList, departmentList, unitList },
-    };
-  } catch (error) {
-    console.error("Error fetching master data:", error);
-    throw new Error("Failed to fetch master data.");
-  }
+  let query = { organizationId: organizationId, isDelete: false };
+  const designationList = await Designations.find(query, {
+    name: 1,
+    isActive: 1,
+    isDelete: 1,
+  });
+  const departmentList = await Department.find(query, {
+    name: 1,
+    isActive: 1,
+    isDelete: 1,
+  });
+  const unitList = await Units.find(query, {
+    name: 1,
+    isActive: 1,
+    isDelete: 1,
+  });
+  const message = `${designationList.length} designation found , ${departmentList.length} department found &  ${unitList.length} unit found `;
+  const masterData = { designationList, departmentList, unitList };
+  return {
+    message,
+    masterData,
+  };
 };
+
+// const masterDataXLSX = async (organizationId) => {
+//   try {
+//     let query = { organizationId, isDelete: false };
+
+//     const [designationList, departmentList, unitList] = await Promise.all([
+//       Designations.find(query, { _id: 1, name: 1 }),
+//       Department.find(query, { _id: 1, name: 1 }),
+//       Units.find(query, { _id: 1, name: 1 }),
+//     ]);
+
+//     const data = [];
+//     let rowIndex = 0;
+
+//     data.push(["ID", "Designations"]); 
+//     let designationHeaderIndex = rowIndex++;
+//     designationList.forEach((d) => data.push([d._id.toString(), d.name]));
+//     data.push([]); 
+//     rowIndex += designationList.length + 1;
+
+
+//     data.push(["ID", "Departments"]); 
+//     let departmentHeaderIndex = rowIndex++;
+//     departmentList.forEach((d) => data.push([d._id.toString(), d.name]));
+//     data.push([]);
+//     rowIndex += departmentList.length + 1;
+
+//     data.push(["ID", "Units"]); 
+//     let unitHeaderIndex = rowIndex++;
+//     unitList.forEach((u) => data.push([u._id.toString(), u.name]));
+
+//     const ws = XLSX.utils.aoa_to_sheet(data);
+
+//     const boldStyle = { font: { bold: true } };
+
+//     ws[`A${designationHeaderIndex + 1}`].s = boldStyle;
+//     ws[`B${designationHeaderIndex + 1}`].s = boldStyle;
+//     ws[`A${departmentHeaderIndex + 1}`].s = boldStyle;
+//     ws[`B${departmentHeaderIndex + 1}`].s = boldStyle;
+//     ws[`A${unitHeaderIndex + 1}`].s = boldStyle;
+//     ws[`B${unitHeaderIndex + 1}`].s = boldStyle;
+
+//     const wb = XLSX.utils.book_new();
+//     XLSX.utils.book_append_sheet(wb, ws, "MasterData");
+
+//     const excelBuffer = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
+
+//     return excelBuffer;
+//   } catch (error) {
+//     console.error("Error generating master data Excel:", error);
+//     throw new Error("Failed to generate master data.");
+//   }
+// };
+
+const masterDataXLSX = async (organizationId) => {
+
+  let query = { organizationId, isDelete: false };
+
+  const [designationList, departmentList, unitList] = await Promise.all([
+    Designations.find(query, { _id: 1, name: 1 }),
+    Department.find(query, { _id: 1, name: 1 }),
+    Units.find(query, { _id: 1, name: 1 }),
+  ]);
+
+  const createSheetData = (header, dataList) => {
+    return [header, ...dataList.map((d) => [d._id.toString(), d.name])];
+  };
+
+  const wsDesignations = XLSX.utils.aoa_to_sheet(
+    createSheetData(["ID", "Designation"], designationList)
+  );
+
+  const wsDepartments = XLSX.utils.aoa_to_sheet(
+    createSheetData(["ID", "Department"], departmentList)
+  );
+
+  const wsUnits = XLSX.utils.aoa_to_sheet(
+    createSheetData(["ID", "Unit"], unitList)
+  );
+
+  const sampleData = [
+    ["Name", "Employee Id", "Email", "Designation", "Department", "Unit Name", "Unit Address"],
+    ["Sonali Sangeeta", "SONA28238", "sonalisangeeta3992@gmail.com", "Developer", "Finance", "Byte", "Bhubaneswar-283"],
+    ["Kantayani Maharana", "KANTA320398", "kantayani83746@ntspl.co.in", "Tester", "IT", "U838", "Jajpur32838"],
+  ];
+  const wsSample = XLSX.utils.aoa_to_sheet(sampleData);
+
+  const autoFitColumns = (ws, data) => {
+    ws["!cols"] = data[0].map((_, i) => ({
+      wch: Math.max(...data.map((row) => (row[i] ? row[i].toString().length : 0)), 10) + 2,
+    }));
+  };
+
+  autoFitColumns(wsDesignations, createSheetData(["ID", "Designation"], designationList));
+  autoFitColumns(wsDepartments, createSheetData(["ID", "Department"], departmentList));
+  autoFitColumns(wsUnits, createSheetData(["ID", "Unit"], unitList));
+  autoFitColumns(wsSample, sampleData);
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, wsDesignations, "Designations");
+  XLSX.utils.book_append_sheet(wb, wsDepartments, "Departments");
+  XLSX.utils.book_append_sheet(wb, wsUnits, "Units");
+  XLSX.utils.book_append_sheet(wb, wsSample, "Sample Data");
+
+  const excelBuffer = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
+
+  return excelBuffer;
+
+};
+
+
+
+
 
 
 /**FUNC- TO DELETE AN EMPLOYEE */
@@ -877,6 +1047,7 @@ module.exports = {
   viewSingleEmployee,
   createAttendee,
   masterData,
+  masterDataXLSX,
   checkDuplicateUserEntry,
   createAttendees,
   getEmployeeListAsPerUnit,

@@ -1759,22 +1759,22 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
         ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
         : process.env.LOGO;
 
-      // const { subject: emailSubject, mailBody } =
-        await emailTemplates.sendCancelMeetingEmailTemplate(
-          meetingDetails,
-          attendee.name,
-          logo
-        );
-      // const emailSubject = await emailConstants.cancelMeetingSubject(
-      //   meetingDetails
-      // );
-      const { subject, mailBody } = mailData;
-      emailService.sendEmail(
-        attendee.email,
-        "Cancel Meeting",
-        subject,
-        mailBody
+     
+        
+      const { subject: emailSubject, mailBody } = await emailTemplates.sendCancelMeetingEmailTemplate(
+        meetingDetails,
+        attendee.name,
+        logo
       );
+    // const emailSubject = await emailConstants.cancelMeetingSubject(
+    //   meetingDetails
+    // );
+    emailService.sendEmail(
+      attendee.email,
+      "Cancel Meeting",
+      emailSubject,
+      mailBody
+    );
     });
   }
   const details = await commonHelper.generateLogObject(

@@ -1894,4 +1894,142 @@ Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
 Date: 19/02/2025, Time: 14:54
 Error: HTML tags & Special letters are not allowed!
 Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+<<<<<<< HEAD
 >>>>>>> 8290183aa26beb1199fe9011abc3f51e5c078690
+=======
+Date: 19/02/2025, Time: 17:50
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\query.js:4897:12)
+    at Query._castConditions (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\query.js:2306:10)
+    at model.Query._findOne (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\query.js:2630:8)
+    at model.Query.exec (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\node_modules\mongoose\lib\query.js:4446:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.checkMeetingRoomAvailability (C:\Users\NTSPL-80\Documents\IPMsg\AutoSave\Final Back UP\B BACKUP\services\meetingService.js:47:27)
+Date: 20/02/2025, Time: 11:08
+Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029897173.xlsx'
+Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029897173.xlsx'
+    at Object.openSync (node:fs:573:18)
+    at Object.writeFileSync (node:fs:2381:35)
+    at write_dl (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:3109:112)
+    at write_zip_denouement (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23784:31)
+    at write_zip_type (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23754:9)
+    at writeSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23891:22)
+    at Object.writeFileSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23914:9)
+    at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
+    at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 20/02/2025, Time: 11:08
+Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029906149.xlsx'
+Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029906149.xlsx'
+    at Object.openSync (node:fs:573:18)
+    at Object.writeFileSync (node:fs:2381:35)
+    at write_dl (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:3109:112)
+    at write_zip_denouement (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23784:31)
+    at write_zip_type (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23754:9)
+    at writeSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23891:22)
+    at Object.writeFileSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23914:9)
+    at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
+    at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 20/02/2025, Time: 11:08
+Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029913973.xlsx'
+Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029913973.xlsx'
+    at Object.openSync (node:fs:573:18)
+    at Object.writeFileSync (node:fs:2381:35)
+    at write_dl (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:3109:112)
+    at write_zip_denouement (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23784:31)
+    at write_zip_type (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23754:9)
+    at writeSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23891:22)
+    at Object.writeFileSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23914:9)
+    at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
+    at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Date: 20/02/2025, Time: 11:08
+Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029927339.xlsx'
+Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/Downloads/error_report_1740029927339.xlsx'
+    at Object.openSync (node:fs:573:18)
+    at Object.writeFileSync (node:fs:2381:35)
+    at write_dl (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:3109:112)
+    at write_zip_denouement (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23784:31)
+    at write_zip_type (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23754:9)
+    at writeSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23891:22)
+    at Object.writeFileSync (/var/www/html/mom-backend/node_modules/xlsx/xlsx.js:23914:9)
+    at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
+    at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+>>>>>>> a89935f78282b2e6cd48fdadb6ed6c855605fb11
+Date: 20/02/2025, Time: 16:50
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 16:56
+Error: emailTemplates.signInByOtpEmail is not a function
+Stack Trace: TypeError: emailTemplates.signInByOtpEmail is not a function
+    at insertOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:166:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async validateSendingOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:221:11)
+    at async Object.sendOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:43:12)
+    at async sendOtp (D:\MinutesVault V2\mom-backendv2\controllers\authController.js:12:20)
+Date: 20/02/2025, Time: 18:13
+Error: Malformed UTF-8 data
+Stack Trace: Error: Malformed UTF-8 data
+    at Object.stringify (D:\MinutesVault V2\mom-backendv2\node_modules\crypto-js\core.js:523:24)
+    at WordArray.init.toString (D:\MinutesVault V2\mom-backendv2\node_modules\crypto-js\core.js:278:38)
+    at Object.decryptWithAES (D:\MinutesVault V2\mom-backendv2\helpers\commonHelper.js:387:30)
+    at D:\MinutesVault V2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2434:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/02/2025, Time: 18:31
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:32
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:36
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:36
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:39
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:43
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationRegistrationService (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:105:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async organizationRegistrationController (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:32:20)
+Date: 20/02/2025, Time: 18:46
+Error: emailTemplates.organizationRegistration is not a function
+Stack Trace: TypeError: emailTemplates.organizationRegistration is not a function
+    at Object.organizationRegistrationService (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:106:45)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async organizationRegistrationController (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:32:20)
