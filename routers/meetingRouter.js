@@ -262,5 +262,13 @@ router.post('/delete-draft/:meetingId',
   authMiddleware.verifyUserToken,
   meetingController.deleteDraftMeeting
 );
+router.delete(
+  "/deleteDraftMeeting/:meetingId",
+  meetingValidator.draftMeetingValidator,
+  authMiddleware.verifyUserToken,
+  meetingController.draftMeetingdelete
+);
+
+
 
 module.exports = router;
