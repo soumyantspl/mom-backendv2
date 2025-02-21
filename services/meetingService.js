@@ -4060,12 +4060,13 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
       //   //     : meetingLink)
       // );
 
-      // const logo = process.env.LOGO;
-      const organizationDetails = await Organization.findOne({ _id: meetings[0].organizationId });
-    
-      const logo = organizationDetails?.dashboardLogo
-        ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
-        : process.env.LOGO;
+       const logo = process.env.LOGO;
+      // const organizationDetails = await Organization.findOne({
+      //   _id: meetingDetails.organizationId,
+      // });
+      // const logo = organizationDetails?.dashboardLogo
+      //   ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+      //   : process.env.LOGO;
 
       const mailData = await emailTemplates.reSendScheduledMeetingEmailTemplate(
         meetingDetails,

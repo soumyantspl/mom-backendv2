@@ -34,6 +34,7 @@ const createMeetingValidator = async (req, res, next) => {
       //     "string.pattern.base": `HTML tags & Special letters are not allowed!`,
       //   })
       //   .required(),
+      //
 
 
       title: Joi.any().when("isEncrypted", {
