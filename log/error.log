@@ -1381,7 +1381,6 @@ Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out 
     at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
     at listOnTimeout (node:internal/timers:594:17)
     at process.processTimers (node:internal/timers:529:7)
-<<<<<<< HEAD
 Date: 14/02/2025, Time: 15:27
 Error: "name" is required
 Stack Trace: ValidationError: "name" is required
@@ -1398,373 +1397,6 @@ Stack Trace: ReferenceError: existingAttendee is not defined
     at Function.process_params (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:346:12)
     at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
     at Function.handle (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:175:3)
-=======
-Date: 06/02/2025, Time: 17:47
-Error: totalCount is not defined
-Stack Trace: ReferenceError: totalCount is not defined
-    at Object.getAllActionData (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\actionService.js:3220:15)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getAllActions (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\actionController.js:490:20)
-Date: 06/02/2025, Time: 17:48
-Error: totalCount is not defined
-Stack Trace: ReferenceError: totalCount is not defined
-    at Object.getAllActionData (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\actionService.js:3220:15)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getAllActions (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\actionController.js:490:20)
-Date: 06/02/2025, Time: 17:50
-Error: totalCount is not defined
-Stack Trace: ReferenceError: totalCount is not defined
-    at Object.getAllActionData (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\actionService.js:3220:3)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getAllActions (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\actionController.js:490:20)
-Date: 06/02/2025, Time: 17:51
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 06/02/2025, Time: 17:55
-Error: totalCount is not defined
-Stack Trace: ReferenceError: totalCount is not defined
-    at Object.getAllActionData (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\actionService.js:3220:3)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getAllActions (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\actionController.js:490:20)
-Date: 06/02/2025, Time: 18:06
-Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
-Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
-    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
-Date: 06/02/2025, Time: 18:07
-Error: totalCount is not defined
-Stack Trace: ReferenceError: totalCount is not defined
-    at Object.getAllActionData (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\actionService.js:3220:15)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getAllActions (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\actionController.js:490:20)
-Date: 06/02/2025, Time: 18:08
-Error: totalCount is not defined
-Stack Trace: ReferenceError: totalCount is not defined
-    at Object.getAllActionData (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\actionService.js:3222:15)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getAllActions (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\actionController.js:490:20)
-Date: 06/02/2025, Time: 18:10
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 06/02/2025, Time: 18:11
-Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
-Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
-    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
-Date: 06/02/2025, Time: 18:11
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 06/02/2025, Time: 18:11
-Error: action is not defined
-Stack Trace: ReferenceError: action is not defined
-    at Object.getAllActionData (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\actionService.js:3212:19)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getAllActions (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\actionController.js:490:20)
-Date: 06/02/2025, Time: 18:13
-Error: totalCountd is not defined
-Stack Trace: ReferenceError: totalCountd is not defined
-    at Object.getAllActionData (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\actionService.js:3220:15)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async getAllActions (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\actionController.js:490:20)
-Date: 07/02/2025, Time: 10:34
-Error: Cannot set properties of undefined (setting 'isMinutesAdded')
-Stack Trace: TypeError: Cannot set properties of undefined (setting 'isMinutesAdded')
-    at Object.viewAgendas (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\agendaService.js:590:55)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async viewAgendas (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\agendaController.js:90:20)
-Date: 07/02/2025, Time: 10:35
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 07/02/2025, Time: 10:35
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 07/02/2025, Time: 10:50
-Error: Organization is not defined
-Stack Trace: ReferenceError: Organization is not defined
-    at Object.contactUsSendOtp (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\demoClientService.js:293:24)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async contactUsendOtp (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\demoClientController.js:164:20)
-Date: 07/02/2025, Time: 10:51
-Error: Organization is not defined
-Stack Trace: ReferenceError: Organization is not defined
-    at Object.contactUsSendOtp (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\demoClientService.js:293:24)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async contactUsendOtp (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\demoClientController.js:164:20)
-Date: 07/02/2025, Time: 11:28
-Error: Cannot set properties of undefined (setting 'isMinutesAdded')
-Stack Trace: TypeError: Cannot set properties of undefined (setting 'isMinutesAdded')
-    at Object.viewAgendas (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\agendaService.js:590:55)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async viewAgendas (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\agendaController.js:90:20)
-Date: 07/02/2025, Time: 11:28
-Error: Cannot set properties of undefined (setting 'isMinutesAdded')
-Stack Trace: TypeError: Cannot set properties of undefined (setting 'isMinutesAdded')
-    at Object.viewAgendas (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\agendaService.js:590:55)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async viewAgendas (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\agendaController.js:90:20)
-Date: 07/02/2025, Time: 14:58
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 07/02/2025, Time: 14:58
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 07/02/2025, Time: 14:58
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 07/02/2025, Time: 14:58
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 07/02/2025, Time: 18:28
-Error: invalid token
-Stack Trace: JsonWebTokenError: invalid token
-    at module.exports [as verify] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\jsonwebtoken\verify.js:82:17)
-    at verifyUserToken (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\middlewares\authMiddleware.js:21:25)
-    at Layer.handle [as handle_request] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\layer.js:95:5)
-    at next (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\route.js:149:13)
-    at forChartClick (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\validators\meetingValidator.js:1131:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Date: 07/02/2025, Time: 18:28
-Error: invalid token
-Stack Trace: JsonWebTokenError: invalid token
-    at module.exports [as verify] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\jsonwebtoken\verify.js:82:17)
-    at verifyUserToken (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\middlewares\authMiddleware.js:21:25)
-    at Layer.handle [as handle_request] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\layer.js:95:5)
-    at next (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\route.js:149:13)
-    at forChartClick (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\validators\meetingValidator.js:1131:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Date: 07/02/2025, Time: 18:30
-Error: invalid token
-Stack Trace: JsonWebTokenError: invalid token
-    at module.exports [as verify] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\jsonwebtoken\verify.js:82:17)
-    at verifyUserToken (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\middlewares\authMiddleware.js:21:25)
-    at Layer.handle [as handle_request] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\layer.js:95:5)
-    at next (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\route.js:149:13)
-    at forChartClick (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\validators\meetingValidator.js:1131:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Date: 10/02/2025, Time: 10:14
-Error: Operation `employees.findOne()` buffering timed out after 10000ms
-Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
-    at Timeout.<anonymous> (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Date: 17/02/2025, Time: 10:47
-Error: queryTxt ETIMEOUT ntspl.6crwppo.mongodb.net
-Stack Trace: Error: queryTxt ETIMEOUT ntspl.6crwppo.mongodb.net
-    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
-Date: 17/02/2025, Time: 10:53
-Error: Cannot read properties of undefined (reading 'startsWith')
-Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
-    at verifyUserToken (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\middlewares\authMiddleware.js:18:15)
-    at Layer.handle [as handle_request] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\layer.js:95:5)
-    at next (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\route.js:149:13)
-    at Route.dispatch (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\route.js:119:3)
-    at Layer.handle [as handle_request] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\layer.js:95:5)
-    at D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\index.js:284:15
-    at Function.process_params (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\index.js:346:12)
-    at next (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\index.js:280:10)
-    at Function.handle (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\index.js:175:3)
-    at router (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\index.js:47:12)
-Date: 17/02/2025, Time: 10:54
-Error: configurations validation failed: organizationId: Path `organizationId` is required.
-Stack Trace: ValidationError: configurations validation failed: organizationId: Path `organizationId` is required.
-    at Document.invalidate (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\document.js:3318:32)
-    at D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\document.js:3079:17
-    at D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\schemaType.js:1388:9
-    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
-Date: 17/02/2025, Time: 16:28
-Error: Cannot read properties of undefined (reading 'hours')
-Stack Trace: TypeError: Cannot read properties of undefined (reading 'hours')
-    at Object.createAlert (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\alertService.js:41:63)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async createAlert (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\alertController.js:10:20)
-Date: 18/02/2025, Time: 10:17
-Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-Stack Trace: Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-    at Object.createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\configService.js:133:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\configController.js:11:20)
-Date: 18/02/2025, Time: 10:19
-Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-Stack Trace: Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-    at Object.createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\configService.js:136:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\configController.js:11:20)
-Date: 18/02/2025, Time: 10:19
-Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-Stack Trace: Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-    at Object.createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\configService.js:136:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\configController.js:11:20)
-Date: 18/02/2025, Time: 10:19
-Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-Stack Trace: Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-    at Object.createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\configService.js:136:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\configController.js:11:20)
-Date: 18/02/2025, Time: 10:20
-Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-Stack Trace: Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-    at Object.createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\configService.js:136:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\configController.js:11:20)
-Date: 18/02/2025, Time: 10:21
-Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-Stack Trace: Error: ❌ draftMeetingCleanupDays must be greater than draftMeetingReminderDays.
-    at Object.createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\configService.js:136:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async createConfig (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\configController.js:11:20)
-Date: 18/02/2025, Time: 10:46
-Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
-Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
-    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
-Date: 18/02/2025, Time: 12:16
-Error: Meeting not found.
-Stack Trace: Error: Meeting not found.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5255:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1074:20)
-Date: 18/02/2025, Time: 12:19
-Error: Meeting not found.
-Stack Trace: Error: Meeting not found.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5255:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1079:20)
-Date: 18/02/2025, Time: 12:21
-Error: Meeting not found.
-Stack Trace: Error: Meeting not found.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5255:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1082:20)
-Date: 18/02/2025, Time: 12:22
-Error: Meeting not found.
-Stack Trace: Error: Meeting not found.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5255:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1082:20)
-Date: 18/02/2025, Time: 12:25
-Error: Meeting not found or you are not the creator of this draft.
-Stack Trace: Error: Meeting not found or you are not the creator of this draft.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5308:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1082:20)
-Date: 18/02/2025, Time: 12:26
-Error: createdById is not defined
-Stack Trace: ReferenceError: createdById is not defined
-    at draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1084:7)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Date: 18/02/2025, Time: 12:27
-Error: Meeting not found or you are not the creator of this draft.
-Stack Trace: Error: Meeting not found or you are not the creator of this draft.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5308:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1082:20)
-Date: 18/02/2025, Time: 12:28
-Error: ip is not defined
-Stack Trace: ReferenceError: ip is not defined
-    at draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1079:7)
-    at Layer.handle [as handle_request] (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\layer.js:95:5)
-    at next (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\express\lib\router\route.js:149:13)
-    at verifyUserToken (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\middlewares\authMiddleware.js:29:7)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-Date: 18/02/2025, Time: 12:29
-Error: Meeting not found or you are not the creator of this draft.
-Stack Trace: Error: Meeting not found or you are not the creator of this draft.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5308:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1077:20)
-Date: 18/02/2025, Time: 12:29
-Error: Meeting not found or you are not the creator of this draft.
-Stack Trace: Error: Meeting not found or you are not the creator of this draft.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5308:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1076:20)
-Date: 18/02/2025, Time: 12:31
-Error: Meeting not found or you are not the creator of this draft.
-Stack Trace: Error: Meeting not found or you are not the creator of this draft.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5308:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1077:20)
-Date: 18/02/2025, Time: 12:32
-Error: Meeting not found or you are not the creator of this draft.
-Stack Trace: Error: Meeting not found or you are not the creator of this draft.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5308:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1079:20)
-Date: 18/02/2025, Time: 12:34
-Error: Meeting not found or you are not the creator of this draft.
-Stack Trace: Error: Meeting not found or you are not the creator of this draft.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5308:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1081:20)
-Date: 18/02/2025, Time: 12:36
-Error: Meeting not found or you are not the creator of this draft.
-Stack Trace: Error: Meeting not found or you are not the creator of this draft.
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5308:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1081:20)
-Date: 18/02/2025, Time: 12:38
-Error: Cannot read properties of null (reading 'title')
-Stack Trace: TypeError: Cannot read properties of null (reading 'title')
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5344:44)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1081:20)
-Date: 18/02/2025, Time: 12:39
-Error: Cannot read properties of null (reading 'title')
-Stack Trace: TypeError: Cannot read properties of null (reading 'title')
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5344:44)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1081:20)
-Date: 18/02/2025, Time: 12:40
-Error: Cannot read properties of null (reading 'meetingId')
-Stack Trace: TypeError: Cannot read properties of null (reading 'meetingId')
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5344:45)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1081:20)
-Date: 18/02/2025, Time: 12:40
-Error: Cannot read properties of null (reading 'organizationId')
-Stack Trace: TypeError: Cannot read properties of null (reading 'organizationId')
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5345:30)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1081:20)
-Date: 18/02/2025, Time: 12:40
-Error: logs validation failed: organizationId: Path `organizationId` is required., userId: Path `userId` is required., action: Path `action` is required.
-Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required., userId: Path `userId` is required., action: Path `action` is required.
-    at Document.invalidate (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\document.js:3318:32)
-    at D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\document.js:3079:17
-    at D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\node_modules\mongoose\lib\schemaType.js:1388:9
-    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
-Date: 18/02/2025, Time: 12:47
-Error: Cannot read properties of null (reading 'organizationId')
-Stack Trace: TypeError: Cannot read properties of null (reading 'organizationId')
-    at Object.deleteDraftMeeting (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\services\meetingService.js:5345:30)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async draftMeetingdelete (D:\Ongoing_Minutes-Vault\Latest Code By Harihar Sir (06-02-2025)\BE\controllers\meetingController.js:1081:20)
->>>>>>> 495bc8391c04129bae98c36d7ef0088e7b8723cd
 Date: 18/02/2025, Time: 18:59
 Error: organizations validation failed: organizationCode: Path `organizationCode` is required.
 Stack Trace: ValidationError: organizations validation failed: organizationCode: Path `organizationCode` is required.
@@ -2158,5 +1790,27 @@ Stack Trace: TypeError: emailTemplates.organizationRegistration is not a functio
     at Object.organizationRegistrationService (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:106:45)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async organizationRegistrationController (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:32:20)
+<<<<<<< HEAD
+Date: 21/02/2025, Time: 10:38
+Error: No active template found for type: ORGANIZATIONREGISTRATIONSENDOTP
+Stack Trace: Error: No active template found for type: ORGANIZATIONREGISTRATIONSENDOTP
+    at D:\On Going\V2\v2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:1805:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 21/02/2025, Time: 10:42
+Error: emailTemplates.signInByOtpEmail is not a function
+Stack Trace: TypeError: emailTemplates.signInByOtpEmail is not a function
+    at insertOtp (D:\On Going\V2\v2\mom-backendv2\services\authService.js:166:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async validateSendingOtp (D:\On Going\V2\v2\mom-backendv2\services\authService.js:211:11)
+    at async Object.sendOtp (D:\On Going\V2\v2\mom-backendv2\services\authService.js:43:12)
+    at async sendOtp (D:\On Going\V2\v2\mom-backendv2\controllers\authController.js:12:20)
+Date: 21/02/2025, Time: 10:45
+Error: emailLogs validation failed: subject: Path `subject` is required., body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subject` is required., body: Path `body` is required.
+    at Document.invalidate (D:\On Going\V2\v2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\On Going\V2\v2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\On Going\V2\v2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+=======
 >>>>>>> 390496992459c68a5ce10b742238e85ece178670
 >>>>>>> 684b56a0dca4f8de83c0bcb089304748abf1fa0a
