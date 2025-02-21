@@ -2,7 +2,7 @@ const Employee = require("../models/employeeModel");
 const Department = require("../models/departmentModel");
 const Units = require("../models/unitModel");
 const Designations = require("../models/designationModel");
-
+const mongoose = require("mongoose")
 const ObjectId = require("mongoose").Types.ObjectId;
 const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
@@ -760,202 +760,276 @@ const getEmployeeListAsPerUnit = async (unitId) => {
 };
 
 
-const importEmployee = async (data, organizationId) => {
-  const savedData = [];
-  const duplicateRecords = [];
-  const validationErrors = [];
+// const importEmployee = async (data, organizationId) => {
+//   const savedData = [];
+//   const duplicateRecords = [];
+//   const validationErrors = [];
 
-  const regularExpression = /^[0-9a-zA-Z -.(),-,_/]+$/;
-  console.log("organizationId", organizationId);
+//   const regularExpression = /^[0-9a-zA-Z -.(),-,_/]+$/;
+//   console.log("organizationId", organizationId);
 
-  const employeeValidationSchema = Joi.object({
-    name: Joi.string()
-      .trim()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Name is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
-      }),
-    email: Joi.string()
-      .trim()
-      .email()
-      .messages({
-        "any.required": `Email is required.`,
-        "string.email": `Invalid email format.`,
-      }),
-    empId: Joi.string()
-      .trim()
-      .required()
-      .messages({
-        "any.required": `Employee ID is required.`,
-        "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
-      })
-      .pattern(regularExpression),
-    designation: Joi.string()
-      .trim()
-      .required()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Designation is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
-      }),
-    department: Joi.string()
-      .trim()
-      .required()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Department is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
-      }),
-    unitName: Joi.string()
-      .trim()
-      .required()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Unit Name is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
-      }),
-    unitAddress: Joi.string()
-      .trim()
-      .required()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Unit Address is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
-      }),
-    organizationId: Joi.string()
-      .required()
-      .messages({
-        "any.required": `Organization ID is required.`,
-      }),
-    designation: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
-    }),
-    department: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
-    }),
-    unitName: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
-    }),
-    unitAddress: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
-    }),
-    organizationId: Joi.string().required().messages({
-      "any.required": `Organization ID is required.`,
-    }),
-    isAdmin: Joi.boolean().strict(),
-  });
+//   const employeeValidationSchema = Joi.object({
+//     name: Joi.string()
+//       .trim()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Name is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
+//       }),
+//     email: Joi.string()
+//       .trim()
+//       .email()
+//       .messages({
+//         "any.required": `Email is required.`,
+//         "string.email": `Invalid email format.`,
+//       }),
+//     empId: Joi.string()
+//       .trim()
+//       .required()
+//       .messages({
+//         "any.required": `Employee ID is required.`,
+//         "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
+//       })
+//       .pattern(regularExpression),
+//     designation: Joi.string()
+//       .trim()
+//       .required()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Designation is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
+//       }),
+//     department: Joi.string()
+//       .trim()
+//       .required()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Department is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
+//       }),
+//     unitName: Joi.string()
+//       .trim()
+//       .required()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Unit Name is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
+//       }),
+//     unitAddress: Joi.string()
+//       .trim()
+//       .required()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Unit Address is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
+//       }),
+//     organizationId: Joi.string()
+//       .required()
+//       .messages({
+//         "any.required": `Organization ID is required.`,
+//       }),
+//     designation: Joi.string().trim().pattern(regularExpression).messages({
+//       "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
+//     }),
+//     department: Joi.string().trim().pattern(regularExpression).messages({
+//       "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
+//     }),
+//     unitName: Joi.string().trim().pattern(regularExpression).messages({
+//       "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
+//     }),
+//     unitAddress: Joi.string().trim().pattern(regularExpression).messages({
+//       "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
+//     }),
+//     organizationId: Joi.string().required().messages({
+//       "any.required": `Organization ID is required.`,
+//     }),
+//     isAdmin: Joi.boolean().strict(),
+//   });
 
-  for (const record of data) {
-    const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
+//   for (const record of data) {
+//     const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
 
-    if (error) {
-      validationErrors.push({
-        record,
-        messages: error.details.map(err => err.message),
-      });
-      continue;
-    }
+//     if (error) {
+//       validationErrors.push({
+//         record,
+//         messages: error.details.map(err => err.message),
+//       });
+//       continue;
+//     }
 
-    const duplicateFields = {};
-    const existingByEmail = await Employee.findOne({
-      email: record.email,
-      organizationId: organizationId
-    });
+//     const duplicateFields = {};
+//     const existingByEmail = await Employee.findOne({
+//       email: record.email,
+//       organizationId: organizationId
+//     });
 
-    const existingByEmpId = await Employee.findOne({ empId: record.empId, organizationId: organizationId });
+//     const existingByEmpId = await Employee.findOne({ empId: record.empId, organizationId: organizationId });
 
-    if (existingByEmail) {
-      duplicateFields.email = true;
-    }
-    if (existingByEmpId) {
-      duplicateFields.empId = true;
-    }
+//     if (existingByEmail) {
+//       duplicateFields.email = true;
+//     }
+//     if (existingByEmpId) {
+//       duplicateFields.empId = true;
+//     }
 
-    if (duplicateFields.email || duplicateFields.empId) {
-      let reasonMessages = [];
-      if (duplicateFields.email) {
-        reasonMessages.push("Email already exists.");
+//     if (duplicateFields.email || duplicateFields.empId) {
+//       let reasonMessages = [];
+//       if (duplicateFields.email) {
+//         reasonMessages.push("Email already exists.");
+//       }
+//       if (duplicateFields.empId) {
+//         reasonMessages.push("Employee ID already exists.");
+//       }
+//       duplicateRecords.push({
+//         ...record,
+//         reason: reasonMessages.join(" ")
+//       });
+//       continue;
+//     }
+
+//     let designationId;
+//     const existingDesignation = await Designations.findOne({
+//       name: record.designation,
+//       organizationId: record.organizationId,
+//     });
+
+//     if (existingDesignation) {
+//       designationId = existingDesignation._id;
+//     } else {
+//       const newDesignation = await Designations.create({
+//         name: record.designation,
+//         organizationId: record.organizationId,
+//         isActive: true,
+//         isDelete: false,
+//       });
+//       designationId = newDesignation._id;
+//     }
+
+//     let departmentId;
+//     const existingDepartment = await Department.findOne({
+//       name: record.department,
+//       organizationId: record.organizationId,
+//     });
+
+//     if (existingDepartment) {
+//       departmentId = existingDepartment._id;
+//     } else {
+//       const newDepartment = await Department.create({
+//         name: record.department,
+//         organizationId: record.organizationId,
+//         isActive: true,
+//         isDelete: false,
+//       });
+//       departmentId = newDepartment._id;
+//     }
+
+//     let unitId;
+//     const existingUnit = await Units.findOne({
+//       name: record.unitName,
+//       organizationId: record.organizationId,
+//     });
+
+//     if (existingUnit) {
+//       unitId = existingUnit._id;
+//     } else {
+//       const newUnit = await Units.create({
+//         name: record.unitName,
+//         address: record.unitAddress,
+//         organizationId: record.organizationId,
+//         isActive: true,
+//         isDelete: false,
+//       });
+//       unitId = newUnit._id;
+//     }
+
+//     const newEmployee = new Employee({
+//       ...record,
+//       designationId,
+//       departmentId,
+//       unitId,
+//     });
+
+//     const savedRecord = await newEmployee.save();
+//     savedData.push(savedRecord);
+//     console.log("Saved Data--->>", savedRecord);
+//   }
+
+//   return { savedData, duplicateRecords, validationErrors };
+// };
+
+const importEmployee = async (employeeData, organizationId) => {
+  try {
+    const savedData = [];
+    const duplicateRecords = [];
+
+    console.log("Incoming Employee Data:", employeeData);
+
+    for (const record of employeeData) {
+      const { empId, email, name, designation, department, unitName } = record;
+
+      console.log("Processing Employee:", name);
+
+      // Skip records with missing required fields
+      if (!name) {
+        duplicateRecords.push({ empId, email, reason: "Employee name is required." });
+        continue;
       }
-      if (duplicateFields.empId) {
-        reasonMessages.push("Employee ID already exists.");
+
+      const duplicateFields = {};
+
+      // Check for existing email
+      const existingByEmail = await Employee.findOne({ email, organizationId });
+      if (existingByEmail) {
+        duplicateFields.email = true;
       }
-      duplicateRecords.push({
-        ...record,
-        reason: reasonMessages.join(" ")
-      });
-      continue;
-    }
 
-    let designationId;
-    const existingDesignation = await Designations.findOne({
-      name: record.designation,
-      organizationId: record.organizationId,
-    });
+      // Check for existing employee ID
+      const existingByEmpId = await Employee.findOne({ empId, organizationId });
+      if (existingByEmpId) {
+        duplicateFields.empId = true;
+      }
 
-    if (existingDesignation) {
-      designationId = existingDesignation._id;
-    } else {
-      const newDesignation = await Designations.create({
-        name: record.designation,
-        organizationId: record.organizationId,
+      if (Object.keys(duplicateFields).length > 0) {
+        duplicateRecords.push({
+          empId,
+          email,
+          reason: `Duplicate found: ${Object.keys(duplicateFields).join(", ")}`
+        });
+        continue;
+      }
+
+      const newEmployee = new Employee({
+        name,
+        empId,
+        profilePicture: "",
+        email,
+        designationId: designation ? new mongoose.Types.ObjectId(designation) : null,
+        departmentId: department ? new mongoose.Types.ObjectId(department) : null,
+        unitId: unitName ? new mongoose.Types.ObjectId(unitName) : null,
+        organizationId: new mongoose.Types.ObjectId(organizationId),
         isActive: true,
+        isMeetingOrganiser: true,
+        isAdmin: false,
+        password: null,
+        isEmployee: true,
         isDelete: false,
       });
-      designationId = newDesignation._id;
+
+      console.log("Saving Employee:", newEmployee);
+      await newEmployee.save();
+      savedData.push(newEmployee);
     }
 
-    let departmentId;
-    const existingDepartment = await Department.findOne({
-      name: record.department,
-      organizationId: record.organizationId,
-    });
-
-    if (existingDepartment) {
-      departmentId = existingDepartment._id;
-    } else {
-      const newDepartment = await Department.create({
-        name: record.department,
-        organizationId: record.organizationId,
-        isActive: true,
-        isDelete: false,
-      });
-      departmentId = newDepartment._id;
-    }
-
-    let unitId;
-    const existingUnit = await Units.findOne({
-      name: record.unitName,
-      organizationId: record.organizationId,
-    });
-
-    if (existingUnit) {
-      unitId = existingUnit._id;
-    } else {
-      const newUnit = await Units.create({
-        name: record.unitName,
-        address: record.unitAddress,
-        organizationId: record.organizationId,
-        isActive: true,
-        isDelete: false,
-      });
-      unitId = newUnit._id;
-    }
-
-    const newEmployee = new Employee({
-      ...record,
-      designationId,
-      departmentId,
-      unitId,
-    });
-
-    const savedRecord = await newEmployee.save();
-    savedData.push(savedRecord);
-    console.log("Saved Data--->>", savedRecord);
+    return { savedData, duplicateRecords };
+  } catch (error) {
+    console.error("Error in importEmployee service:", error);
+    throw error;
   }
-
-  return { savedData, duplicateRecords, validationErrors };
 };
+
+
+
+
 
 
 
