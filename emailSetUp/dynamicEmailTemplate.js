@@ -209,7 +209,7 @@ const sendScheduledMeetingEmailTemplate = async (
       .replace("{userManualLink}", process.env.USER_MANUAL_LINK)
       .replace("{meetingMode}",commonHelper.convertFirstLetterToCapital(meetingData.mode))
       .replace("{meetingId}", meetingData?.meetingId)
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingLink}", link)
       .replace(
         "{meetingLocation}",
@@ -240,7 +240,7 @@ const sendScheduledMeetingEmailTemplate = async (
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
     subject = subject
-      .replace("{meetingTitle}", meetingData.title)
+      .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingDate}", new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime)
@@ -324,7 +324,7 @@ const sendReScheduledMeetingEmailTemplate = async (
         "{name}",
         commonHelper.convertFirstLetterOfFullNameToCapital(attendeeName)
       )
-      .replace(/{meetingTitle}/g, meetingData.title)
+      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
       .replace(/{meetingId}/g, meetingData.meetingId)
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace(/{fromTime}/g, meetingData.fromTime)
@@ -381,7 +381,7 @@ const sendReScheduledMeetingEmailTemplate = async (
       .replace(/{createdByEmail}/g, meetingData.createdByDetail?.email);
 
     subject = subject
-      .replace(/{meetingTitle}/g, meetingData.title)
+      .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
       .replace(/{meetingDate}/g, new Date(meetingData.date).toDateString())
       .replace("{fromTime}", meetingData.fromTime)
       .replace("{toTime}", meetingData.toTime);
@@ -548,7 +548,7 @@ const actionReassignEmailToOlAssignedUserTemplate = async (
 
       body = body
       .replace('{oldAssignedUserName}', oldAssignedUserDetails?.name)
-        .replace(/{actionDescription}/g, action?.description)
+        .replace(/{actionDescription}/g, commonHelper.decryptWithAES(action?.description))
         .replace(/{reason}/g, reason)
         .replace(/{assignedUserName}/g, assignedUserDetails?.name)
         .replace(/{assignedUserEmail}/g, assignedUserDetails?.email)
@@ -618,7 +618,7 @@ const actionReassignEmailTemplate = async (
           `${process.env.FRONTEND_URL}/view-action-detail/${action._id}`
         )
         .replace("{reason}", reason)
-        .replace(/{actionTitle}/g, action.title)
+        .replace(/{actionTitle}/g, commonHelper.decryptWithAES(action.title))
         .replace(
           /{name}/g,
           commonHelper.convertFirstLetterOfFullNameToCapital(
@@ -630,7 +630,7 @@ const actionReassignEmailTemplate = async (
           userData.name
         )
         .replace(/{organizerEmail}/g, userData.email);
-      subject = subject.replace(/{actionTitle}/g, action.title);
+      subject = subject.replace(/{actionTitle}/g, commonHelper.decryptWithAES(action.title));
 
       mailBody =
         `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -703,7 +703,7 @@ const actionAssignEmailTemplate = async (
           )
         )
         .replace("{organizerEmail}", userData.email);
-      subject = subject.replace("{actionTitle}", action.title);
+      subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(action.title));
 
       mailBody =
         `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -782,9 +782,9 @@ const actionReOpenEmailTemplate = async (
           )
         )
         .replace(/{meetingId}/g, meetingData?.meetingId)
-        .replace(/{meetingTitle}/g, meetingData?.title)
-        .replace(/{description}/g, action?.description)
-        .replace(/{actionTitle}/g, action.title)
+        .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData?.title))
+        .replace(/{description}/g, commonHelper.decryptWithAES(action?.description))
+        .replace(/{actionTitle}/g, commonHelper.decryptWithAES(action.title))
         .replace(
           /{organizerName}/g,
           commonHelper.convertFirstLetterOfFullNameToCapital(
@@ -792,7 +792,7 @@ const actionReOpenEmailTemplate = async (
           )
         )
         .replace(/{organizerEmail}/g, meetingData.createdByDetail.email);
-      subject = subject.replace("{actionTitle}", action.title);
+      subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(action.title));
       mailBody =
         `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
         `<div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">` +
@@ -1153,14 +1153,14 @@ const actionReassignRequestRejectEmailTemplate = async (
 
       .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingId}", meetingData.meetingId)
-      .replace("{description}", actionDetails?.description)
+      .replace("{description}", commonHelper.decryptWithAES(actionDetails?.description))
       .replace("{organizerName}", meetingData?.createdByDetail?.name)
       .replace("{organizerEmail}", meetingData?.createdByDetail?.email)
     //  .replace("{assignedUserName}", attendeeDetails.name)
       .replace("{assignedUserEmail}", attendeeDetails.email);
 
     //  subject = subject.replace('{organizerName}', meetingData?.createdByDetail?.name);
-    subject = subject.replace("{actionTitle}", actionDetails.title);
+    subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(actionDetails.title));
 
     console.log("Final Body After Replace:", body);
 
@@ -1446,7 +1446,7 @@ const sendActionDueReminderEmailTemplate = async (
       // -  ${meetingData.toTime}.</p>` +
       `<p style="color: #000 !important">The below assigned action is due. Please find the action details below.</p>` +
       '<p style="color: #000 !important; margin-bottom:0px;"><strong>Action</strong></p>' +
-      `<p style="color: #000 !important; margin:0px">${actionDetails?.description}</p>` +
+      `<p style="color: #000 !important; margin:0px">${commonHelper.decryptWithAES(actionDetails?.description)}</p>` +
       '<p style="color: #000 !important; margin-bottom:0px;">Action Link</p>' +
       `<p style="color: #000 !important; margin:0px;">${process.env.FRONTEND_URL}/view-action-detail/${actionDetails?._id}</p>` +
       // '<p style="color: #000 !important">We request you to kindly review the minutes and take necessary actions like accept or reject or request for amendment if any.We would like to mention that the action window will be open for the next 12 hours and post that all minutes will be treated as accepted.</p>' +
@@ -1546,7 +1546,7 @@ const reSendScheduledMeetingEmailTemplate = async (
           commonHelper.convertFirstLetterToCapital(meetingData.mode)
         )
         .replace(/{meetingId}/g, meetingData?.meetingId)
-        .replace(/{meetingTitle}/g, meetingData.title)
+        .replace(/{meetingTitle}/g, commonHelper.decryptWithAES(meetingData.title))
         .replace(/{meetingLink}/g, link)
         .replace(/{attendees}/g, attendeeData)
         .replace(/{agenda}/g, agendaData)
@@ -1615,7 +1615,7 @@ const reSendScheduledMeetingEmailTemplate = async (
         );
 
       subject = subject
-        .replace("{meetingTitle}", meetingData.title)
+        .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
         .replace("{meetingDate}", new Date(meetingData.date).toDateString())
         .replace("{fromTime}", meetingData.fromTime)
         .replace("{toTime}", meetingData.toTime)
@@ -2101,14 +2101,14 @@ const actionApproveEmailTemplate = async (
     body = body
       .replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital( assignedUserDetails?.name))
       .replace( "{actionlink}",`${process.env.FRONTEND_URL}/view-action-detail/${action._id}`)
-      .replace("{actionDescription}", action?.description)
+      .replace("{actionDescription}", commonHelper.decryptWithAES(action?.description))
       .replace("{approvalRemark}", reason)
       .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingId}", meetingData.meetingId)
       .replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital(meetingData.createdByDetail.name))
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
-    subject = subject.replace("{actionTitle}", action.title);
+    subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(action.title));
 
     console.log("Meeting Tittle====", commonHelper.decryptWithAES(meetingData.title));
 
@@ -2338,7 +2338,7 @@ const actionCancelEmailTemplate = async (
           )
         )
         .replace(/{email}/g, attendeeDetails?.email)
-        .replace("{description}", actionDetails?.description)
+        .replace("{description}", commonHelper.decryptWithAES(actionDetails?.description))
         .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData?.title))
         .replace("{meetingId}", meetingData?.meetingId)
         .replace("{organizerEmail}", meetingData.createdByDetail.email)
@@ -2349,7 +2349,7 @@ const actionCancelEmailTemplate = async (
           )
         );
       // .replace('{actionTitle}', actionDetails.title);
-      subject = subject.replace("{actionTitle}", actionDetails.title);
+      subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(actionDetails.title));
 
       console.log("Final Body After Replace:", body);
 
@@ -2378,7 +2378,8 @@ const actionCancelEmailTemplate = async (
   });
 };
 
-const actionCompleteEmailTemplate = async (  meetingData,
+const actionCompleteEmailTemplate = async (  
+  meetingData,
   logo,
   attendeeDetails,
   remark,
@@ -2414,7 +2415,7 @@ const actionCompleteEmailTemplate = async (  meetingData,
 
     //  salutation = salutation.replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital( meetingData.createdByDetail.name));
       
-      subject = subject.replace("{actionTitle}", actionDetails?.title);
+      subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(actionDetails?.title));
       console.log("Subject----",subject);
       console.log("actionDetails----",actionDetails);
       body = body
@@ -2430,8 +2431,8 @@ const actionCompleteEmailTemplate = async (  meetingData,
           )
         )
         .replace(/{email}/g, attendeeDetails?.email)
-        .replace("{description}", actionDetails?.description)
-        .replace("{meetingTitle}", meetingData?.title)
+        .replace("{description}", commonHelper.decryptWithAES(actionDetails?.description))
+        .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData?.title))
         .replace("{meetingId}", meetingData?.meetingId)
         .replace("{organizerEmail}", meetingData.createdByDetail.email)
         .replace(
@@ -2550,7 +2551,7 @@ const actionAssignAdminEmailTemplate = async (
         return reject(new Error(`No body found for template type: ACTIONASSIGNADMIN`));
       }
 
-      subject = subject.replace("{actionTitle}", action.title);
+      subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(action.title));
       body = body
         .replace(
           /{actionlink}/g,
@@ -2617,7 +2618,7 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
         .map(
           (meeting) => `
             <li>
-              <strong>${meeting.title}</strong> (Created: ${new Date(meeting.createdAt).toDateString()})<br>
+              <strong>${commonHelper.decryptWithAES(meeting.title)}</strong> (Created: ${new Date(meeting.createdAt).toDateString()})<br>
               <a href="${process.env.FRONTEND_URL}/view-meeting-details/${meeting._id}">View Meeting</a>
             </li>
           `
@@ -2657,10 +2658,6 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
     }
   });
 };
-
-
-
-
 
 module.exports = {
   //signInByOtpEmail,

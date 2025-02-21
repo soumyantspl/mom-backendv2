@@ -234,13 +234,27 @@ router.post(
   meetingController.downloadZoomRecordingsInZip
 );
 
-router.post('/check-availability/:id', meetingController.checkAttendeeAvailability);
+// ADD ATTENDEE
+router.post('/check-availability/:id',
+  meetingValidator.checkAttendeeAvailabilityValidator, 
+  authMiddleware.verifyUserToken,
+  meetingController.checkAttendeeAvailability
+);
 
 //check room availability
-router.post('/check-meetingroom-availability', meetingController.checkMeetingRoomAvailability);
+router.post('/check-meetingroom-availability', 
+  meetingValidator.checkRoomAvailabilityValidator,
+  authMiddleware.verifyUserToken,
+  meetingController.checkMeetingRoomAvailability
+);
 
 // check attendee availability in edit-meeting
-router.post('/check-attendee-availability', meetingController.checkAttendeeArrayAvailability);
+router.post('/check-attendee-availability',
+  meetingValidator.checkAttendeeArrayAvailabilityValidator,
+  authMiddleware.verifyUserToken, 
+  meetingController.checkAttendeeArrayAvailability
+);
+
 // Route to notify the meeting creator about a draft meeting
 router.post('/notify-draft/:meetingId',
   authMiddleware.verifyUserToken,
@@ -251,12 +265,9 @@ router.post('/delete-draft/:meetingId',
   authMiddleware.verifyUserToken,
   meetingController.deleteDraftMeeting
 );
-router.post("/deleteDraftMeeting/:createdById", 
+router.post("/deleteDraftMeeting/:meetingId", 
   authMiddleware.verifyUserToken, 
   meetingController.draftMeetingdelete
 );
-
-
-
 
 module.exports = router;

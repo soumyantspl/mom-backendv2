@@ -5,12 +5,12 @@ const validator = require("../validators/employeeValidator");
 const authMiddleware = require("../middlewares/authMiddleware");
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
-const path=require('path')
+const path = require('path')
 
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, '../uploads'); 
+    const uploadPath = path.join(__dirname, '../uploads');
     console.log(`File is being uploaded to: ${uploadPath}`);
     cb(null, uploadPath);
   },
@@ -31,7 +31,7 @@ const fileFilter = (req, file, cb) => {
 const uploadpicture = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, 
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 
@@ -74,11 +74,17 @@ router.get(
 router.get(
   "/masterData/:organizationId",
   // validator.masterDataValidator,
-  // authMiddleware.verifyUserToken,
+  authMiddleware.verifyUserToken,
   employeeController.masterData
 );
-
 /* MASTER DATA */
+router.post(
+  "/masterDataXLSX/:organizationId",
+  // validator.masterDataValidator,
+  // authMiddleware.verifyUserToken,
+  employeeController.masterDataXLSX
+);
+
 router.get(
   "/listOnlyEmployee/:organizationId",
   validator.listOnlyEmployeeValidator,

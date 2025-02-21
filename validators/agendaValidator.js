@@ -15,7 +15,25 @@ const createAgendaValidator = async (req, res, next) => {
     const bodySchema = Joi.object({
       organizationId: Joi.string().trim().alphanum().required(),
       meetingId: Joi.string().trim().alphanum().required(),
-      title: Joi.string().min(2).max(100).required(),
+      // title: Joi.string().min(2).max(100).required(),
+
+       title: Joi.any().when("isEncrypted", {
+              is: true,
+              then: Joi.string()
+                .trim()
+                // .min(10)
+                // .max(300)
+                //.pattern(/^[A-Za-z0-9+/=]+$/) //  Ensure encrypted format (Base64-like)
+                .required(),
+              otherwise: Joi.string()
+                .trim()
+                .min(3)
+                .max(100)
+                .required(),
+            }),
+            
+          //  isEncrypted: Joi.boolean().default(false),
+
       // topic: Joi.string().trim().allow(null, ""),
       topic: Joi.string()
         .trim()
@@ -55,17 +73,51 @@ const createAgendaWithMinutesValidator = async (req, res, next) => {
         .items({
           organizationId: Joi.string().trim().alphanum().required(),
           meetingId: Joi.string().trim().alphanum().required(),
-          title: Joi.string().trim().min(5).max(100).required(),
-          topic: Joi.string()
-            .trim()
-            // .min(5)
-            // .max(200)
-            // .pattern(regularExpressionForHtml)
-            // .messages({
-            //   "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-            // })
-            .allow(null, ""),
-          //topic: Joi.string().trim().allow(null, ""),
+        //  title: Joi.string().trim().min(5).max(100).required(),
+
+        
+       title: Joi.any().when("isEncrypted", {
+        is: true,
+        then: Joi.string()
+          .trim()
+          // .min(10)
+          // .max(300)
+          //.pattern(/^[A-Za-z0-9+/=]+$/) //  Ensure encrypted format (Base64-like)
+          .required(),
+        otherwise: Joi.string()
+          .trim()
+          .min(3)
+          .max(100)
+          .required(),
+      }),
+      
+     // isEncrypted: Joi.boolean().default(false),
+
+     topic: Joi.any().when("isEncrypted", {
+      is: true,
+      then: Joi.string()
+        .trim()
+        // .min(10)
+        // .max(300)
+        //.pattern(/^[A-Za-z0-9+/=]+$/) //  Ensure encrypted format (Base64-like)
+        .required(),
+      otherwise: Joi.string()
+        .trim()
+        .min(3)
+        .max(100)
+        .required(),
+    }),
+
+          // topic: Joi.string()
+          //   .trim()
+          //   // .min(5)
+          //   // .max(200)
+          //   // .pattern(regularExpressionForHtml)
+          //   // .messages({
+          //   //   "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+          //   // })
+          //   .allow(null, ""),
+          // //topic: Joi.string().trim().allow(null, ""),
           timeLine: Joi.number(),
         }),
     }).required();

@@ -117,7 +117,14 @@ const checkAttendeeAvailability = async (req, res) => {
       errorLog(error);
       return Responses.errorResponse(req, res, error);
     }
+    const busyMessages = result.map(
+      (attendee) => `${attendee.name} is unavailable due to another meeting (Meeting ID: ${attendee.meetingId}) from ${attendee.fromTime} to ${attendee.toTime}`
+    );
+
+    return Responses.failResponse(req, res, result, busyMessages, 200);
   }
+
+
   
   // meeting room availability
   const checkMeetingRoomAvailability = async (req, res) => {
@@ -1052,6 +1059,42 @@ const downloadZoomRecordingsInZip = async (req, res) => {
   }
 };
 
+
+
+const getMeetingActionPriorityDetailsController = async (req, res) => {
+  try {
+    const result = await meetingService.getMeetingActionPriorityDetailsforChart(
+      req.query,
+      req.body,
+      req.userId,
+      req.userData
+    );
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.recordsFound,
+      200
+    );
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
+
+
 const notifyMeetingCreatorAboutDraft = async (req, res) => {
   console.log("Processing draft meeting notification...");
 
@@ -1114,75 +1157,39 @@ const deleteDraftMeeting = async (req, res) => {
   }
 };
 
-const getMeetingActionPriorityDetailsController = async (req, res) => {
-  try {
-    const result = await meetingService.getMeetingActionPriorityDetailsforChart(
-      req.query,
-      req.body,
-      req.userId,
-      req.userData
-    );
-    if (!result) {
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        messages.recordsNotFound,
-        200
-      );
-    }
-    return Responses.successResponse(
-      req,
-      res,
-      result,
-      messages.recordsFound,
-      200
-    );
-  } catch (error) {
-    console.log("Controller error:", error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
-
 
 const draftMeetingdelete = async (req, res) => {
   try {
-
-    console.log("Request Body:", req.body);
-
-
-    console.log("Received createdById:", req.body.createdById);
-
+   // console.log("Request Data:", req.params.meetingId); 
+    
     let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
 
     const result = await meetingService.deleteDraftMeeting(
-      req.body.createdById,  
-      req.createdById,       
-      req.body,
+      req.params.meetingId, 
+      req.userId, 
+      req.body, 
       ip
     );
 
     if (!result) {
-      return Responses.failResponse(req, res, null, messages.deleteDraftFailed, 409);
+      return Responses.failResponse(req, res, null, messages.draftFailed, 409);
     }
 
     return Responses.successResponse(
       req,
       res,
-      result.data,
+      result,
       messages.draftDeleted,
-      201
+      200
     );
   } catch (error) {
-    // Log the error for debugging purposes
-    console.log("Controller error in deleting draft meeting:", error);
+    console.error("Controller error:", error);
     errorLog(error);
-
-    // Return an error response if something goes wrong
     return Responses.errorResponse(req, res, error);
   }
 };
+
+
 
 
 
@@ -1222,6 +1229,7 @@ module.exports = {
   checkMeetingRoomAvailability,
   checkAttendeeArrayAvailability,
   deleteDraftMeeting,
+  draftMeetingdelete,
   notifyMeetingCreatorAboutDraft,
   getMeetingActionPriorityDetailsController,
   draftMeetingdelete

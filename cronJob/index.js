@@ -41,8 +41,6 @@ const checkDraftMeetingsCron = () => {
   }
 };
 
-
-
 const scheduleDraftMeetingCleanup = () => {
   cron.schedule("0 0 * * *", async () => { 
     console.log("Running deleteOldDraftMeetings cron job...");

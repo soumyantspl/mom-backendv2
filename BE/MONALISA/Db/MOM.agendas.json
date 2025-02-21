@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "66965b5bb120ec5a9840cbd5"
+  },
+  "organizationId": {
+    "$oid": "6655d3118ba49b304f0d8258"
+  },
+  "meetingId": {
+    "$oid": "66965177ac3cd986ca2abe76"
+  },
+  "title": " agenda new 1",
+  "topic": "",
+  "timeLine": 0,
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2024-07-16T11:36:59.077Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-16T11:36:59.077Z"
+  }
+}]
