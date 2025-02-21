@@ -513,22 +513,22 @@ const getEmployeeListAsPerUnit = async (req, res) => {
 //   }
 // };
 
-const writeErrorFile = (duplicateRecords) => {
+const writeErrorFile = (duplicateRecords, validationErrors) => {
   const workbook = xlsx.utils.book_new();
-
   const reverseMapping = {};
+
   Object.entries(columnMapping).forEach(([excelCol, schemaField]) => {
     reverseMapping[schemaField] = excelCol;
   });
 
   const buildRowObject = (recordData, reason = "") => {
     const rowObject = {
-      "Employee Id": recordData.empId || "",
-      Email: recordData.email || "",
-      // Reason: reason,
+      "Employee Id": recordData?.empId || "",
+      Email: recordData?.email || "",
+      Reason: reason,
     };
 
-    Object.keys(recordData).forEach((schemaField) => {
+    Object.keys(recordData || {}).forEach((schemaField) => {
       if (schemaField === "email" || schemaField === "empId") return;
       const excelCol = reverseMapping[schemaField] || schemaField;
       rowObject[excelCol] = recordData[schemaField] || "";
@@ -538,36 +538,50 @@ const writeErrorFile = (duplicateRecords) => {
   };
 
   // Format duplicate records with a reason column
-  const formatDuplicateRecords = duplicateRecords.map((dupObj) => {
+  const formatDuplicateRecords = duplicateRecords?.map((dupObj) => {
     const { organizationId, ...data } = dupObj || {};
 
     let reason = [];
-    if (dupObj.email) reason.push("Email already exists.");
-    if (dupObj.empId) reason.push("Employee ID already exists.");
+    if (dupObj?.email) reason.push("Email already exists.");
+    if (dupObj?.empId) reason.push("Employee ID already exists.");
     reason = reason.length > 0 ? reason.join(" ") : "Duplicate entry";
 
     return buildRowObject(data, reason);
-  });
+  }) || [];
 
-  // Add Duplicate Records Sheet
   if (formatDuplicateRecords.length > 0) {
     const duplicateSheet = xlsx.utils.json_to_sheet(formatDuplicateRecords);
     xlsx.utils.book_append_sheet(workbook, duplicateSheet, "Duplicate Records");
 
-    // Set column width dynamically
-    duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0]).map((colKey) => ({
-      wpx: Math.max(
-        ...formatDuplicateRecords.map((row) => (row[colKey] ? row[colKey].toString().length : 0)),
-        colKey.length
-      ) * 10,
-    }));
+    if (formatDuplicateRecords.length > 0) {
+      duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0]).map((colKey) => ({
+        wpx: Math.max(
+          ...formatDuplicateRecords.map((row) => (row[colKey] ? row[colKey].toString().length : 0)),
+          colKey.length
+        ) * 10,
+      }));
+    }
+  }
+
+  // Add Validation Errors Sheet
+  if (Array.isArray(validationErrors) && validationErrors.length > 0) {
+    const errorSheet = xlsx.utils.json_to_sheet(validationErrors);
+    xlsx.utils.book_append_sheet(workbook, errorSheet, "Validation Errors");
+
+    if (validationErrors.length > 0) {
+      errorSheet["!cols"] = Object.keys(validationErrors[0]).map((colKey) => ({
+        wpx: Math.max(
+          ...validationErrors.map((row) => (row[colKey] ? row[colKey].toString().length : 0)),
+          colKey.length
+        ) * 10,
+      }));
+    }
   }
 
   // Save the Excel file
   const fileName = `error_report_${Date.now()}.xlsx`;
   const errorFilePath = path.join(__dirname, "../Downloads", fileName);
 
-  // Ensure Downloads folder exists
   if (!fs.existsSync(path.join(__dirname, "../Downloads"))) {
     fs.mkdirSync(path.join(__dirname, "../Downloads"), { recursive: true });
   }
@@ -576,6 +590,8 @@ const writeErrorFile = (duplicateRecords) => {
 
   return errorFilePath;
 };
+
+
 
 
 
@@ -610,14 +626,30 @@ const importEmployee = async (req, res) => {
     }));
 
     console.log("transformedData", transformedData);
-    const { savedData, duplicateRecords } = await employeeService.importEmployee(transformedData, organizationId);
+    const { savedData, duplicateRecords, validationErrors } = await employeeService.importEmployee(transformedData, organizationId);
     fs.unlinkSync(filePath);
 
-    if (duplicateRecords.length > 0) {
-      const errorFilePath = writeErrorFile(duplicateRecords);
-      const errorFileUrl = `${process.env.BASE_URL}Downloads/${path.basename(errorFilePath)}`;
 
-      return Responses.failResponse(req, res, { errorFileUrl }, messages.importFailed, 200);
+
+    // if (duplicateRecords.length > 0) {
+    //   const errorFilePath = writeErrorFile(duplicateRecords);
+    //   const errorFileUrl = `${process.env.BASE_URL}Downloads/${path.basename(errorFilePath)}`;
+
+    //   return Responses.failResponse(req, res, { errorFileUrl }, messages.importFailed, 200);
+    // }
+
+
+    if (duplicateRecords.length > 0 || validationErrors.length > 0) {
+      const errorFilePath = writeErrorFile(duplicateRecords, validationErrors);
+      const errorFileUrl = `${process.env.BASE_URL}Downloads/${path.basename(errorFilePath)}`
+
+      return Responses.failResponse(
+        req,
+        res,
+        { errorFileUrl },
+        messages.importFailed,
+        200
+      );
     }
 
     return Responses.successResponse(req, res, savedData, messages.importSuccess, 200);
