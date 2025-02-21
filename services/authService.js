@@ -5,8 +5,8 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const emailService = require("./emailService");
 const authMiddleware = require("../middlewares/authMiddleware");
-//const emailTemplates = require("../emailSetUp/emailTemplates");
- const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailConstants = require("../constants/emailConstants");
 const ObjectId = require("mongoose").Types.ObjectId;
 const axios = require("axios");
@@ -154,16 +154,16 @@ const insertOtp = async (
 
   const logo = organization?.dashboardLogo
     ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
-    : null;
+    : process.env.LOGO;
 
-  // const mailData = await emailTemplates.sendOtpEmailTemplate(
-  //   userData,
-  //   data.otp,
-  //   process.env.CHECK_OTP_VALIDATION_TIME,
-  //   supportData,
-  //   logo
-  // );
-  const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
+  const mailData = await emailTemplates.sendOtpEmailTemplate(
+    userData,
+    data.otp,
+    process.env.CHECK_OTP_VALIDATION_TIME,
+    supportData,
+    logo
+  );
+  //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
   // const emailSubject = emailConstants.signInOtpsubject;
   const { emailSubject, mailData: mailBody } = mailData;
 
