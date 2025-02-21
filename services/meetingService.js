@@ -5354,21 +5354,10 @@ const getMeetingActionPriorityDetailsforChart = async (
 };
 
 const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
-  const meeting = await Meeting.findOne({ _id: new ObjectId(id) });
-
-  if (!meeting) {
-    throw new Error("Meeting not found.");
-  }
-  
-
-  if (meeting.createdById.toString() !== userId.toString()) {
-    throw new Error("Only the meeting creator can delete the draft.");
-  }
-
-  
-  const result = await Meeting.findOneAndUpdate(
+  const result = await Meeting.findByIdAndDelete(
     { _id: new ObjectId(id) },
-    { new: true }  
+  
+    { new: true }
   );
   if (!result) {
     return null; 
@@ -5384,10 +5373,10 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
     const logData = {
       moduleName: logMessages.Meeting.moduleName,
       userId,
-      action: logMessages.Meeting.deleteDraftMeeting,
+      action: logMessages.Meeting.updateRSVP,
       ipAddress,
       details: commonHelper.convertFirstLetterToCapital(details.join(" , ")),
-      subDetails: `Meeting Title: ${result.title} (${result.meetingId})`,
+      subDetails: ` Meeting Title: ${result.title} (${result.meetingId})`,
       organizationId: result.organizationId,
     };
     //console.log("Logdata------------",logData)
