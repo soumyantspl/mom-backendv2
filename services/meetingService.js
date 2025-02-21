@@ -42,7 +42,7 @@ function convertTo12HourFormat(timeStr) {
 }
 
 // meeting room availability
-const checkMeetingRoomAvailability = async(data)  => {
+const checkMeetingRoomAvailability = async (data) => {
   const existingMeeting = await Meeting.findOne({
     organizationId: data.organizationId,
     date: new Date(data.date),
@@ -66,11 +66,11 @@ const checkMeetingRoomAvailability = async(data)  => {
   if (existingMeeting) {
     const fromTimeFormatted = convertTo12HourFormat(existingMeeting.fromTime);
     const toTimeFormatted = convertTo12HourFormat(existingMeeting.toTime);
-    return { 
+    return {
       roomUnavailable: true,
       bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
     };
-  }  
+  }
 }
 
 const BASE_URL = process.env.BASE_URL;
@@ -83,15 +83,15 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
   const existingUserMeeting = await Meeting.findOne({
     createdById: new ObjectId(userId),
     date: new Date(data.date),
-    $or: [ 
-      { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } }, 
-      { fromTime: { $gte: data.fromTime, $lt: data.toTime } }, 
-      { toTime: { $gt: data.fromTime, $lte: data.toTime } } 
+    $or: [
+      { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
+      { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
+      { toTime: { $gt: data.fromTime, $lte: data.toTime } }
     ],
     isActive: true,
     "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
   });
-  
+
   if (existingUserMeeting) {
     const fromTimeFormatted = convertTo12HourFormat(existingUserMeeting.fromTime);
     const toTimeFormatted = convertTo12HourFormat(existingUserMeeting.toTime);
@@ -135,7 +135,7 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
       },
     ],
   };
-  
+
   if (data.parentMeetingId) {
     inputData.parentMeetingId = data.parentMeetingId;
     const lastFollowOnMeetingDetails = await Meeting.find(
@@ -191,15 +191,15 @@ const checkAttendeeAvailability = async (data, id) => {
     if (employee) {
       attendeeIds = new ObjectId(employee._id);
     } else {
-        console.log("Employee not found with email:", data.email);
+      console.log("Employee not found with email:", data.email);
     }
   }
-  if (data.attendeeId){
+  if (data.attendeeId) {
     attendeeIds = new ObjectId(data.attendeeId);
-  } 
+  }
   const fromToTime = await Meetings.findOne(
     { _id: new ObjectId(id) },
-    { date:1, fromTime: 1, toTime: 1, isActive:1, meetingStatus:1 }
+    { date: 1, fromTime: 1, toTime: 1, isActive: 1, meetingStatus: 1 }
   );
   const existingAttendee = await Meetings.findOne({
     date: fromToTime.date,
@@ -207,7 +207,7 @@ const checkAttendeeAvailability = async (data, id) => {
     "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
     $or: [
       {
-        fromTime: { $lt: fromToTime.toTime }, 
+        fromTime: { $lt: fromToTime.toTime },
         toTime: { $gt: fromToTime.fromTime }
       },
       {
@@ -222,15 +222,15 @@ const checkAttendeeAvailability = async (data, id) => {
   if (existingAttendee) {
     const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
     const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
-    return { 
-      attendeeUnavailable: true, 
+    return {
+      attendeeUnavailable: true,
       bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
     };
   }
 }
 
 /// attendee array availability
-const checkAttendeeArrayAvailability = async (data) => { 
+const checkAttendeeArrayAvailability = async (data) => {
   let attendeeAvailability = [];
   for (const a of data.attendees) {
     const meetings = await Meetings.find(
@@ -245,13 +245,13 @@ const checkAttendeeArrayAvailability = async (data) => {
           { toTime: { $gt: data.fromTime, $lte: data.toTime } }
         ],
       },
-      { fromTime: 1, toTime: 1, _id: 1, meetingId:1 }
-    ); 
+      { fromTime: 1, toTime: 1, _id: 1, meetingId: 1 }
+    );
     if (meetings.length > 0) {
       const employee = await Employee.findOne(
         { _id: new ObjectId(a._id) },
         { name: 1 }
-      );  
+      );
       meetings.forEach((meeting) => {
         attendeeAvailability.push({
           attendeeId: new ObjectId(a._id),
@@ -1736,22 +1736,22 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
         ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
         : process.env.LOGO;
 
-     
-        
+
+
       const { subject: emailSubject, mailBody } = await emailTemplates.sendCancelMeetingEmailTemplate(
         meetingDetails,
         attendee.name,
         logo
       );
-    // const emailSubject = await emailConstants.cancelMeetingSubject(
-    //   meetingDetails
-    // );
-    emailService.sendEmail(
-      attendee.email,
-      "Cancel Meeting",
-      emailSubject,
-      mailBody
-    );
+      // const emailSubject = await emailConstants.cancelMeetingSubject(
+      //   meetingDetails
+      // );
+      emailService.sendEmail(
+        attendee.email,
+        "Cancel Meeting",
+        emailSubject,
+        mailBody
+      );
     });
   }
   const details = await commonHelper.generateLogObject(
@@ -4060,7 +4060,7 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
       //   //     : meetingLink)
       // );
 
-       const logo = process.env.LOGO;
+      const logo = process.env.LOGO;
       // const organizationDetails = await Organization.findOne({
       //   _id: meetingDetails.organizationId,
       // });
@@ -5169,7 +5169,7 @@ const deleteOldDraftMeetings = async () => {
       })),
     };
   });
-//soft delete
+  //soft delete
   const result = await Meeting.updateMany(
     {
       "meetingStatus.status": "draft",
@@ -5354,24 +5354,9 @@ const getMeetingActionPriorityDetailsforChart = async (
 };
 
 const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
-  const meeting = await Meeting.findOne({ _id: new ObjectId(id) });
-
-  if (!meeting) {
-    throw new Error("Meeting not found.");
-  }
-  
-
-  if (meeting.createdById.toString() !== userId.toString()) {
-    throw new Error("Only the meeting creator can delete the draft.");
-  }
-
-  
-  const result = await Meeting.findOneAndUpdate(
-    { _id: new ObjectId(id) },
-    { new: true }  
-  );
+  const result = await Meeting.findByIdAndDelete(id);
   if (!result) {
-    return null; 
+    return null;
   }
   //console.log(`Meeting with ID: ${id} marked as deleted (soft delete).`);
 
@@ -5384,10 +5369,10 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
     const logData = {
       moduleName: logMessages.Meeting.moduleName,
       userId,
-      action: logMessages.Meeting.deleteDraftMeeting,
+      action: logMessages.Meeting.updateRSVP,
       ipAddress,
       details: commonHelper.convertFirstLetterToCapital(details.join(" , ")),
-      subDetails: `Meeting Title: ${result.title} (${result.meetingId})`,
+      subDetails: ` Meeting Title: ${result.title} (${result.meetingId})`,
       organizationId: result.organizationId,
     };
     //console.log("Logdata------------",logData)
