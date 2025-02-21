@@ -38,7 +38,7 @@
     "pdf-lib": "^1.17.1",
     "pdfkit": "^0.15.0",
     "pdfmake": "^0.2.12",
-    "playwright": "^1.46.1",
+    "playwright": "^1.50.1",
     "puppeteer": "^23.1.1",
     "qpdf": "^0.1.0-prealpha.1",
     "request-ip": "^3.3.0",
