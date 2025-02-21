@@ -2659,10 +2659,6 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
   });
 };
 
-
-
-
-
 module.exports = {
   //signInByOtpEmail,
   //updateMeeting,
