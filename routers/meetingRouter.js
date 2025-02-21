@@ -234,27 +234,24 @@ router.post(
   meetingController.downloadZoomRecordingsInZip
 );
 
-// ADD ATTENDEE
-router.post('/check-availability/:id',
-  meetingValidator.checkAttendeeAvailabilityValidator, 
-  authMiddleware.verifyUserToken,
+router.post('/check-availability/:id', 
+  // authMiddleware.verifyUserToken,
   meetingController.checkAttendeeAvailability
 );
 
 //check room availability
 router.post('/check-meetingroom-availability', 
-  meetingValidator.checkRoomAvailabilityValidator,
-  authMiddleware.verifyUserToken,
   meetingController.checkMeetingRoomAvailability
 );
 
 // check attendee availability in edit-meeting
-router.post('/check-attendee-availability',
-  meetingValidator.checkAttendeeArrayAvailabilityValidator,
-  authMiddleware.verifyUserToken, 
+router.post('/check-attendee-availability', 
   meetingController.checkAttendeeArrayAvailability
 );
 
+
+
+///CREATE FOR CRONJOB DRAFT MEETINg/// PRATISHRUTI
 // Route to notify the meeting creator about a draft meeting
 router.post('/notify-draft/:meetingId',
   authMiddleware.verifyUserToken,
@@ -265,9 +262,13 @@ router.post('/delete-draft/:meetingId',
   authMiddleware.verifyUserToken,
   meetingController.deleteDraftMeeting
 );
-router.post("/deleteDraftMeeting/:meetingId", 
-  authMiddleware.verifyUserToken, 
+router.delete(
+  "/deleteDraftMeeting/:meetingId",
+  meetingValidator.draftMeetingValidator,
+  authMiddleware.verifyUserToken,
   meetingController.draftMeetingdelete
 );
+
+
 
 module.exports = router;

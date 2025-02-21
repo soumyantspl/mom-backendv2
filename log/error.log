@@ -1791,6 +1791,24 @@ Stack Trace: TypeError: emailTemplates.organizationRegistration is not a functio
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async organizationRegistrationController (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:32:20)
 <<<<<<< HEAD
+Date: 21/02/2025, Time: 11:28
+Error: emailTemplates.signInByOtpEmail is not a function
+Stack Trace: TypeError: emailTemplates.signInByOtpEmail is not a function
+    at insertOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:166:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async validateSendingOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:221:11)
+    at async Object.sendOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:43:12)
+    at async sendOtp (D:\MinutesVault V2\mom-backendv2\controllers\authController.js:12:20)
+Date: 21/02/2025, Time: 11:28
+Error: emailTemplates.signInByOtpEmail is not a function
+Stack Trace: TypeError: emailTemplates.signInByOtpEmail is not a function
+    at insertOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:166:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async validateSendingOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:221:11)
+    at async Object.sendOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:43:12)
+    at async sendOtp (D:\MinutesVault V2\mom-backendv2\controllers\authController.js:12:20)
+=======
+<<<<<<< HEAD
 Date: 21/02/2025, Time: 10:38
 Error: No active template found for type: ORGANIZATIONREGISTRATIONSENDOTP
 Stack Trace: Error: No active template found for type: ORGANIZATIONREGISTRATIONSENDOTP
@@ -1814,3 +1832,4 @@ Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subjec
 =======
 >>>>>>> 390496992459c68a5ce10b742238e85ece178670
 >>>>>>> 684b56a0dca4f8de83c0bcb089304748abf1fa0a
+>>>>>>> 225cd03fa5aeddf73d0bebcca3385e75758098e1

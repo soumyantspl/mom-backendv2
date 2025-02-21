@@ -640,7 +640,7 @@ const viewProfile = async (req, res) => {
     console.log("Uploaded File:", profilePicture);
     console.log("Request File:", req.body);
 
-    const result = await employeeService.viewProfile(
+    const result = await employeeService.updateProfile(
       req.userId,
       req.params.id,
       req.body,
