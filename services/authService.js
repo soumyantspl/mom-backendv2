@@ -163,7 +163,8 @@ const insertOtp = async (
   //   supportData,
   //   logo
   // );
-  const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
+  // const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
+  const mailData = await emailTemplates.sendOtpEmailTemplate(userData, data.otp);
   // const emailSubject = emailConstants.signInOtpsubject;
   const { emailSubject, mailData: mailBody } = mailData;
 

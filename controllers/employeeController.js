@@ -525,7 +525,7 @@ const importEmployee = async (req, res) => {
 };
 
 
-const viewProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
   try {
     const ip = req.headers.ip || (await commonHelper.getIp(req));
     const profilePicture = req.file;
@@ -533,7 +533,7 @@ const viewProfile = async (req, res) => {
     console.log("Uploaded File:", profilePicture);
     console.log("Request File:", req.body);
 
-    const result = await employeeService.viewProfile(
+    const result = await employeeService.updateProfile(
       req.userId,
       req.params.id,
       req.body,
@@ -582,5 +582,5 @@ module.exports = {
   getEmployeeListAsPerUnit,
   importEmployee,
   writeErrorFile,
-  viewProfile
+  updateProfile
 };

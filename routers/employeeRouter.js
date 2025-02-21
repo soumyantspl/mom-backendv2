@@ -115,11 +115,11 @@ router.post(
 
 /* VIEW PROFILE  */
 router.put(
-  "/viewProfile/:id",
+  "/updateProfile/:id",
   uploadpicture.single("profilePicture"),
-  validator.viewProfileValidator,
+  validator.updtaeProfileValidator,
   authMiddleware.verifyUserToken,
-  employeeController.viewProfile
+  employeeController.updateProfile
 );
 
 module.exports = router;
