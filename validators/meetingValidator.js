@@ -48,11 +48,11 @@ const createMeetingValidator = async (req, res, next) => {
         otherwise: Joi.string()
           .trim()
           .min(3)
-          .max(300)
-          .pattern(regularExpression)
-          .messages({
-            "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-          })
+          // .max(300)
+          // .pattern(regularExpression)
+          // .messages({
+          //   "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+          // })
           .required(),
       }),
       

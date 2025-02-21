@@ -101,31 +101,19 @@ const checkAttendeeAvailability = async (req, res) => {
   
   /// check attendee array availability
   const checkAttendeeArrayAvailability = async (req, res) => {
-    try{
-      const result = await meetingService.checkAttendeeArrayAvailability(
-        req.body
-      );
-      if (result?.attendeeUnavailable) {
-        const errMsg = messages.attendeeUnavailable;
-        return Responses.failResponse(
-          req,
-          res,
-          null,
-          errMsg,
-          200
-        );
-      } 
-      if (!result) {
-        return Responses.failResponse(
-          req,
-          res,
-          null,
-          messages.recordsNotFound,
-          200
-        );
+    try {
+      const result = await meetingService.checkAttendeeArrayAvailability(req.body);
+  
+      if (!result || result.length === 0) {
+        return Responses.successResponse(req, res, null, messages.recordsNotFound, 200);
       }
+      const busyMessages = result.map(
+        (attendee) => `${attendee.name} is unavailable due to another meeting (Meeting ID: ${attendee.meetingId}) from ${attendee.fromTime} to ${attendee.toTime}`
+      );
+  
+      return Responses.failResponse(req, res, result, busyMessages, 200);
     } catch (error) {
-      console.log("Controller error:", error);
+      console.error("Controller error:", error);
       errorLog(error);
       return Responses.errorResponse(req, res, error);
     }

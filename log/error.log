@@ -1850,3 +1850,29 @@ Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
 Date: 21/02/2025, Time: 10:50
 Error: HTML tags & Special letters are not allowed!
 Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 21/02/2025, Time: 11:10
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 21/02/2025, Time: 11:10
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 21/02/2025, Time: 11:12
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 21/02/2025, Time: 11:14
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 21/02/2025, Time: 11:38
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at convertTo12HourFormat (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:33:36)
+    at Object.checkAttendeeArrayAvailability (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:264:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async checkAttendeeArrayAvailability (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:105:22)
+Date: 21/02/2025, Time: 11:40
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at convertTo12HourFormat (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:33:36)
+    at Object.checkAttendeeArrayAvailability (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:264:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async checkAttendeeArrayAvailability (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:105:22)
