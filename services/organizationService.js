@@ -100,15 +100,19 @@ const organizationRegistrationService = async (data) => {
       // Prepare email data and send registration email
       const logo = process.env.LOGO;
       const emailType = "Organization Registration";
-      const emailSubject = "Organization Registration";
+      //const emailSubject = "Organization Registration";
 
-      const mailData = await emailTemplates.organizationRegistration(
+
+      const mailData = await emailTemplates.registrationWelcomeMail(
         commonHelper.convertFirstLetterOfFullNameToCapital(result.name),
         logo
       );
-      console.log("Email template data:", mailData);
+      
+     const { emailSubject, mailData: mailBody } = mailData;
+     console.log("mail data", mailData)
 
-      await emailService.sendEmail(result.email, emailType, emailSubject, mailData);
+
+      await emailService.sendEmail(result.email, emailType, emailSubject, mailBody);
       console.log("Registration email sent to:", result.email);
 
       return result;
@@ -133,7 +137,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     console.log("Duplicate email found");
     return { isDuplicate: true };
   } else if (employeeDuplicate) {
-    return { isDuplicate: true };
+    return { isDuplicate: true};
   }
   const otpLogsData = await organizationOtp.findOne({
     email,
@@ -148,8 +152,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     const otpData = new organizationOtp({ otp, email });
     await otpData.save();
 
-    // const logo = process.env.LOGO;
-    const logo = data.dashboardLogo;
+    const logo = process.env.LOGO;
     const emailType = "Send OTP";
     // const emailSubject = "Organization Registration";
     const { emailSubject, mailData: mailBody } = mailData;
@@ -196,8 +199,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     { new: true }
   );
 
-  // const logo = process.env.LOGO;
-  const logo = data.dashboardLogo;
+  const logo = process.env.LOGO;
   const emailType = "Send OTP";
   // const emailSubject = "Organization Registration";
   const { emailSubject, mailData: mailBody } = mailData;

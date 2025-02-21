@@ -1736,22 +1736,22 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
         ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
         : process.env.LOGO;
 
-      // const { subject: emailSubject, mailBody } =
-        await emailTemplates.sendCancelMeetingEmailTemplate(
-          meetingDetails,
-          attendee.name,
-          logo
-        );
-      // const emailSubject = await emailConstants.cancelMeetingSubject(
-      //   meetingDetails
-      // );
-      const { subject, mailBody } = mailData;
-      emailService.sendEmail(
-        attendee.email,
-        "Cancel Meeting",
-        subject,
-        mailBody
+     
+        
+      const { subject: emailSubject, mailBody } = await emailTemplates.sendCancelMeetingEmailTemplate(
+        meetingDetails,
+        attendee.name,
+        logo
       );
+    // const emailSubject = await emailConstants.cancelMeetingSubject(
+    //   meetingDetails
+    // );
+    emailService.sendEmail(
+      attendee.email,
+      "Cancel Meeting",
+      emailSubject,
+      mailBody
+    );
     });
   }
   const details = await commonHelper.generateLogObject(
@@ -5367,23 +5367,18 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
   
   const result = await Meeting.findOneAndUpdate(
     { _id: new ObjectId(id) },
-    {
-      $set: {
-        "meetingStatus.status": "deleted",  
-        "meetingStatus.remarks": data.remarks,
-        "isDeleted": true, 
-      },
-    },
     { new: true }  
   );
-
+  if (!result) {
+    return null; 
+  }
+  //console.log(`Meeting with ID: ${id} marked as deleted (soft delete).`);
 
   const details = await commonHelper.generateLogObject(
     { status: "deleted" },
     userId,
     { status: "draft deleted" }
   );
-
   if (details.length !== 0) {
     const logData = {
       moduleName: logMessages.Meeting.moduleName,
@@ -5394,10 +5389,11 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
       subDetails: `Meeting Title: ${result.title} (${result.meetingId})`,
       organizationId: result.organizationId,
     };
+    //console.log("Logdata------------",logData)
     await logService.createLog(logData);
   }
 
-  return result; 
+  return result;
 };
 
 

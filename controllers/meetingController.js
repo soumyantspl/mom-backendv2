@@ -1150,6 +1150,7 @@ const deleteDraftMeeting = async (req, res) => {
   }
 };
 
+
 const draftMeetingdelete = async (req, res) => {
   try {
    // console.log("Request Data:", req.params.meetingId); 
@@ -1180,6 +1181,12 @@ const draftMeetingdelete = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+
+
+
+
+
 
 module.exports = {
   createMeeting,
@@ -1218,5 +1225,5 @@ module.exports = {
   draftMeetingdelete,
   notifyMeetingCreatorAboutDraft,
   getMeetingActionPriorityDetailsController,
-
+  draftMeetingdelete
 };

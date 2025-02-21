@@ -120,7 +120,10 @@ const roomUnavailable = "The room is already booked for the selected date and ti
 const organizerUnavailable = "You already have a meeting scheduled on this date from "
 const attendeesFound = "Busy attendees found"
 ///Pratishruti//
-//view pRofile//
+//Draft Delete//
+const draftFailed= "Draft Failed";
+
+
 //Pratishruti//
 //view pRofile//
 const currentPasswordIncorrect = "Current Password is Incorrect"
@@ -237,5 +240,7 @@ module.exports = {
   notValid,
   deleteDraftFailed,
   draftDeleted,
-  attendeesFound
+  draftFailed
+  ///////////////////
+  //////////////////
 };
