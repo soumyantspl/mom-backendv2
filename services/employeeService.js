@@ -959,7 +959,7 @@ const importEmployee = async (data, organizationId) => {
 
 
 
-const updateProfile = async (userId, id, data, ipAddress, profilePicture) => {
+const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
   if (profilePicture && profilePicture.filename) {
     const filePath = `/uploads/${profilePicture.filename}`;
     data.profilePicture = filePath;
@@ -1052,5 +1052,5 @@ module.exports = {
   createAttendees,
   getEmployeeListAsPerUnit,
   importEmployee,
-  updateProfile
+  viewProfile
 };

@@ -155,6 +155,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     const logo = process.env.LOGO;
     const emailType = "Send OTP";
     // const emailSubject = "Organization Registration";
+    const { emailSubject, mailData: mailBody } = mailData;
     const mailData =
       await emailTemplates.organizationRegistrationSendOtpTemplate(
         commonHelper.convertFirstLetterOfFullNameToCapital(name),
@@ -162,7 +163,6 @@ const organizationSendOtp = async (id, data, ipAddress) => {
         process.env.CHECK_OTP_VALIDATION_TIME,
         logo
       );
-      const { emailSubject, mailData: mailBody } = mailData;
 
     await emailService.sendEmail(email, emailType, emailSubject, mailBody);
     return {
@@ -202,6 +202,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
   const logo = process.env.LOGO;
   const emailType = "Send OTP";
   // const emailSubject = "Organization Registration";
+  const { emailSubject, mailData: mailBody } = mailData;
   const mailData = await emailTemplates.organizationRegistrationSendOtpTemplate(
     commonHelper.convertFirstLetterOfFullNameToCapital(name),
     otp,
@@ -209,7 +210,6 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     logo
   );
 
-  const { emailSubject, mailData: mailBody } = mailData;
   await emailService.sendEmail(email, emailType, emailSubject, mailBody);
   return {
     data: {

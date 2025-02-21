@@ -34,6 +34,7 @@ const createMeetingValidator = async (req, res, next) => {
       //     "string.pattern.base": `HTML tags & Special letters are not allowed!`,
       //   })
       //   .required(),
+      //
 
 
       title: Joi.any().when("isEncrypted", {
@@ -1187,31 +1188,89 @@ const forChartClick = async (req, res, next) => {
   }
 };
 
-// DRAFT MEETING VALIDATOR
-const draftMeetingValidator = async (req, res, next) => {
+// attendee availability validator
+const checkAttendeeAvailabilityValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
       headers: Joi.object({
-        authorization: Joi.required(),
-        ip: Joi.string(),
+        authorization: Joi.required()
       }).unknown(true),
     });
-    const paramsSchema = Joi.object({
-      id: Joi.string().trim().alphanum().required(),
-    });
     const bodySchema = Joi.object({
-      remarks: Joi.string().trim(),
-    }).required();
-    await bodySchema.validateAsync(req.body);
+      email: Joi.string().email().optional(),
+      attendeeId: Joi.string().optional(),
+    }).or("email", "attendeeId");
+
     await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
     next();
   } catch (error) {
     console.log(error);
     errorLog(error);
-    return Responses.errorResponse(req, res, error);
+    return Responses.errorResponse(req, res, error, 200);
   }
 };
 
+// room availability validator
+const checkRoomAvailabilityValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required()
+      }).unknown(true),
+    });
+    const bodySchema = Joi.object({
+      organizationId: Joi.string().required(),
+      date: Joi.date().iso().required(),
+      roomId: Joi.string().required(),
+      fromTime: Joi.string().required(),
+      toTime: Joi.string().required(),
+    });
+
+    await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+
+// attendee array availability validator
+const checkAttendeeArrayAvailabilityValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required()
+      }).unknown(true),
+    });
+    const bodySchema = Joi.object({
+      date: Joi.date().iso().required(),
+      fromTime: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required(),
+      toTime: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required(),
+      attendees: Joi.array()
+        .items(
+          Joi.object({
+            _id: Joi.string().required(), 
+          }).unknown(true)
+        )
+        .min(1)
+        .required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
 module.exports = {
   updateMeetingStatusValidator,
   createMeetingValidator,
@@ -1240,7 +1299,9 @@ module.exports = {
   totalMeetingListForChartValidator,
   getMeetingActionPriotityDetailsValidator,
   deleteZoomRecordingValidator,
-  downloadZoomRecordingsInZipValidaor,
   forChartClick,
-  draftMeetingValidator,
+  downloadZoomRecordingsInZipValidaor,
+  checkAttendeeAvailabilityValidator,
+  checkRoomAvailabilityValidator,
+  checkAttendeeArrayAvailabilityValidator
 };

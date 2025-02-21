@@ -256,7 +256,7 @@ const listOnlyEmployeeAsUnitValidator = async (req, res, next) => {
   }
 };
 
-const updtaeProfileValidator = async (req, res, next) => {
+const viewProfileValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
       headers: Joi.object({
@@ -334,5 +334,5 @@ module.exports = {
   checkDuplicateUser,
   listOnlyEmployeeValidator,
   listOnlyEmployeeAsUnitValidator,
-  updtaeProfileValidator
+  viewProfileValidator
 };

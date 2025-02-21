@@ -99,6 +99,7 @@ const checkAttendeeAvailability = async (req, res) => {
   }
   }
   
+  /// check attendee array availability
   const checkAttendeeArrayAvailability = async (req, res) => {
     try {
       const result = await meetingService.checkAttendeeArrayAvailability(req.body);
@@ -106,18 +107,24 @@ const checkAttendeeAvailability = async (req, res) => {
       if (!result || result.length === 0) {
         return Responses.successResponse(req, res, null, messages.recordsNotFound, 200);
       }
-  
       const busyMessages = result.map(
-        (attendee) => `${attendee.name} is scheduled from ${attendee.fromTime} - ${attendee.toTime}`
+        (attendee) => `${attendee.name} is unavailable due to another meeting (Meeting ID: ${attendee.meetingId}) from ${attendee.fromTime} to ${attendee.toTime}`
       );
-      return Responses.successResponse(req, res, result, busyMessages, 200);
-      // return Responses.successResponse(req, res, busyMessages, messages.attendeesFound, 200);
+  
+      return Responses.failResponse(req, res, result, busyMessages, 200);
     } catch (error) {
       console.error("Controller error:", error);
       errorLog(error);
       return Responses.errorResponse(req, res, error);
     }
+    const busyMessages = result.map(
+      (attendee) => `${attendee.name} is unavailable due to another meeting (Meeting ID: ${attendee.meetingId}) from ${attendee.fromTime} to ${attendee.toTime}`
+    );
+
+    return Responses.failResponse(req, res, result, busyMessages, 200);
   }
+
+
   
   // meeting room availability
   const checkMeetingRoomAvailability = async (req, res) => {
@@ -1151,8 +1158,6 @@ const deleteDraftMeeting = async (req, res) => {
 };
 
 
-
-
 const draftMeetingdelete = async (req, res) => {
   try {
    // console.log("Request Data:", req.params.meetingId); 
@@ -1224,6 +1229,7 @@ module.exports = {
   checkMeetingRoomAvailability,
   checkAttendeeArrayAvailability,
   deleteDraftMeeting,
+  draftMeetingdelete,
   notifyMeetingCreatorAboutDraft,
   getMeetingActionPriorityDetailsController,
   draftMeetingdelete

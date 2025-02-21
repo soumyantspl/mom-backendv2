@@ -28,7 +28,7 @@ const JSZip = require("jszip");
 const path = require("path");
 const Configuration = require("../models/configurationModel")
 process.env.TZ = "Asia/Calcutta";
-const BASE_URL = process.env.BASE_URL || "";
+
 function convertTo12HourFormat(timeStr) {
   const [hours, minutes] = timeStr.split(":");
   const date = new Date();
@@ -43,7 +43,6 @@ function convertTo12HourFormat(timeStr) {
 
 // meeting room availability
 const checkMeetingRoomAvailability = async(data)  => {
-  console.log("data of Meeting Room-------------------", data);
   const existingMeeting = await Meeting.findOne({
     organizationId: data.organizationId,
     date: new Date(data.date),
@@ -64,7 +63,6 @@ const checkMeetingRoomAvailability = async(data)  => {
       }
     ]
   });
-  console.log('date-', new Date(data.date))
   if (existingMeeting) {
     const fromTimeFormatted = convertTo12HourFormat(existingMeeting.fromTime);
     const toTimeFormatted = convertTo12HourFormat(existingMeeting.toTime);
@@ -73,8 +71,9 @@ const checkMeetingRoomAvailability = async(data)  => {
       bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
     };
   }  
-  }
+}
 
+const BASE_URL = process.env.BASE_URL;
 
 /**FUNC- CREATE MEETING */
 const createMeeting = async (data, userId, ipAddress = 1000) => {
@@ -84,8 +83,11 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
   const existingUserMeeting = await Meeting.findOne({
     createdById: new ObjectId(userId),
     date: new Date(data.date),
-    fromTime: { $lt: data.toTime },  
-    toTime: { $gt: data.fromTime },
+    $or: [ 
+      { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } }, 
+      { fromTime: { $gte: data.fromTime, $lt: data.toTime } }, 
+      { toTime: { $gt: data.fromTime, $lte: data.toTime } } 
+    ],
     isActive: true,
     "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
   });
@@ -183,10 +185,7 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
 
 // attendee availability checking
 const checkAttendeeAvailability = async (data, id) => {
-  console.log('checkAttendeeAvailability data-----', data)
-
   let attendeeIds;
-
   if (data.email) {
     const employee = await Employee.findOne({ email: data.email }, { _id: 1 });
     if (employee) {
@@ -197,15 +196,11 @@ const checkAttendeeAvailability = async (data, id) => {
   }
   if (data.attendeeId){
     attendeeIds = new ObjectId(data.attendeeId);
-  }
-  
+  } 
   const fromToTime = await Meetings.findOne(
     { _id: new ObjectId(id) },
     { date:1, fromTime: 1, toTime: 1, isActive:1, meetingStatus:1 }
   );
-
-  console.log('From To Time----', fromToTime);
-
   const existingAttendee = await Meetings.findOne({
     date: fromToTime.date,
     isActive: true,
@@ -224,9 +219,6 @@ const checkAttendeeAvailability = async (data, id) => {
     ],
     attendees: { $elemMatch: { _id: { $in: attendeeIds } } }
   });
-
-  console.log('existingAttendee----', existingAttendee)
-
   if (existingAttendee) {
     const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
     const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
@@ -239,49 +231,39 @@ const checkAttendeeAvailability = async (data, id) => {
 
 /// attendee array availability
 const checkAttendeeArrayAvailability = async (data) => { 
-  console.log("Data inside attendee array-----", data);
   let attendeeAvailability = [];
-    data.attendees.map(async (a) => {
-      console.log(a._id, new Date(data.date))
-      const meetings = await Meetings.find({
+  for (const a of data.attendees) {
+    const meetings = await Meetings.find(
+      {
         "attendees._id": new ObjectId(a._id),
-         date: new Date(data.date),
-         isActive: true,
-        // "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
-        // $or: [
-        //   {
-        //     fromTime: { $lt: data.toTime }, 
-        //     toTime: { $gt: data.fromTime }
-        //   },
-        //   {
-        //     fromTime: { $gte: data.fromTime, $lt: data.toTime }
-        //   },
-        //   {
-        //     toTime: { $gt: data.fromTime, $lte: data.toTime }
-        //   }
-        // ],
-      }, { fromTime: 1, toTime: 1, _id: 1 } );
-
-      console.log("Meetings in attendee array-----", meetings);
-      console.log('Meetings attendee array count', meetings.length);
-
-      if (meetings.length > 0) {
-        const employee = await Employee.findOne({ _id: new ObjectId(a._id)}, { name: 1 });
-        console.log("Employee in attendee array-----", employee);
-
-        meetings.forEach((meeting) => {
-          attendeeAvailability.push({
-            attendeeId: a._id,
-            name: employee?.name,
-            meetingId: meeting._id,
-            fromTime: convertTo12HourFormat(meeting.fromTime),
-            toTime: convertTo12HourFormat(meeting.toTime),
-          });
+        date: new Date(data.date),
+        isActive: true,
+        "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+        $or: [
+          { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
+          { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
+          { toTime: { $gt: data.fromTime, $lte: data.toTime } }
+        ],
+      },
+      { fromTime: 1, toTime: 1, _id: 1, meetingId:1 }
+    ); 
+    if (meetings.length > 0) {
+      const employee = await Employee.findOne(
+        { _id: new ObjectId(a._id) },
+        { name: 1 }
+      );  
+      meetings.forEach((meeting) => {
+        attendeeAvailability.push({
+          attendeeId: new ObjectId(a._id),
+          name: employee?.name,
+          meetingId: meeting.meetingId,
+          fromTime: convertTo12HourFormat(meeting.fromTime),
+          toTime: convertTo12HourFormat(meeting.toTime),
         });
-      }
-    })
-    console.log('Attendee--Availability Array-555------', attendeeAvailability)
-    return attendeeAvailability;
+      });
+    }
+  }
+  return attendeeAvailability;
 };
 
 
@@ -306,17 +288,12 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
       { _id: new ObjectId(id) },
       { _id: 1, attendees: 1 }
     );
-    console.log('Get Existing Attendees----', getExistingAttendees);
-
     const newPeopleArray = data.attendees
       .filter((item) => item.isEmployee === false && item._id === undefined)
       .map((item) => {
         item.organizationId = data.organizationId;
         return item;
       });
-
-    console.log('New People Array-----', newPeopleArray);
-
     if (newPeopleArray.length !== 0) {
       const newEmployee = await employeeService.createAttendees(newPeopleArray);
       mergedData = [...data.attendees, ...newEmployee]
@@ -4083,12 +4060,13 @@ const sendMeetingDetails = async (userId, data, userData, ipAddress = "1000") =>
       //   //     : meetingLink)
       // );
 
-      // const logo = process.env.LOGO;
-      const organizationDetails = await Organization.findOne({ _id: meetings[0].organizationId });
-    
-      const logo = organizationDetails?.dashboardLogo
-        ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
-        : process.env.LOGO;
+       const logo = process.env.LOGO;
+      // const organizationDetails = await Organization.findOne({
+      //   _id: meetingDetails.organizationId,
+      // });
+      // const logo = organizationDetails?.dashboardLogo
+      //   ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+      //   : process.env.LOGO;
 
       const mailData = await emailTemplates.reSendScheduledMeetingEmailTemplate(
         meetingDetails,
@@ -5375,18 +5353,22 @@ const getMeetingActionPriorityDetailsforChart = async (
   };
 };
 
-
 const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
-  const result = await Meeting.findByIdAndDelete(
+  const meeting = await Meeting.findOne({ _id: new ObjectId(id) });
+
+  if (!meeting) {
+    throw new Error("Meeting not found.");
+  }
+  
+
+  if (meeting.createdById.toString() !== userId.toString()) {
+    throw new Error("Only the meeting creator can delete the draft.");
+  }
+
+  
+  const result = await Meeting.findOneAndUpdate(
     { _id: new ObjectId(id) },
-    {
-      $set: {
-        "meetingStatus.status": "draft",
-        //"meetingStatus.remarks": data.remarks,
-        //isDeleted: true, 
-      },
-    },
-    { new: true }
+    { new: true }  
   );
   if (!result) {
     return null; 
@@ -5402,10 +5384,10 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
     const logData = {
       moduleName: logMessages.Meeting.moduleName,
       userId,
-      action: logMessages.Meeting.updateRSVP,
+      action: logMessages.Meeting.deleteDraftMeeting,
       ipAddress,
       details: commonHelper.convertFirstLetterToCapital(details.join(" , ")),
-      subDetails: ` Meeting Title: ${result.title} (${result.meetingId})`,
+      subDetails: `Meeting Title: ${result.title} (${result.meetingId})`,
       organizationId: result.organizationId,
     };
     //console.log("Logdata------------",logData)
@@ -5414,14 +5396,6 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
 
   return result;
 };
-
-
-
-
-
-
-
-
 
 
 
