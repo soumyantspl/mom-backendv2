@@ -1799,6 +1799,66 @@ Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith
     at param (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
     at Function.process_params (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
     at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+<<<<<<< HEAD
+Date: 19/02/2025, Time: 17:25
+Error: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+Stack Trace: MongoParseError: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+    at new ConnectionString (D:\MinutesVault V2\mom-backendv2\node_modules\mongodb-connection-string-url\lib\index.js:86:19)
+    at parseOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\connection_string.js:203:17)
+    at new MongoClient (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\mongo_client.js:51:61)
+    at NativeConnection.createClient (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:328:14)
+    at NativeConnection.openUri (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\connection.js:1069:34)
+    at Mongoose.connect (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\mongoose.js:446:15)
+    at connectDB (D:\MinutesVault V2\mom-backendv2\dbLayer\connection.js:8:33)
+    at Object.<anonymous> (D:\MinutesVault V2\mom-backendv2\server.js:63:1)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1689:10)
+Date: 19/02/2025, Time: 18:19
+Error: Cannot read properties of null (reading 'organizationId')
+Stack Trace: TypeError: Cannot read properties of null (reading 'organizationId')
+    at Object.deleteDraftMeeting (D:\MinutesVault V2\mom-backendv2\services\meetingService.js:5409:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async draftMeetingdelete (D:\MinutesVault V2\mom-backendv2\controllers\meetingController.js:1171:20)
+Date: 19/02/2025, Time: 18:19
+Error: Cannot read properties of null (reading 'organizationId')
+Stack Trace: TypeError: Cannot read properties of null (reading 'organizationId')
+    at Object.deleteDraftMeeting (D:\MinutesVault V2\mom-backendv2\services\meetingService.js:5409:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async draftMeetingdelete (D:\MinutesVault V2\mom-backendv2\controllers\meetingController.js:1171:20)
+Date: 19/02/2025, Time: 18:20
+Error: Cannot read properties of null (reading 'organizationId')
+Stack Trace: TypeError: Cannot read properties of null (reading 'organizationId')
+    at Object.deleteDraftMeeting (D:\MinutesVault V2\mom-backendv2\services\meetingService.js:5409:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async draftMeetingdelete (D:\MinutesVault V2\mom-backendv2\controllers\meetingController.js:1171:20)
+Date: 20/02/2025, Time: 11:12
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 20/02/2025, Time: 11:13
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 20/02/2025, Time: 11:25
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 20/02/2025, Time: 11:26
+Error: invalid token
+Stack Trace: JsonWebTokenError: invalid token
+    at module.exports [as verify] (D:\MinutesVault V2\mom-backendv2\node_modules\jsonwebtoken\verify.js:82:17)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:21:25)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at draftMeetingValidator (D:\MinutesVault V2\mom-backendv2\validators\meetingValidator.js:1155:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/02/2025, Time: 11:28
+Error: invalid token
+Stack Trace: JsonWebTokenError: invalid token
+    at module.exports [as verify] (D:\MinutesVault V2\mom-backendv2\node_modules\jsonwebtoken\verify.js:82:17)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:21:25)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at draftMeetingValidator (D:\MinutesVault V2\mom-backendv2\validators\meetingValidator.js:1155:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+=======
 Date: 19/02/2025, Time: 11:11
 Error: Cannot read properties of undefined (reading 'startsWith')
 Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
@@ -1834,6 +1894,9 @@ Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
 Date: 19/02/2025, Time: 14:54
 Error: HTML tags & Special letters are not allowed!
 Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+<<<<<<< HEAD
+>>>>>>> 8290183aa26beb1199fe9011abc3f51e5c078690
+=======
 Date: 19/02/2025, Time: 17:50
 Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
 Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
@@ -1899,3 +1962,74 @@ Stack Trace: Error: EACCES: permission denied, open '/var/www/html/mom-backend/D
     at writeErrorFile (/var/www/html/mom-backend/controllers/employeeController.js:447:8)
     at importEmployee (/var/www/html/mom-backend/controllers/employeeController.js:495:29)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+>>>>>>> a89935f78282b2e6cd48fdadb6ed6c855605fb11
+Date: 20/02/2025, Time: 16:50
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 16:56
+Error: emailTemplates.signInByOtpEmail is not a function
+Stack Trace: TypeError: emailTemplates.signInByOtpEmail is not a function
+    at insertOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:166:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async validateSendingOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:221:11)
+    at async Object.sendOtp (D:\MinutesVault V2\mom-backendv2\services\authService.js:43:12)
+    at async sendOtp (D:\MinutesVault V2\mom-backendv2\controllers\authController.js:12:20)
+Date: 20/02/2025, Time: 18:13
+Error: Malformed UTF-8 data
+Stack Trace: Error: Malformed UTF-8 data
+    at Object.stringify (D:\MinutesVault V2\mom-backendv2\node_modules\crypto-js\core.js:523:24)
+    at WordArray.init.toString (D:\MinutesVault V2\mom-backendv2\node_modules\crypto-js\core.js:278:38)
+    at Object.decryptWithAES (D:\MinutesVault V2\mom-backendv2\helpers\commonHelper.js:387:30)
+    at D:\MinutesVault V2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2434:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/02/2025, Time: 18:31
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:32
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:36
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:36
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:39
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 20/02/2025, Time: 18:43
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationRegistrationService (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:105:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async organizationRegistrationController (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:32:20)
+Date: 20/02/2025, Time: 18:46
+Error: emailTemplates.organizationRegistration is not a function
+Stack Trace: TypeError: emailTemplates.organizationRegistration is not a function
+    at Object.organizationRegistrationService (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:106:45)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async organizationRegistrationController (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:32:20)
