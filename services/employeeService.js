@@ -760,202 +760,202 @@ const getEmployeeListAsPerUnit = async (unitId) => {
 };
 
 
-const importEmployee2 = async (data, organizationId) => {
-  const savedData = [];
-  const duplicateRecords = [];
-  const validationErrors = [];
+// const importEmployee2 = async (data, organizationId) => {
+//   const savedData = [];
+//   const duplicateRecords = [];
+//   const validationErrors = [];
 
-  const regularExpression = /^[0-9a-zA-Z -.(),-,_/]+$/;
-  console.log("organizationId", organizationId);
+//   const regularExpression = /^[0-9a-zA-Z -.(),-,_/]+$/;
+//   console.log("organizationId", organizationId);
 
-  const employeeValidationSchema = Joi.object({
-    name: Joi.string()
-      .trim()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Name is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
-      }),
-    email: Joi.string()
-      .trim()
-      .email()
-      .messages({
-        "any.required": `Email is required.`,
-        "string.email": `Invalid email format.`,
-      }),
-    empId: Joi.string()
-      .trim()
-      .required()
-      .messages({
-        "any.required": `Employee ID is required.`,
-        "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
-      })
-      .pattern(regularExpression),
-    designation: Joi.string()
-      .trim()
-      .required()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Designation is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
-      }),
-    department: Joi.string()
-      .trim()
-      .required()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Department is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
-      }),
-    unitName: Joi.string()
-      .trim()
-      .required()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Unit Name is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
-      }),
-    unitAddress: Joi.string()
-      .trim()
-      .required()
-      .pattern(regularExpression)
-      .messages({
-        "any.required": `Unit Address is required.`,
-        "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
-      }),
-    organizationId: Joi.string()
-      .required()
-      .messages({
-        "any.required": `Organization ID is required.`,
-      }),
-    designation: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
-    }),
-    department: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
-    }),
-    unitName: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
-    }),
-    unitAddress: Joi.string().trim().pattern(regularExpression).messages({
-      "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
-    }),
-    organizationId: Joi.string().required().messages({
-      "any.required": `Organization ID is required.`,
-    }),
-    isAdmin: Joi.boolean().strict(),
-  });
+//   const employeeValidationSchema = Joi.object({
+//     name: Joi.string()
+//       .trim()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Name is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Name!`,
+//       }),
+//     email: Joi.string()
+//       .trim()
+//       .email()
+//       .messages({
+//         "any.required": `Email is required.`,
+//         "string.email": `Invalid email format.`,
+//       }),
+//     empId: Joi.string()
+//       .trim()
+//       .required()
+//       .messages({
+//         "any.required": `Employee ID is required.`,
+//         "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
+//       })
+//       .pattern(regularExpression),
+//     designation: Joi.string()
+//       .trim()
+//       .required()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Designation is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
+//       }),
+//     department: Joi.string()
+//       .trim()
+//       .required()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Department is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
+//       }),
+//     unitName: Joi.string()
+//       .trim()
+//       .required()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Unit Name is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
+//       }),
+//     unitAddress: Joi.string()
+//       .trim()
+//       .required()
+//       .pattern(regularExpression)
+//       .messages({
+//         "any.required": `Unit Address is required.`,
+//         "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
+//       }),
+//     organizationId: Joi.string()
+//       .required()
+//       .messages({
+//         "any.required": `Organization ID is required.`,
+//       }),
+//     designation: Joi.string().trim().pattern(regularExpression).messages({
+//       "string.pattern.base": `HTML tags & Special letters are not allowed for Designation!`,
+//     }),
+//     department: Joi.string().trim().pattern(regularExpression).messages({
+//       "string.pattern.base": `HTML tags & Special letters are not allowed for Department!`,
+//     }),
+//     unitName: Joi.string().trim().pattern(regularExpression).messages({
+//       "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Name!`,
+//     }),
+//     unitAddress: Joi.string().trim().pattern(regularExpression).messages({
+//       "string.pattern.base": `HTML tags & Special letters are not allowed for Unit Address!`,
+//     }),
+//     organizationId: Joi.string().required().messages({
+//       "any.required": `Organization ID is required.`,
+//     }),
+//     isAdmin: Joi.boolean().strict(),
+//   });
 
-  for (const record of data) {
-    const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
+//   for (const record of data) {
+//     const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
 
-    if (error) {
-      validationErrors.push({
-        record,
-        messages: error.details.map(err => err.message),
-      });
-      continue;
-    }
+//     if (error) {
+//       validationErrors.push({
+//         record,
+//         messages: error.details.map(err => err.message),
+//       });
+//       continue;
+//     }
 
-    const duplicateFields = {};
-    const existingByEmail = await Employee.findOne({
-      email: record.email,
-      organizationId: organizationId
-    });
+//     const duplicateFields = {};
+//     const existingByEmail = await Employee.findOne({
+//       email: record.email,
+//       organizationId: organizationId
+//     });
 
-    const existingByEmpId = await Employee.findOne({ empId: record.empId, organizationId: organizationId });
+//     const existingByEmpId = await Employee.findOne({ empId: record.empId, organizationId: organizationId });
 
-    if (existingByEmail) {
-      duplicateFields.email = true;
-    }
-    if (existingByEmpId) {
-      duplicateFields.empId = true;
-    }
+//     if (existingByEmail) {
+//       duplicateFields.email = true;
+//     }
+//     if (existingByEmpId) {
+//       duplicateFields.empId = true;
+//     }
 
-    if (duplicateFields.email || duplicateFields.empId) {
-      let reasonMessages = [];
-      if (duplicateFields.email) {
-        reasonMessages.push("Email already exists.");
-      }
-      if (duplicateFields.empId) {
-        reasonMessages.push("Employee ID already exists.");
-      }
-      duplicateRecords.push({
-        ...record,
-        reason: reasonMessages.join(" ")
-      });
-      continue;
-    }
+//     if (duplicateFields.email || duplicateFields.empId) {
+//       let reasonMessages = [];
+//       if (duplicateFields.email) {
+//         reasonMessages.push("Email already exists.");
+//       }
+//       if (duplicateFields.empId) {
+//         reasonMessages.push("Employee ID already exists.");
+//       }
+//       duplicateRecords.push({
+//         ...record,
+//         reason: reasonMessages.join(" ")
+//       });
+//       continue;
+//     }
 
-    let designationId;
-    const existingDesignation = await Designations.findOne({
-      name: record.designation,
-      organizationId: record.organizationId,
-    });
+//     let designationId;
+//     const existingDesignation = await Designations.findOne({
+//       name: record.designation,
+//       organizationId: record.organizationId,
+//     });
 
-    if (existingDesignation) {
-      designationId = existingDesignation._id;
-    } else {
-      const newDesignation = await Designations.create({
-        name: record.designation,
-        organizationId: record.organizationId,
-        isActive: true,
-        isDelete: false,
-      });
-      designationId = newDesignation._id;
-    }
+//     if (existingDesignation) {
+//       designationId = existingDesignation._id;
+//     } else {
+//       const newDesignation = await Designations.create({
+//         name: record.designation,
+//         organizationId: record.organizationId,
+//         isActive: true,
+//         isDelete: false,
+//       });
+//       designationId = newDesignation._id;
+//     }
 
-    let departmentId;
-    const existingDepartment = await Department.findOne({
-      name: record.department,
-      organizationId: record.organizationId,
-    });
+//     let departmentId;
+//     const existingDepartment = await Department.findOne({
+//       name: record.department,
+//       organizationId: record.organizationId,
+//     });
 
-    if (existingDepartment) {
-      departmentId = existingDepartment._id;
-    } else {
-      const newDepartment = await Department.create({
-        name: record.department,
-        organizationId: record.organizationId,
-        isActive: true,
-        isDelete: false,
-      });
-      departmentId = newDepartment._id;
-    }
+//     if (existingDepartment) {
+//       departmentId = existingDepartment._id;
+//     } else {
+//       const newDepartment = await Department.create({
+//         name: record.department,
+//         organizationId: record.organizationId,
+//         isActive: true,
+//         isDelete: false,
+//       });
+//       departmentId = newDepartment._id;
+//     }
 
-    let unitId;
-    const existingUnit = await Units.findOne({
-      name: record.unitName,
-      organizationId: record.organizationId,
-    });
+//     let unitId;
+//     const existingUnit = await Units.findOne({
+//       name: record.unitName,
+//       organizationId: record.organizationId,
+//     });
 
-    if (existingUnit) {
-      unitId = existingUnit._id;
-    } else {
-      const newUnit = await Units.create({
-        name: record.unitName,
-        address: record.unitAddress,
-        organizationId: record.organizationId,
-        isActive: true,
-        isDelete: false,
-      });
-      unitId = newUnit._id;
-    }
+//     if (existingUnit) {
+//       unitId = existingUnit._id;
+//     } else {
+//       const newUnit = await Units.create({
+//         name: record.unitName,
+//         address: record.unitAddress,
+//         organizationId: record.organizationId,
+//         isActive: true,
+//         isDelete: false,
+//       });
+//       unitId = newUnit._id;
+//     }
 
-    const newEmployee = new Employee({
-      ...record,
-      designationId,
-      departmentId,
-      unitId,
-    });
+//     const newEmployee = new Employee({
+//       ...record,
+//       designationId,
+//       departmentId,
+//       unitId,
+//     });
 
-    const savedRecord = await newEmployee.save();
-    savedData.push(savedRecord);
-    console.log("Saved Data--->>", savedRecord);
-  }
+//     const savedRecord = await newEmployee.save();
+//     savedData.push(savedRecord);
+//     console.log("Saved Data--->>", savedRecord);
+//   }
 
-  return { savedData, duplicateRecords, validationErrors };
-};
+//   return { savedData, duplicateRecords, validationErrors };
+// };
 
 const importEmployee = async (employeeData, organizationId) => {
   try {
@@ -1005,7 +1005,7 @@ const importEmployee = async (employeeData, organizationId) => {
           "any.required": `"Designation Id" is required.`,
           "string.pattern.base": `"Designation Id" must be a valid.`
         }),
-      unitName: Joi.string()
+      unit: Joi.string()
         .trim()
         .pattern(/^[0-9a-fA-F]{24}$/, { name: "Unit Id" })
         .required()
@@ -1028,7 +1028,7 @@ const importEmployee = async (employeeData, organizationId) => {
 
     for (const record of employeeData) {
 
-      const { empId, email, name, designation, department, unitName } = record;
+      const { empId, email, name, designation, department, unit } = record;
 
       console.log("Processing Employee:", name);
 
@@ -1063,6 +1063,11 @@ const importEmployee = async (employeeData, organizationId) => {
         duplicateFields.empId = true;
       }
 
+      const departmentIdExist = await Department.findOne({ department, organizationId })
+      if (!departmentIdExist) {
+
+      }
+      
       if (Object.keys(duplicateFields).length > 0) {
         duplicateRecords.push({
           empId,
@@ -1079,7 +1084,7 @@ const importEmployee = async (employeeData, organizationId) => {
         email,
         designationId: designation ? new mongoose.Types.ObjectId(designation) : null,
         departmentId: department ? new mongoose.Types.ObjectId(department) : null,
-        unitId: unitName ? new mongoose.Types.ObjectId(unitName) : null,
+        unitId: unit ? new mongoose.Types.ObjectId(unit) : null,
         organizationId: new mongoose.Types.ObjectId(organizationId),
         isActive: true,
         isMeetingOrganiser: true,

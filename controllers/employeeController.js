@@ -11,9 +11,9 @@ const columnMapping = {
   Name: "name",
   "Employee Id": "empId",
   Email: "email",
-  Designation: "designationId",
-  Department: "departmentId",
-  "Unit Name": "unitId",
+  "Designation Id": "designationId",
+  "Department Id": "departmentId",
+  "Unit Id": "unitId",
   // "Unit Address": "unitAddress",
 };
 
@@ -618,9 +618,9 @@ const importEmployee = async (req, res) => {
       empId: emp["Employee Id"],
       name: emp["Name"] || "",  // Ensure name is included
       email: emp["Email"],
-      department: emp["Department"] || undefined,
-      designation: emp["Designation"] || undefined,
-      unitName: emp["Unit Name"] || undefined,
+      department: emp["Department Id"] || undefined,
+      designation: emp["Designation Id"] || undefined,
+      unit: emp["Unit Id"] || undefined,
       organizationId: organizationId
     }));
 
