@@ -1833,3 +1833,159 @@ Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subjec
 >>>>>>> 390496992459c68a5ce10b742238e85ece178670
 >>>>>>> 684b56a0dca4f8de83c0bcb089304748abf1fa0a
 >>>>>>> 225cd03fa5aeddf73d0bebcca3385e75758098e1
+Date: 24/02/2025, Time: 15:26
+Error: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+Stack Trace: MongoParseError: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+    at new ConnectionString (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongodb-connection-string-url\lib\index.js:86:19)
+    at parseOptions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\connection_string.js:203:17)
+    at new MongoClient (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\mongo_client.js:52:61)
+    at NativeConnection.createClient (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:328:14)
+    at NativeConnection.openUri (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\connection.js:1069:34)
+    at Mongoose.connect (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\mongoose.js:446:15)
+    at connectDB (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\dbLayer\connection.js:8:33)
+    at Object.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\server.js:63:1)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1689:10)
+Date: 24/02/2025, Time: 15:27
+Error: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+Stack Trace: MongoParseError: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+    at new ConnectionString (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongodb-connection-string-url\lib\index.js:86:19)
+    at parseOptions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\connection_string.js:203:17)
+    at new MongoClient (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\mongo_client.js:52:61)
+    at NativeConnection.createClient (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:328:14)
+    at NativeConnection.openUri (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\connection.js:1069:34)
+    at Mongoose.connect (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\mongoose.js:446:15)
+    at connectDB (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\dbLayer\connection.js:8:33)
+    at Object.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\server.js:63:1)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1689:10)
+Date: 24/02/2025, Time: 18:48
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:49
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:49
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:49
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:49
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:50
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:50
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:51
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:57
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:58
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
