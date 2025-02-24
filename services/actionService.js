@@ -16,12 +16,49 @@ const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const meetingService = require("../services/meetingService");
 const { pipeline } = require("nodemailer/lib/xoauth2");
+const moment = require('moment');
 
 const Organization = require("../models/organizationModel");
 const BASE_URL = process.env.BASE_URL;
 
+
+// const addComments = async (userId, id, data) => {
+//   // Extract @usernames from comment
+//   const mentionedUsernames = data.commentDescription.match(/@([a-zA-Z0-9_]+)/g);
+
+//   let mentionedUsers = [];
+//   if (mentionedUsernames) {
+//     const usernames = mentionedUsernames.map(name => name.substring(1)); 
+
+//     console.log("Extracted Usernames:", usernames);
+
+//     // Fetch user IDs from the database
+//     mentionedUsers = await Employee.find({ name: { $in: usernames } }).select("_id");
+    
+//     console.log("Matched Users in DB:", mentionedUsers);
+
+//     mentionedUsers = mentionedUsers.map(employee => employee._id); 
+//   }
+
+//   const inputData = {
+//     actionId: id,
+//     userId: userId,
+//     commentDescription: data.commentDescription,
+//     mentionedUsers, 
+//   };
+
+//   const commentData = new ActionComments(inputData);
+//   const result = await commentData.save();
+  
+//   console.log("Final Comment Data:", result);
+  
+//   return result;
+// };
+
+
+
 //FUCNTION TO CREATE COMMENTS
-const comments = async (userId, id, data, ipAddress = "1000") => {
+const addComments = async (userId, id, data) => {
   const inputData = {
     actionId: id,
     userId: userId,
@@ -31,13 +68,59 @@ const comments = async (userId, id, data, ipAddress = "1000") => {
   const result = await commentData.save();
   return result;
 };
+
 /**FUNC-VIEW ACTION COMMENT */
-const viewActionComment = async (id) => {
-  const viewActionCommentList = await ActionComments.findById(id);
-  return {
-    viewActionCommentList,
-  };
+// const viewActionComment = async (actionId) => {
+//   const totalComments = await ActionComments.countDocuments({ actionId });
+//   const viewActionCommentList = await ActionComments.find({ actionId }).sort({ createdAt: -1 }); 
+//   console.log("Fetched Data:", viewActionCommentList);
+//   return { totalComments, viewActionCommentList };
+// };
+
+
+const viewActionComment = async (actionId) => {
+  const totalComments = await ActionComments.countDocuments({ actionId });
+  const viewActionCommentList = await ActionComments.find({ actionId })
+    .sort({ createdAt: -1 })
+    .lean(); 
+
+  
+  const formattedComments = viewActionCommentList.map(comment => ({
+    ...comment,
+    createdAt: comment.createdAt 
+      ? moment(comment.createdAt).format('MMMM DD,YYYY hh:mm A') 
+      : null,
+  }));
+
+ // console.log("Fetched Data:", formattedComments);
+  return { totalComments, viewActionCommentList: formattedComments };
 };
+
+
+/**FUNC- EDIT ACTION COMMENT */
+const updateComment = async (userId, commentId, data) => {
+  const updatedComment = await ActionComments.findOneAndUpdate(
+    { _id: commentId, userId: userId }, 
+    { commentDescription: data.commentDescription },
+    { new: true } 
+  );
+
+  return updatedComment;
+};
+
+/**FUNC- DELETE ACTION COMMENT */
+const deleteComment = async (userId, commentId) => {
+  const deletedComment = await ActionComments.findOneAndDelete({
+    _id: commentId,
+    userId: userId, 
+  });
+
+  return deletedComment;
+};
+
+
+
+
 /**FUNC- ACTION REASSIGN REQUEST */
 const actionReassignRequest = async (
   userId,
@@ -3712,7 +3795,9 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
 
 
 module.exports = {
-  comments,
+  addComments,
+  updateComment,
+  deleteComment,
   viewActionComment,
   actionReassignRequest,
   viewSingleAction,

@@ -1833,3 +1833,100 @@ Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subjec
 >>>>>>> 390496992459c68a5ce10b742238e85ece178670
 >>>>>>> 684b56a0dca4f8de83c0bcb089304748abf1fa0a
 >>>>>>> 225cd03fa5aeddf73d0bebcca3385e75758098e1
+Date: 24/02/2025, Time: 11:39
+Error: "actionId" is required
+Stack Trace: ValidationError: "actionId" is required
+Date: 24/02/2025, Time: 11:53
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 11:57
+Error: mongoose is not defined
+Stack Trace: ReferenceError: mongoose is not defined
+    at Object.viewActionComment (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:43:3)
+    at viewActionComment (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:36:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 11:58
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 12:17
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 12:21
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 12:33
+Error: actionService.deleteComment is not a function
+Stack Trace: TypeError: actionService.deleteComment is not a function
+    at actionCommentsDelete (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:95:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 12:34
+Error: actionService.deleteComment is not a function
+Stack Trace: TypeError: actionService.deleteComment is not a function
+    at actionCommentsDelete (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:95:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 12:38
+Error: ip is not defined
+Stack Trace: ReferenceError: ip is not defined
+    at actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:15:7)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 12:38
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 24/02/2025, Time: 15:10
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 24/02/2025, Time: 15:21
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 15:31
+Error: "actionId" is required
+Stack Trace: ValidationError: "actionId" is required
+Date: 24/02/2025, Time: 15:34
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 24/02/2025, Time: 15:34
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 24/02/2025, Time: 15:35
+Error: User is not defined
+Stack Trace: ReferenceError: User is not defined
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:34:5)
+    at actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 15:38
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 16:02
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 17:32
+Error: "headers.content-type" is not allowed
+Stack Trace: ValidationError: "headers.content-type" is not allowed

@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const actionCommentsSchema = new mongoose.Schema(
   {
-    commentDescription: {
-      type: String,
-      required: true,
-    },
     userId: {
       type: mongoose.Schema.ObjectId,
       required: true,
@@ -13,6 +9,16 @@ const actionCommentsSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       required: true,
     },
+    commentDescription: {
+      type: String,
+      required: true,
+    },
+    mentionedUsers: [
+      {
+        type: mongoose.Schema.ObjectId,
+        
+      },
+    ],
   },
   {
     timestamps: true,

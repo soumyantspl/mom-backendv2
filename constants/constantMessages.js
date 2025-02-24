@@ -3,6 +3,8 @@ const dempoCreateSuccess =
   "Thank you for requesting a demo! Our team will reach out to you shortly to schedule the demo at a convenient time!";
 const createError = "Error while creating!";
 const updateSuccess = "Updated successfully!";
+const updateFail = "Failed to Update Comment";
+const deleteFail = "Failed to Delete Comment";
 const meetingUpdateSuccess =
   "Meeting is updated and notification sent to all the attendees successfully.";
 const updateFailedRecordNotFound = "Record not found. Update failed!";
@@ -132,6 +134,8 @@ const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater tha
 const draftDeleted = "Draft Meeting Deleted"
 const deleteDraftFailed = "Faild in Delete Draft Meeting"
 module.exports = {
+  updateFail,
+  deleteFail,
   pleaseAddMinute,
   isDeleteNotAllowed,
   cancelSuccess,
