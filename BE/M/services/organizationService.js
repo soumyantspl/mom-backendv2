@@ -1,7 +1,8 @@
 const Organization = require("../models/organizationModel");
 const Configuration = require("../models/configurationModel");
 const emailConstants = require("../constants/emailConstants");
-const emailTemplates = require("../emailSetUp/emailTemplates");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
@@ -15,116 +16,114 @@ const Designations = require("../models/designationModel");
 const Units = require("../models/unitModel");
 const Employee = require("../models/employeeModel");
 const { duplicateEmail } = require("../constants/constantMessages");
-
+const { generateOrganizationCode } = require("../helpers/commonHelper")
 //FUNCTION TO- ORGANIZATION EXIST OR NOT
+
 const existingOrganization = async (email) => {
   const DATA = await Organization.findOne({ email, isActive: true });
   return DATA;
 };
 
-//FUNCTION TO- CREATE ORGANIZATION
+
 const organizationRegistrationService = async (data) => {
-  const organisationCheck = await checkDuplicateOrganization(
-    data.name,
-    data.email,
-  );
+  // Check for duplicate organization and employee email
+  const organisationCheck = await checkDuplicateOrganization(data.name, data.email);
+  const employeeEmailCheck = await checkDuplicateEmployee(data.email);
 
-  const employeeEmailCheck = await checkDuplicateEmployee(data.email)
-  const duplicateOrganizationCodeCheck = await checkDuplicateOrganizationCode(data.organizationCode)
-
+  // Verify OTP status (within the allowed time window)
   const isOtpVerified = await organizationOtp.findOne({
     email: data.email,
     isVerified: true,
     updatedAt: {
-      $gte:
-        new Date().getTime() -
-        1000 * 60 * process.env.CHECK_OTP_VALIDATION_TIME,
+      $gte: new Date().getTime() - 1000 * 60 * process.env.CHECK_OTP_VALIDATION_TIME,
     },
   });
-
   console.log("isOtpVerified", isOtpVerified);
 
   if (isOtpVerified) {
     if (!organisationCheck && !employeeEmailCheck) {
-      if (!duplicateOrganizationCodeCheck) {
-        const newOrganizationData = {
-          name: data.name,
-          dashboardLogo: data.dashboardLogo,
-          loginLogo: data.loginLogo,
-          email: data.email,
-          phoneNo: data.phoneNo,
-          organizationId: data.organizationId,
-          organizationCode: data.organizationCode,
-        };
-        const organization = new Organization(newOrganizationData);
-        const result = await organization.save();
+      // Generate organization code based on organization name
+      const organizationCode = await generateOrganizationCode(data.name);
+      console.log("Generated Organization Code:", organizationCode);
 
-        console.log("org result------>>>", result)
-        const newDepartment = new Department({
-          name: "Other",
-          organizationId: result._id
-        });
-        const departmentResult = await newDepartment.save();
+      const newOrganizationData = {
+        name: data.name,
+        email: data.email,
+        contactPersonName: data.contactPersonName,
+        phoneNo: data.phoneNo,
+        contactPersonPhNo: data.contactPersonPhNo,
+        contactPersonWhatsAppNo: data.contactPersonWhatsAppNo,
+        organizationCode
+      };
+
+      console.log("newOrganizationData-->", newOrganizationData)
+      const organization = new Organization(newOrganizationData);
+      const result = await organization.save();
+      console.log("Organization created:", result);
+
+      // Create default related records: Department, Designation, Unit
+      const newDepartment = new Department({
+        name: "Other",
+        organizationId: result._id
+      });
+      const departmentResult = await newDepartment.save();
+
+      const newDesignation = new Designations({
+        name: "Other",
+        organizationId: result._id,
+      });
+      const designationResult = await newDesignation.save();
+
+      const newUnitData = new Units({
+        name: "Other",
+        address: "Other",
+        organizationId: result._id,
+      });
+      const unitResult = await newUnitData.save();
+
+      // Create an admin employee for the organization
+      const inputData = {
+        name: result.name,
+        organizationId: result._id,
+        email: result.email,
+        designationId: designationResult._id,
+        departmentId: departmentResult._id,
+        unitId: unitResult._id,
+        isMeetingOrganiser: true,
+        isAdmin: true,
+        empId: "Admin",
+      };
+      const empData = new Employee(inputData);
+      const empResult = await empData.save();
+      console.log("Admin Employee created:", empResult);
+
+      // Prepare email data and send registration email
+      const logo = process.env.LOGO;
+      const emailType = "Organization Registration";
+      // const emailSubject = "Organization Registration";
 
 
-        const newDesignation = new Designations({
-          name: "Other",
-          organizationId: result._id,
-        });
-        const designationResult = await newDesignation.save();
+      const mailData = await emailTemplates.registrationWelcomeMail(
+        commonHelper.convertFirstLetterOfFullNameToCapital(result.name),
+        logo
+      );
+
+      const { emailSubject, mailData: mailBody } = mailData;
+      // console.log("mail data", mailData)
 
 
-        const newUnitData = new Units({
-          name: "Other",
-          address: "Other",
-          organizationId: result._id,
-        });
-        const unitResult = await newUnitData.save();
+      await emailService.sendEmail(result.email, emailType, emailSubject, mailBody);
+      console.log("Registration email sent to:", result.email);
 
-
-        const inputData = {
-          name: result.name,
-          organizationId: result._id,
-          email: result.email,
-          designationId: designationResult._id,
-          departmentId: departmentResult._id,
-          unitId: unitResult._id,
-          isMeetingOrganiser: true,
-          isAdmin: true,
-          empId: "Admin",
-        };
-        const empData = new Employee(inputData);
-        const empResult = await empData.save();
-        console.log("result-->", empResult)
-
-        const logo = process.env.LOGO;
-        const emailType = "Organization Registration";
-        const emailSubject = "Organization Registration";
-
-        const mailData = await emailTemplates.organizationRegistration(
-          commonHelper.convertFirstLetterOfFullNameToCapital(result.name),
-          logo
-        );
-
-        console.log("mail data", mailData)
-
-        await emailService.sendEmail(result.email, emailType, emailSubject, mailData);
-        console.log("result-->", result)
-
-        return result;
-      }
-      else {
-        return { isDuplicate: true }
-      }
+      return result;
     } else {
       return { isDuplicate: true };
     }
   } else {
-    return {
-      isOtpVerified: false,
-    };
+    return { isOtpVerified: false };
   }
 };
+
 
 const organizationSendOtp = async (id, data, ipAddress) => {
   const { name, email } = data;
@@ -138,7 +137,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     console.log("Duplicate email found");
     return { isDuplicate: true };
   } else if (employeeDuplicate) {
-    return { isDuplicate: true};
+    return { isDuplicate: true };
   }
   const otpLogsData = await organizationOtp.findOne({
     email,
@@ -153,9 +152,10 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     const otpData = new organizationOtp({ otp, email });
     await otpData.save();
 
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
+    const logo = data.dashboardLogo;
     const emailType = "Send OTP";
-    const emailSubject = "Organization Registration";
+    // const emailSubject = "Organization Registration";
     const mailData =
       await emailTemplates.organizationRegistrationSendOtpTemplate(
         commonHelper.convertFirstLetterOfFullNameToCapital(name),
@@ -163,8 +163,8 @@ const organizationSendOtp = async (id, data, ipAddress) => {
         process.env.CHECK_OTP_VALIDATION_TIME,
         logo
       );
-
-    await emailService.sendEmail(email, emailType, emailSubject, mailData);
+    const { emailSubject, mailData: mailBody } = mailData;
+    await emailService.sendEmail(email, emailType, emailSubject, mailBody);
     return {
       data: {
         usedOtp: 1,
@@ -199,7 +199,8 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     { new: true }
   );
 
-  const logo = process.env.LOGO;
+  // const logo = process.env.LOGO;
+  const logo = data.dashboardLogo;
   const emailType = "Send OTP";
   const emailSubject = "Organization Registration";
   const mailData = await emailTemplates.organizationRegistrationSendOtpTemplate(
@@ -355,17 +356,6 @@ const editOrganizationService = async (userId, id, data, ipAddress) => {
 
   console.log("Current Organization->", currentOrganization);
 
-  // Check for duplicate organization code
-  const isDuplicateCode = await Organization.findOne({
-    _id: { $ne: id },
-    organizationCode: data.organizationCode,
-    isActive: true,
-  });
-  if (isDuplicateCode) {
-    console.log("Duplicate Organization Code->", isDuplicateCode);
-    return { error: "Organization code already exists." };
-  }
-
   // Prepare data for update
   const updatedData = {
     ...data,
@@ -436,7 +426,7 @@ const editOrganizationService = async (userId, id, data, ipAddress) => {
 
 //FUNCTION TO- CHECK DUPLICATE ORGANIZATION
 const checkDuplicateOrganization = async (email) => {
-  return await Organization.findOne({ email });
+  return await Organization.findOne({ email: email });
 };
 
 const checkDuplicateOrganizationCode = async (organizationCode) => {
@@ -553,7 +543,10 @@ const viewSingleOrganizationService = async (id) => {
         dashboardLogo: 1,
         organizationCode: 1,
         email: 1,
+        contactPersonName: 1,
         phoneNo: 1,
+        contactPersonPhNo: 1,
+        contactPersonWhatsAppNo: 1,
         name: 1,
         hostingDetails: {
           _id: 1,
@@ -599,6 +592,8 @@ const viewSingleOrganizationService = async (id) => {
   };
   return result;
 };
+
+
 module.exports = {
   organizationRegistrationService,
   organizationSendOtp,

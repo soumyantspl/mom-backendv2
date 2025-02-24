@@ -19,10 +19,10 @@ router.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 // Creating new organization
 router.post(
   "/createOrganization/",
-  upload.fields([
-    { name: "dashboardLogo", maxCount: 1 },
-    { name: "loginLogo", maxCount: 1 },
-  ]),
+  // upload.fields([
+  //   { name: "dashboardLogo", maxCount: 1 },
+  //   { name: "loginLogo", maxCount: 1 },
+  // ]),
   organzationController.organizationRegistrationController
 );
 //VIEWING LIST OF ORGANIZATION

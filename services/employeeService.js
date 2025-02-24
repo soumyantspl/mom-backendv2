@@ -1063,11 +1063,32 @@ const importEmployee = async (employeeData, organizationId) => {
         duplicateFields.empId = true;
       }
 
-      const departmentIdExist = await Department.findOne({ department, organizationId })
-      if (!departmentIdExist) {
+      // const departmentIdExist = await Department.findOne({ department, organizationId })
+      // if (!departmentIdExist) {
 
+      // }
+
+      const departmentDoc = await Department.findOne({ _id: department, organizationId });
+      const designationDoc = await Designation.findOne({ _id: designation, organizationId });
+      const unitDoc = await Unit.findOne({ _id: unit, organizationId });
+
+      // If any of them do not exist, push validation error
+      const missingRefs = [];
+      if (!departmentDoc) missingRefs.push("Department ID not available");
+      if (!designationDoc) missingRefs.push("Designation ID not available");
+      if (!unitDoc) missingRefs.push("Unit ID not available");
+
+      if (missingRefs.length > 0) {
+        validationErrors.push({
+          "Employee Id": record.empId || "",
+          "Email": record.email || "",
+          "Name": record.name || "",
+          "Reason": missingRefs.join(" | "), // e.g. "Department ID not available | Unit ID not available"
+        });
+        continue; // Move on to the next record
       }
-      
+
+
       if (Object.keys(duplicateFields).length > 0) {
         duplicateRecords.push({
           empId,
