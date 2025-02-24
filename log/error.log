@@ -1833,3 +1833,120 @@ Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subjec
 >>>>>>> 390496992459c68a5ce10b742238e85ece178670
 >>>>>>> 684b56a0dca4f8de83c0bcb089304748abf1fa0a
 >>>>>>> 225cd03fa5aeddf73d0bebcca3385e75758098e1
+Date: 24/02/2025, Time: 14:10
+Error: "departments" is not allowed
+Stack Trace: ValidationError: "departments" is not allowed
+Date: 24/02/2025, Time: 14:12
+Error: "departments" is not allowed
+Stack Trace: ValidationError: "departments" is not allowed
+Date: 24/02/2025, Time: 14:12
+Error: "departments" is not allowed
+Stack Trace: ValidationError: "departments" is not allowed
+Date: 24/02/2025, Time: 14:13
+Error: "departments" is not allowed
+Stack Trace: ValidationError: "departments" is not allowed
+Date: 24/02/2025, Time: 14:13
+Error: "departments" is not allowed
+Stack Trace: ValidationError: "departments" is not allowed
+Date: 24/02/2025, Time: 14:13
+Error: "departments" is not allowed
+Stack Trace: ValidationError: "departments" is not allowed
+Date: 24/02/2025, Time: 14:13
+Error: Employee ID is required
+Stack Trace: ValidationError: Employee ID is required
+Date: 24/02/2025, Time: 14:14
+Error: "departmentId" is not allowed
+Stack Trace: ValidationError: "departmentId" is not allowed
+Date: 24/02/2025, Time: 14:20
+Error: "designationId" is not allowed
+Stack Trace: ValidationError: "designationId" is not allowed
+Date: 24/02/2025, Time: 14:22
+Error: "designationId" is not allowed to be empty
+Stack Trace: ValidationError: "designationId" is not allowed to be empty
+Date: 24/02/2025, Time: 14:22
+Error: "designationId" is not allowed to be empty
+Stack Trace: ValidationError: "designationId" is not allowed to be empty
+Date: 24/02/2025, Time: 14:26
+Error: Employee ID is required
+Stack Trace: ValidationError: Employee ID is required
+Date: 24/02/2025, Time: 14:27
+Error: Employee ID is required
+Stack Trace: ValidationError: Employee ID is required
+Date: 24/02/2025, Time: 14:28
+Error: "unitId" is not allowed to be empty
+Stack Trace: ValidationError: "unitId" is not allowed to be empty
+Date: 24/02/2025, Time: 14:29
+Error: "email" is not allowed
+Stack Trace: ValidationError: "email" is not allowed
+Date: 24/02/2025, Time: 14:30
+Error: "units" is not allowed
+Stack Trace: ValidationError: "units" is not allowed
+Date: 24/02/2025, Time: 14:31
+Error: "designationId" is not allowed to be empty
+Stack Trace: ValidationError: "designationId" is not allowed to be empty
+Date: 24/02/2025, Time: 15:00
+Error: "id" must only contain alpha-numeric characters
+Stack Trace: ValidationError: "id" must only contain alpha-numeric characters
+Date: 24/02/2025, Time: 15:02
+Error: "id" must only contain alpha-numeric characters
+Stack Trace: ValidationError: "id" must only contain alpha-numeric characters
+Date: 24/02/2025, Time: 15:03
+Error: "id" must only contain alpha-numeric characters
+Stack Trace: ValidationError: "id" must only contain alpha-numeric characters
+Date: 24/02/2025, Time: 15:04
+Error: "id" must only contain alpha-numeric characters
+Stack Trace: ValidationError: "id" must only contain alpha-numeric characters
+Date: 24/02/2025, Time: 15:07
+Error: "email" is not allowed to be empty
+Stack Trace: ValidationError: "email" is not allowed to be empty
+Date: 24/02/2025, Time: 15:32
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 24/02/2025, Time: 15:32
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 24/02/2025, Time: 15:32
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 24/02/2025, Time: 15:32
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 24/02/2025, Time: 15:32
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 24/02/2025, Time: 16:05
+Error: "profilePicture" is not allowed to be empty
+Stack Trace: ValidationError: "profilePicture" is not allowed to be empty
+Date: 24/02/2025, Time: 16:08
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 24/02/2025, Time: 16:16
+Error: "email" is not allowed to be empty
+Stack Trace: ValidationError: "email" is not allowed to be empty
+Date: 24/02/2025, Time: 16:16
+Error: "companyName" is not allowed to be empty
+Stack Trace: ValidationError: "companyName" is not allowed to be empty
+Date: 24/02/2025, Time: 16:18
+Error: "email" is not allowed to be empty
+Stack Trace: ValidationError: "email" is not allowed to be empty
+Date: 24/02/2025, Time: 16:20
+Error: "email" is required
+Stack Trace: ValidationError: "email" is required
+Date: 24/02/2025, Time: 16:20
+Error: "designation" is not allowed
+Stack Trace: ValidationError: "designation" is not allowed
+Date: 24/02/2025, Time: 16:25
+Error: "designation" is not allowed
+Stack Trace: ValidationError: "designation" is not allowed
+Date: 24/02/2025, Time: 16:26
+Error: "designation" is not allowed to be empty
+Stack Trace: ValidationError: "designation" is not allowed to be empty
+Date: 24/02/2025, Time: 16:29
+Error: "profilePicture" is not allowed to be empty
+Stack Trace: ValidationError: "profilePicture" is not allowed to be empty
+Date: 24/02/2025, Time: 16:40
+Error: "confirmPassword" is required
+Stack Trace: ValidationError: "confirmPassword" is required

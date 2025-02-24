@@ -632,7 +632,7 @@ const importEmployee = async (req, res) => {
 
 
 
-const viewProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
   try {
     const ip = req.headers.ip || (await commonHelper.getIp(req));
     const profilePicture = req.file;
@@ -689,5 +689,5 @@ module.exports = {
   getEmployeeListAsPerUnit,
   importEmployee,
   writeErrorFile,
-  viewProfile
+  updateProfile
 };
