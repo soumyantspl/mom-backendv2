@@ -962,10 +962,12 @@ const importEmployee = async (employeeData, organizationId) => {
     const savedData = [];
     const duplicateRecords = [];
     const validationErrors = [];
+    const regularExpression = /^[0-9a-zA-Z .,:;()/\-_\n]+$/;
     const employeeValidationSchema = Joi.object({
       empId: Joi.string()
         .trim()
         .required()
+        .pattern(regularExpression)
         .messages({
           "any.required": `Employee ID is required.`,
           "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`
@@ -981,36 +983,39 @@ const importEmployee = async (employeeData, organizationId) => {
       name: Joi.string()
         .trim()
         .required()
+        .pattern(regularExpression)
         .messages({
-          "any.required": `"name" is required.`
+          "any.required": `"name" is required.`,
+          "string.pattern.base":
+            "Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash, colon, parentheses).",
         }),
       department: Joi.string()
         .trim()
-        .pattern(/^[0-9a-fA-F]{24}$/, { name: "mongoId" })
+        .pattern(/^[0-9a-fA-F]{24}$/, { name: "Department Id" })
         .required()
         .messages({
-          "any.required": `"department" is required.`,
-          "string.pattern.base": `"department" must be a valid MongoID.`
+          "any.required": `"Department Id" is required.`,
+          "string.pattern.base": `"Department ID" must be a valid.`
         }),
       designation: Joi.string()
         .trim()
-        .pattern(/^[0-9a-fA-F]{24}$/, { name: "mongoId" })
+        .pattern(/^[0-9a-fA-F]{24}$/, { name: "Designation Id" })
         .required()
         .messages({
-          "any.required": `"designation" is required.`,
-          "string.pattern.base": `"designation" must be a valid MongoID.`
+          "any.required": `"Designation Id" is required.`,
+          "string.pattern.base": `"Designation Id" must be a valid.`
         }),
       unitName: Joi.string()
         .trim()
-        .pattern(/^[0-9a-fA-F]{24}$/, { name: "mongoId" })
+        .pattern(/^[0-9a-fA-F]{24}$/, { name: "Unit Id" })
         .required()
         .messages({
-          "any.required": `"unitName" is required.`,
-          "string.pattern.base": `"unitName" must be a valid MongoID.`
+          "any.required": `"Unit Id" is required.`,
+          "string.pattern.base": `"Unit Id" must be a valid.`
         }),
       organizationId: Joi.string()
         .trim()
-        .pattern(/^[0-9a-fA-F]{24}$/, { name: "mongoId" })
+        .pattern(/^[0-9a-fA-F]{24}$/, { name: "organizationId" })
         .required()
         .messages({
           "any.required": `"organizationId" is required.`,
