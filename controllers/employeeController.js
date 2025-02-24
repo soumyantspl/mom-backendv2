@@ -537,16 +537,31 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
     return rowObject;
   };
 
+  // Add Validation Errors Sheet
+  if (Array.isArray(validationErrors) && validationErrors.length > 0) {
+    const errorSheet = xlsx.utils.json_to_sheet(validationErrors);
+    xlsx.utils.book_append_sheet(workbook, errorSheet, "Validation Errors");
+
+    if (validationErrors.length > 0) {
+      errorSheet["!cols"] = Object.keys(validationErrors[0]).map((colKey) => ({
+        wpx: Math.max(
+          ...validationErrors.map((row) => (row[colKey] ? row[colKey].toString().length : 0)),
+          colKey.length
+        ) * 10,
+      }));
+    }
+  }
+
   // Format duplicate records with a reason column
   const formatDuplicateRecords = duplicateRecords?.map((dupObj) => {
-    const { organizationId, ...data } = dupObj || {};
+    const { organizationId, reason, ...data } = dupObj || {};
 
-    let reason = [];
-    if (dupObj?.email) reason.push("Email already exists.");
-    if (dupObj?.empId) reason.push("Employee ID already exists.");
-    reason = reason.length > 0 ? reason.join(" ") : "Duplicate entry";
+    let reasonMsg = [];
+    if (dupObj?.email) reasonMsg.push("Email already exists.");
+    if (dupObj?.empId) reasonMsg.push("Employee ID already exists.");
+    reasonMsg = reasonMsg.length > 0 ? reasonMsg.join(" ") : "Duplicate entry";
 
-    return buildRowObject(data, reason);
+    return buildRowObject(data, reasonMsg);
   }) || [];
 
   if (formatDuplicateRecords.length > 0) {
@@ -563,22 +578,6 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
     }
   }
 
-  // Add Validation Errors Sheet
-  if (Array.isArray(validationErrors) && validationErrors.length > 0) {
-    const errorSheet = xlsx.utils.json_to_sheet(validationErrors);
-    xlsx.utils.book_append_sheet(workbook, errorSheet, "Validation Errors");
-
-    if (validationErrors.length > 0) {
-      errorSheet["!cols"] = Object.keys(validationErrors[0]).map((colKey) => ({
-        wpx: Math.max(
-          ...validationErrors.map((row) => (row[colKey] ? row[colKey].toString().length : 0)),
-          colKey.length
-        ) * 10,
-      }));
-    }
-  }
-
-  // Save the Excel file
   const fileName = `error_report_${Date.now()}.xlsx`;
   const errorFilePath = path.join(__dirname, "../Downloads", fileName);
 
@@ -630,7 +629,7 @@ const importEmployee = async (req, res) => {
     fs.unlinkSync(filePath);
 
 
-
+    console.log("validationErrors->", validationErrors)
     // if (duplicateRecords.length > 0) {
     //   const errorFilePath = writeErrorFile(duplicateRecords);
     //   const errorFileUrl = `${process.env.BASE_URL}Downloads/${path.basename(errorFilePath)}`;

@@ -107,9 +107,9 @@ const organizationRegistrationService = async (data) => {
         commonHelper.convertFirstLetterOfFullNameToCapital(result.name),
         logo
       );
-      
-     const { emailSubject, mailData: mailBody } = mailData;
-     console.log("mail data", mailData)
+
+      const { emailSubject, mailData: mailBody } = mailData;
+      console.log("mail data", mailData)
 
 
       await emailService.sendEmail(result.email, emailType, emailSubject, mailBody);
@@ -137,7 +137,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     console.log("Duplicate email found");
     return { isDuplicate: true };
   } else if (employeeDuplicate) {
-    return { isDuplicate: true};
+    return { isDuplicate: true };
   }
   const otpLogsData = await organizationOtp.findOne({
     email,
@@ -152,10 +152,10 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     const otpData = new organizationOtp({ otp, email });
     await otpData.save();
 
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
+    const logo = data.dashboardLogo;
     const emailType = "Send OTP";
     // const emailSubject = "Organization Registration";
-    const { emailSubject, mailData: mailBody } = mailData;
     const mailData =
       await emailTemplates.organizationRegistrationSendOtpTemplate(
         commonHelper.convertFirstLetterOfFullNameToCapital(name),
@@ -163,7 +163,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
         process.env.CHECK_OTP_VALIDATION_TIME,
         logo
       );
-
+    const { emailSubject, mailData: mailBody } = mailData;
     await emailService.sendEmail(email, emailType, emailSubject, mailBody);
     return {
       data: {
@@ -199,10 +199,10 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     { new: true }
   );
 
-  const logo = process.env.LOGO;
+  // const logo = process.env.LOGO;
+  const logo = data.dashboardLogo;
   const emailType = "Send OTP";
-  // const emailSubject = "Organization Registration";
-  const { emailSubject, mailData: mailBody } = mailData;
+  const emailSubject = "Organization Registration";
   const mailData = await emailTemplates.organizationRegistrationSendOtpTemplate(
     commonHelper.convertFirstLetterOfFullNameToCapital(name),
     otp,
@@ -210,7 +210,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     logo
   );
 
-  await emailService.sendEmail(email, emailType, emailSubject, mailBody);
+  await emailService.sendEmail(email, emailType, emailSubject, mailData);
   return {
     data: {
       usedOtp: otpLogsData.otpCount + 1,

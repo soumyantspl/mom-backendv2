@@ -963,21 +963,61 @@ const importEmployee = async (employeeData, organizationId) => {
     const duplicateRecords = [];
     const validationErrors = [];
     const employeeValidationSchema = Joi.object({
-      email: Joi.string()
-        .trim()
-        .email()
-        .messages({
-          "any.required": `Email is required.`,
-          "string.email": `Invalid email format.`,
-        }),
       empId: Joi.string()
         .trim()
         .required()
         .messages({
           "any.required": `Employee ID is required.`,
-          "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`,
+          "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`
+        }),
+      email: Joi.string()
+        .trim()
+        .email()
+        .required()
+        .messages({
+          "any.required": `Email is required.`,
+          "string.email": `Invalid email format.`
+        }),
+      name: Joi.string()
+        .trim()
+        .required()
+        .messages({
+          "any.required": `"name" is required.`
+        }),
+      department: Joi.string()
+        .trim()
+        .pattern(/^[0-9a-fA-F]{24}$/, { name: "mongoId" })
+        .required()
+        .messages({
+          "any.required": `"department" is required.`,
+          "string.pattern.base": `"department" must be a valid MongoID.`
+        }),
+      designation: Joi.string()
+        .trim()
+        .pattern(/^[0-9a-fA-F]{24}$/, { name: "mongoId" })
+        .required()
+        .messages({
+          "any.required": `"designation" is required.`,
+          "string.pattern.base": `"designation" must be a valid MongoID.`
+        }),
+      unitName: Joi.string()
+        .trim()
+        .pattern(/^[0-9a-fA-F]{24}$/, { name: "mongoId" })
+        .required()
+        .messages({
+          "any.required": `"unitName" is required.`,
+          "string.pattern.base": `"unitName" must be a valid MongoID.`
+        }),
+      organizationId: Joi.string()
+        .trim()
+        .pattern(/^[0-9a-fA-F]{24}$/, { name: "mongoId" })
+        .required()
+        .messages({
+          "any.required": `"organizationId" is required.`,
+          "string.pattern.base": `"organizationId" must be a valid MongoID.`
         })
-    })
+    });
+
 
     console.log("Incoming Employee Data:", employeeData);
 
@@ -990,8 +1030,10 @@ const importEmployee = async (employeeData, organizationId) => {
       const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
       if (error) {
         validationErrors.push({
-          record,
-          messages: error.details.map(err => err.message),
+          "Employee Id": record.empId || "",
+          "Email": record.email || "",
+          "Name": record.name || "",
+          "Reason": error.details.map(err => err.message).join(" | "),
         });
         continue;
       }
