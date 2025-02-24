@@ -3791,7 +3791,7 @@ module.exports = {
   totalActionList,
   getUserActionPriotityDetails,
   getAllActionData,
-  //PRATISHRUTI ----- Action Rechartbar Click
+  ////////////PRATISHRUTI ----- Action Rechartbar Click
   getMeetingDueActionPriorityDetailsforChart,
   getAttendeesWithPendingActions,
 };
