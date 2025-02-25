@@ -119,9 +119,12 @@ const attendeeUnavailable = "This attendee is already scheduled for a meeting at
 const roomUnavailable = "The room is already booked for the selected date and time ";
 const organizerUnavailable = "You already have a meeting scheduled on this date from "
 const attendeesFound = "Busy attendees found"
+const departmentIdNotFound = "Department Id is not available"
+const designationIdNotFound = "Designation Id is not available"
+const unitIdNotFound = "Unit Id not available"
 ///Pratishruti//
 //Draft Delete//
-const draftFailed= "Draft Failed";
+const draftFailed = "Draft Failed";
 
 
 //Pratishruti//
@@ -240,7 +243,10 @@ module.exports = {
   notValid,
   deleteDraftFailed,
   draftDeleted,
-  draftFailed
+  draftFailed,
+  designationIdNotFound,
+  departmentIdNotFound,
+  unitIdNotFound
   ///////////////////
   //////////////////
 };

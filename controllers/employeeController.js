@@ -7,6 +7,15 @@ const fs = require("fs");
 const xlsx = require("xlsx");
 const path = require("path");
 
+// const columnMapping = {
+//   Name: "name",
+//   "Employee Id": "empId",
+//   Email: "email",
+//   "Designation Id": "designationId",
+//   "Department Id": "departmentId",
+//   "Unit Id": "unitId",
+//   // "Unit Address": "unitAddress",
+// };
 const columnMapping = {
   Name: "name",
   "Employee Id": "empId",
@@ -16,7 +25,6 @@ const columnMapping = {
   "Unit Id": "unitId",
   // "Unit Address": "unitAddress",
 };
-
 
 /**FUNC- TO CREATE EMPLOYEE**/
 const createEmployee = async (req, res) => {
@@ -362,157 +370,6 @@ const getEmployeeListAsPerUnit = async (req, res) => {
   }
 };
 
-
-// const writeErrorFile = (duplicateRecords, validationErrors) => {
-//   const workbook = xlsx.utils.book_new();
-
-//   const reverseMapping = {};
-//   Object.entries(columnMapping).forEach(([excelCol, schemaField]) => {
-//     reverseMapping[schemaField] = excelCol;
-//   });
-
-//   const buildRowObject = (recordData) => {
-//     const rowObject = {
-//       "Employee Id": recordData.empId || "",
-//       Email: recordData.email || "",
-//     };
-
-//     Object.keys(recordData).forEach((schemaField) => {
-//       if (schemaField === "email" || schemaField === "empId") return;
-//       const excelCol = reverseMapping[schemaField] || schemaField;
-//       rowObject[excelCol] = recordData[schemaField];
-//     });
-//     return rowObject;
-//   };
-
-
-//   const formatValidationErrors = validationErrors.map((errorItem) => {
-//     const { organizationId, ...data } = errorItem.record || {};
-//     const row = buildRowObject(data);
-//     row["Validation Errors"] = errorItem.messages.join(", "); // Add error messages column
-//     return row;
-//   });
-
-
-//   const formatDuplicateRecords = duplicateRecords.map((dupObj) => {
-//     const { organizationId, ...data } = dupObj || {};
-//     console.log("data", data);
-//     let reason = "";
-//     if (dupObj.email) reason += "Email already exists. ";
-//     if (dupObj.empId) reason += "Employee ID already exists.";
-//     reason = reason.trim() || "Duplicate entry";
-
-//     return buildRowObject(data, reason);
-//   });
-
-
-
-//   if (formatValidationErrors.length > 0) {
-//     const errorSheet = xlsx.utils.json_to_sheet(formatValidationErrors);
-//     xlsx.utils.book_append_sheet(workbook, errorSheet, "Validation Errors");
-//     errorSheet["!cols"] = Object.keys(formatValidationErrors[0]).map((colKey) => ({
-//       wpx: Math.max(
-//         ...formatValidationErrors.map((row) => {
-//           const val = row[colKey];
-//           const strVal = (val && val.v) || val || "";
-//           return strVal.toString().length;
-//         }),
-//         colKey.length
-//       ) * 10,
-//     }));
-//   }
-
-//   if (formatDuplicateRecords.length > 0) {
-//     const duplicateSheet = xlsx.utils.json_to_sheet(formatDuplicateRecords);
-//     xlsx.utils.book_append_sheet(workbook, duplicateSheet, "Duplicate Records");
-
-//     duplicateSheet["!cols"] = Object.keys(formatDuplicateRecords[0]).map((colKey) => ({
-//       wpx: Math.max(
-//         ...formatDuplicateRecords.map((row) => {
-//           const val = row[colKey];
-//           const strVal = (val && val.v) || val || "";
-//           return strVal.toString().length;
-//         }),
-//         colKey.length
-//       ) * 10,
-//     }));
-//   }
-
-//   const fileName = `error_report_${Date.now()}.xlsx`;
-//   const errorFilePath = path.join(__dirname, "../Downloads", fileName);
-
-//   if (!fs.existsSync(path.join(__dirname, "../Downloads"))) {
-//     fs.mkdirSync(path.join(__dirname, "../Downloads"), { recursive: true });
-//   }
-
-//   xlsx.writeFile(workbook, errorFilePath);
-
-//   return errorFilePath;
-// };
-
-
-// //Import Employee Controller
-// const importEmployee = async (req, res) => {
-//   console.log("Import Employee");
-
-//   if (!req.file) {
-//     return Responses.errorResponse(req, res, error);
-//   }
-
-//   const filePath = req.file.path;
-//   try {
-//     const organizationId = req.params.organizationId;
-//     console.log("Org ID->", organizationId);
-
-//     if (!organizationId) {
-//       return Responses.errorResponse(req, res, error);
-//     }
-
-//     const workbook = xlsx.readFile(filePath);
-//     const sheetName = workbook.SheetNames[0];
-//     const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-//     const transformedData = sheetData.map((row) => {
-//       const transformedRow = {};
-//       for (const [excelColumn, schemaField] of Object.entries(columnMapping)) {
-//         let value = row[excelColumn];
-//         // if (schemaField === "isAdmin") {
-//         //   value = value?.toString().toLowerCase() === "yes";
-//         // }
-//         transformedRow[schemaField] = value;
-//       }
-//       transformedRow.organizationId = organizationId;
-//       return transformedRow;
-//     });
-
-//     console.log("Transformed Data:", transformedData[0]);
-//     const { savedData, duplicateRecords, validationErrors } = await employeeService.importEmployee(transformedData, organizationId);
-//     fs.unlinkSync(filePath);
-
-//     if (duplicateRecords.length > 0 || validationErrors.length > 0) {
-//       const errorFilePath = writeErrorFile(duplicateRecords, validationErrors);
-//       const errorFileUrl = `${process.env.BASE_URL}Downloads/${path.basename(errorFilePath)}`
-
-//       return Responses.failResponse(
-//         req,
-//         res,
-//         { errorFileUrl },
-//         messages.importFailed,
-//         200
-//       );
-//     }
-//     return Responses.successResponse(req, res, savedData, messages.importSuccess, 200);
-
-//   } catch (error) {
-//     if (fs.existsSync(filePath)) {
-//       fs.unlinkSync(filePath);
-//     }
-//     console.error("Error during Excel import:", error.message);
-//     // return res.status(500).json({ message: "Error processing Excel file", error: error.message });
-//     return Responses.errorResponse(req, res, error);
-//   }
-// };
-
 const writeErrorFile = (duplicateRecords, validationErrors) => {
   const workbook = xlsx.utils.book_new();
   const reverseMapping = {};
@@ -529,7 +386,12 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
     };
 
     Object.keys(recordData || {}).forEach((schemaField) => {
-      if (schemaField === "email" || schemaField === "empId") return;
+      if (
+        schemaField === "email" ||
+        schemaField === "empId" ||
+        schemaField === "Reason"
+      )
+        return;
       const excelCol = reverseMapping[schemaField] || schemaField;
       rowObject[excelCol] = recordData[schemaField] || "";
     });
@@ -537,32 +399,43 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
     return rowObject;
   };
 
-  // Add Validation Errors Sheet
   if (Array.isArray(validationErrors) && validationErrors.length > 0) {
-    const errorSheet = xlsx.utils.json_to_sheet(validationErrors);
+    const formattedValidationErrors = validationErrors.map((err) =>
+      buildRowObject(err, err.Reason)
+    );
+    const errorSheet = xlsx.utils.json_to_sheet(formattedValidationErrors);
     xlsx.utils.book_append_sheet(workbook, errorSheet, "Validation Errors");
 
-    if (validationErrors.length > 0) {
-      errorSheet["!cols"] = Object.keys(validationErrors[0]).map((colKey) => ({
-        wpx: Math.max(
-          ...validationErrors.map((row) => (row[colKey] ? row[colKey].toString().length : 0)),
-          colKey.length
-        ) * 10,
-      }));
+    if (formattedValidationErrors.length > 0) {
+      errorSheet["!cols"] = Object.keys(formattedValidationErrors[0]).map(
+        (colKey) => ({
+          wpx: Math.max(
+            ...formattedValidationErrors.map((row) =>
+              row[colKey] ? row[colKey].toString().length : 0
+            ),
+            colKey.length
+          ) * 10,
+        })
+      );
     }
   }
 
-  // Format duplicate records with a reason column
   const formatDuplicateRecords = duplicateRecords?.map((dupObj) => {
-    const { organizationId, reason, ...data } = dupObj || {};
+    const { organizationId, duplicateFlags, ...data } = dupObj || {};
 
     let reasonMsg = [];
-    if (dupObj?.email) reasonMsg.push("Email already exists.");
-    if (dupObj?.empId) reasonMsg.push("Employee ID already exists.");
-    reasonMsg = reasonMsg.length > 0 ? reasonMsg.join(" ") : "Duplicate entry";
+    if (duplicateFlags?.email) {
+      reasonMsg.push("Email already exists.");
+    }
+    if (duplicateFlags?.empId) {
+      reasonMsg.push("Employee ID already exists.");
+    }
 
+    reasonMsg = reasonMsg.length > 0 ? reasonMsg.join(" ") : "Duplicate entry";
     return buildRowObject(data, reasonMsg);
   }) || [];
+
+
 
   if (formatDuplicateRecords.length > 0) {
     const duplicateSheet = xlsx.utils.json_to_sheet(formatDuplicateRecords);
@@ -586,11 +459,8 @@ const writeErrorFile = (duplicateRecords, validationErrors) => {
   }
 
   xlsx.writeFile(workbook, errorFilePath);
-
   return errorFilePath;
 };
-
-
 
 
 
@@ -615,12 +485,12 @@ const importEmployee = async (req, res) => {
 
     // Ensure `name` is included in transformed data
     const transformedData = sheetData.map(emp => ({
-      empId: emp["Employee Id"],
-      name: emp["Name"] || "",  // Ensure name is included
+      empId: String(emp["Employee Id"]),
+      name: emp["Name"] || "",
       email: emp["Email"],
       department: emp["Department Id"] || undefined,
       designation: emp["Designation Id"] || undefined,
-      unit: emp["Unit Id"] || undefined,
+      unitName: emp["Unit Id"] || undefined,
       organizationId: organizationId
     }));
 
@@ -662,6 +532,74 @@ const importEmployee = async (req, res) => {
 };
 
 
+// const importEmployee = async (req, res) => {
+//   console.log("Import Employee");
+
+//   if (!req.file) {
+//     return Responses.errorResponse(req, res, "File is required");
+//   }
+//   console.log("File->", req.file);
+
+//   const filePath = req.file.path;
+//   try {
+//     const organizationId = req.params.organizationId;
+//     if (!organizationId) {
+//       return Responses.errorResponse(req, res, "Organization ID is required");
+//     }
+
+//     const workbook = xlsx.readFile(filePath);
+//     const sheetName = workbook.SheetNames[0];
+//     const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+//     // Ensure `name` is included in transformed data
+//     const transformedData = sheetData.map(emp => ({
+//       empId: emp["Employee Id"],
+//       name: emp["Name"] || "",  // Ensure name is included
+//       email: emp["Email"],
+//       department: emp["Department Id"] || undefined,
+//       designation: emp["Designation Id"] || undefined,
+//       unit: emp["Unit Id"] || undefined,
+//       organizationId: organizationId
+//     }));
+
+
+
+//     console.log("transformedData", transformedData);
+//     const { savedData, duplicateRecords, validationErrors } = await employeeService.importEmployee(transformedData, organizationId);
+//     fs.unlinkSync(filePath);
+
+
+//     console.log("validationErrors->", validationErrors)
+//     // if (duplicateRecords.length > 0) {
+//     //   const errorFilePath = writeErrorFile(duplicateRecords);
+//     //   const errorFileUrl = `${process.env.BASE_URL}Downloads/${path.basename(errorFilePath)}`;
+
+//     //   return Responses.failResponse(req, res, { errorFileUrl }, messages.importFailed, 200);
+//     // }
+
+
+//     if (duplicateRecords.length > 0 || validationErrors.length > 0) {
+//       const errorFilePath = writeErrorFile(duplicateRecords, validationErrors);
+//       const errorFileUrl = `${process.env.BASE_URL}Downloads/${path.basename(errorFilePath)}`
+
+//       return Responses.failResponse(
+//         req,
+//         res,
+//         { errorFileUrl },
+//         messages.importFailed,
+//         200
+//       );
+//     }
+
+//     return Responses.successResponse(req, res, savedData, messages.importSuccess, 200);
+//   } catch (error) {
+//     if (fs.existsSync(filePath)) {
+//       fs.unlinkSync(filePath);
+//     }
+//     console.error("Error during Excel import:", error.message);
+//     return Responses.errorResponse(req, res, error);
+//   }
+// };
 
 const viewProfile = async (req, res) => {
   try {

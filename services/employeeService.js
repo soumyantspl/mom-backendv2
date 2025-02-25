@@ -16,7 +16,7 @@ const bcrypt = require('bcrypt');
 const XLSX = require("xlsx");
 const Organization = require("../models/organizationModel");
 const BASE_URL = process.env.BASE_URL;
-
+const messages = require("../constants/constantMessages");
 
 /**FUNC- CREATE EMPLOYEE */
 const createEmployee = async (userId, data, ipAddress) => {
@@ -279,9 +279,9 @@ const masterDataXLSX = async (organizationId) => {
   );
 
   const sampleData = [
-    ["Name", "Employee Id", "Email", "Designation", "Department", "Unit Name", "Unit Address"],
-    ["Sonali Sangeeta", "SONA28238", "sonalisangeeta3992@gmail.com", "Developer", "Finance", "Byte", "Bhubaneswar-283"],
-    ["Kantayani Maharana", "KANTA320398", "kantayani83746@ntspl.co.in", "Tester", "IT", "U838", "Jajpur32838"],
+    ["Name", "Employee Id", "Email", "Designation Id", "Department Id", "Unit Id"],
+    ["Sonali Sangeeta", "SONA28238", "sonalisangeeta3992@gmail.com", "Developer", "Finance", "Byte"],
+    ["Kantayani Maharana", "KANTA320398", "kantayani83746@ntspl.co.in", "Tester", "IT", "U838"],
   ];
   const wsSample = XLSX.utils.aoa_to_sheet(sampleData);
 
@@ -957,178 +957,316 @@ const getEmployeeListAsPerUnit = async (unitId) => {
 //   return { savedData, duplicateRecords, validationErrors };
 // };
 
+// const importEmployee = async (employeeData, organizationId) => {
+//   try {
+//     const savedData = [];
+//     const duplicateRecords = [];
+//     const validationErrors = [];
+//     const regularExpression = /^[0-9a-zA-Z .,:;()/\-_\n]+$/;
+//     const employeeValidationSchema = Joi.object({
+//       empId: Joi.string()
+//         .trim()
+//         .required()
+//         .pattern(regularExpression)
+//         .messages({
+//           "any.required": `Employee ID is required.`,
+//           "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`
+//         }),
+//       email: Joi.string()
+//         .trim()
+//         .email()
+//         .required()
+//         .messages({
+//           "any.required": `Email is required.`,
+//           "string.email": `Invalid email format.`
+//         }),
+//       name: Joi.string()
+//         .trim()
+//         .required()
+//         .pattern(regularExpression)
+//         .messages({
+//           "any.required": `"name" is required.`,
+//           "string.pattern.base":
+//             "Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash, colon, parentheses).",
+//         }),
+//       department: Joi.string()
+//         .trim()
+//         .pattern(/^[0-9a-fA-F]{24}$/, { name: "Department Id" })
+//         .required()
+//         .messages({
+//           "any.required": `"Department Id" is required.`,
+//           "string.pattern.base": `"Department ID" must be a valid.`
+//         }),
+//       designation: Joi.string()
+//         .trim()
+//         .pattern(/^[0-9a-fA-F]{24}$/, { name: "Designation Id" })
+//         .required()
+//         .messages({
+//           "any.required": `"Designation Id" is required.`,
+//           "string.pattern.base": `"Designation Id" must be a valid.`
+//         }),
+//       unit: Joi.string()
+//         .trim()
+//         .pattern(/^[0-9a-fA-F]{24}$/, { name: "Unit Id" })
+//         .required()
+//         .messages({
+//           "any.required": `"Unit Id" is required.`,
+//           "string.pattern.base": `"Unit Id" must be a valid.`
+//         }),
+//       organizationId: Joi.string()
+//         .trim()
+//         .pattern(/^[0-9a-fA-F]{24}$/, { name: "organizationId" })
+//         .required()
+//         .messages({
+//           "any.required": `"organizationId" is required.`,
+//           "string.pattern.base": `"organizationId" must be a valid MongoID.`
+//         })
+//     });
+
+
+//     console.log("Incoming Employee Data:", employeeData);
+
+//     for (const record of employeeData) {
+
+//       // Instead of destructuring department, designation, unit, use:
+//       const { empId, email, name, designationId, departmentId, unitId } = record;
+
+//       console.log("Processing Employee:", name);
+
+//       const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
+//       if (error) {
+//         validationErrors.push({
+//           "Employee Id": record.empId || "",
+//           "Email": record.email || "",
+//           "Name": record.name || "",
+//           "Reason": error.details.map(err => err.message).join(" | "),
+//         });
+//         continue;
+//       }
+
+//       // Skip records with missing required fields
+//       if (!name) {
+//         duplicateRecords.push({ empId, email, reason: "Employee name is required." });
+//         continue;
+//       }
+
+//       const duplicateFields = {};
+
+//       // Check for existing email
+//       const existingByEmail = await Employee.findOne({ email, organizationId });
+//       if (existingByEmail) {
+//         duplicateFields.email = true;
+//       }
+
+//       // Check for existing employee ID
+//       const existingByEmpId = await Employee.findOne({ empId, organizationId });
+//       if (existingByEmpId) {
+//         duplicateFields.empId = true;
+//       }
+
+//       // const departmentIdExist = await Department.findOne({ department, organizationId })
+//       // if (!departmentIdExist) {
+
+//       // }
+
+//       const departmentDoc = await Department.findOne({ _id: departmentId, organizationId });
+//       const designationDoc = await Designations.findOne({ _id: designationId, organizationId });
+//       const unitDoc = await Units.findOne({ _id: unitId, organizationId });
+
+
+//       // If any of them do not exist, push validation error
+//       const missingRefs = [];
+//       if (!departmentDoc) missingRefs.push("Department ID not available");
+//       if (!designationDoc) missingRefs.push("Designation ID not available");
+//       if (!unitDoc) missingRefs.push("Unit ID not available");
+
+//       if (missingRefs.length > 0) {
+//         validationErrors.push({
+//           "Employee Id": record.empId || "",
+//           "Email": record.email || "",
+//           "Name": record.name || "",
+//           "Reason": missingRefs.join(" | "),
+//         });
+//         continue; // Move on to the next record
+//       }
+
+
+//       if (Object.keys(duplicateFields).length > 0) {
+//         duplicateRecords.push({
+//           empId,
+//           email,
+//           reason: `Duplicate found: ${Object.keys(duplicateFields).join(", ")}`
+//         });
+//         continue;
+//       }
+
+//       const newEmployee = new Employee({
+//         name,
+//         empId,
+//         profilePicture: "",
+//         email,
+//         designationId: designationId ? new mongoose.Types.ObjectId(designationId) : null,
+//         departmentId: departmentId ? new mongoose.Types.ObjectId(departmentId) : null,
+//         unitId: unitId ? new mongoose.Types.ObjectId(unitId) : null,
+//         organizationId: new mongoose.Types.ObjectId(organizationId),
+//         isActive: true,
+//         isMeetingOrganiser: true,
+//         isAdmin: false,
+//         password: null,
+//         isEmployee: true,
+//         isDelete: false,
+//       });
+
+//       console.log("Saving Employee:", newEmployee);
+//       await newEmployee.save();
+//       savedData.push(newEmployee);
+//     }
+
+//     return { savedData, duplicateRecords, validationErrors };
+//   } catch (error) {
+//     console.error("Error in importEmployee service:", error);
+//     throw error;
+//   }
+// };
+
+
 const importEmployee = async (employeeData, organizationId) => {
-  try {
-    const savedData = [];
-    const duplicateRecords = [];
-    const validationErrors = [];
-    const regularExpression = /^[0-9a-zA-Z .,:;()/\-_\n]+$/;
-    const employeeValidationSchema = Joi.object({
-      empId: Joi.string()
-        .trim()
-        .required()
-        .pattern(regularExpression)
-        .messages({
-          "any.required": `Employee ID is required.`,
-          "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`
-        }),
-      email: Joi.string()
-        .trim()
-        .email()
-        .required()
-        .messages({
-          "any.required": `Email is required.`,
-          "string.email": `Invalid email format.`
-        }),
-      name: Joi.string()
-        .trim()
-        .required()
-        .pattern(regularExpression)
-        .messages({
-          "any.required": `"name" is required.`,
-          "string.pattern.base":
-            "Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash, colon, parentheses).",
-        }),
-      department: Joi.string()
-        .trim()
-        .pattern(/^[0-9a-fA-F]{24}$/, { name: "Department Id" })
-        .required()
-        .messages({
-          "any.required": `"Department Id" is required.`,
-          "string.pattern.base": `"Department ID" must be a valid.`
-        }),
-      designation: Joi.string()
-        .trim()
-        .pattern(/^[0-9a-fA-F]{24}$/, { name: "Designation Id" })
-        .required()
-        .messages({
-          "any.required": `"Designation Id" is required.`,
-          "string.pattern.base": `"Designation Id" must be a valid.`
-        }),
-      unit: Joi.string()
-        .trim()
-        .pattern(/^[0-9a-fA-F]{24}$/, { name: "Unit Id" })
-        .required()
-        .messages({
-          "any.required": `"Unit Id" is required.`,
-          "string.pattern.base": `"Unit Id" must be a valid.`
-        }),
-      organizationId: Joi.string()
-        .trim()
-        .pattern(/^[0-9a-fA-F]{24}$/, { name: "organizationId" })
-        .required()
-        .messages({
-          "any.required": `"organizationId" is required.`,
-          "string.pattern.base": `"organizationId" must be a valid MongoID.`
-        })
-    });
-
-
-    console.log("Incoming Employee Data:", employeeData);
-
-    for (const record of employeeData) {
-
-      const { empId, email, name, designation, department, unit } = record;
-
-      console.log("Processing Employee:", name);
-
-      const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
-      if (error) {
-        validationErrors.push({
-          "Employee Id": record.empId || "",
-          "Email": record.email || "",
-          "Name": record.name || "",
-          "Reason": error.details.map(err => err.message).join(" | "),
-        });
-        continue;
-      }
-
-      // Skip records with missing required fields
-      if (!name) {
-        duplicateRecords.push({ empId, email, reason: "Employee name is required." });
-        continue;
-      }
-
-      const duplicateFields = {};
-
-      // Check for existing email
-      const existingByEmail = await Employee.findOne({ email, organizationId });
-      if (existingByEmail) {
-        duplicateFields.email = true;
-      }
-
-      // Check for existing employee ID
-      const existingByEmpId = await Employee.findOne({ empId, organizationId });
-      if (existingByEmpId) {
-        duplicateFields.empId = true;
-      }
-
-      // const departmentIdExist = await Department.findOne({ department, organizationId })
-      // if (!departmentIdExist) {
-
-      // }
-
-      const departmentDoc = await Department.findOne({ _id: department, organizationId });
-      const designationDoc = await Designation.findOne({ _id: designation, organizationId });
-      const unitDoc = await Unit.findOne({ _id: unit, organizationId });
-
-      // If any of them do not exist, push validation error
-      const missingRefs = [];
-      if (!departmentDoc) missingRefs.push("Department ID not available");
-      if (!designationDoc) missingRefs.push("Designation ID not available");
-      if (!unitDoc) missingRefs.push("Unit ID not available");
-
-      if (missingRefs.length > 0) {
-        validationErrors.push({
-          "Employee Id": record.empId || "",
-          "Email": record.email || "",
-          "Name": record.name || "",
-          "Reason": missingRefs.join(" | "), // e.g. "Department ID not available | Unit ID not available"
-        });
-        continue; // Move on to the next record
-      }
-
-
-      if (Object.keys(duplicateFields).length > 0) {
-        duplicateRecords.push({
-          empId,
-          email,
-          reason: `Duplicate found: ${Object.keys(duplicateFields).join(", ")}`
-        });
-        continue;
-      }
-
-      const newEmployee = new Employee({
-        name,
-        empId,
-        profilePicture: "",
-        email,
-        designationId: designation ? new mongoose.Types.ObjectId(designation) : null,
-        departmentId: department ? new mongoose.Types.ObjectId(department) : null,
-        unitId: unit ? new mongoose.Types.ObjectId(unit) : null,
-        organizationId: new mongoose.Types.ObjectId(organizationId),
-        isActive: true,
-        isMeetingOrganiser: true,
-        isAdmin: false,
-        password: null,
-        isEmployee: true,
-        isDelete: false,
+  const savedData = [];
+  const duplicateRecords = [];
+  const validationErrors = [];
+  const regularExpression = /^[0-9a-zA-Z .,:;()/\-_\n]+$/;
+  const employeeValidationSchema = Joi.object({
+    empId: Joi.string()
+      .trim()
+      .required()
+      .pattern(regularExpression)
+      .messages({
+        "any.required": `Employee ID is required.`,
+        "string.pattern.base": `Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash for Employee ID)`
+      }),
+    email: Joi.string()
+      .trim()
+      .email()
+      .required()
+      .messages({
+        "any.required": `Email is required.`,
+        "string.email": `Invalid email format.`
+      }),
+    name: Joi.string()
+      .trim()
+      .required()
+      .pattern(regularExpression)
+      .messages({
+        "any.required": `"name" is required.`,
+        "string.pattern.base":
+          "Allowed Inputs: (a-z, A-Z, 0-9, space, comma, dash, colon, parentheses).",
+      }),
+    department: Joi.string()
+      .trim()
+      .pattern(/^[0-9a-fA-F]{24}$/, { name: "Department Id" })
+      .required()
+      .messages({
+        "any.required": `"Department Id" is required.`,
+        "string.pattern.base": `"Department ID" must be a valid MongoID.`
+      }),
+    designation: Joi.string()
+      .trim()
+      .pattern(/^[0-9a-fA-F]{24}$/, { name: "Designation Id" })
+      .required()
+      .messages({
+        "any.required": `"Designation Id" is required.`,
+        "string.pattern.base": `"Designation Id" must be a valid MongoID.`
+      }),
+    unitName: Joi.string()
+      .trim()
+      .pattern(/^[0-9a-fA-F]{24}$/, { name: "Unit Id" })
+      .required()
+      .messages({
+        "any.required": `"Unit Id" is required.`,
+        "string.pattern.base": `"Unit Id" must be a valid MongoID.`
+      }),
+    organizationId: Joi.string()
+      .trim()
+      .pattern(/^[0-9a-fA-F]{24}$/, { name: "organizationId" })
+      .required()
+      .messages({
+        "any.required": `"organizationId" is required.`,
+        "string.pattern.base": `"organizationId" must be a valid MongoID.`
+      })
+  });
+  console.log("Incoming Employee Data:", employeeData);
+  for (const record of employeeData) {
+    const { empId, email, name, designation, department, unitName } = record;
+    const { error } = employeeValidationSchema.validate(record, { abortEarly: false });
+    if (error) {
+      validationErrors.push({
+        "Employee Id": empId || "",
+        "Email": email || "",
+        "Name": name || "",
+        "Reason": error.details.map(err => err.message).join(" | "),
       });
-
-      console.log("Saving Employee:", newEmployee);
-      await newEmployee.save();
-      savedData.push(newEmployee);
+      continue;
+    }
+    const duplicateFields = {};
+    const existingByEmail = await Employee.findOne({ email, organizationId });
+    if (existingByEmail) {
+      duplicateFields.email = true;
+    }
+    const existingByEmpId = await Employee.findOne({ empId, organizationId });
+    if (existingByEmpId) {
+      duplicateFields.empId = true;
+    }
+    if (Object.keys(duplicateFields).length > 0) {
+      duplicateRecords.push({
+        empId,
+        email,
+        duplicateFlags: duplicateFields
+      });
+      continue;
     }
 
-    return { savedData, duplicateRecords, validationErrors };
-  } catch (error) {
-    console.error("Error in importEmployee service:", error);
-    throw error;
+    const departmentData = await Department.findOne({ _id: department, organizationId });
+    const designationData = await Designations.findOne({ _id: designation, organizationId });
+    const unitData = await Units.findOne({ _id: unitName, organizationId });
+
+    const missingRefs = [];
+    if (!departmentData) missingRefs.push(messages.departmentIdNotFound);
+    if (!designationData) missingRefs.push(messages.designationIdNotFound);
+    if (!unitData) missingRefs.push(messages.unitIdNotFound);
+
+    if (missingRefs.length > 0) {
+      validationErrors.push({
+        "Employee Id": empId || "",
+        "Email": email || "",
+        "Name": name || "",
+        "Reason": missingRefs.join(" | "),
+      });
+      continue;
+    }
+    const newEmployee = new Employee({
+      name,
+      empId,
+      profilePicture: "",
+      email,
+      designationId: new mongoose.Types.ObjectId(designation),
+      departmentId: new mongoose.Types.ObjectId(department),
+      unitId: new mongoose.Types.ObjectId(unitName),
+      organizationId: new mongoose.Types.ObjectId(record.organizationId),
+      isActive: true,
+      isMeetingOrganiser: true,
+      isAdmin: false,
+      password: null,
+      isEmployee: true,
+      isDelete: false,
+    });
+    console.log("Saving Employee:", newEmployee);
+    await newEmployee.save();
+    savedData.push(newEmployee);
   }
+
+  return { savedData, duplicateRecords, validationErrors };
+
 };
-
-
-
 
 
 

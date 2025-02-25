@@ -191,7 +191,8 @@ const editOrganizationController = async (req, res) => {
       contactPersonWhatsAppNo: req.body.contactPersonWhatsAppNo ? Number(req.body.contactPersonWhatsAppNo) || null : null,
       organizationCode: req.body.organizationCode,
     };
-
+    console.log("Data-->", data)
+    retur
     if (req.files) {
       if (req.files["dashboardLogo"]) {
         data.dashboardLogo = req.files["dashboardLogo"][0].path;
