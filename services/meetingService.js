@@ -1537,6 +1537,7 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
         date: 1,
         fromTime: 1,
         toTime: 1,
+        profilePicture: 1,
         status: 1,
         locationDetails: 1,
         meetingStatus: 1,
@@ -1576,7 +1577,9 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
           companyName: 1,
           isMeetingOrganiser: 1,
           isAdmin: 1,
+          profilePicture: 1, 
         },
+
         parentMeetingDetails: {
           _id: 1,
         },
@@ -1610,6 +1613,7 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
           meetingDataObject["canWriteMOM"] = item.canWriteMOM;
         }
         if (attendeeData) {
+          item.profilePicture = attendeeData.profilePicture
           item.email = attendeeData.email;
           item.name = attendeeData.name;
           item.empId = attendeeData.empId;

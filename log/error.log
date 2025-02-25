@@ -1950,3 +1950,30 @@ Stack Trace: ValidationError: "profilePicture" is not allowed to be empty
 Date: 24/02/2025, Time: 16:40
 Error: "confirmPassword" is required
 Stack Trace: ValidationError: "confirmPassword" is required
+Date: 25/02/2025, Time: 09:48
+Error: "email" is not allowed to be empty
+Stack Trace: ValidationError: "email" is not allowed to be empty
+Date: 25/02/2025, Time: 09:51
+Error: "profilePicture" is not allowed to be empty
+Stack Trace: ValidationError: "profilePicture" is not allowed to be empty
+Date: 25/02/2025, Time: 09:51
+Error: "currentPassword" is not allowed to be empty
+Stack Trace: ValidationError: "currentPassword" is not allowed to be empty
+Date: 25/02/2025, Time: 09:51
+Error: "currentPassword" is not allowed to be empty
+Stack Trace: ValidationError: "currentPassword" is not allowed to be empty
+Date: 25/02/2025, Time: 09:55
+Error: "profilePicture" is not allowed to be empty
+Stack Trace: ValidationError: "profilePicture" is not allowed to be empty
+Date: 25/02/2025, Time: 10:00
+Error: "email" is required
+Stack Trace: ValidationError: "email" is required
+Date: 25/02/2025, Time: 10:05
+Error: "email" is required
+Stack Trace: ValidationError: "email" is required
+Date: 25/02/2025, Time: 10:06
+Error: "email" is required
+Stack Trace: ValidationError: "email" is required
+Date: 25/02/2025, Time: 10:30
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required

@@ -275,8 +275,8 @@ const updateProfileValidator = async (req, res, next) => {
         .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
       isActive: Joi.boolean().strict().optional(),
       email: Joi.string()
-      .email({ tlds: { allow: false } })
-      .required(),
+        .email({ tlds: { allow: false } })
+        .required(),
       empId: Joi.string()
         .trim()
         .pattern(/^[0-9a-zA-Z -.(),-,_/]+$/)
@@ -285,10 +285,10 @@ const updateProfileValidator = async (req, res, next) => {
           "string.pattern.base": "Allowed Inputs: a-z, A-Z, 0-9, space, comma, dash",
           "string.empty": "Employee ID is required",
         }),
-        designation:Joi.string().trim().alphanum(),
-        designationId: Joi.string().trim().alphanum(),
-        departmentId: Joi.string().trim().alphanum(),
-        units: Joi.string().trim().alphanum(),
+      designation: Joi.string().trim().alphanum(),
+      designationId: Joi.string().trim().alphanum(),
+      departmentId: Joi.string().trim().alphanum(),
+      units: Joi.string().trim().alphanum(),
       profilePicture: Joi.string().optional(),
       companyName: Joi.string().optional(),
       currentPassword: Joi.string().optional(),
