@@ -40,7 +40,7 @@ const viewActionComment = async (req, res) => {
         res,
         null,
         messages.recordNotFound,
-        409
+        200
       );
     }
     return Responses.successResponse(

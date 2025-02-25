@@ -20,6 +20,8 @@ const { pipeline } = require("nodemailer/lib/xoauth2");
 const Organization = require("../models/organizationModel");
 const BASE_URL = process.env.BASE_URL;
 
+const moment = require('moment');
+
 //FUCNTION TO CREATE COMMENTS
 const comments = async (userId, id, data, ipAddress = "1000") => {
   const inputData = {
@@ -32,12 +34,29 @@ const comments = async (userId, id, data, ipAddress = "1000") => {
   return result;
 };
 /**FUNC-VIEW ACTION COMMENT */
-const viewActionComment = async (id) => {
-  const viewActionCommentList = await ActionComments.findById(id);
-  return {
-    viewActionCommentList,
-  };
+// const viewActionComment = async (id) => {
+//   const viewActionCommentList = await ActionComments.findById(id);
+//   return {
+//     viewActionCommentList,
+//   };
+// };
+
+const viewActionComment = async (actionId) => {
+  const totalComments = await ActionComments.countDocuments({ actionId });
+  const viewActionCommentList = await ActionComments.find({ actionId })
+    .sort({ createdAt: -1 })
+    .lean(); 
+
+  
+  const formattedComments = viewActionCommentList.map(comment => ({
+    ...comment,
+    createdAt: comment.createdAt 
+      ? moment(comment.createdAt).format('MMMM DD,YYYY hh:mm A') 
+      : null,
+  }));
+  return { totalComments, viewActionCommentList: formattedComments };
 };
+
 /**FUNC- ACTION REASSIGN REQUEST */
 const actionReassignRequest = async (
   userId,

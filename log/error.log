@@ -1989,3 +1989,25 @@ Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date)
     at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 25/02/2025, Time: 16:39
+Error: moment is not defined
+Stack Trace: ReferenceError: moment is not defined
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:51:24
+    at Array.map (<anonymous>)
+    at Object.viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:49:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\controllers\actionController.js:36:20)
+Date: 25/02/2025, Time: 16:39
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 25/02/2025, Time: 16:39
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 25/02/2025, Time: 16:41
+Error: moment is not defined
+Stack Trace: ReferenceError: moment is not defined
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:51:24
+    at Array.map (<anonymous>)
+    at Object.viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:49:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\controllers\actionController.js:36:20)

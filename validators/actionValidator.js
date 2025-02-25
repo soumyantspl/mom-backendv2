@@ -232,25 +232,25 @@ const viewActionActivities = async (req, res, next) => {
   }
 };
 
-const viewActionCommentValidator = async (req, res, next) => {
-  try {
-    const headerSchema = Joi.object({
-      headers: Joi.object({
-        authorization: Joi.required(),
-      }).unknown(true),
-    });
-    const paramsSchema = Joi.object({
-      id: Joi.string().trim().alphanum().required(),
-    });
-    await headerSchema.validateAsync({ headers: req.headers });
-    await paramsSchema.validateAsync(req.params);
-    next();
-  } catch (error) {
-    console.log(error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
+// const viewActionCommentValidator = async (req, res, next) => {
+//   try {
+//     const headerSchema = Joi.object({
+//       headers: Joi.object({
+//         authorization: Joi.required(),
+//       }).unknown(true),
+//     });
+//     const paramsSchema = Joi.object({
+//       id: Joi.string().trim().alphanum().required(),
+//     });
+//     await headerSchema.validateAsync({ headers: req.headers });
+//     await paramsSchema.validateAsync(req.params);
+//     next();
+//   } catch (error) {
+//     console.log(error);
+//     errorLog(error);
+//     return Responses.errorResponse(req, res, error);
+//   }
+// };
 // ACTION REASSIGN REQUEST VALIDATOR
 const actionReassignRequestRejectValidator = async (req, res, next) => {
   try {
@@ -563,6 +563,25 @@ const ChartbarClickattendee = async (req, res, next) => {
   }
 };
 
+const viewActionCommentValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+      }).unknown(true),
+    });
+    const paramsSchema = Joi.object({
+      id: Joi.string().trim().alphanum().required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await paramsSchema.validateAsync(req.params);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 
 module.exports = {
   actionCommentsValidator,

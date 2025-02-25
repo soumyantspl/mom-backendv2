@@ -149,4 +149,12 @@ router.post(
   actionController.getAttendeeDueActionPriorityDetails
 );
 
+/* VIEW ACTION COMMENT  */
+router.get(
+  "/viewActionComment/:id",
+  actionValidator.viewActionCommentValidator,
+  authMiddleware.verifyUserToken,
+  actionController.viewActionComment
+);
+
 module.exports = router;

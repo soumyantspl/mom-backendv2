@@ -81,7 +81,8 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
 
   // meeting organizer validation
   const existingUserMeeting = await Meeting.findOne({
-    createdById: new ObjectId(userId),
+    // createdById: new ObjectId(userId),
+    attendees: { $elemMatch: { _id: { $in: new ObjectId(userId)}}},
     date: new Date(data.date),
     $or: [
       { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
