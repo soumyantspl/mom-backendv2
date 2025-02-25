@@ -30,7 +30,6 @@ const createUnit = async (userId, data, ipAddress) => {
 };
 
 const editUnit = async (userId, id, data, ipAddress) => {
-
   const unitDetails = await checkDuplicate(data.organizationId, data.name);
   if (unitDetails) {
     if (
@@ -54,7 +53,7 @@ const editUnit = async (userId, id, data, ipAddress) => {
         data
       );
       if (details.length !== 0) {
-        let logData
+        let logData;
         if (data.isActive === true) {
           logData = {
             moduleName: logMessages.Unit.moduleName,
@@ -73,14 +72,16 @@ const editUnit = async (userId, id, data, ipAddress) => {
             details: `Unit <strong>${result.name}</strong> is Deactivated`,
             organizationId: result.organizationId,
           };
-        }
-        else {
+        } else {
           logData = {
             moduleName: logMessages.Unit.moduleName,
             userId,
             action: logMessages.Unit.updateUnit,
             ipAddress,
-            details: details.join(" , ") + ("of Unit ") + `<strong>${data.name}</strong>`,
+            details:
+              details.join(" , ") +
+              "of Unit " +
+              `<strong>${data.name}</strong>`,
             organizationId: result.organizationId,
           };
         }
@@ -101,7 +102,7 @@ const editUnit = async (userId, id, data, ipAddress) => {
     ////////////////////LOGER START
     const details = await commonHelper.generateLogObject(result, userId, data);
     if (details.length !== 0) {
-      let logData
+      let logData;
       if (data.isActive === true) {
         logData = {
           moduleName: logMessages.Unit.moduleName,
@@ -120,8 +121,7 @@ const editUnit = async (userId, id, data, ipAddress) => {
           details: `Unit <strong>${result.name}</strong> is Deactivated`,
           organizationId: result.organizationId,
         };
-      }
-      else {
+      } else {
         logData = {
           moduleName: logMessages.Unit.moduleName,
           userId,
@@ -152,7 +152,8 @@ const deleteUnit = async (userId, id, ipAddress) => {
     userId,
     action: logMessages.Unit.deleteUnit,
     ipAddress,
-    details: logMessages.Unit.detailsdeleteUnit + `<strong>${result.name}</strong>`,
+    details:
+      logMessages.Unit.detailsdeleteUnit + `<strong>${result.name}</strong>`,
     organizationId: result.organizationId,
   };
   await logService.createLog(logData);
@@ -186,14 +187,14 @@ const listUnit = async (userId, bodyData, queryData) => {
   const { order } = queryData;
   let query = searchKey
     ? {
-      organizationId,
-      name: { $regex: searchKey, $options: "i" },
-      isDelete: false,
-    }
+        organizationId,
+        name: { $regex: searchKey, $options: "i" },
+        isDelete: false,
+      }
     : {
-      organizationId,
-      isDelete: false,
-    };
+        organizationId,
+        isDelete: false,
+      };
   if (updatedAt) {
     query.updatedAt = updatedAt;
   }

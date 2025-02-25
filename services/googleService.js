@@ -273,7 +273,6 @@ async function addEvent() {
   );
 }
 
-
 // Authenticate using OAuth2
 async function authenticate() {
   console.log("===========================================11111=");
@@ -318,7 +317,7 @@ async function authenticate() {
 
   return oAuth2Client;
 }
-const authenticateData=async (organizationId)=>{
+const authenticateData = async (organizationId) => {
   const gmailCrtedentialsData = await HostingDetails.findOne(
     { organizationId: new ObjectId(organizationId) },
     { gMeetCredentials: 1, organizationId: 1 }
@@ -331,7 +330,8 @@ const authenticateData=async (organizationId)=>{
     const secretToken = commonHelper?.decryptWithAES(
       gmailCrtedentialsData?.gMeetCredentials?.secretToken
     );
-    const refreshToken = gmailCrtedentialsData?.gMeetCredentials?.tokenData?.refreshToken;
+    const refreshToken =
+      gmailCrtedentialsData?.gMeetCredentials?.tokenData?.refreshToken;
     console.log(clientId);
     console.log(secretToken);
     console.log(refreshToken);
@@ -341,15 +341,15 @@ const authenticateData=async (organizationId)=>{
       secretToken,
       "http://localhost:3000/hosting-details"
     );
-   // const newToken = await refreshAccessToken(refreshToken);
+    // const newToken = await refreshAccessToken(refreshToken);
 
     oAuth2Client.setCredentials({
-      refresh_token:refreshToken
+      refresh_token: refreshToken,
     });
     const { credentials } = await oAuth2Client.refreshAccessToken();
     //  fs.writeFileSync("token.json", JSON.stringify(credentials));
     console.log("New Access Token:======================", credentials);
-   // return credentials;
+    // return credentials;
 
     const tokenData = {
       accessToken: credentials?.access_token,
@@ -364,10 +364,9 @@ const authenticateData=async (organizationId)=>{
     );
     oAuth2Client.setCredentials(credentials);
     return oAuth2Client;
-}
-return false
-}
-
+  }
+  return false;
+};
 
 const googleMeetAuthUrl = async (organizationId) => {
   const gmailCrtedentialsData = await HostingDetails.findOne(
@@ -393,7 +392,10 @@ const googleMeetAuthUrl = async (organizationId) => {
     const authUrl = oauth2Clients.generateAuthUrl({
       access_type: "offline",
       prompt: "consent", // Forces Google to issue a new refresh token
-      scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.events'],
+      scope: [
+        "https://www.googleapis.com/auth/calendar",
+        "https://www.googleapis.com/auth/calendar.events",
+      ],
     });
     return authUrl;
   }
@@ -440,209 +442,12 @@ const getAccessTokens = async (code, organizationId) => {
       );
       return saveToenInHostDetails;
     }
-
-   
   }
   return false;
 };
 
-
 // Function to Add Event
-const addEventForMOM=async ( meeting,
-  meetingTimeZone)=> {
-
-    const attendeesEmailids = meeting?.attendees.map((item) => {
-      return {
-        email: item.email,
-      };
-    });
-    const meetingDate = new Date(meeting.date);
-
-    console.log("meetingDate============", meetingDate);
-    const meetingStartDateTime = commonHelper.combineDateAndTimeInISO(
-      meeting.date,
-      meeting.actualFromTime
-    );
-    console.log("meetingStartDateTime--------------", meetingStartDateTime);
-    console.log(
-      "meetingStartDateTime------------in new date",
-      new Date(meetingStartDateTime)
-    );
-  
-    const meetingStartDateTimeUTC = new Date(meetingStartDateTime);
-  
-    // // Add 5 hours and 30 minutes
-    // meetingStartDateTimeUTC.setUTCHours(
-    //   meetingStartDateTimeUTC.getUTCHours() + 5
-    // );
-    // meetingStartDateTimeUTC.setUTCMinutes(
-    //   meetingStartDateTimeUTC.getUTCMinutes() + 30
-    // );
-    // console.log(meetingStartDateTimeUTC);
-    // console.log(meetingStartDateTimeUTC.toISOString()); // Updated timestamp
-    const meetingEndDateTime = commonHelper.combineDateAndTimeInISO(
-      meeting.date,
-      meeting.actualToTime
-    );
-    console.log("meetingEndDateTime--------------", meetingEndDateTime);
-    console.log(
-      "meetingEndDateTime------------in new date",
-      new Date(meetingEndDateTime)
-    );
-    const meetingEndDateTimeUTC = new Date(meetingEndDateTime);
-    console.log("meetingEndDateTimeUTC--------------", meetingEndDateTimeUTC);
-  const auth = await authenticateData(meeting?.organizationId);
-  const calendar = google.calendar({ version: "v3", auth });
-  const event = {
-    summary:meeting?.title,
-    location: "Google Meet",
-    description: meeting?.title,
-    start: {
-      dateTime: meetingStartDateTimeUTC.toISOString().split(".")[0],
-      timeZone: meetingTimeZone,
-    },
-    end: {
-      dateTime: meetingEndDateTimeUTC.toISOString().split(".")[0],
-      timeZone: meetingTimeZone,
-    },
-    attendees: [
-      { email: "node.js@ntspl.co.in" },
-      { email: "soumyamishra.mishra8@gmail.com" },
-      { email: "soumya.mishra8@ntspl.co.in" },
-    ],
-  //  attendees: attendeesEmailids,
-    sendUpdates: "all", // Options: "none", "externalOnly", "all"
-    visibility: "private", // Options: "default", "public", "private"
-    guestsCanModify: true, // Allows guests to edit the event
-    guestsCanInviteOthers: true, // Allows guests to invite others
-    guestsCanSeeOtherGuests: true, // Hides guest list from attendees
-    reminders: { useDefault: true }
-  };
-
-
-  const response = await calendar.events.insert({
-    calendarId: "primary",
-    resource: event,
-    sendUpdates: "all", // Sends email invitations to all attendees
-  });
-  console.log("Google new event created response:", response.data);
-  console.log("ENDDDDDDDDDDDDDDDDDDDDDDDDDDDD==========");
-  return response.data;
-
-  // calendar.events.insert(
-  //   {
-  //     calendarId: "primary",
-  //     resource: event,
-  //   },
-  //   (err, event) => {
-  //     if (err) return console.error("Error adding event:", err);
-  //     console.log("Event created:", event.data.htmlLink);
-  //   }
-  // );
-}
-const createGMeetingMOM = async (
-  meeting,
-  attendeesEmailids,
-  meetingTimeZone
-) => {
-  console.log("START======================================");
-  console.log("MEETING------------------", meeting);
-  console.log("MEETING DATE", meeting?.date);
-  console.log("MEETING FROM TIME", meeting?.fromTime);
-  console.log("MEETING TO TIME", meeting?.toTime);
-  const meetingDate = new Date(meeting.date);
-
-  console.log("meetingDate============", meetingDate);
-  const meetingStartDateTime = commonHelper.combineDateAndTimeInISO(
-    meeting.date,
-    meeting.actualFromTime
-  );
-  console.log("meetingStartDateTime--------------", meetingStartDateTime);
-  console.log(
-    "meetingStartDateTime------------in new date",
-    new Date(meetingStartDateTime)
-  );
-
-  const meetingStartDateTimeUTC = new Date(meetingStartDateTime);
-
-  // // Add 5 hours and 30 minutes
-  // meetingStartDateTimeUTC.setUTCHours(
-  //   meetingStartDateTimeUTC.getUTCHours() + 5
-  // );
-  // meetingStartDateTimeUTC.setUTCMinutes(
-  //   meetingStartDateTimeUTC.getUTCMinutes() + 30
-  // );
-  // console.log(meetingStartDateTimeUTC);
-  // console.log(meetingStartDateTimeUTC.toISOString()); // Updated timestamp
-  const meetingEndDateTime = commonHelper.combineDateAndTimeInISO(
-    meeting.date,
-    meeting.actualToTime
-  );
-  console.log("meetingEndDateTime--------------", meetingEndDateTime);
-  console.log(
-    "meetingEndDateTime------------in new date",
-    new Date(meetingEndDateTime)
-  );
-  const meetingEndDateTimeUTC = new Date(meetingEndDateTime);
-  console.log("meetingEndDateTimeUTC--------------", meetingEndDateTimeUTC);
-  const auth = await authenticateData(meeting?.organizationId);
-  console.log(
-    "after call============================================================="
-  );
-  const calendar = google.calendar({ version: "v3", auth });
-  // start: {
-  //   dateTime: "2025-02-12T05:05:00-07:00",
-  //   timeZone: "Asia/Kolkata",
-  // },
-  const event = {
-    summary: meeting?.title,
-    description: meeting?.title,
-    location: "Online (Google Meet)",
-    start: {
-      dateTime: meetingStartDateTimeUTC.toISOString().split(".")[0],
-      timeZone: meetingTimeZone,
-    },
-    end: {
-      dateTime: meetingEndDateTimeUTC.toISOString().split(".")[0],
-      timeZone: meetingTimeZone,
-    },
-    conferenceData: {
-      createRequest: {
-        requestId: uuidv4(), // Must be unique per request
-        conferenceSolutionKey: { type: "hangoutsMeet" }, // Required for Google Meet
-      },
-    },
-    attendees: attendeesEmailids,
-    sendUpdates: "all", // Options: "none", "externalOnly", "all"
-    visibility: "private", // Options: "default", "public", "private"
-    guestsCanModify: true, // Allows guests to edit the event
-    guestsCanInviteOthers: true, // Allows guests to invite others
-    guestsCanSeeOtherGuests: true, // Hides guest list from attendees
-    reminders: { useDefault: true },
-  };
-  console.log("event==========", event);
-
-  const response = await calendar.events.insert({
-    calendarId: "primary",
-    resource: event,
-    sendUpdates: "all", // Sends email invitations to all attendees
-    conferenceDataVersion: 1,
-  });
-  console.log("Google Meet response:", response.data);
-  console.log("ENDDDDDDDDDDDDDDDDDDDDDDDDDDDD==========");
-  return response.data;
-};
-
-const updateGMeetingMOM = async (
-  meeting,
-  meetingTimeZone
-) => {
-  console.log("START======================================");
-  console.log("MEETING------------------", meeting);
-  console.log("MEETING DATE", meeting?.date);
-  console.log("MEETING FROM TIME", meeting?.fromTime);
-  console.log("MEETING TO TIME", meeting?.toTime);
-
+const addEventForMOM = async (meeting, meetingTimeZone) => {
   const attendeesEmailids = meeting?.attendees.map((item) => {
     return {
       email: item.email,
@@ -684,14 +489,101 @@ const updateGMeetingMOM = async (
   const meetingEndDateTimeUTC = new Date(meetingEndDateTime);
   console.log("meetingEndDateTimeUTC--------------", meetingEndDateTimeUTC);
   const auth = await authenticateData(meeting?.organizationId);
+  const calendar = google.calendar({ version: "v3", auth });
+  const event = {
+    summary: meeting?.title,
+    location: "Google Meet",
+    description: meeting?.title,
+    start: {
+      dateTime: meetingStartDateTimeUTC.toISOString().split(".")[0],
+      timeZone: meetingTimeZone,
+    },
+    end: {
+      dateTime: meetingEndDateTimeUTC.toISOString().split(".")[0],
+      timeZone: meetingTimeZone,
+    },
+    attendees: [
+      { email: "node.js@ntspl.co.in" },
+      { email: "soumyamishra.mishra8@gmail.com" },
+      { email: "soumya.mishra8@ntspl.co.in" },
+    ],
+    //  attendees: attendeesEmailids,
+    sendUpdates: "all", // Options: "none", "externalOnly", "all"
+    visibility: "private", // Options: "default", "public", "private"
+    guestsCanModify: true, // Allows guests to edit the event
+    guestsCanInviteOthers: true, // Allows guests to invite others
+    guestsCanSeeOtherGuests: true, // Hides guest list from attendees
+    reminders: { useDefault: true },
+  };
+
+  const response = await calendar.events.insert({
+    calendarId: "primary",
+    resource: event,
+    sendUpdates: "all", // Sends email invitations to all attendees
+  });
+  console.log("Google new event created response:", response.data);
+  console.log("ENDDDDDDDDDDDDDDDDDDDDDDDDDDDD==========");
+  return response.data;
+
+  // calendar.events.insert(
+  //   {
+  //     calendarId: "primary",
+  //     resource: event,
+  //   },
+  //   (err, event) => {
+  //     if (err) return console.error("Error adding event:", err);
+  //     console.log("Event created:", event.data.htmlLink);
+  //   }
+  // );
+};
+const createGMeetingMOM = async (
+  meeting,
+  meetingTimeZone
+) => {
+  console.log("START======================================");
+  console.log("MEETING------------------", meeting);
+  console.log("MEETING DATE", meeting?.date);
+  console.log("MEETING FROM TIME", meeting?.fromTime);
+  console.log("MEETING TO TIME", meeting?.toTime);
+
+  const attendeesEmailids = meeting?.attendees.map((item) => {
+    return {
+      email: item.email,
+    };
+  });
+  attendeesEmailids.push(
+    { email: "soumyamishra.mishra8@gmail.com" },
+  )
+  const meetingDate = new Date(meeting.date);
+
+  console.log("meetingDate============", meetingDate);
+  const meetingStartDateTime = commonHelper.combineDateAndTimeInISO(
+    meeting.date,
+    meeting.actualFromTime
+  );
+  console.log("meetingStartDateTime--------------", meetingStartDateTime);
+  console.log(
+    "meetingStartDateTime------------in new date",
+    new Date(meetingStartDateTime)
+  );
+
+  const meetingStartDateTimeUTC = new Date(meetingStartDateTime);
+  const meetingEndDateTime = commonHelper.combineDateAndTimeInISO(
+    meeting.date,
+    meeting.actualToTime
+  );
+  console.log("meetingEndDateTime--------------", meetingEndDateTime);
+  console.log(
+    "meetingEndDateTime------------in new date",
+    new Date(meetingEndDateTime)
+  );
+  const meetingEndDateTimeUTC = new Date(meetingEndDateTime);
+  console.log("meetingEndDateTimeUTC--------------", meetingEndDateTimeUTC);
+  const auth = await authenticateData(meeting?.organizationId);
   console.log(
     "after call============================================================="
   );
   const calendar = google.calendar({ version: "v3", auth });
-  // start: {
-  //   dateTime: "2025-02-12T05:05:00-07:00",
-  //   timeZone: "Asia/Kolkata",
-  // },
   const event = {
     summary: meeting?.title,
     description: meeting?.title,
@@ -710,13 +602,98 @@ const updateGMeetingMOM = async (
         conferenceSolutionKey: { type: "hangoutsMeet" }, // Required for Google Meet
       },
     },
-   // attendees: attendeesEmailids,
-    attendees: [
-      { email: "node.js@ntspl.co.in" },
-      { email: "soumyamishra.mishra8@gmail.com" },
-      //  { email: "monalisamahantantspl@gmail.com"  },
-      // { email: "seo@ntspl.co.in" },
-    ],
+    attendees: attendeesEmailids,
+    sendUpdates: "all", // Options: "none", "externalOnly", "all"
+    visibility: "private", // Options: "default", "public", "private"
+    guestsCanModify: true, // Allows guests to edit the event
+    guestsCanInviteOthers: true, // Allows guests to invite others
+    guestsCanSeeOtherGuests: true, // Hides guest list from attendees
+    reminders: { useDefault: true },
+  };
+  console.log("event==========", event);
+
+  const response = await calendar.events.insert({
+    calendarId: "primary",
+    resource: event,
+    sendUpdates: "all", // Sends email invitations to all attendees
+    conferenceDataVersion: 1,
+  });
+  console.log("Google Meet response:", response.data);
+  console.log("ENDDDDDDDDDDDDDDDDDDDDDDDDDDDD==========");
+  return response.data;
+};
+
+const updateGMeetingMOM = async (meeting, meetingTimeZone) => {
+  console.log("START======================================");
+  console.log("MEETING------------------", meeting);
+  console.log("MEETING DATE", meeting?.date);
+  console.log("MEETING FROM TIME", meeting?.fromTime);
+  console.log("MEETING TO TIME", meeting?.toTime);
+
+  let attendeesEmailids = meeting?.attendees.map((item) => {
+    return {
+      email: item.email,
+    };
+  });
+  const meetingDate = new Date(meeting.date);
+  attendeesEmailids.push(
+    { email: "soumyamishra.mishra8@gmail.com" },
+  )
+  console.log("attendeesEmailids============", attendeesEmailids);
+  const meetingStartDateTime = commonHelper.combineDateAndTimeInISO(
+    meeting.date,
+    meeting.actualFromTime
+  );
+  console.log("meetingStartDateTime--------------", meetingStartDateTime);
+  console.log(
+    "meetingStartDateTime------------in new date",
+    new Date(meetingStartDateTime)
+  );
+
+  const meetingStartDateTimeUTC = new Date(meetingStartDateTime);
+
+  const meetingEndDateTime = commonHelper.combineDateAndTimeInISO(
+    meeting.date,
+    meeting.actualToTime
+  );
+  console.log("meetingEndDateTime--------------", meetingEndDateTime);
+  console.log(
+    "meetingEndDateTime------------in new date",
+    new Date(meetingEndDateTime)
+  );
+  const meetingEndDateTimeUTC = new Date(meetingEndDateTime);
+  console.log("meetingEndDateTimeUTC--------------", meetingEndDateTimeUTC);
+  const auth = await authenticateData(meeting?.organizationId);
+  console.log(
+    "after call============================================================="
+  );
+
+
+  const event = {
+    summary: meeting?.title,
+    description: meeting?.title,
+    location: "Online (Google Meet)",
+    start: {
+      dateTime: meetingStartDateTimeUTC.toISOString().split(".")[0],
+      timeZone: meetingTimeZone,
+    },
+    end: {
+      dateTime: meetingEndDateTimeUTC.toISOString().split(".")[0],
+      timeZone: meetingTimeZone,
+    },
+    conferenceData: {
+      createRequest: {
+        requestId: uuidv4(), // Must be unique per request
+        conferenceSolutionKey: { type: "hangoutsMeet" }, // Required for Google Meet
+      },
+    },
+     attendees: attendeesEmailids,
+    // attendees: [
+    //   { email: "node.js@ntspl.co.in" },
+    //   { email: "soumyamishra.mishra8@gmail.com" },
+    //   //  { email: "monalisamahantantspl@gmail.com"  },
+    //   // { email: "seo@ntspl.co.in" },
+    // ],
     sendUpdates: "all", // Options: "none", "externalOnly", "all"
     visibility: "private", // Options: "default", "public", "private"
     guestsCanModify: true, // Allows guests to edit the event
@@ -735,18 +712,48 @@ const updateGMeetingMOM = async (
 
   if (meetingHostDetails?.length !== 0) {
     const eventId = meetingHostDetails[0].hostMeetingId;
-  const response = await calendar.events.update({
-    eventId, // Required field
-    calendarId: "primary",
-    resource: event,
-    sendUpdates: "all", // Sends email invitations to all attendees
-    conferenceDataVersion: 1,
-  });
-  console.log("Google Meet response:", response.data);
-  console.log("ENDDDDDDDDDDDDDDDDDDDDDDDDDDDD==========");
-  return response.data;
-}
-return false;
+    const calendar = google.calendar({ version: "v3", auth });
+    const response = await calendar.events.update({
+      eventId, // Required field
+      calendarId: "primary",
+      resource: event,
+      sendUpdates: "all", // Sends email invitations to all attendees
+      conferenceDataVersion: 1,
+    });
+    console.log("Update Google Meet response:", response.data);
+    console.log("ENDDDDDDDDDDDDDDDDDDDDDDDDDDDD==========");
+   // pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+    return response.data;
+  }
+  return false;
+};
+
+const deleteGMeetingMOM = async (meeting) => {
+
+
+  const auth = await authenticateData(meeting?.organizationId);
+
+  const calendar = google.calendar({ version: "v3", auth });
+
+  const meetingHostDetails = await MeetingHostDetails.find(
+    { meetingId: new ObjectId(meeting?._id) },
+    { _id: 1, meetingId: 1, hostMeetingId: 1 }
+  )
+    .sort({ _id: -1 })
+    .limit(1);
+  console.log("meetingHostDetails===========", meetingHostDetails);
+
+  if (meetingHostDetails?.length !== 0) {
+    const eventId = meetingHostDetails[0].hostMeetingId;
+    const response = await calendar.events.delete({
+      calendarId: "primary",
+      eventId,
+    });
+
+    console.log("Delete Google Meet response:", response.data);
+    return true;
+  }
+  return false;
 };
 
 module.exports = {
@@ -756,5 +763,6 @@ module.exports = {
   updateGMeetingMOM,
   googleMeetAuthUrl,
   getAccessTokens,
-  addEventForMOM
+  addEventForMOM,
+  deleteGMeetingMOM,
 };

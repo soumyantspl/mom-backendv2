@@ -2605,3 +2605,45 @@ Stack Trace: Error: Login Required.
     at async Object.createGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:357:20)
     at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:578:28)
     at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 25/02/2025, Time: 14:59
+Error: isUpdated is not defined
+Stack Trace: ReferenceError: isUpdated is not defined
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:380:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 25/02/2025, Time: 15:02
+Error: pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp is not defined
+Stack Trace: ReferenceError: pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp is not defined
+    at Object.updateGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:721:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:367:34)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 25/02/2025, Time: 15:04
+Error: pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp is not defined
+Stack Trace: ReferenceError: pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp is not defined
+    at Object.updateGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:721:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:367:34)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 25/02/2025, Time: 15:14
+Error: event is not defined
+Stack Trace: ReferenceError: event is not defined
+    at Object.deleteGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:736:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:346:34)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 25/02/2025, Time: 15:15
+Error: isUpdated is not defined
+Stack Trace: ReferenceError: isUpdated is not defined
+    at Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:354:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)
+Date: 25/02/2025, Time: 15:18
+Error: Resource has been deleted
+Stack Trace: Error: Resource has been deleted
+    at Gaxios._request (E:\Ongoing\V2\mom-backend\node_modules\gaxios\build\src\gaxios.js:142:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async OAuth2Client.requestAsync (E:\Ongoing\V2\mom-backend\node_modules\google-auth-library\build\src\auth\oauth2client.js:429:18)
+    at async Object.deleteGMeetingMOM (E:\Ongoing\V2\mom-backend\services\googleService.js:746:22)
+    at async Object.updateMeeting (E:\Ongoing\V2\mom-backend\services\meetingService.js:346:34)
+    at async updateMeeting (E:\Ongoing\V2\mom-backend\controllers\meetingController.js:118:20)

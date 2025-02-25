@@ -309,10 +309,23 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
 
   if (data.step == 1) {
     updateData = data;
-    updateData.hostDetails = {
-      hostType: data.linkType ? data.linkType : "MANUAL",
-    };
-    updateData.link = data.linkType !== "MANUAL" ? "" : data.link;
+
+    if (data.linkType == "MANUAL") {
+      updateData.hostDetails = {
+        hostType: "MANUAL",
+      };
+    } else {
+      updateData.hostDetails = {
+        hostType: data.linkType,
+        hostLink:data.link ? data.link : "",
+      };
+    }
+
+    // updateData.hostDetails = {
+    //   hostType: data.linkType ? data.linkType : "MANUAL",
+    //   hostLink:data.link ? data.link : "",
+    // };
+   // updateData.link = data.linkType !== "MANUAL" ? "" : data.link;
     if (data.date) {
       updateData.date = new Date(data.date);
     }
@@ -333,7 +346,64 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
     }
   );
   // const meeting = await Meeting.findOne({ _id: new ObjectId(id) });
-  const meeting = await viewMeeting(id, userId);
+  let meeting = await viewMeeting(id, userId);
+  ///////////////START OF UPDATE GOOGLE MEET///////////////
+
+  // IF GOOGLE MEET TO OTHER MODE
+  if (
+    meeting?.hostDetails?.hostType !== "GMEET" &&
+    meetingUpdate?.hostDetails?.hostType == "GMEET" &&
+    meetingUpdate?.hostDetails?.hostLink &&
+    data.step !== 3 &&
+    data?.isUpdate == true &&
+    data?.isEditMeeting == true
+  ) {
+    let updatedMeetingHostData = await googleService.deleteGMeetingMOM(meeting);
+
+    if (updatedMeetingHostData) {
+      await meetingHostDetails.findOneAndDelete({
+        hostMeetingId: updatedMeetingHostData.id,
+        meetingId: new ObjectId(meeting?._id),
+      });
+    }
+  }
+  // IF GOOGLE MEET AND ANY OTHER DATA IS UPDATED
+  if (
+    meeting?.hostDetails?.hostType == "GMEET" &&
+    meeting?.hostDetails?.hostLink &&
+    meetingUpdate?.hostDetails?.hostType == "GMEET" &&
+    data.step !== 3 &&
+    data?.isUpdate == true &&
+    data?.isEditMeeting == true
+  ) {
+    let updatedMeetingHostData = await googleService.updateGMeetingMOM(
+      meeting,
+      process.env.TZ
+    );
+
+    if (updatedMeetingHostData) {
+      const meetingHostDeatils = {
+        meetingDateTime: updatedMeetingHostData?.start?.dateTime,
+      };
+
+      await meetingHostDetails.findOneAndUpdate(
+        {
+          hostMeetingId: updatedMeetingHostData.id,
+          meetingId: new ObjectId(meeting?._id),
+        },
+
+        {
+          $set: meetingHostDeatils,
+        },
+
+        {
+          new: true,
+        }
+      );
+    }
+  }
+
+  ///////////////END OF UPDATE GOOGLE MEET///////////////
 
   if (
     meeting?.hostDetails?.hostType === "ZOOM" &&
@@ -382,9 +452,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
     }
   }
 
-  ///////////////START OF UPDATE GOOGLE MEET///////////////
-
-  ///////////////END OF UPDATE GOOGLE MEET///////////////
   let allowedUsers = [new ObjectId(userId), meeting?.createdById];
   let details = null;
   if (data.step === 1) {
@@ -513,6 +580,7 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
       }
     }
     ///////////////START OF ADD GOOGLE MEET///////////////
+    // FOR CREATE MEETING BY GMEET
     if (data.isUpdate === false && meeting.hostDetails.hostType == "GMEET") {
       const attendeesEmailids = meeting?.attendees.map((item) => {
         return {
@@ -568,8 +636,66 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
         await meetingHostDatas.save();
       }
     }
+    // IF OTHER MODE TO GMEET UPDATED AND IT IS ALREADY SCHEDULED
+
     ///////////////END OF ADD GOOGLE MEET///////////////
   }
+
+  if (
+    meeting?.hostDetails?.hostType == "GMEET" &&
+    meetingUpdate?.hostDetails?.hostType !== "GMEET" &&
+    meeting?.step == 3 &&
+    data.step !== 3 &&
+    data?.isUpdate == true &&
+    data?.isEditMeeting == true
+  ) {
+    const attendeesOnlyEmailids = meeting?.attendees.map((item) => item.email);
+
+    let meetingHostData = await googleService.createGMeetingMOM(
+      meeting,
+      process.env.TZ
+    );
+    console.log(
+      "meetingHostData=========================>>>>>>>>>>>>>>>>>>>",
+      meetingHostData
+    );
+    if (meetingHostData) {
+      meetingLink = meetingHostData?.host_url?.split("?")[0];
+      hostLink = meetingHostData?.hangoutLink;
+      const hostData = {
+        hostLink: meetingHostData?.hangoutLink,
+        hostType: meeting?.hostDetails?.hostType,
+      };
+      console.log("hostData-------------", hostData);
+
+      updatedMeeting = await Meeting.findByIdAndUpdate(
+        { _id: new ObjectId(id) },
+
+        {
+          $set: {
+            link: meetingHostData?.hangoutLink,
+            hostDetails: hostData,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+      console.log(updatedMeeting);
+      const meetingHostDeatils = {
+        hostedBy: "gmeet",
+        meetingId: meeting._id,
+        hostMeetingId: meetingHostData.id,
+        meetingDateTime: meetingHostData?.start?.dateTime,
+        attendees: attendeesOnlyEmailids,
+        meetingLink: meetingHostData?.hangoutLink,
+        purpose: meetingHostData?.title,
+      };
+      const meetingHostDatas = new meetingHostDetails(meetingHostDeatils);
+      await meetingHostDatas.save();
+    }
+  }
+
   console.log(meeting.hostDetails);
   console.log(meeting.meetingStatus.status);
   console.log(data.isUpdate);
@@ -583,11 +709,12 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
       meeting.meetingStatus.status === "rescheduled")
   ) {
     updatedMeeting = await callMeetingHost(meeting, linkType);
+    console.log(
+      "updatedMeeting=======2222222222222222222222222222222222222222222222",
+      updatedMeeting
+    );
   }
-  console.log(
-    "updatedMeeting=======2222222222222222222222222222222222222222222222",
-    updatedMeeting
-  );
+
   //////////////////LOGER START
   let logDetails = [];
   if (stepCheck == 1) {
@@ -959,9 +1086,10 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
 
       await googleService?.updateEventForMOM(meeting, process.env.TZ);
     }
-
+    meeting = await viewMeeting(id, userId);
     return meeting;
   } else {
+    meeting = await viewMeeting(id, userId);
     return meeting;
   }
 };

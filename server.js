@@ -89,6 +89,66 @@ app.get("/", async (req, res) => {
 // });
 app.use("/api", mainRouter);
 
+
+
+
+
+const multer = require("multer");
+const fs = require("fs");
+const axios = require("axios");
+const FormData = require("form-data");
+
+
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Set up Multer for file upload
+const upload = multer({ dest: "uploads/" });
+
+// OpenAI Whisper Transcription Endpoint
+app.post("/transcribe", upload.single("audio"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No audio file uploaded" });
+    }
+
+    const formData = new FormData();
+    formData.append("file", fs.createReadStream(req.file.path));
+    formData.append("model", "whisper-1");
+
+    const response = await axios.post("https://api.openai.com/v1/audio/transcriptions", formData, {
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        ...formData.getHeaders(),
+      },
+    });
+
+    fs.unlinkSync(req.file.path); // Delete file after processing
+    res.json({ text: response.data.text });
+  } catch (error) {
+    console.error("Error:", error.response?.data || error.message);
+    res.status(500).json({ error: "Failed to transcribe audio" });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // SOCKET IO
 console.log("frontend", process.env.FRONTEND_URL);
 const io = socket(
