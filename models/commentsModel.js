@@ -5,6 +5,10 @@ const actionCommentsSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       required: true,
     },
+    meetingId: {
+      type: mongoose.Schema.ObjectId,
+      required: true,
+    },
     actionId: {
       type: mongoose.Schema.ObjectId,
       required: true,

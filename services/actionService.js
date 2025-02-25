@@ -58,16 +58,87 @@ const BASE_URL = process.env.BASE_URL;
 
 
 //FUCNTION TO CREATE COMMENTS
+
 const addComments = async (userId, id, data) => {
+  
+  const actionDetails = await Minutes.findOne({ _id: id });
+
+  if (!actionDetails || !actionDetails.meetingId) {
+    console.error("Error: No meetingId found for the given actionId.");
+    return false;
+  }
+
   const inputData = {
+    meetingId: actionDetails.meetingId, 
     actionId: id,
-    userId: userId,
+    userId: data.userId,
     commentDescription: data.commentDescription,
   };
+  console.log("Input Data for ActionComments:", inputData);
+
+ 
+
   const commentData = new ActionComments(inputData);
   const result = await commentData.save();
+
+  console.log("Saved Comment Data:", result);
+  // const UserDetail = await ActionComments.findOne(
+  //   { userId: new ObjectId(userId) },
+  //   { _id: 1, email: 1, name: 1 }
+  // );
+
+
+const comment = await ActionComments.findOne({ userId: new ObjectId(userId) });
+console.log("userId -----:", userId);
+console.log("Comment -----:", comment);
+
+if (!comment) {
+    console.error("Error: No comment found for this userId.");
+    return false;
+}
+
+
+const UserDetail = await Employee.findOne(
+    { _id: new ObjectId(userId) }, 
+    { _id: 1, email: 1, name: 1 } 
+);
+
+
+  console.log("Commenter Details-----:", UserDetail);
+  
+  const meetingDetails = await meetingService.viewMeeting(
+    actionDetails.meetingId, 
+    userId
+  );
+ 
+
+  console.log("Meeting Details---------:", meetingDetails);
+
+
+  const logo = process.env.LOGO;
+  const mailData = await emailTemplates.sendCommentEmailTemplate(
+    meetingDetails,
+    logo,
+    UserDetail,
+    result
+  );
+
+  if (!mailData) {
+    console.error("Error: Email template generation failed.");
+    return false;
+  }
+   const { emailSubject, mailData: mailBody } = mailData;
+
+
+  await emailService.sendEmail(
+    meetingDetails?.createdByDetail?.email,
+    emailSubject,
+    mailBody,
+  );
+
   return result;
 };
+
 
 /**FUNC-VIEW ACTION COMMENT */
 // const viewActionComment = async (actionId) => {
