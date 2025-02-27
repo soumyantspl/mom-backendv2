@@ -1977,3 +1977,21 @@ Stack Trace: ValidationError: "email" is required
 Date: 25/02/2025, Time: 10:30
 Error: "headers.authorization" is required
 Stack Trace: ValidationError: "headers.authorization" is required
+Date: 27/02/2025, Time: 09:51
+Error: "units" must only contain alpha-numeric characters
+Stack Trace: ValidationError: "units" must only contain alpha-numeric characters
+Date: 27/02/2025, Time: 09:51
+Error: "units" must only contain alpha-numeric characters
+Stack Trace: ValidationError: "units" must only contain alpha-numeric characters
+Date: 27/02/2025, Time: 10:33
+Error: "units" is required
+Stack Trace: ValidationError: "units" is required
+Date: 27/02/2025, Time: 10:33
+Error: "units" is required
+Stack Trace: ValidationError: "units" is required
+Date: 27/02/2025, Time: 10:34
+Error: "units" is required
+Stack Trace: ValidationError: "units" is required
+Date: 27/02/2025, Time: 10:49
+Error: "designation" must only contain alpha-numeric characters
+Stack Trace: ValidationError: "designation" must only contain alpha-numeric characters
