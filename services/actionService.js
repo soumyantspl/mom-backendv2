@@ -47,6 +47,17 @@ const viewActionComment = async (actionId) => {
     .sort({ createdAt: -1 })
     .lean(); 
 
+    for (let comment of viewActionCommentList) {
+      if (comment.userId) {
+        const userDetail = await Employee.findOne(
+          { _id: new ObjectId(comment.userId) },
+          { _id: 1, email: 1, name: 1 }
+        ).lean();
+  
+        comment.userName = userDetail?.name || 'Unknown';
+        comment.userEmail = userDetail?.email || 'No Email';
+      }
+    }
   
   const formattedComments = viewActionCommentList.map(comment => ({
     ...comment,
@@ -54,8 +65,11 @@ const viewActionComment = async (actionId) => {
       ? moment(comment.createdAt).format('MMMM DD,YYYY hh:mm A') 
       : null,
   }));
+
+ // console.log("Fetched Data:", formattedComments);
   return { totalComments, viewActionCommentList: formattedComments };
 };
+
 
 /**FUNC- ACTION REASSIGN REQUEST */
 const actionReassignRequest = async (

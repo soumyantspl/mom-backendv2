@@ -48,7 +48,7 @@ const viewActionComment = async (req, res) => {
       res,
       result,
       messages.recordsFound,
-      201
+      200
     );
   } catch (error) {
     console.log(error);
