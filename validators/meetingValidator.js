@@ -368,6 +368,7 @@ const updateMeetingValidator = async (req, res, next) => {
             }),
             designation: Joi.string().trim().allow(null, ""),
             companyName: Joi.string().trim().allow(null, ""),
+            profilePicture: Joi.string().trim().allow(null, ""),
           })
           .required(),
         otherwise: Joi.array()
@@ -624,6 +625,7 @@ const updateMeetingAttendanceValidator = async (req, res, next) => {
             .required(),
           isAttended: Joi.boolean(),
           attendanceType: Joi.string().valid(...attendanceTypeValues),
+          profilePicture: Joi.string().trim().allow(null, ""),
         })
         .required(),
     });
@@ -735,6 +737,7 @@ const rescheduleMeetingValidator = async (req, res, next) => {
             .required(),
           name: Joi.string().trim().required(),
           canWriteMOM: Joi.boolean(),
+          profilePicture: Joi.string().trim().allow(null, ""),
         })
         .required(),
     });
