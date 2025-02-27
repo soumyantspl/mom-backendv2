@@ -2378,85 +2378,63 @@ const actionCancelEmailTemplate = async (
   });
 };
 
+
 // SEND COMMENT EMAIL TEMPLATE
-// SEND COMMENT EMAIL TEMPLATE
-const sendCommentEmailTemplate = async (
-  meetingDetails,
-  logo,
-  userDetail,
-  result
-) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const template = await EmailTemplate.findOne({
-        templateType: "SENDCOMMENT",
-        isActive: true,
-      });
-
-      if (!template) {
-        console.error("No email template found!");
-        return reject(new Error("No email template found!"));
-      }
-
-      let mailBody = "";
-      let body = "";
-      let subject = "";
-
-      if (template.sendCommentCredentials) {
-        body = template.sendCommentCredentials.body || "";
-        subject = template.subject || "";
-      } else {
-        console.error("SendCommentCredentials missing in template!");
-        return reject(new Error("SendCommentCredentials missing in template!"));
-      }
-
-      console.log("Template Body Before Replace:", body);
-
-      body = body
-        .replace(
-          /{UserName}/g,
-          commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
-        )
-        .replace(/{UserEmail}/g, userDetail?.email)
-        .replace("{commentDetails}", result?.commentDescription)
-        .replace("{organizerEmail}", meetingDetails.createdByDetail?.email)
-        .replace(
-          "{organizerName}",
-          commonHelper.convertFirstLetterOfFullNameToCapital(meetingDetails.createdByDetail?.name)
-        )
-        .replace(
-          "{actionlink}",
-          `${process.env.FRONTEND_URL}/view-action-detail/${result?.id}`
-        );
-
-      console.log("Final Processed Body:", body);
-
-      mailBody = `
-        <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
-          <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
-            <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
-              <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
-                <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
-              </a>
-              ${body}
-            </div>
-          </div>
-        </div>`;
-
-      console.log("Final Processed Subject:", subject);
-      console.log("Final Processed Mail Body:", mailBody);
-
-      
-      resolve({
-        emailSubject: subject.trim(), 
-        mailData: mailBody.trim(),
-      });
-
-    } catch (error) {
-      console.error("Error generating email template:", error);
-      reject(error);
-    }
+const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result) => {
+  const template = await EmailTemplate.findOne({
+    templateType: "SENDCOMMENT",
+    isActive: true,
   });
+
+  if (!template) {
+    console.error("No email template found!");
+    return false;
+  }
+
+  if (!template.sendCommentCredentials) {
+    console.error("SendCommentCredentials missing in template!");
+    return false;
+  }
+
+  let body = template.sendCommentCredentials.body || "";
+  let subject = template.subject || "";
+
+  console.log("Template Body Before Replace:", body);
+  subject = subject.replace(/{UserName}/g,commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name));
+
+  body = body
+    .replace(
+      /{UserName}/g,
+      commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
+    )
+    .replace(/{UserEmail}/g, userDetail?.email)
+    .replace("{commentDetails}", result?.commentDescription)
+    .replace("{organizerEmail}", meetingDetails.createdByDetail?.email)
+    .replace(
+      "{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital(meetingDetails.createdByDetail?.name))
+    .replace(
+      "{actionlink}",
+      `${process.env.FRONTEND_URL}/view-action-detail/${result?.actionId}`
+    );
+
+  console.log("Final Processed Body:", body);
+
+  const mailBody = `
+    <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
+      <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
+        <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
+          <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
+            <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
+          </a>
+          ${body}
+        </div>
+      </div>
+    </div>`;
+
+  return {
+    emailSubject: subject.trim(),
+    mailData: mailBody.trim(),
+  };
 };
 
 

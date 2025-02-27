@@ -5,6 +5,7 @@ const createError = "Error while creating!";
 const updateSuccess = "Updated successfully!";
 const updateFail = "Failed to Update Comment";
 const deleteFail = "Failed to Delete Comment";
+const unauthorizedEdit = "You can only edit your own comment.";
 const meetingUpdateSuccess =
   "Meeting is updated and notification sent to all the attendees successfully.";
 const updateFailedRecordNotFound = "Record not found. Update failed!";
@@ -136,6 +137,7 @@ const deleteDraftFailed = "Faild in Delete Draft Meeting"
 module.exports = {
   updateFail,
   deleteFail,
+  unauthorizedEdit,
   pleaseAddMinute,
   isDeleteNotAllowed,
   cancelSuccess,

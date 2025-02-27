@@ -57,7 +57,7 @@ const viewActionComment = async (req, res) => {
   }
 };
 
-/**FUNC- TO UPDATE ACTION COMMENT**/
+/** FUNC - TO UPDATE ACTION COMMENT **/
 const actionCommentsUpdate = async (req, res) => {
   try {
     const result = await actionService.updateComment(
@@ -65,6 +65,17 @@ const actionCommentsUpdate = async (req, res) => {
       req.params.commentId,
       req.body
     );
+
+    if (result === "unauthorized") {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.unauthorizedEdit,
+        403
+      );
+    }
+
     if (!result) {
       return Responses.failResponse(
         req,
@@ -74,6 +85,7 @@ const actionCommentsUpdate = async (req, res) => {
         409
       );
     }
+
     return Responses.successResponse(
       req,
       res,

@@ -31,7 +31,7 @@ const actionCommentsValidator = async (req, res, next) => {
       userId: Joi.string().trim().alphanum().required(),
       commentDescription: Joi.string()
         .min(3)
-        .max(50)
+        .max(300)
         .trim()
         .pattern(commentRegex)
         .messages({

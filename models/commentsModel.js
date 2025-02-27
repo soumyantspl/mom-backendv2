@@ -18,10 +18,13 @@ const actionCommentsSchema = new mongoose.Schema(
       required: true,
     },
     mentionedUsers: [
-      {
-        type: mongoose.Schema.ObjectId,
-        
-      },
+      new mongoose.Schema(
+        {
+          id: { type: mongoose.Schema.ObjectId },
+          name: { type: String },
+        },
+        { _id: false } 
+      ),
     ],
   },
   {
