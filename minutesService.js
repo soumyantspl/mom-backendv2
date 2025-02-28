@@ -1343,13 +1343,14 @@ const getMomAcceptDetails = async (meetingId, userId) => {
           _id: 1,
           name: 1,
           status: 1,
+          profilePicture:1,
         },
       },
     },
     { $unwind: "$userDetails" },
   ]);
 
-  console.log("result-----momAcceptDetails", result);
+  console.log("userDetails after lookup and unwind:", JSON.stringify(result, null, 2));
   return result;
 };
 

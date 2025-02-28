@@ -1885,6 +1885,7 @@ const viewMeetingActivities = async (meetingId) => {
           _id: 1,
           name: 1,
           email: 1,
+          profilePicture:1,
         },
       },
     },

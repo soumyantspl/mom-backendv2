@@ -532,6 +532,7 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
           name: 1,
           _id: 1,
           email: 1,
+          profilePicture:1,
         },
         attendeesDetail: {
           name: 1,
@@ -826,28 +827,14 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     } else {
       reassignedUserId = empData._id;
     }
-  } else if (data.attendeeData) {
-    // If attendeeData is a single object, process it as a single reassigned user
-    const empData = await employeeService.createAttendee(
-      data.attendeeData.name,
-      data.attendeeData.email,
-      data.attendeeData.organizationId,
-      data.attendeeData.designation,
-      data.attendeeData.companyName
-    );
-
-    reassignedUserId = empData.isDuplicate ? empData.duplicateUserId : empData._id;
   }
 
-  // Ensure reassignedUserId is stored correctly in the update object
   const reassignDetails = {
     userId,
     reAssignReason: data.reAssignReason,
     newDueDate: data.dueDate,
-    reAssignedUserId: Array.isArray(reassignedUserId)
-      ? reassignedUserId.map((id) => new ObjectId(id))
-      : new ObjectId(reassignedUserId),
-    priority: data?.priority || "LOW",
+    reAssignedUserId: new ObjectId(reassignedUserId),
+    priority: data?.priority ? data?.priority : "LOW",
   };
 
   const updateData = {
@@ -855,112 +842,103 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     isRequested: false,
     isPending: true,
     actionStatus: "REASSIGNED",
-    assignedUserId: Array.isArray(reassignedUserId)
-      ? reassignedUserId.map((id) => new ObjectId(id))
-      : new ObjectId(reassignedUserId),
+    assignedUserId: new ObjectId(reassignedUserId),
   };
+  result = await Minutes.findOneAndUpdate(
+    {
+      _id: new ObjectId(actionId),
+    },
+    updateData,
+    {
+      isNew: false,
+    }
+  );
+  const minuteDetails = await Minutes.findOne({
+    _id: new ObjectId(actionId),
+  });
 
   let userIndex = 0;
   const newRequestDetails = minuteDetails.reassigneRequestDetails.map(
     (item, index) => {
-      if (Array.isArray(result?.assignedUserId)) {
-        if (result?.assignedUserId.includes(item.userId.toString())) {
-          userIndex = index;
-        }
-      } else if (item.userId.toString() === result?.assignedUserId?.toString()) {
+      if (item.userId.toString() === result?.assignedUserId?.toString()) {
         userIndex = index;
       }
-
       if (index === minuteDetails.reassigneRequestDetails.length - 1) {
         minuteDetails.reassigneRequestDetails[userIndex].isAccepted = true;
-        minuteDetails.reassigneRequestDetails[userIndex].actionDateTime = new Date();
-        minuteDetails.reassigneRequestDetails[userIndex].reAssignReason = data.reAssignReason;
+        minuteDetails.reassigneRequestDetails[userIndex].actionDateTime =
+          new Date();
+        minuteDetails.reassigneRequestDetails[userIndex].reAssignReason =
+          data.reAssignReason;
         return item;
       }
       return item;
     }
   );
-
   minuteDetails.reassigneRequestDetails = newRequestDetails;
-  console.log("Updated Minute Details:", minuteDetails);
-
+  console.log("minuteDetails---------------", minuteDetails);
   const minuteData = new Minutes(minuteDetails);
   const newMinutes = await minuteData.save();
 
-  // Assign the updated values to data
-  data = {
-    ...data,
-    isActive: true,
-    createdById: new ObjectId(userId),
-    priority: data.priority || "LOW",
-    dueDate: new Date(data.dueDate),
-    mainDueDate: new Date(result.mainDueDate),
-    assignedUserId: reassignedUserId.length ? reassignedUserId : new ObjectId(userId),
-    actionId,
-    agendaId: result.agendaId,
-    meetingId: result.meetingId,
-    organizationId: result.organizationId,
-    parentMinuteId: actionId,
-    minuteId: minuteDetails.minuteId,
-    description: minuteDetails.description,
-    title: minuteDetails.title,
-    attendees: minuteDetails.attendees,
-    isAction: true,
-    status: result?.status,
-    sequence: result?.sequence,
-  };
-
-  console.log("Final Data Before Saving:", data);
-
+  data["isActive"] = true;
+  data["createdById"] = new ObjectId(userId);
+  data["priority"] = data.priority ? data.priority : "LOW";
+  data["dueDate"] = new Date(data.dueDate);
+  data["mainDueDate"] = new Date(result.mainDueDate);
+  data["assignedUserId"] = reassignedUserId
+    ? reassignedUserId
+    : new ObjectId(userId);
+  data["actionId"] = actionId;
+  data["agendaId"] = result.agendaId;
+  data["meetingId"] = result.meetingId;
+  data["organizationId"] = result.organizationId;
+  data["parentMinuteId"] = actionId;
+  data["minuteId"] = minuteDetails.minuteId;
+  data["description"] = minuteDetails.description;
+  data["title"] = minuteDetails.title;
+  data["attendees"] = minuteDetails.attendees;
+  data["isAction"] = true;
+  data["status"] = result?.status;
+  data["sequence"] = result?.sequence;
+  "inside data-------------------------", data, result?.status;
   const actionData = new Minutes(data);
   await actionData.save();
-
-  if (data?.lastActionActivityId) {
-    await ActionActivities.findByIdAndUpdate(
-      { _id: new ObjectId(data.lastActionActivityId) },
-      { isRead: true }
-    );
-  }
-
   const actionActivityObject = {
     activityDetails: data.reAssignReason,
     activityTitle: "ACTION FORWARDED",
     minuteId: actionId,
-    reassignedUserId,
+    reassignedUserId: reassignedUserId,
     userId,
     status: "REASSIGNED",
     actionId: minuteDetails.minuteId,
-    isRead: true,
   };
+  "activityObject-->", actionActivityObject;
+  const actionActivitiesResult = await createActionActivity(
+    actionActivityObject
+  );
+  "actionActivitiesResult------------", actionActivitiesResult;
 
-  await createActionActivity(actionActivityObject);
-
-  const meetingDetails = await meetingService.viewMeeting(result?.meetingId, userId);
-  console.log("Meeting Details:", meetingDetails);
-
-  const assignedUserDetail = await Employee.find(
-    { _id: { $in: reassignedUserId.map((id) => new ObjectId(id)) } },
+  const meetingDetails = await meetingService.viewMeeting(
+    result?.meetingId,
+    userId
+  );
+  console.log("meetingDetails===========5555=", meetingDetails)
+  const assignedUserDetail = await Employee.findOne(
+    { _id: new ObjectId(reassignedUserId) },
     { _id: 1, email: 1, name: 1 }
   );
-
-  console.log("Assigned Users:", assignedUserDetail);
-
+  console.log("assignedUserDetail===========5555=", assignedUserDetail)
   const oldAssignedUserDetail = await Employee.findOne(
     { _id: new ObjectId(result?.assignedUserId) },
     { _id: 1, email: 1, name: 1 }
   );
-
-  console.log("Old Assigned User:", oldAssignedUserDetail);
-
+  console.log("meetingDetails===========5555=", oldAssignedUserDetail)
   const allowedUsers = [
     new ObjectId(userId),
     result?.createdById,
     meetingDetails?.createdById,
-    ...reassignedUserId.map((id) => new ObjectId(id)),
+    reassignedUserId,
   ];
-
-  console.log("Allowed Users:", allowedUsers);
-
+  console.log("allowedUsers==============", allowedUsers)
   const notificationData = {
     title: "ACTION FORWARDED",
     organizationId: new ObjectId(result.organizationId),
@@ -973,36 +951,36 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     byUserId: userId,
     toUserId: reassignedUserId,
   };
-
-  await notificationService.createNotification(notificationData);
+  const addNotification = await notificationService.createNotification(
+    notificationData
+  );
 
   if (meetingDetails) {
     // const logo = process.env.LOGO;
+    
     const organization = await Organization.findOne({
       _id: new ObjectId(result.organizationId),
     });
-
+  
     const logo = organization?.dashboardLogo
-      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
-      : process.env.LOGO;
-
-    console.log("userData2-->", userData);
+    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+    : null;
 
     const mailData = await emailTemplates.actionReassignEmailTemplate(
       meetingDetails,
       logo,
       assignedUserDetail,
       data.reAssignReason,
-      userData,
       result
     );
-
+    // const emailSubject = await emailConstants.reassignSubject(result);
     const { emailSubject, mailData: mailBody } = mailData;
-
-    assignedUserDetail.forEach((user) => {
-      emailService.sendEmail(user.email, "Action Forwarded", emailSubject, mailBody);
-    });
-
+    emailService.sendEmail(
+      assignedUserDetail?.email,
+      "Action Forwarded",
+      emailSubject,
+      mailBody
+    );
     const mailOldData =
       await emailTemplates.actionReassignEmailToOlAssignedUserTemplate(
         meetingDetails,
@@ -1010,12 +988,10 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
         assignedUserDetail,
         data.reAssignReason,
         result,
-        userData,
-        oldAssignedUserDetail
+        oldAssignedUserDetail,
+        userData
       );
-    // const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(
-    //   result
-    // );
+    // const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(result)
     const { oldemailSubject, mailOldData: oldmailBody } = mailOldData;
 
     emailService.sendEmail(
@@ -1024,19 +1000,35 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       oldemailSubject,
       oldmailBody
     );
-
+    ////////////////////LOGER START
     const logData = {
       moduleName: logMessages.Action.moduleName,
       userId,
       action: logMessages.Action.reassignAction,
       ipAddress,
-      details: `Action forwarded from <strong>${oldAssignedUserDetail?.name} (${oldAssignedUserDetail?.email})</strong> to <strong>${assignedUserDetail.map(u => `${u.name} (${u.email})`).join(', ')}</strong>`,
-      subDetails: `Action: ${result?.title}<br/>Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
+      details:
+        "Action forwarded from <strong>" +
+        commonHelper.convertFirstLetterOfFullNameToCapital(
+          oldAssignedUserDetail?.name
+        ) +
+        " (" +
+        oldAssignedUserDetail?.email +
+        ") </strong>" +
+        " to <strong>" +
+        commonHelper.convertFirstLetterOfFullNameToCapital(
+          assignedUserDetail?.name
+        ) +
+        " (" +
+        assignedUserDetail?.email +
+        ") </strong>",
+      subDetails: `
+      Action : ${result?.title}</br>
+      Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
       organizationId: result?.organizationId,
     };
     await logService.createLog(logData);
+    /////////////////// LOGER END
   }
-
   return result;
 };
 
@@ -1856,11 +1848,13 @@ const viewActionActivity = async (id) => {
           _id: 1,
           name: 1,
           email: 1,
+          profilePicture:1,
         },
         reAssignedUserDetails: {
           _id: 1,
           name: 1,
           email: 1,
+          profilePicture:1,
         },
       },
     },
@@ -2985,6 +2979,7 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
           name: 1,
           _id: 1,
           email: 1,
+          profilePicture:1,
         },
         attendeesDetail: {
           name: 1,
@@ -3374,7 +3369,7 @@ const getMeetingDueActionPriorityDetailsforChart = async (
         fromTime: 1,
         meetingStatus: 1,
         minutesDetail: 1,
-        assignedUserDetails: { name: 1, _id: 1, email: 1 },
+        assignedUserDetails: { name: 1, _id: 1, email: 1,profilePicture:1, },
         attendees: 1,
         attendeesDetail: 1,
       },
@@ -3438,7 +3433,7 @@ const getMeetingDueActionPriorityDetailsforChart = async (
       return {
         ...action,
         dueDate: formattedDueDate,
-        assignedUserDetails: assignedUser || { name: "Unknown", email: "unknown@example.com" },
+        assignedUserDetails: assignedUser,
         userDetail: assignedUser,
         meetingDetails: {
           _id: meeting._id,
@@ -3584,7 +3579,7 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
           meetingId: 1,
           title: 1,
           minutesDetail: 1,
-          assignedUserDetails: { name: 1, _id: 1, email: 1 },
+          assignedUserDetails: { name: 1, _id: 1, email: 1,profilePicture:1, },
           attendees: 1,
           attendeesDetail: 1,
         },

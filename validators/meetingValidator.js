@@ -608,6 +608,7 @@ const updateMeetingAttendanceValidator = async (req, res, next) => {
           isAttended: Joi.boolean(),
           rsvp: Joi.string().trim().valid("YES", "NO", "AWAITING", "MAYBE"),
           canWriteMOM: Joi.boolean(),
+          profilePicture: Joi.string().trim().allow(null, ""),
         })
         .required(),
       attendanceData: Joi.array()
@@ -668,6 +669,7 @@ const generateMOMValidator = async (req, res, next) => {
             .required(),
           name: Joi.string().trim().required(),
           canWriteMOM: Joi.boolean(),
+          profilePicture: Joi.string().trim().allow(null, ""),
         })
         .required(),
     });
@@ -773,6 +775,7 @@ const giveMomWritePermissionValidator = async (req, res, next) => {
           canWriteMOM: Joi.boolean().required(),
           rsvp: Joi.string().valid("YES", "NO", "AWAITING").required(),
           isAttended: Joi.boolean().required(),
+          profilePicture: Joi.string().trim().allow(null, ""),
         })
         .required(),
     });
