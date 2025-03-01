@@ -577,7 +577,8 @@ const ChartbarClickattendee = async (req, res, next) => {
   }
 };
 
-
+const actionCommentsUpdateValidator = async (req, res, next) => {
+};
 module.exports = {
   actionCommentsValidator,
   actionReassignRequestValidator,
@@ -595,7 +596,8 @@ module.exports = {
   getUserActionPriotityDetailsValidator,
   priorityWiseAllActionsValidator,
   ChartbarClickforalldata,
-  ChartbarClickattendee
+  ChartbarClickattendee,
+  actionCommentsUpdateValidator
 };
 
 ///////////

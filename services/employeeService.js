@@ -1043,8 +1043,8 @@ const updateProfile = async (userId, id, data, ipAddress, profilePicture) => {
   }
 
   let logDetails = [];
-  const employeeName = employee.name || "Unknown Employee";
-  const email = employee.email || "Email not available";
+  const employeeName = employee.name ;
+  const email = employee.email ;
 
   // Password update logic
   if (data.password && data.confirmPassword) {

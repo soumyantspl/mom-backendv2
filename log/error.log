@@ -3069,3 +3069,6 @@ Date: 01/03/2025, Time: 11:51
 Error: "reAssignedUsers" is required
 Stack Trace: ValidationError: "reAssignedUsers" is required
 >>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
+Date: 01/03/2025, Time: 14:45
+Error: "email" is required
+Stack Trace: ValidationError: "email" is required
