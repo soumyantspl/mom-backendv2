@@ -7,12 +7,12 @@ const commonHelper = require("../helpers/commonHelper");
 /**FUNC- FOR ACTION COMMENT**/
 const actionCommentsCreate = async (req, res) => {
   try {
-    let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
-    const result = await actionService.comments(
+   
+    const result = await actionService.addComments(
       req.userId,
       req.params.id,
       req.body,
-      ip
+    
     );
     if (!result) {
       return Responses.failResponse(req, res, null, messages.createError, 409);
@@ -20,8 +20,8 @@ const actionCommentsCreate = async (req, res) => {
     return Responses.successResponse(
       req,
       res,
-      result.data,
-      messages.createdSuccess,
+      result,
+      messages.commentCreatedSuccess,
       201
     );
   } catch (error) {
@@ -40,7 +40,7 @@ const viewActionComment = async (req, res) => {
         res,
         null,
         messages.recordNotFound,
-        409
+        200
       );
     }
     return Responses.successResponse(
@@ -56,6 +56,83 @@ const viewActionComment = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+/** FUNC - TO UPDATE ACTION COMMENT **/
+const actionCommentsUpdate = async (req, res) => {
+  try {
+    const result = await actionService.updateComment(
+      req.userId,
+      req.params.commentId,
+      req.body
+    );
+
+    if (result === "unauthorized") {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.unauthorizedEdit,
+        403
+      );
+    }
+
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.updateFail,
+        409
+      );
+    }
+
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.updateSuccess,
+      200
+    );
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
+/**FUNC- TO DELETE ACTION COMMENT**/
+const actionCommentsDelete = async (req, res) => {
+  try {
+    const result = await actionService.deleteComment(
+      req.userId,
+      req.params.commentId
+    );
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.deleteFail,
+        409
+      );
+    }
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.deleteSuccess,
+      200
+    );
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
+
 /**FUNC- TO ACTION REASSIGN REQUEST**/
 const actionReassignRequest = async (req, res) => {
   try {
@@ -582,6 +659,8 @@ const getAttendeeDueActionPriorityDetails = async (req, res) => {
 
 module.exports = {
   actionCommentsCreate,
+  actionCommentsUpdate,
+  actionCommentsDelete,
   actionReassignRequest,
   viewSingleAction,
   viewActionComment,

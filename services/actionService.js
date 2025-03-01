@@ -16,28 +16,287 @@ const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const meetingService = require("../services/meetingService");
 const { pipeline } = require("nodemailer/lib/xoauth2");
+const moment = require('moment');
 
 const Organization = require("../models/organizationModel");
 const BASE_URL = process.env.BASE_URL;
 
+
+// const addComments = async (userId, id, data) => {
+//   // Extract @usernames from comment
+//   const mentionedUsernames = data.commentDescription.match(/@([a-zA-Z0-9_]+)/g);
+
+//   let mentionedUsers = [];
+//   if (mentionedUsernames) {
+//     const usernames = mentionedUsernames.map(name => name.substring(1)); 
+
+//     console.log("Extracted Usernames:", usernames);
+
+//     // Fetch user IDs from the database
+//     mentionedUsers = await Employee.find({ name: { $in: usernames } }).select("_id");
+    
+//     console.log("Matched Users in DB:", mentionedUsers);
+
+//     mentionedUsers = mentionedUsers.map(employee => employee._id); 
+//   }
+
+//   const inputData = {
+//     actionId: id,
+//     userId: userId,
+//     commentDescription: data.commentDescription,
+//     mentionedUsers, 
+//   };
+
+//   const commentData = new ActionComments(inputData);
+//   const result = await commentData.save();
+  
+//   console.log("Final Comment Data:", result);
+  
+//   return result;
+// };
+
+
+
 //FUCNTION TO CREATE COMMENTS
-const comments = async (userId, id, data, ipAddress = "1000") => {
+
+const addComments = async (userId, id, data) => {
+  const actionDetails = await Minutes.findOne({ _id: id }).lean();
+  console.log("Action Details====", actionDetails);
+
+  if (!actionDetails || !actionDetails.meetingId) {
+    console.error("Error: No meetingId found for the given actionId.");
+    return false;
+  }
+
+  const meetingDetails = await meetingService.viewMeeting(
+    actionDetails.meetingId,
+    data.userId
+  );
+
+  if (!meetingDetails || !Array.isArray(meetingDetails.attendees)) {
+    console.error("Error: Meeting details or attendees not found.");
+    return false;
+  }
+
+  console.log("Meeting Details====:", meetingDetails);
+  console.log("Attendees-----", meetingDetails.attendees);
+
+  let mentionedUsers = [];
+  let commentText = data.commentDescription;
+
+  // Extract mentioned attendees based on their names
+  meetingDetails.attendees.forEach(attendee => {
+    if (!attendee.name) return;
+    const mentionTag = `@${attendee.name}`;
+    
+    if (commentText.includes(mentionTag)) {
+      mentionedUsers.push({
+        id: attendee._id.toString(),
+        name: attendee.name,
+        email: attendee.email,
+      });
+      commentText = commentText.replace(mentionTag, "").trim(); 
+    }
+  });
+
   const inputData = {
+    meetingId: actionDetails.meetingId,
     actionId: id,
-    userId: userId,
-    commentDescription: data.commentDescription,
+    userId: data.userId,
+    commentDescription: commentText, 
+    mentionedUsers, 
   };
+
+  console.log("Input Data for ActionComments:", inputData);
+
   const commentData = new ActionComments(inputData);
-  const result = await commentData.save();
+  let result = await commentData.save();
+  console.log("Saved Comment Data:", result);
+
+  const userDetail = await Employee.findOne(
+    { _id: new ObjectId(data.userId) },
+    { _id: 1, email: 1, name: 1 }
+  ).lean();
+
+  if (!userDetail) {
+    console.error("Error: User not found!");
+    return false;
+  }
+
+  console.log("User Details:", userDetail);
+
+  const logo = process.env.LOGO;
+  const mailData = await emailTemplates.sendCommentEmailTemplate(
+    meetingDetails,
+    logo,
+    userDetail,
+    result
+  );
+
+  console.log("MailData from action service:", mailData);
+
+  if (!mailData) {
+    console.error("Error: Email template generation failed.");
+    return false;
+  }
+
+  const { emailSubject, mailData: mailBody } = mailData;
+  console.log("MailBody sent:", mailBody);
+
+  await emailService.sendEmail(
+    meetingDetails?.createdByDetail?.email,
+    "Comment Created",
+    emailSubject,
+    mailBody
+  );
+
+  result = result.toObject();
+  result.userName = userDetail.name;
+  result.userEmail = userDetail.email;
+
   return result;
 };
+
+
+
+
+
 /**FUNC-VIEW ACTION COMMENT */
-const viewActionComment = async (id) => {
-  const viewActionCommentList = await ActionComments.findById(id);
-  return {
-    viewActionCommentList,
-  };
+const viewActionComment = async (actionId) => {
+  const totalComments = await ActionComments.countDocuments({ actionId });
+  const viewActionCommentList = await ActionComments.find({ actionId })
+    .sort({ createdAt: -1 })
+    .lean(); 
+
+    for (let comment of viewActionCommentList) {
+      if (comment.userId) {
+        const userDetail = await Employee.findOne(
+          { _id: new ObjectId(comment.userId) },
+          { _id: 1, email: 1, name: 1 }
+        ).lean();
+  
+        comment.userName = userDetail?.name || 'Unknown';
+        comment.userEmail = userDetail?.email || 'No Email';
+      }
+    }
+  
+  const formattedComments = viewActionCommentList.map(comment => ({
+    ...comment,
+    createdAt: comment.createdAt 
+      ? moment(comment.createdAt).format('MMMM DD, YYYY hh:mm A') 
+      : null,
+  }));
+
+ // console.log("Fetched Data:", formattedComments);
+  return { totalComments, viewActionCommentList: formattedComments };
 };
+
+
+/**FUNC- EDIT ACTION COMMENT */
+// const updateComment = async (userId, commentId, data) => {
+//   const updatedComment = await ActionComments.findOneAndUpdate(
+//     { _id: commentId, userId: userId }, 
+//     { commentDescription: data.commentDescription },
+//     { new: true } 
+//   );
+
+//   return updatedComment;
+// };
+
+const updateComment = async (userId, commentId, data) => {
+  
+  const existingComment = await ActionComments.findOne({ _id: commentId });
+console.log("Existing comment-----", existingComment);
+  if (!existingComment) {
+    console.error("Error: Comment not found.");
+    return false;
+  }
+
+  
+  const userDetail = await Employee.findOne(
+    { _id: new ObjectId(userId) },
+    { _id: 1, email: 1, name: 1 }
+  );
+// console.log("Userdetail id----",userDetail._id);
+// console.log("Existing comment userid=====",existingComment.userId);
+  if (!userDetail) {
+    console.error("Error: User details not found.");
+    return false;
+  }
+
+  if (existingComment.userId.toString() !== userId.toString()) {
+    console.error("Error: You can only edit your own comment.");
+    return "unauthorized";
+  }
+  
+  const updatedComment = await ActionComments.findOneAndUpdate(
+    { _id: commentId },
+    { commentDescription: data.commentDescription },
+    { new: true }
+  );
+
+  if (!updatedComment) {
+    console.error("Error: Comment update failed.");
+    return false;
+  }
+
+  
+  const actionDetails = await Minutes.findOne({ _id: updatedComment.actionId });
+  if (!actionDetails || !actionDetails.meetingId) {
+    console.error("Error: No meetingId found for the given actionId.");
+    return false;
+  }
+
+  const meetingDetails = await meetingService.viewMeeting(
+    actionDetails.meetingId,
+    userId
+  );
+  if (!meetingDetails) {
+    console.error("Error: Meeting details not found.");
+    return false;
+  }
+
+  
+  const logo = process.env.LOGO;
+  const mailData = await emailTemplates.sendCommentEmailTemplate(
+    meetingDetails,
+    logo,
+    userDetail,
+    updatedComment
+  );
+
+  if (!mailData) {
+    console.error("Error: Email template generation failed.");
+    return false;
+  }
+
+  const { emailSubject, mailData: mailBody } = mailData;
+  console.log("MailBody sent------", mailBody);
+
+  await emailService.sendEmail(
+    meetingDetails?.createdByDetail?.email,
+    "Comment Updated",
+    emailSubject,
+    mailBody
+  );
+
+  return updatedComment;
+};
+
+
+/**FUNC- DELETE ACTION COMMENT */
+const deleteComment = async (userId, commentId) => {
+  const deletedComment = await ActionComments.findOneAndDelete({
+    _id: commentId,
+    userId: userId, 
+  });
+
+  return deletedComment;
+};
+
+
+
+
 /**FUNC- ACTION REASSIGN REQUEST */
 const actionReassignRequest = async (
   userId,
@@ -3707,7 +3966,9 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
 
 
 module.exports = {
-  comments,
+  addComments,
+  updateComment,
+  deleteComment,
   viewActionComment,
   actionReassignRequest,
   viewSingleAction,
