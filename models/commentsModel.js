@@ -22,6 +22,7 @@ const actionCommentsSchema = new mongoose.Schema(
         {
           id: { type: mongoose.Schema.ObjectId },
           name: { type: String },
+          email: {type: String}
         },
         { _id: false } 
       ),

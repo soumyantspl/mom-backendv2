@@ -21,7 +21,7 @@ const actionCommentsCreate = async (req, res) => {
       req,
       res,
       result,
-      messages.createdSuccess,
+      messages.commentCreatedSuccess,
       201
     );
   } catch (error) {

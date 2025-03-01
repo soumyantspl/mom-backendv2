@@ -93,6 +93,7 @@ const addComments = async (userId, id, data) => {
       mentionedUsers.push({
         id: attendee._id.toString(),
         name: attendee.name,
+        email: attendee.email,
       });
       commentText = commentText.replace(mentionTag, "").trim(); 
     }
@@ -182,7 +183,7 @@ const viewActionComment = async (actionId) => {
   const formattedComments = viewActionCommentList.map(comment => ({
     ...comment,
     createdAt: comment.createdAt 
-      ? moment(comment.createdAt).format('MMMM DD,YYYY hh:mm A') 
+      ? moment(comment.createdAt).format('MMMM DD, YYYY hh:mm A') 
       : null,
   }));
 

@@ -2400,12 +2400,13 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
   let subject = template.subject || "";
 
   console.log("Template Body Before Replace:", body);
-  subject = subject.replace(/{UserName}/g,commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name));
+  subject = subject.replace(/{UserName}/g,userDetail?.name);
 
   body = body
     .replace(
       /{UserName}/g,
-      commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
+     // commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
+      userDetail?.name
     )
     .replace(/{UserEmail}/g, userDetail?.email)
     .replace("{commentDetails}", result?.commentDescription)

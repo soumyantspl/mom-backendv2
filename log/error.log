@@ -2790,3 +2790,52 @@ Stack Trace: ValidationError: actionComments validation failed: mentionedUsers.0
     at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:111:23)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 01/03/2025, Time: 11:38
+Error: emailLogs validation failed: emailTo: Cast to string failed for value "[
+  'sunilntspl@gmail.com',
+  'sunilntspl@gmail.com',
+  'moharanasunil09@gmail.com',
+  'monalisamahantantspl@gmail.com'
+]" (type Array) at path "emailTo"
+Stack Trace: ValidationError: emailLogs validation failed: emailTo: Cast to string failed for value "[
+  'sunilntspl@gmail.com',
+  'sunilntspl@gmail.com',
+  'moharanasunil09@gmail.com',
+  'monalisamahantantspl@gmail.com'
+]" (type Array) at path "emailTo"
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1480:12)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1132:16)
+    at model.Document (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:178:12)
+    at model.Model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:128:12)
+    at new model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:4779:15)
+    at saveEmailLogs (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\emailService.js:49:24)
+    at Object.sendEmail (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\emailService.js:45:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:152:3)
+Date: 01/03/2025, Time: 11:44
+Error: emailLogs validation failed: emailTo: Cast to string failed for value "[
+  'sunilntspl@gmail.com',
+  'sunilntspl@gmail.com',
+  'moharanasunil09@gmail.com',
+  'monalisamahantantspl@gmail.com'
+]" (type Array) at path "emailTo"
+Stack Trace: ValidationError: emailLogs validation failed: emailTo: Cast to string failed for value "[
+  'sunilntspl@gmail.com',
+  'sunilntspl@gmail.com',
+  'moharanasunil09@gmail.com',
+  'monalisamahantantspl@gmail.com'
+]" (type Array) at path "emailTo"
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1480:12)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1132:16)
+    at model.Document (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:178:12)
+    at model.Model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:128:12)
+    at new model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:4779:15)
+    at saveEmailLogs (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\emailService.js:49:24)
+    at Object.sendEmail (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\emailService.js:45:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:152:3)
+Date: 01/03/2025, Time: 11:51
+Error: "reAssignedUsers" is required
+Stack Trace: ValidationError: "reAssignedUsers" is required
