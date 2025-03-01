@@ -61,7 +61,7 @@ const checkMeetingRoomAvailability = async (data) => {
       {
         toTime: { $gt: data.fromTime, $lte: data.toTime }
       }
-    ]
+    ]   
   });
   if (existingMeeting) {
     const fromTimeFormatted = convertTo12HourFormat(existingMeeting.fromTime);

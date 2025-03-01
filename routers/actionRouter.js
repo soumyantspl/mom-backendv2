@@ -4,13 +4,7 @@ const actionValidator = require("../validators/actionValidator");
 const authMiddleware = require("../middlewares/authMiddleware");
 const actionController = require("../controllers/actionController");
 
-/* ACTION COMMENT  */
-router.post(
-  "/actionComment/:id",
-  actionValidator.actionCommentsValidator,
-  authMiddleware.verifyUserToken,
-  actionController.actionCommentsCreate
-);
+
 /* ACTION REASSIGN REQUEST  */
 router.put(
   "/actionReAssignRequest/:id",
@@ -35,13 +29,37 @@ router.get(
   actionController.viewAllActions
 );
 
+/* ACTION COMMENT  */
+router.post(
+  "/addActionComment/:id",
+  actionValidator.actionCommentsValidator,
+  authMiddleware.verifyUserToken,
+  actionController.actionCommentsCreate
+);
+
 /* VIEW ACTION COMMENT  */
 router.get(
-  "/viewActionComment",
+  "/viewActionComment/:id",
   actionValidator.viewActionCommentValidator,
   authMiddleware.verifyUserToken,
   actionController.viewActionComment
 );
+
+/* EDIT ACTION COMMENT  */
+router.put(
+  "/updateActionComment/:commentId",
+  actionValidator.actionCommentsUpdateValidator,
+  authMiddleware.verifyUserToken,
+  actionController.actionCommentsUpdate
+);
+
+/* DELETE ACTION COMMENT  */
+router.delete(
+  "/deleteActionComment/:commentId",
+  authMiddleware.verifyUserToken,
+  actionController.actionCommentsDelete
+);
+
 
 /* REASSIGN ACTION  */
 router.put(
@@ -66,6 +84,8 @@ router.put(
   authMiddleware.verifyUserToken,
   actionController.updateAction
 );
+
+
 
 /* VIEW ACTION   */
 router.get(

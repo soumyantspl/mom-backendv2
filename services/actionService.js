@@ -16,31 +16,48 @@ const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const meetingService = require("../services/meetingService");
 const { pipeline } = require("nodemailer/lib/xoauth2");
+const moment = require('moment');
 
 const Organization = require("../models/organizationModel");
 const BASE_URL = process.env.BASE_URL;
 
-const moment = require('moment');
 
-//FUCNTION TO CREATE COMMENTS
-const comments = async (userId, id, data, ipAddress = "1000") => {
-  const inputData = {
-    actionId: id,
-    userId: userId,
-    commentDescription: data.commentDescription,
-  };
-  const commentData = new ActionComments(inputData);
-  const result = await commentData.save();
-  return result;
-};
-/**FUNC-VIEW ACTION COMMENT */
-// const viewActionComment = async (id) => {
-//   const viewActionCommentList = await ActionComments.findById(id);
-//   return {
-//     viewActionCommentList,
+// const addComments = async (userId, id, data) => {
+//   // Extract @usernames from comment
+//   const mentionedUsernames = data.commentDescription.match(/@([a-zA-Z0-9_]+)/g);
+
+//   let mentionedUsers = [];
+//   if (mentionedUsernames) {
+//     const usernames = mentionedUsernames.map(name => name.substring(1)); 
+
+//     console.log("Extracted Usernames:", usernames);
+
+//     // Fetch user IDs from the database
+//     mentionedUsers = await Employee.find({ name: { $in: usernames } }).select("_id");
+    
+//     console.log("Matched Users in DB:", mentionedUsers);
+
+//     mentionedUsers = mentionedUsers.map(employee => employee._id); 
+//   }
+
+//   const inputData = {
+//     actionId: id,
+//     userId: userId,
+//     commentDescription: data.commentDescription,
+//     mentionedUsers, 
 //   };
+
+//   const commentData = new ActionComments(inputData);
+//   const result = await commentData.save();
+  
+//   console.log("Final Comment Data:", result);
+  
+//   return result;
 // };
 
+
+
+//FUCNTION TO CREATE COMMENTS
 
 const addComments = async (userId, id, data) => {
   const actionDetails = await Minutes.findOne({ _id: id }).lean();
@@ -76,6 +93,7 @@ const addComments = async (userId, id, data) => {
       mentionedUsers.push({
         id: attendee._id.toString(),
         name: attendee.name,
+        email: attendee.email,
       });
       commentText = commentText.replace(mentionTag, "").trim(); 
     }
@@ -139,6 +157,11 @@ const addComments = async (userId, id, data) => {
   return result;
 };
 
+
+
+
+
+/**FUNC-VIEW ACTION COMMENT */
 const viewActionComment = async (actionId) => {
   const totalComments = await ActionComments.countDocuments({ actionId });
   const viewActionCommentList = await ActionComments.find({ actionId })
@@ -167,6 +190,18 @@ const viewActionComment = async (actionId) => {
  // console.log("Fetched Data:", formattedComments);
   return { totalComments, viewActionCommentList: formattedComments };
 };
+
+
+/**FUNC- EDIT ACTION COMMENT */
+// const updateComment = async (userId, commentId, data) => {
+//   const updatedComment = await ActionComments.findOneAndUpdate(
+//     { _id: commentId, userId: userId }, 
+//     { commentDescription: data.commentDescription },
+//     { new: true } 
+//   );
+
+//   return updatedComment;
+// };
 
 
 /**FUNC- ACTION REASSIGN REQUEST */
@@ -4000,7 +4035,6 @@ module.exports = {
   addComments,
   updateComment,
   deleteComment,
-  comments,
   viewActionComment,
   actionReassignRequest,
   viewSingleAction,

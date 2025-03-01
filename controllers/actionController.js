@@ -56,6 +56,83 @@ const viewActionComment = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+/** FUNC - TO UPDATE ACTION COMMENT **/
+const actionCommentsUpdate = async (req, res) => {
+  try {
+    const result = await actionService.updateComment(
+      req.userId,
+      req.params.commentId,
+      req.body
+    );
+
+    if (result === "unauthorized") {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.unauthorizedEdit,
+        403
+      );
+    }
+
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.updateFail,
+        409
+      );
+    }
+
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.updateSuccess,
+      200
+    );
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
+/**FUNC- TO DELETE ACTION COMMENT**/
+const actionCommentsDelete = async (req, res) => {
+  try {
+    const result = await actionService.deleteComment(
+      req.userId,
+      req.params.commentId
+    );
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.deleteFail,
+        409
+      );
+    }
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.deleteSuccess,
+      200
+    );
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
+
 /**FUNC- TO ACTION REASSIGN REQUEST**/
 const actionReassignRequest = async (req, res) => {
   try {
@@ -575,80 +652,6 @@ const getAttendeeDueActionPriorityDetails = async (req, res) => {
     );
   } catch (error) {
     console.log("Controller error:", error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
-
-/** FUNC - TO UPDATE ACTION COMMENT **/
-const actionCommentsUpdate = async (req, res) => {
-  try {
-    const result = await actionService.updateComment(
-      req.userId,
-      req.params.commentId,
-      req.body
-    );
-
-    if (result === "unauthorized") {
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        messages.unauthorizedEdit,
-        403
-      );
-    }
-
-    if (!result) {
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        messages.updateFail,
-        409
-      );
-    }
-
-    return Responses.successResponse(
-      req,
-      res,
-      result,
-      messages.updateSuccess,
-      200
-    );
-  } catch (error) {
-    console.log(error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
-
-
-/**FUNC- TO DELETE ACTION COMMENT**/
-const actionCommentsDelete = async (req, res) => {
-  try {
-    const result = await actionService.deleteComment(
-      req.userId,
-      req.params.commentId
-    );
-    if (!result) {
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        messages.deleteFail,
-        409
-      );
-    }
-    return Responses.successResponse(
-      req,
-      res,
-      result,
-      messages.deleteSuccess,
-      200
-    );
-  } catch (error) {
-    console.log(error);
     errorLog(error);
     return Responses.errorResponse(req, res, error);
   }

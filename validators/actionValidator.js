@@ -17,35 +17,7 @@ const delayStatusEnumData = ["DELAYED", "NOTDELAYED"];
 const enumPriorityValues = ["HIGH", "LOW", "NORMAL"];
 const regularExpression = /^[0-9a-zA-Z .(),/-]+$/;
 const commentRegex = /^[0-9a-zA-Z .(),@/-]+$/;
-// const actionCommentsValidator = async (req, res, next) => {
-//   try {
-//     const headerSchema = Joi.object({
-//       headers: Joi.object({
-//         authorization: Joi.required(),
-//         ip: Joi.string(),
-//       }).unknown(true),
-//     });
-//     const bodySchema = Joi.object({
-//       actionId: Joi.string().trim().alphanum().required(),
-//       userId: Joi.string().trim().alphanum().required(),
-//       commentDescription: Joi.string()
-//         .min(3)
-//         .max(50)
-//         .trim()
-//         .pattern(regularExpression)
-//         .messages({
-//           "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-//         }),
-//     });
-//     await headerSchema.validateAsync({ headers: req.headers });
-//     await bodySchema.validateAsync(req.body);
-//     next();
-//   } catch (error) {
-//     console.log(error);
-//     errorLog(error);
-//     return Responses.errorResponse(req, res, error);
-//   }
-// };
+
 // ACTION REASSIGN REQUEST VALIDATOR
 
 

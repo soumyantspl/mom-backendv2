@@ -2378,6 +2378,70 @@ const actionCancelEmailTemplate = async (
   });
 };
 
+
+// SEND COMMENT EMAIL TEMPLATE
+const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result) => {
+  const template = await EmailTemplate.findOne({
+    templateType: "SENDCOMMENT",
+    isActive: true,
+  });
+
+  if (!template) {
+    console.error("No email template found!");
+    return false;
+  }
+
+  if (!template.sendCommentCredentials) {
+    console.error("SendCommentCredentials missing in template!");
+    return false;
+  }
+
+  let body = template.sendCommentCredentials.body || "";
+  let subject = template.subject || "";
+
+  console.log("Template Body Before Replace:", body);
+  subject = subject.replace(/{UserName}/g,userDetail?.name);
+
+  body = body
+    .replace(
+      /{UserName}/g,
+     // commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
+      userDetail?.name
+    )
+    .replace(/{UserEmail}/g, userDetail?.email)
+    .replace("{commentDetails}", result?.commentDescription)
+    .replace("{organizerEmail}", meetingDetails.createdByDetail?.email)
+    .replace(
+      "{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital(meetingDetails.createdByDetail?.name))
+    .replace(
+      "{actionlink}",
+      `${process.env.FRONTEND_URL}/view-action-detail/${result?.actionId}`
+    );
+
+  console.log("Final Processed Body:", body);
+
+  const mailBody = `
+    <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
+      <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
+        <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
+          <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
+            <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
+          </a>
+          ${body}
+        </div>
+      </div>
+    </div>`;
+
+  return {
+    emailSubject: subject.trim(),
+    mailData: mailBody.trim(),
+  };
+};
+
+
+
+
+
 const actionCompleteEmailTemplate = async (  
   meetingData,
   logo,
@@ -2659,63 +2723,7 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
   });
 };
 
-// SEND COMMENT EMAIL TEMPLATE
-const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result) => {
-  const template = await EmailTemplate.findOne({
-    templateType: "SENDCOMMENT",
-    isActive: true,
-  });
 
-  if (!template) {
-    console.error("No email template found!");
-    return false;
-  }
-
-  if (!template.sendCommentCredentials) {
-    console.error("SendCommentCredentials missing in template!");
-    return false;
-  }
-
-  let body = template.sendCommentCredentials.body || "";
-  let subject = template.subject || "";
-
-  console.log("Template Body Before Replace:", body);
-  subject = subject.replace(/{UserName}/g,userDetail?.name);
-
-  body = body
-    .replace(
-      /{UserName}/g,
-      commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
-    )
-    .replace(/{UserEmail}/g, userDetail?.email)
-    .replace("{commentDetails}", result?.commentDescription)
-    .replace("{organizerEmail}", meetingDetails.createdByDetail?.email)
-    .replace(
-      "{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital(meetingDetails.createdByDetail?.name))
-    .replace(
-      "{actionlink}",
-      `${process.env.FRONTEND_URL}/view-action-detail/${result?.actionId}`
-    );
-
-  console.log("Final Processed Body:", body);
-
-  const mailBody = `
-    <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
-      <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
-        <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
-          <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
-            <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
-          </a>
-          ${body}
-        </div>
-      </div>
-    </div>`;
-
-  return {
-    emailSubject: subject.trim(),
-    mailData: mailBody.trim(),
-  };
-};
 
 module.exports = {
   signInByOtpEmail,

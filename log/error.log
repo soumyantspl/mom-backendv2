@@ -1833,6 +1833,7 @@ Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subjec
 >>>>>>> 390496992459c68a5ce10b742238e85ece178670
 >>>>>>> 684b56a0dca4f8de83c0bcb089304748abf1fa0a
 >>>>>>> 225cd03fa5aeddf73d0bebcca3385e75758098e1
+<<<<<<< HEAD
 Date: 24/02/2025, Time: 15:26
 Error: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
 Stack Trace: MongoParseError: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
@@ -2101,3 +2102,1011 @@ Stack Trace: ValidationError: "authorization" is required
 Date: 28/02/2025, Time: 16:18
 Error: "authorization" is required
 Stack Trace: ValidationError: "authorization" is required
+=======
+Date: 24/02/2025, Time: 11:39
+Error: "actionId" is required
+Stack Trace: ValidationError: "actionId" is required
+Date: 24/02/2025, Time: 11:53
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 11:57
+Error: mongoose is not defined
+Stack Trace: ReferenceError: mongoose is not defined
+    at Object.viewActionComment (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:43:3)
+    at viewActionComment (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:36:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 11:58
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 12:17
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 12:21
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 12:33
+Error: actionService.deleteComment is not a function
+Stack Trace: TypeError: actionService.deleteComment is not a function
+    at actionCommentsDelete (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:95:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 12:34
+Error: actionService.deleteComment is not a function
+Stack Trace: TypeError: actionService.deleteComment is not a function
+    at actionCommentsDelete (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:95:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 12:38
+Error: ip is not defined
+Stack Trace: ReferenceError: ip is not defined
+    at actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:15:7)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 12:38
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 24/02/2025, Time: 15:10
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 24/02/2025, Time: 15:21
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 15:31
+Error: "actionId" is required
+Stack Trace: ValidationError: "actionId" is required
+Date: 24/02/2025, Time: 15:34
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 24/02/2025, Time: 15:34
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 24/02/2025, Time: 15:35
+Error: User is not defined
+Stack Trace: ReferenceError: User is not defined
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:34:5)
+    at actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 24/02/2025, Time: 15:38
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 16:02
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 24/02/2025, Time: 17:32
+Error: "headers.content-type" is not allowed
+Stack Trace: ValidationError: "headers.content-type" is not allowed
+Date: 25/02/2025, Time: 12:19
+Error: Action is not defined
+Stack Trace: ReferenceError: Action is not defined
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:63:25)
+    at actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 25/02/2025, Time: 12:20
+Error: mongoose is not defined
+Stack Trace: ReferenceError: mongoose is not defined
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:99:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 12:21
+Error: attendeeDetails is not defined
+Stack Trace: ReferenceError: attendeeDetails is not defined
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2408:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:104:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 12:23
+Error: actionDetails is not defined
+Stack Trace: ReferenceError: actionDetails is not defined
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2414:55)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:104:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 12:23
+Error: commentDetails is not defined
+Stack Trace: ReferenceError: commentDetails is not defined
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2421:62)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:104:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 12:25
+Error: commentDetails is not defined
+Stack Trace: ReferenceError: commentDetails is not defined
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2434:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:104:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 12:27
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 12:32
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 12:35
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 12:38
+Error: emailLogs validation failed: emailType: Path `emailType` is required., subject: Path `subject` is required., body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: emailType: Path `emailType` is required., subject: Path `subject` is required., body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 12:46
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 12:53
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:01
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:03
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:05
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:07
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:08
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:14
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:16
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:23
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:24
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:25
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 13:27
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 14:38
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 14:55
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:02
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:07
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:10
+Error: emailSubject is not defined
+Stack Trace: ReferenceError: emailSubject is not defined
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2462:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:104:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 15:11
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:12
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:15
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:18
+Error: emailSubject is not defined
+Stack Trace: ReferenceError: emailSubject is not defined
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:118:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 15:21
+Error: emailLogs validation failed: subject: Path `subject` is required., body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subject` is required., body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:23
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:24
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:31
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:33
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:40
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:44
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:45
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:102:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 15:48
+Error: Class constructor ObjectId cannot be invoked without 'new'
+Stack Trace: TypeError: Class constructor ObjectId cannot be invoked without 'new'
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:99:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 15:57
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 15:58
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 16:07
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 16:18
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 16:19
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 16:21
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 16:22
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 16:39
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 16:42
+Error: actionId is not defined
+Stack Trace: ReferenceError: actionId is not defined
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:64:54)
+    at actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 25/02/2025, Time: 16:46
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 16:53
+Error: Cannot read properties of undefined (reading 'toString')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'toString')
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1247:41
+    at Array.map (<anonymous>)
+    at Object.viewMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1229:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:86:26)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 16:54
+Error: Cannot read properties of undefined (reading 'toString')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'toString')
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1247:41
+    at Array.map (<anonymous>)
+    at Object.viewMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1229:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:86:26)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 16:56
+Error: Cannot read properties of undefined (reading 'toString')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'toString')
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1247:41
+    at Array.map (<anonymous>)
+    at Object.viewMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1229:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:86:26)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 16:59
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:10
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:15
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:20
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:26
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2416:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:107:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 17:27
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2416:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:107:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 17:29
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2416:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:107:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 17:29
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2416:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:107:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 17:31
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2416:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:107:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 25/02/2025, Time: 17:35
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:37
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:40
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:42
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:47
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 17:49
+Error: Cast to ObjectId failed for value "{
+  actionId: '67bd61ad542c8a6f4ec69ce6',
+  userId: '67a9dbedf64501539c6eddcd',
+  commentDescription: ' Comments 20 for Testing'
+}" (type Object) at path "_id" for model "Minutes"
+Stack Trace: CastError: Cast to ObjectId failed for value "{
+  actionId: '67bd61ad542c8a6f4ec69ce6',
+  userId: '67a9dbedf64501539c6eddcd',
+  commentDescription: ' Comments 20 for Testing'
+}" (type Object) at path "_id" for model "Minutes"
+    at SchemaObjectId.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schema\objectId.js:251:11)
+    at SchemaType.applySetters (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaType.castForQuery (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1673:17)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:319:34)
+    at Query.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:64:25)
+Date: 25/02/2025, Time: 17:56
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:01
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:04
+Error: "userId" is required
+Stack Trace: ValidationError: "userId" is required
+Date: 25/02/2025, Time: 18:04
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:11
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:12
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:19
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:21
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:26
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:31
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:41
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:49
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 18:53
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 19:02
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 19:02
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 19:03
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 19:12
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 25/02/2025, Time: 19:16
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 27/02/2025, Time: 09:58
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 27/02/2025, Time: 10:02
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 27/02/2025, Time: 10:05
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 27/02/2025, Time: 10:06
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 27/02/2025, Time: 10:22
+Error: Schema hasn't been registered for model "Employee".
+Use mongoose.model(name, schema)
+Stack Trace: MissingSchemaError: Schema hasn't been registered for model "Employee".
+Use mongoose.model(name, schema)
+    at NativeConnection.model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\connection.js:1489:13)
+    at _getModelFromConn (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:579:15)
+    at addModelNamesToMap (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:507:17)
+    at getModelsMapForPopulate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\helpers\populate\getModelsMapForPopulate.js:208:7)
+    at _populatePath (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:4435:21)
+    at Function.populate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:4403:19)
+    at model.Query._find (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2403:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:63)
+    at async Object.viewActionComment (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:157:33)
+Date: 27/02/2025, Time: 10:34
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 27/02/2025, Time: 10:42
+Error: "userId" is required
+Stack Trace: ValidationError: "userId" is required
+Date: 27/02/2025, Time: 10:43
+Error: emailLogs validation failed: body: Path `body` is required.
+Stack Trace: ValidationError: emailLogs validation failed: body: Path `body` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 27/02/2025, Time: 12:08
+Error: commenterDetail is not defined
+Stack Trace: ReferenceError: commenterDetail is not defined
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:94:37)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 12:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 27/02/2025, Time: 12:27
+Error: commenterDetail is not defined
+Stack Trace: ReferenceError: commenterDetail is not defined
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:94:37)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 12:42
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 27/02/2025, Time: 15:45
+Error: Cannot read properties of undefined (reading 'toLowerCase')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'toLowerCase')
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:86:59
+    at Array.find (<anonymous>)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:86:28
+    at String.replace (<anonymous>)
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:85:52)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 16:07
+Error: Cannot read properties of undefined (reading 'find')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'find')
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:90:28
+    at String.replace (<anonymous>)
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:88:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 16:52
+Error: "reAssignedUsers" is required
+Stack Trace: ValidationError: "reAssignedUsers" is required
+Date: 27/02/2025, Time: 17:20
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2415:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:123:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 17:25
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2415:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:125:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 17:25
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2415:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:125:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 17:30
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2415:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:127:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 17:42
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2415:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:127:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 17:44
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 27/02/2025, Time: 17:46
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 27/02/2025, Time: 17:46
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2414:38)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:127:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 17:58
+Error: Cannot read properties of undefined (reading 'split')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'split')
+    at Object.convertFirstLetterOfFullNameToCapital (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:376:30)
+    at Object.sendCommentEmailTemplate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:2414:38)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:128:20)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 18:24
+Error: "commentDescription" length must be less than or equal to 50 characters long
+Stack Trace: ValidationError: "commentDescription" length must be less than or equal to 50 characters long
+Date: 27/02/2025, Time: 18:32
+Error: actionComments validation failed: mentionedUsers.0: Cast to [ObjectId] failed for value "[\n' +
+  "  { id: '678f436e22bd22f02f9a10f7', name: 'Sunil' },\n" +
+  "  { id: '67bff525d30b555118290b63', name: 'Moharana Sunil' },\n" +
+  "  { id: '678f428922bd22f02f9a0fe1', name: 'Monalisa-NTSPL' }\n" +
+  ']" (type string) at path "mentionedUsers.0" because of "CastError"
+Stack Trace: ValidationError: actionComments validation failed: mentionedUsers.0: Cast to [ObjectId] failed for value "[\n' +
+  "  { id: '678f436e22bd22f02f9a10f7', name: 'Sunil' },\n" +
+  "  { id: '67bff525d30b555118290b63', name: 'Moharana Sunil' },\n" +
+  "  { id: '678f428922bd22f02f9a0fe1', name: 'Monalisa-NTSPL' }\n" +
+  ']" (type string) at path "mentionedUsers.0" because of "CastError"
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1480:12)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1132:16)
+    at model.Document (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:178:12)
+    at model.Model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:128:12)
+    at new model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:4779:15)
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:111:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 27/02/2025, Time: 18:33
+Error: actionComments validation failed: mentionedUsers.0: Cast to [ObjectId] failed for value "[\n' +
+  "  { id: '678f436e22bd22f02f9a10f7', name: 'Sunil' },\n" +
+  "  { id: '67bff525d30b555118290b63', name: 'Moharana Sunil' },\n" +
+  "  { id: '678f428922bd22f02f9a0fe1', name: 'Monalisa-NTSPL' }\n" +
+  ']" (type string) at path "mentionedUsers.0" because of "CastError"
+Stack Trace: ValidationError: actionComments validation failed: mentionedUsers.0: Cast to [ObjectId] failed for value "[\n' +
+  "  { id: '678f436e22bd22f02f9a10f7', name: 'Sunil' },\n" +
+  "  { id: '67bff525d30b555118290b63', name: 'Moharana Sunil' },\n" +
+  "  { id: '678f428922bd22f02f9a0fe1', name: 'Monalisa-NTSPL' }\n" +
+  ']" (type string) at path "mentionedUsers.0" because of "CastError"
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1480:12)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1132:16)
+    at model.Document (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:178:12)
+    at model.Model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:128:12)
+    at new model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:4779:15)
+    at Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:111:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\actionController.js:11:20)
+Date: 01/03/2025, Time: 11:38
+Error: emailLogs validation failed: emailTo: Cast to string failed for value "[
+  'sunilntspl@gmail.com',
+  'sunilntspl@gmail.com',
+  'moharanasunil09@gmail.com',
+  'monalisamahantantspl@gmail.com'
+]" (type Array) at path "emailTo"
+Stack Trace: ValidationError: emailLogs validation failed: emailTo: Cast to string failed for value "[
+  'sunilntspl@gmail.com',
+  'sunilntspl@gmail.com',
+  'moharanasunil09@gmail.com',
+  'monalisamahantantspl@gmail.com'
+]" (type Array) at path "emailTo"
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1480:12)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1132:16)
+    at model.Document (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:178:12)
+    at model.Model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:128:12)
+    at new model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:4779:15)
+    at saveEmailLogs (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\emailService.js:49:24)
+    at Object.sendEmail (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\emailService.js:45:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:152:3)
+Date: 01/03/2025, Time: 11:44
+Error: emailLogs validation failed: emailTo: Cast to string failed for value "[
+  'sunilntspl@gmail.com',
+  'sunilntspl@gmail.com',
+  'moharanasunil09@gmail.com',
+  'monalisamahantantspl@gmail.com'
+]" (type Array) at path "emailTo"
+Stack Trace: ValidationError: emailLogs validation failed: emailTo: Cast to string failed for value "[
+  'sunilntspl@gmail.com',
+  'sunilntspl@gmail.com',
+  'moharanasunil09@gmail.com',
+  'monalisamahantantspl@gmail.com'
+]" (type Array) at path "emailTo"
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1480:12)
+    at model.$set (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:1132:16)
+    at model.Document (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:178:12)
+    at model.Model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:128:12)
+    at new model (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\model.js:4779:15)
+    at saveEmailLogs (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\emailService.js:49:24)
+    at Object.sendEmail (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\emailService.js:45:16)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.addComments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\actionService.js:152:3)
+Date: 01/03/2025, Time: 11:51
+Error: "reAssignedUsers" is required
+Stack Trace: ValidationError: "reAssignedUsers" is required
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
