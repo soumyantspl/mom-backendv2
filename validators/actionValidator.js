@@ -16,12 +16,14 @@ const delayStatusEnumData = ["DELAYED", "NOTDELAYED"];
 //const regularExpression = /^[0-9a-zA-Z ,/-]+$/;
 const enumPriorityValues = ["HIGH", "LOW", "NORMAL"];
 const regularExpression = /^[0-9a-zA-Z .(),/-]+$/;
+const commentRegex = /^[0-9a-zA-Z .(),@/-]+$/;
+
 const actionCommentsValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
       headers: Joi.object({
         authorization: Joi.required(),
-        ip: Joi.string(),
+     
       }).unknown(true),
     });
     const bodySchema = Joi.object({
@@ -29,9 +31,9 @@ const actionCommentsValidator = async (req, res, next) => {
       userId: Joi.string().trim().alphanum().required(),
       commentDescription: Joi.string()
         .min(3)
-        .max(50)
+        .max(300)
         .trim()
-        .pattern(regularExpression)
+        .pattern(commentRegex)
         .messages({
           "string.pattern.base": `HTML tags & Special letters are not allowed!`,
         }),
@@ -45,6 +47,38 @@ const actionCommentsValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+//ACTION COMMENT UPDATE VALIDATOR
+const actionCommentsUpdateValidator = async (req, res, next) => {
+  try {
+
+    const headerSchema = Joi.object({
+      authorization: Joi.string().required(), 
+    }).unknown(true); 
+
+
+    const bodySchema = Joi.object({
+      commentDescription: Joi.string()
+        .min(3)
+        .max(50)
+        .trim()
+        .pattern(commentRegex)
+        .messages({
+          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+        }),
+    });
+    
+    await headerSchema.validateAsync(req.headers);
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
 // ACTION REASSIGN REQUEST VALIDATOR
 const actionReassignRequestValidator = async (req, res, next) => {
   try {
@@ -566,6 +600,7 @@ const ChartbarClickattendee = async (req, res, next) => {
 
 module.exports = {
   actionCommentsValidator,
+  actionCommentsUpdateValidator,
   actionReassignRequestValidator,
   viewSingleActionValidator,
   reAssignActionValidator,
