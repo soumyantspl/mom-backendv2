@@ -59,6 +59,104 @@ const BASE_URL = process.env.BASE_URL;
 
 //FUCNTION TO CREATE COMMENTS
 
+// const addComments = async (userId, id, data) => {
+//   const actionDetails = await Minutes.findOne({ _id: id }).lean();
+//   console.log("Action Details====", actionDetails);
+
+//   if (!actionDetails || !actionDetails.meetingId) {
+//     console.error("Error: No meetingId found for the given actionId.");
+//     return false;
+//   }
+
+//   const meetingDetails = await meetingService.viewMeeting(
+//     actionDetails.meetingId,
+//     data.userId
+//   );
+
+//   if (!meetingDetails || !Array.isArray(meetingDetails.attendees)) {
+//     console.error("Error: Meeting details or attendees not found.");
+//     return false;
+//   }
+
+//   console.log("Meeting Details====:", meetingDetails);
+//   console.log("Attendees-----", meetingDetails.attendees);
+
+//   let mentionedUsers = [];
+//   let commentText = data.commentDescription;
+
+//   // Extract mentioned attendees based on their names
+//   meetingDetails.attendees.forEach(attendee => {
+//     if (!attendee.name) return;
+//     const mentionTag = `@${attendee.name}`;
+    
+//     if (commentText.includes(mentionTag)) {
+//       mentionedUsers.push({
+//         id: attendee._id.toString(),
+//         name: attendee.name,
+//         email: attendee.email,
+//       });
+//       commentText = commentText.replace(mentionTag, "").trim(); 
+//     }
+//   });
+
+//   const inputData = {
+//     meetingId: actionDetails.meetingId,
+//     actionId: id,
+//     userId: data.userId,
+//     commentDescription: commentText, 
+//     mentionedUsers, 
+//   };
+
+//   console.log("Input Data for ActionComments:", inputData);
+
+//   const commentData = new ActionComments(inputData);
+//   let result = await commentData.save();
+//   console.log("Saved Comment Data:", result);
+
+//   const userDetail = await Employee.findOne(
+//     { _id: new ObjectId(data.userId) },
+//     { _id: 1, email: 1, name: 1 }
+//   ).lean();
+
+//   if (!userDetail) {
+//     console.error("Error: User not found!");
+//     return false;
+//   }
+
+//   console.log("User Details:", userDetail);
+
+//   const logo = process.env.LOGO;
+//   const mailData = await emailTemplates.sendCommentEmailTemplate(
+//     meetingDetails,
+//     logo,
+//     userDetail,
+//     result
+//   );
+
+//   console.log("MailData from action service:", mailData);
+
+//   if (!mailData) {
+//     console.error("Error: Email template generation failed.");
+//     return false;
+//   }
+
+//   const { emailSubject, mailData: mailBody } = mailData;
+//   console.log("MailBody sent:", mailBody);
+
+//   await emailService.sendEmail(
+//     meetingDetails?.createdByDetail?.email,
+//     "Comment Created",
+//     emailSubject,
+//     mailBody
+//   );
+
+//   result = result.toObject();
+//   result.userName = userDetail.name;
+//   result.userEmail = userDetail.email;
+
+//   return result;
+// };
+
 const addComments = async (userId, id, data) => {
   const actionDetails = await Minutes.findOne({ _id: id }).lean();
   console.log("Action Details====", actionDetails);
@@ -126,29 +224,57 @@ const addComments = async (userId, id, data) => {
   console.log("User Details:", userDetail);
 
   const logo = process.env.LOGO;
-  const mailData = await emailTemplates.sendCommentEmailTemplate(
+
+  // Send an email to each mentioned user individually
+  for (const mentionedUser of mentionedUsers) {
+    const personalizedMailData = await emailTemplates.sendCommentEmailTemplate(
+      meetingDetails,
+      logo,
+      userDetail,
+      result,
+      mentionedUser.name 
+    );
+
+    if (!personalizedMailData) {
+      console.error(`Error: Email template generation failed for ${mentionedUser.email}`);
+      continue; 
+    }
+
+    const { emailSubject, mailData: mailBody } = personalizedMailData;
+
+    await emailService.sendEmail(
+      mentionedUser.email,
+      "Comment Created",
+      emailSubject,
+      mailBody
+    );
+
+    console.log(`Email sent to ${mentionedUser.email}`);
+  }
+
+  // Send an email to the meeting creator
+  const organizerMailData = await emailTemplates.sendCommentEmailTemplate(
     meetingDetails,
     logo,
     userDetail,
-    result
+    result,
+    meetingDetails.createdByDetail?.name 
   );
 
-  console.log("MailData from action service:", mailData);
+  if (organizerMailData) {
+    const { emailSubject, mailData: mailBody } = organizerMailData;
+    
+    await emailService.sendEmail(
+      meetingDetails.createdByDetail?.email,
+      "Comment Created",
+      emailSubject,
+      mailBody
+    );
 
-  if (!mailData) {
-    console.error("Error: Email template generation failed.");
-    return false;
+    console.log(`Email sent to Meeting Organizer: ${meetingDetails.createdByDetail?.email}`);
+  } else {
+    console.error("Error: Email template generation failed for meeting organizer.");
   }
-
-  const { emailSubject, mailData: mailBody } = mailData;
-  console.log("MailBody sent:", mailBody);
-
-  await emailService.sendEmail(
-    meetingDetails?.createdByDetail?.email,
-    "Comment Created",
-    emailSubject,
-    mailBody
-  );
 
   result = result.toObject();
   result.userName = userDetail.name;

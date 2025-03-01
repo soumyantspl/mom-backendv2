@@ -66,7 +66,7 @@ const updateEmailTemplate = async (organizationId, data) => {
     
     "ACTIONASSIGNADMIN": ["{name}", "{actionTitle}", "{assignedUserName}", "{actionlink}", "{organizerName}", "{organizerEmail}"],
 
-    "SENDCOMMENT": [ "{actionTitle}", "{UserName}","{UserEmail}", "{actionlink}", "{organizerName}", "{organizerEmail}", "{commentDetails}"],
+    "SENDCOMMENT": [ "{actionTitle}", "{UserName}","{UserEmail}", "{actionlink}","Greetings", "{organizerName}", "{organizerEmail}", "{commentDetails}"],
    
 };
 

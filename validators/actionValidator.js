@@ -16,7 +16,8 @@ const delayStatusEnumData = ["DELAYED", "NOTDELAYED"];
 //const regularExpression = /^[0-9a-zA-Z ,/-]+$/;
 const enumPriorityValues = ["HIGH", "LOW", "NORMAL"];
 const regularExpression = /^[0-9a-zA-Z .(),/-]+$/;
-const commentRegex = /^[0-9a-zA-Z .(),@/-]+$/;
+// const commentRegex = /^[0-9a-zA-Z .(),@/-]+$/;
+const commentRegex = /^[0-9a-zA-Z .(),@/<>\-="']+$/;
 
 const actionCommentsValidator = async (req, res, next) => {
   try {
