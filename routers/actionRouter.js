@@ -149,12 +149,37 @@ router.post(
   actionController.getAttendeeDueActionPriorityDetails
 );
 
+////////////// for commentt section /////////////////////////
+
 /* VIEW ACTION COMMENT  */
 router.get(
   "/viewActionComment/:id",
   actionValidator.viewActionCommentValidator,
   authMiddleware.verifyUserToken,
   actionController.viewActionComment
+);
+
+/* ACTION COMMENT  */
+router.post(
+  "/addActionComment/:id",
+  actionValidator.actionCommentsValidator,
+  authMiddleware.verifyUserToken,
+  actionController.actionCommentsCreate
+);
+
+/* EDIT ACTION COMMENT  */
+router.put(
+  "/updateActionComment/:commentId",
+  actionValidator.actionCommentsUpdateValidator,
+  authMiddleware.verifyUserToken,
+  actionController.actionCommentsUpdate
+);
+
+/* DELETE ACTION COMMENT  */
+router.delete(
+  "/deleteActionComment/:commentId",
+  authMiddleware.verifyUserToken,
+  actionController.actionCommentsDelete
 );
 
 module.exports = router;

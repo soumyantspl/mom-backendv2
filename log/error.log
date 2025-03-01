@@ -2011,3 +2011,93 @@ Stack Trace: ReferenceError: moment is not defined
     at Object.viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:49:51)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\controllers\actionController.js:36:20)
+Date: 28/02/2025, Time: 14:27
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 28/02/2025, Time: 14:28
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 28/02/2025, Time: 15:09
+Error: commentRegex is not defined
+Stack Trace: ReferenceError: commentRegex is not defined
+    at actionCommentsValidator (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\validators\actionValidator.js:601:18)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 28/02/2025, Time: 15:11
+Error: "userId" is required
+Stack Trace: ValidationError: "userId" is required
+Date: 28/02/2025, Time: 15:12
+Error: "actionId" is required
+Stack Trace: ValidationError: "actionId" is required
+Date: 28/02/2025, Time: 15:12
+Error: "userId" is required
+Stack Trace: ValidationError: "userId" is required
+Date: 28/02/2025, Time: 15:15
+Error: "meetingId" is not allowed
+Stack Trace: ValidationError: "meetingId" is not allowed
+Date: 28/02/2025, Time: 15:16
+Error: emailTemplates.sendCommentEmailTemplate is not a function
+Stack Trace: TypeError: emailTemplates.sendCommentEmailTemplate is not a function
+    at Object.addComments (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:111:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\controllers\actionController.js:11:20)
+Date: 28/02/2025, Time: 15:22
+Error: "userId" is required
+Stack Trace: ValidationError: "userId" is required
+Date: 28/02/2025, Time: 16:12
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 28/02/2025, Time: 16:13
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 28/02/2025, Time: 16:13
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 28/02/2025, Time: 16:15
+Error: "authorization" is required
+Stack Trace: ValidationError: "authorization" is required
+Date: 28/02/2025, Time: 16:15
+Error: "authorization" is required
+Stack Trace: ValidationError: "authorization" is required
+Date: 28/02/2025, Time: 16:18
+Error: "authorization" is required
+Stack Trace: ValidationError: "authorization" is required

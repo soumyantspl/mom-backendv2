@@ -16,63 +16,38 @@ const delayStatusEnumData = ["DELAYED", "NOTDELAYED"];
 //const regularExpression = /^[0-9a-zA-Z ,/-]+$/;
 const enumPriorityValues = ["HIGH", "LOW", "NORMAL"];
 const regularExpression = /^[0-9a-zA-Z .(),/-]+$/;
-const actionCommentsValidator = async (req, res, next) => {
-  try {
-    const headerSchema = Joi.object({
-      headers: Joi.object({
-        authorization: Joi.required(),
-        ip: Joi.string(),
-      }).unknown(true),
-    });
-    const bodySchema = Joi.object({
-      actionId: Joi.string().trim().alphanum().required(),
-      userId: Joi.string().trim().alphanum().required(),
-      commentDescription: Joi.string()
-        .min(3)
-        .max(50)
-        .trim()
-        .pattern(regularExpression)
-        .messages({
-          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-        }),
-    });
-    await headerSchema.validateAsync({ headers: req.headers });
-    await bodySchema.validateAsync(req.body);
-    next();
-  } catch (error) {
-    console.log(error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
+const commentRegex = /^[0-9a-zA-Z .(),@/-]+$/;
+// const actionCommentsValidator = async (req, res, next) => {
+//   try {
+//     const headerSchema = Joi.object({
+//       headers: Joi.object({
+//         authorization: Joi.required(),
+//         ip: Joi.string(),
+//       }).unknown(true),
+//     });
+//     const bodySchema = Joi.object({
+//       actionId: Joi.string().trim().alphanum().required(),
+//       userId: Joi.string().trim().alphanum().required(),
+//       commentDescription: Joi.string()
+//         .min(3)
+//         .max(50)
+//         .trim()
+//         .pattern(regularExpression)
+//         .messages({
+//           "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+//         }),
+//     });
+//     await headerSchema.validateAsync({ headers: req.headers });
+//     await bodySchema.validateAsync(req.body);
+//     next();
+//   } catch (error) {
+//     console.log(error);
+//     errorLog(error);
+//     return Responses.errorResponse(req, res, error);
+//   }
+// };
 // ACTION REASSIGN REQUEST VALIDATOR
-const actionReassignRequestValidator = async (req, res, next) => {
-  try {
-    const headerSchema = Joi.object({
-      headers: Joi.object({
-        authorization: Joi.required(),
-        ip: Joi.string(),
-      }).unknown(true),
-    });
-    const bodySchema = Joi.object({
-      requestDetails: Joi.string().trim().pattern(regularExpression).messages({
-        "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-      }),
-    });
-    const paramsSchema = Joi.object({
-      id: Joi.string().trim().alphanum().required(),
-    });
 
-    await headerSchema.validateAsync({ headers: req.headers });
-    await paramsSchema.validateAsync(req.params);
-    await bodySchema.validateAsync(req.body);
-    next();
-  } catch (error) {
-    console.log(error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-};
 
 // VIEW SINGLE ACTION VALIDATOR
 const viewSingleActionValidator = async (req, res, next) => {
@@ -530,7 +505,34 @@ const ChartbarClickforalldata = async (req, res, next) => {
     return Responses.errorResponse(req, res, error, 200);
   }
 };
+// ACTION REASSIGN REQUEST VALIDATOR
+const actionReassignRequestValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+        ip: Joi.string(),
+      }).unknown(true),
+    });
+    const bodySchema = Joi.object({
+      requestDetails: Joi.string().trim().pattern(regularExpression).messages({
+        "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+      }),
+    });
+    const paramsSchema = Joi.object({
+      id: Joi.string().trim().alphanum().required(),
+    });
 
+    await headerSchema.validateAsync({ headers: req.headers });
+    await paramsSchema.validateAsync(req.params);
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 const ChartbarClickattendee = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
@@ -583,8 +585,69 @@ const viewActionCommentValidator = async (req, res, next) => {
   }
 };
 
+const actionCommentsValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+     
+      }).unknown(true),
+    });
+    const bodySchema = Joi.object({
+      actionId: Joi.string().trim().alphanum().required(),
+      userId: Joi.string().trim().alphanum().required(),
+      commentDescription: Joi.string()
+        .min(3)
+        .max(300)
+        .trim()
+        .pattern(commentRegex)
+        .messages({
+          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+        }),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+//ACTION COMMENT UPDATE VALIDATOR
+const actionCommentsUpdateValidator = async (req, res, next) => {
+  try {
+
+    const headerSchema = Joi.object({
+      authorization: Joi.string().required(), 
+    }).unknown(true); 
+
+
+    const bodySchema = Joi.object({
+      commentDescription: Joi.string()
+        .min(3)
+        .max(50)
+        .trim()
+        .pattern(commentRegex)
+        .messages({
+          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+        }),
+    });
+    
+    await headerSchema.validateAsync(req.headers);
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
 module.exports = {
   actionCommentsValidator,
+  actionCommentsUpdateValidator,
   actionReassignRequestValidator,
   viewSingleActionValidator,
   reAssignActionValidator,
