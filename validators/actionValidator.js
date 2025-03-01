@@ -552,7 +552,11 @@ const ChartbarClickattendee = async (req, res, next) => {
     const bodySchema = Joi.object({
       organizationId: Joi.string().trim().alphanum().required(),
       meetingId:Joi.string().trim(),
-      assignedUserId:Joi.string().trim(),
+      assignedUserId: Joi.alternatives().try(
+        Joi.string().trim(), 
+        Joi.array().items(Joi.string().trim())
+      ),
+      
       searchKey: Joi.string()
         .trim()
         .pattern(regularExpression)

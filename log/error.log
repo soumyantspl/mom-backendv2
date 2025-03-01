@@ -1995,3 +1995,50 @@ Stack Trace: ValidationError: "units" is required
 Date: 27/02/2025, Time: 10:49
 Error: "designation" must only contain alpha-numeric characters
 Stack Trace: ValidationError: "designation" must only contain alpha-numeric characters
+Date: 01/03/2025, Time: 10:19
+Error: Cannot read properties of undefined (reading '_id')
+Stack Trace: TypeError: Cannot read properties of undefined (reading '_id')
+    at D:\MinutesVault V2\mom-backendv2\emailSetUp\dynamicEmailTemplate.js:618:68
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 01/03/2025, Time: 10:56
+Error: logo is not defined
+Stack Trace: ReferenceError: logo is not defined
+    at Object.acceptMinutes (D:\MinutesVault V2\mom-backendv2\services\minutesService.js:1217:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async acceptMinutes (D:\MinutesVault V2\mom-backendv2\controllers\minutesController.js:345:20)
+Date: 01/03/2025, Time: 11:39
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3704:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:554:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 01/03/2025, Time: 11:39
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3704:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:554:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 01/03/2025, Time: 11:40
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3704:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:554:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 01/03/2025, Time: 11:40
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3704:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:554:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
