@@ -3110,3 +3110,9 @@ Date: 01/03/2025, Time: 11:51
 Error: "reAssignedUsers" is required
 Stack Trace: ValidationError: "reAssignedUsers" is required
 >>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
+Date: 01/03/2025, Time: 17:24
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 01/03/2025, Time: 17:25
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
