@@ -3116,3 +3116,15 @@ Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
 Date: 01/03/2025, Time: 17:25
 Error: HTML tags & Special letters are not allowed!
 Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 03/03/2025, Time: 16:25
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 03/03/2025, Time: 16:30
+Error: "commentDescription" length must be less than or equal to 50 characters long
+Stack Trace: ValidationError: "commentDescription" length must be less than or equal to 50 characters long
+Date: 03/03/2025, Time: 18:02
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 03/03/2025, Time: 18:03
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!

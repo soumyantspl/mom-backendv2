@@ -126,29 +126,57 @@ const addComments = async (userId, id, data) => {
   console.log("User Details:", userDetail);
 
   const logo = process.env.LOGO;
-  const mailData = await emailTemplates.sendCommentEmailTemplate(
+
+  // Send an email to each mentioned user individually
+  for (const mentionedUser of mentionedUsers) {
+    const personalizedMailData = await emailTemplates.sendCommentEmailTemplate(
+      meetingDetails,
+      logo,
+      userDetail,
+      result,
+      mentionedUser.name 
+    );
+
+    if (!personalizedMailData) {
+      console.error(`Error: Email template generation failed for ${mentionedUser.email}`);
+      continue; 
+    }
+
+    const { emailSubject, mailData: mailBody } = personalizedMailData;
+
+    await emailService.sendEmail(
+      mentionedUser.email,
+      "Comment Created",
+      emailSubject,
+      mailBody
+    );
+
+    console.log(`Email sent to ${mentionedUser.email}`);
+  }
+
+  // Send an email to the meeting creator
+  const organizerMailData = await emailTemplates.sendCommentEmailTemplate(
     meetingDetails,
     logo,
     userDetail,
-    result
+    result,
+    meetingDetails.createdByDetail?.name 
   );
 
-  console.log("MailData from action service:", mailData);
+  if (organizerMailData) {
+    const { emailSubject, mailData: mailBody } = organizerMailData;
+    
+    await emailService.sendEmail(
+      meetingDetails.createdByDetail?.email,
+      "Comment Created",
+      emailSubject,
+      mailBody
+    );
 
-  if (!mailData) {
-    console.error("Error: Email template generation failed.");
-    return false;
+    console.log(`Email sent to Meeting Organizer: ${meetingDetails.createdByDetail?.email}`);
+  } else {
+    console.error("Error: Email template generation failed for meeting organizer.");
   }
-
-  const { emailSubject, mailData: mailBody } = mailData;
-  console.log("MailBody sent:", mailBody);
-
-  await emailService.sendEmail(
-    meetingDetails?.createdByDetail?.email,
-    "Comment Created",
-    emailSubject,
-    mailBody
-  );
 
   result = result.toObject();
   result.userName = userDetail.name;
