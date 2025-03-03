@@ -7,8 +7,9 @@ const otpDemoLogs = require("../models/otpDemoLogsModel");
 const otpContactUsLogs = require("../models/contactUsOtpLogs");
 const DemoClient = require("../models/demoClientsSchema");
 const contactUs = require("../models/contactUsModel");
-
+const ObjectId = require("mongoose").Types.ObjectId;
 const Organization = require("../models/organizationModel");
+const ContactUs = require("../models/contactUsModel");
 const BASE_URL = process.env.BASE_URL;
 
 //FUCNTION TO CREATE DEPARTMENT
@@ -66,6 +67,7 @@ const createDemoClient = async (data, ipAddress) => {
     };
   }
 };
+
 
 const demoSendOtp = async (data, ipAddress) => {
   data;
@@ -289,6 +291,26 @@ const saveContactUsDetails = async (data, ipAddress) => {
   }
 };
 
+const contactUsList = async (searchKey = "") => {
+  searchKey = searchKey.trim();
+
+  const query =
+    searchKey.length > 0
+      ? {
+          $or: [
+            { name: { $regex: new RegExp(searchKey, "i") } }, 
+            { email: { $regex: new RegExp(searchKey, "i") } },
+          ],
+        }
+      : {}; 
+
+  const result = await ContactUs.find(query); 
+  const totalCount = await ContactUs.countDocuments(query); 
+
+  return { totalCount, result };
+};
+
+
 const contactUsSendOtp = async (data, ipAddress) => {
   data;
   const name = data.name;
@@ -454,4 +476,5 @@ module.exports = {
   saveContactUsDetails,
   contactUsSendOtp,
   verifyContactUsOtp,
+  contactUsList
 };

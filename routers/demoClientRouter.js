@@ -7,6 +7,9 @@ router.post(
   DemoClientValidator.createDemoClientValidator,
   demoClientController.createDemoClient
 );
+router.get("/contact-list", 
+  demoClientController.getAllContacts);
+
 router.post(
   "/demoSendOtp",
   DemoClientValidator.sendOtpValidator,
