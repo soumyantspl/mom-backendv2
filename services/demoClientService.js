@@ -291,24 +291,6 @@ const saveContactUsDetails = async (data, ipAddress) => {
   }
 };
 
-const contactUsList = async (searchKey = "") => {
-  searchKey = searchKey.trim();
-
-  const query =
-    searchKey.length > 0
-      ? {
-          $or: [
-            { name: { $regex: new RegExp(searchKey, "i") } }, 
-            { email: { $regex: new RegExp(searchKey, "i") } },
-          ],
-        }
-      : {}; 
-
-  const result = await ContactUs.find(query); 
-  const totalCount = await ContactUs.countDocuments(query); 
-
-  return { totalCount, result };
-};
 
 
 const contactUsSendOtp = async (data, ipAddress) => {
@@ -476,5 +458,5 @@ module.exports = {
   saveContactUsDetails,
   contactUsSendOtp,
   verifyContactUsOtp,
-  contactUsList
+ 
 };
