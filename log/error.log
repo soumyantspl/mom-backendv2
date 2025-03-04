@@ -3128,3 +3128,167 @@ Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
 Date: 03/03/2025, Time: 18:03
 Error: HTML tags & Special letters are not allowed!
 Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 04/03/2025, Time: 11:26
+Error: "mentionedUsers" is not allowed
+Stack Trace: ValidationError: "mentionedUsers" is not allowed
+Date: 04/03/2025, Time: 12:47
+Error: "commentDescription" is not allowed to be empty
+Stack Trace: ValidationError: "commentDescription" is not allowed to be empty
+Date: 04/03/2025, Time: 12:48
+Error: "commentDescription" is not allowed to be empty
+Stack Trace: ValidationError: "commentDescription" is not allowed to be empty
+Date: 04/03/2025, Time: 15:34
+Error: "commentDescription" length must be less than or equal to 50 characters long
+Stack Trace: ValidationError: "commentDescription" length must be less than or equal to 50 characters long
+Date: 04/03/2025, Time: 15:35
+Error: "commentDescription" length must be less than or equal to 50 characters long
+Stack Trace: ValidationError: "commentDescription" length must be less than or equal to 50 characters long
+Date: 04/03/2025, Time: 15:37
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 04/03/2025, Time: 15:43
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 04/03/2025, Time: 15:55
+Error: "mentionedUsers" is not allowed
+Stack Trace: ValidationError: "mentionedUsers" is not allowed
+Date: 04/03/2025, Time: 15:57
+Error: "mentionedUsers" is not allowed
+Stack Trace: ValidationError: "mentionedUsers" is not allowed
+Date: 04/03/2025, Time: 16:04
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:09
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:11
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:24
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:27
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:30
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:37
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:55
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 17:56
+Error: "mentionedUsers" is not allowed
+Stack Trace: ValidationError: "mentionedUsers" is not allowed
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)

@@ -48,7 +48,7 @@ router.get(
 /* EDIT ACTION COMMENT  */
 router.put(
   "/updateActionComment/:commentId",
-  actionValidator.actionCommentsUpdateValidator,
+   actionValidator.actionCommentsUpdateValidator,
   authMiddleware.verifyUserToken,
   actionController.actionCommentsUpdate
 );

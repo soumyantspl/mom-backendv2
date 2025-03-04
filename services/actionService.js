@@ -3969,21 +3969,19 @@ const getAttendeesWithPendingActions = async (
 
 /**FUNC- EDIT ACTION COMMENT */
 const updateComment = async (userId, commentId, data) => {
-  
   const existingComment = await ActionComments.findOne({ _id: commentId });
-console.log("Existing comment-----", existingComment);
+  console.log("Existing comment:", existingComment);
+
   if (!existingComment) {
     console.error("Error: Comment not found.");
     return false;
   }
 
-  
   const userDetail = await Employee.findOne(
     { _id: new ObjectId(userId) },
     { _id: 1, email: 1, name: 1 }
-  );
-// console.log("Userdetail id----",userDetail._id);
-// console.log("Existing comment userid=====",existingComment.userId);
+  ).lean();
+
   if (!userDetail) {
     console.error("Error: User details not found.");
     return false;
@@ -3993,60 +3991,231 @@ console.log("Existing comment-----", existingComment);
     console.error("Error: You can only edit your own comment.");
     return "unauthorized";
   }
+
+ 
+  const actionDetails = await Minutes.findOne({ _id: existingComment.actionId }).lean();
+  if (!actionDetails || !actionDetails.meetingId) {
+    console.error("Error: No meetingId found for the given actionId.");
+    return false;
+  }
+
+  const meetingDetails = await meetingService.viewMeeting(actionDetails.meetingId, userId);
+  if (!meetingDetails || !Array.isArray(meetingDetails.attendees)) {
+    console.error("Error: Meeting details or attendees not found.");
+    return false;
+  }
+
+  console.log("Meeting Details:", meetingDetails);
+  console.log("Attendees:", meetingDetails.attendees);
+
+  let mentionedUsers = data.mentionedUsers || [];
+  console.log("mentionedUsers inside update comment:", mentionedUsers);
+  let commentText = data.commentDescription.trim();
+
+ 
+  meetingDetails.attendees.forEach(attendee => {
+    if (!attendee.name) return;
+    const mentionTag = `@${attendee.name}`;
+
+    if (commentText.includes(mentionTag)) {
+      mentionedUsers.push({
+        id: attendee._id.toString(),
+        name: attendee.name,
+        email: attendee.email,
+      });
+      commentText = commentText.replace(mentionTag, "").trim(); 
+    }
+  });
+     // Ensure mentionedUsers are valid attendees
+    //  mentionedUsers = mentionedUsers.filter(user => 
+    //   meetingDetails.attendees.some(attendee => attendee._id.toString() === user.id)
+    // );
   
   const updatedComment = await ActionComments.findOneAndUpdate(
     { _id: commentId },
-    { commentDescription: data.commentDescription },
+    { commentDescription: commentText, mentionedUsers },
     { new: true }
-  );
+  ).lean();
 
   if (!updatedComment) {
     console.error("Error: Comment update failed.");
     return false;
   }
 
-  
-  const actionDetails = await Minutes.findOne({ _id: updatedComment.actionId });
-  if (!actionDetails || !actionDetails.meetingId) {
-    console.error("Error: No meetingId found for the given actionId.");
-    return false;
-  }
+  console.log("Updated Comment:", updatedComment);
 
-  const meetingDetails = await meetingService.viewMeeting(
-    actionDetails.meetingId,
-    userId
-  );
-  if (!meetingDetails) {
-    console.error("Error: Meeting details not found.");
-    return false;
-  }
-
-  
   const logo = process.env.LOGO;
-  const mailData = await emailTemplates.sendCommentEmailTemplate(
+
+  // Send an email to each mentioned user individually
+  for (const mentionedUser of mentionedUsers) {
+    const personalizedMailData = await emailTemplates.sendCommentEmailTemplate(
+      meetingDetails,
+      logo,
+      userDetail,
+      updatedComment,
+      mentionedUser.name
+    );
+
+    if (!personalizedMailData) {
+      console.error(`Error: Email template generation failed for ${mentionedUser.email}`);
+      continue;
+    }
+
+    const { emailSubject, mailData: mailBody } = personalizedMailData;
+
+    await emailService.sendEmail(
+      mentionedUser.email,
+      "Comment Updated",
+      emailSubject,
+      mailBody
+    );
+
+    console.log(`Email sent to ${mentionedUser.email}`);
+  }
+
+  
+  const organizerMailData = await emailTemplates.sendCommentEmailTemplate(
     meetingDetails,
     logo,
     userDetail,
-    updatedComment
+    updatedComment,
+    meetingDetails.createdByDetail?.name
   );
 
-  if (!mailData) {
-    console.error("Error: Email template generation failed.");
-    return false;
+  if (organizerMailData) {
+    const { emailSubject, mailData: mailBody } = organizerMailData;
+
+    await emailService.sendEmail(
+      meetingDetails.createdByDetail?.email,
+      "Comment Updated",
+      emailSubject,
+      mailBody
+    );
+
+    console.log(`Email sent to Meeting Organizer: ${meetingDetails.createdByDetail?.email}`);
+  } else {
+    console.error("Error: Email template generation failed for meeting organizer.");
   }
-
-  const { emailSubject, mailData: mailBody } = mailData;
-  console.log("MailBody sent------", mailBody);
-
-  await emailService.sendEmail(
-    meetingDetails?.createdByDetail?.email,
-    "Comment Updated",
-    emailSubject,
-    mailBody
-  );
 
   return updatedComment;
 };
+
+
+// const updateComment = async (userId, commentId, data) => {
+//   const existingComment = await ActionComments.findOne({ _id: commentId });
+//   if (!existingComment) {
+//     console.error("Error: Comment not found.");
+//     return false;
+//   }
+
+//   const userDetail = await Employee.findOne(
+//     { _id: new ObjectId(userId) },
+//     { _id: 1, email: 1, name: 1 }
+//   ).lean();
+
+//   if (!userDetail) {
+//     console.error("Error: User details not found.");
+//     return false;
+//   }
+
+//   if (existingComment.userId.toString() !== userId.toString()) {
+//     console.error("Error: You can only edit your own comment.");
+//     return "unauthorized";
+//   }
+
+//   const actionDetails = await Minutes.findOne({ _id: existingComment.actionId }).lean();
+//   if (!actionDetails || !actionDetails.meetingId) {
+//     console.error("Error: No meetingId found for the given actionId.");
+//     return false;
+//   }
+
+//   const meetingDetails = await meetingService.viewMeeting(actionDetails.meetingId, userId);
+//   if (!meetingDetails || !Array.isArray(meetingDetails.attendees)) {
+//     console.error("Error: Meeting details or attendees not found.");
+//     return false;
+//   }
+
+//   console.log("Meeting Details:", meetingDetails);
+//   console.log("Attendees:", meetingDetails.attendees);
+
+//   // Extract mentions from the request payload
+//   let mentionedUsers = data.mentionedUsers || [];
+//   let commentText = data.commentDescription.trim();
+
+//   // Ensure mentionedUsers are valid attendees
+//   mentionedUsers = mentionedUsers.filter(user => 
+//     meetingDetails.attendees.some(attendee => attendee._id.toString() === user.id)
+//   );
+
+//   // Save updated comment with mentionedUsers
+//   const updatedComment = await ActionComments.findOneAndUpdate(
+//     { _id: commentId },
+//     { commentDescription: commentText, mentionedUsers },
+//     { new: true }
+//   ).lean();
+
+//   if (!updatedComment) {
+//     console.error("Error: Comment update failed.");
+//     return false;
+//   }
+
+//   console.log("Updated Comment:", updatedComment);
+
+//   const logo = process.env.LOGO;
+
+//   // Send emails to mentioned users
+//   for (const mentionedUser of mentionedUsers) {
+//     const personalizedMailData = await emailTemplates.sendCommentEmailTemplate(
+//       meetingDetails,
+//       logo,
+//       userDetail,
+//       updatedComment,
+//       mentionedUser.name
+//     );
+
+//     if (!personalizedMailData) {
+//       console.error(`Error: Email template generation failed for ${mentionedUser.email}`);
+//       continue;
+//     }
+
+//     const { emailSubject, mailData: mailBody } = personalizedMailData;
+
+//     await emailService.sendEmail(
+//       mentionedUser.email,
+//       "Comment Updated",
+//       emailSubject,
+//       mailBody
+//     );
+
+//     console.log(`Email sent to ${mentionedUser.email}`);
+//   }
+
+//   // Send email to meeting organizer
+//   const organizerMailData = await emailTemplates.sendCommentEmailTemplate(
+//     meetingDetails,
+//     logo,
+//     userDetail,
+//     updatedComment,
+//     meetingDetails.createdByDetail?.name
+//   );
+
+//   if (organizerMailData) {
+//     const { emailSubject, mailData: mailBody } = organizerMailData;
+
+//     await emailService.sendEmail(
+//       meetingDetails.createdByDetail?.email,
+//       "Comment Updated",
+//       emailSubject,
+//       mailBody
+//     );
+
+//     console.log(`Email sent to Meeting Organizer: ${meetingDetails.createdByDetail?.email}`);
+//   } else {
+//     console.error("Error: Email template generation failed for meeting organizer.");
+//   }
+
+//   return updatedComment;
+// };
 
 
 /**FUNC- DELETE ACTION COMMENT */

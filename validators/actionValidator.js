@@ -600,12 +600,19 @@ const actionCommentsUpdateValidator = async (req, res, next) => {
     const bodySchema = Joi.object({
       commentDescription: Joi.string()
         .min(3)
-        .max(50)
+        .max(100)
         .trim()
         .pattern(commentRegex)
         .messages({
           "string.pattern.base": `HTML tags & Special letters are not allowed!`,
         }),
+        mentionedUsers: Joi.array().items(
+          Joi.object({
+            id: Joi.string().required(),
+            name: Joi.string().min(1).max(50).required(),
+            email: Joi.string().email().required(),
+          })
+        ).optional(),
     });
     
     await headerSchema.validateAsync(req.headers);
