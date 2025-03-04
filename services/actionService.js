@@ -319,15 +319,6 @@ const viewActionComment = async (actionId) => {
 
 
 /**FUNC- EDIT ACTION COMMENT */
-// const updateComment = async (userId, commentId, data) => {
-//   const updatedComment = await ActionComments.findOneAndUpdate(
-//     { _id: commentId, userId: userId }, 
-//     { commentDescription: data.commentDescription },
-//     { new: true } 
-//   );
-
-//   return updatedComment;
-// };
 
 // const updateComment = async (userId, commentId, data) => {
   
@@ -408,6 +399,7 @@ const viewActionComment = async (actionId) => {
 
 //   return updatedComment;
 // };
+
 const updateComment = async (userId, commentId, data) => {
   const existingComment = await ActionComments.findOne({ _id: commentId });
   console.log("Existing comment:", existingComment);
@@ -432,7 +424,7 @@ const updateComment = async (userId, commentId, data) => {
     return "unauthorized";
   }
 
-  // Fetch related action & meeting details
+ 
   const actionDetails = await Minutes.findOne({ _id: existingComment.actionId }).lean();
   if (!actionDetails || !actionDetails.meetingId) {
     console.error("Error: No meetingId found for the given actionId.");
@@ -451,7 +443,7 @@ const updateComment = async (userId, commentId, data) => {
   let mentionedUsers = [];
   let commentText = data.commentDescription.trim();
 
-  // Extract mentioned attendees from the comment text
+ 
   meetingDetails.attendees.forEach(attendee => {
     if (!attendee.name) return;
     const mentionTag = `@${attendee.name}`;
@@ -462,11 +454,11 @@ const updateComment = async (userId, commentId, data) => {
         name: attendee.name,
         email: attendee.email,
       });
-      commentText = commentText.replace(mentionTag, "").trim(); // Remove mention from comment text
+      commentText = commentText.replace(mentionTag, "").trim(); 
     }
   });
 
-  // Update the comment with the new text & mentioned users
+  
   const updatedComment = await ActionComments.findOneAndUpdate(
     { _id: commentId },
     { commentDescription: commentText, mentionedUsers },
@@ -509,7 +501,7 @@ const updateComment = async (userId, commentId, data) => {
     console.log(`Email sent to ${mentionedUser.email}`);
   }
 
-  // Send an email to the meeting organizer
+  
   const organizerMailData = await emailTemplates.sendCommentEmailTemplate(
     meetingDetails,
     logo,

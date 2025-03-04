@@ -2399,7 +2399,7 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
   let body = template.sendCommentCredentials.body || "";
   let subject = template.subject || "";
 
-  console.log("Template Body Before Replace:", body);
+ // console.log("Template Body Before Replace:", body);
   subject = subject.replace(/{UserName}/g,userDetail?.name);
  
 
@@ -2420,7 +2420,7 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
       `${process.env.FRONTEND_URL}/view-action-detail/${result?.actionId}`
     );
 
-  console.log("Final Processed Body:", body);
+  //console.log("Final Processed Body:", body);
 
   const mailBody = `
     <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
