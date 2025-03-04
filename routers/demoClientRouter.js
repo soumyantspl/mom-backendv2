@@ -36,7 +36,5 @@ router.post(
   demoClientController.verifyContactUsOtp
 );
 
-router.get("/contact-list", 
-  demoClientController.getAllContacts);
 
 module.exports = router;

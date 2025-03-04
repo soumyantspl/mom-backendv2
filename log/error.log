@@ -3085,3 +3085,12 @@ Stack Trace: ReferenceError: ContactUs is not defined
     at Function.process_params (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\index.js:346:12)
     at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
     at Function.handle (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\index.js:175:3)
+Date: 04/03/2025, Time: 11:46
+Error: Cannot destructure property 'limit' of 'params' as it is undefined.
+Stack Trace: TypeError: Cannot destructure property 'limit' of 'params' as it is undefined.
+    at Object.contactUsList (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:17:13)
+    at getAllContacts (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\adminPanelController.js:11:51)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at contactListValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\validators\adminPanelValidator.js:36:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
