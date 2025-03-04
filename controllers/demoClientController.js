@@ -247,6 +247,25 @@ const verifyContactUsOtp = async (req, res) => {
   }
 };
 
+/** FUNC- TO GET DEMO CLIENT LIST **/
+const getAllContacts = async (req, res) => {
+  try {
+    const demoClients = await demoClientService.contactUsList();
+
+    return Responses.successResponse(
+      req,
+      res,
+      demoClients,
+      messages.contactListFetched,
+      200
+    );
+  } catch (error) {
+    errorLog(error);
+    console.log("Error fetching demo client list:", error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
 module.exports = {
   contactUsendOtp,
   verifyContactUsOtp,
@@ -254,4 +273,5 @@ module.exports = {
   demoSendOtp,
   verifyOtp,
   saveContactUsDetails,
+  getAllContacts
 };

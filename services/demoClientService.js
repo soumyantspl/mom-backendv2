@@ -446,6 +446,25 @@ const verifyContactUsOtp = async (data) => {
   }
 };
 
+const contactUsList = async (searchKey = "") => {
+  searchKey = searchKey.trim();
+
+  const query =
+    searchKey.length > 0
+      ? {
+          $or: [
+            { name: { $regex: new RegExp(searchKey, "i") } }, 
+            { email: { $regex: new RegExp(searchKey, "i") } },
+          ],
+        }
+      : {}; 
+
+  const result = await contactUs.find(query); 
+  const totalCount = await contactUs.countDocuments(query); 
+
+  return { totalCount, result };
+};
+
 module.exports = {
   createDemoClient,
   demoSendOtp,
@@ -454,4 +473,5 @@ module.exports = {
   saveContactUsDetails,
   contactUsSendOtp,
   verifyContactUsOtp,
+  contactUsList
 };
