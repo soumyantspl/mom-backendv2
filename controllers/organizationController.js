@@ -271,6 +271,22 @@ const editOrganizationEmailController = async (req, res) => {
   }
 };
 
+/** FUNC- TO VIEW ORGANIZATION DASHBOARD LOGO **/
+const getOrganizationLogoController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const logoUrl = await organizationService.getOrganizationLogo(id);
+
+    if (!logoUrl) {
+      return Responses.failResponse(req, res, null, messages.recordsNotFound, 200);
+    }
+
+    return Responses.successResponse(req, res, { logoUrl }, messages.recordsFound, 200);
+  } catch (error) {
+    console.log(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 
 module.exports = {
   organizationRegistrationController,
@@ -279,5 +295,6 @@ module.exports = {
   viewSingleOrganizationController,
   registrationSendOtp,
   verifyRegistrationOtp,
-  editOrganizationEmailController
+  editOrganizationEmailController,
+  getOrganizationLogoController
 };

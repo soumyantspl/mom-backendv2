@@ -1833,3 +1833,40 @@ Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subjec
 >>>>>>> 390496992459c68a5ce10b742238e85ece178670
 >>>>>>> 684b56a0dca4f8de83c0bcb089304748abf1fa0a
 >>>>>>> 225cd03fa5aeddf73d0bebcca3385e75758098e1
+Date: 04/03/2025, Time: 15:12
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 04/03/2025, Time: 15:15
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationSendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\organizationService.js:158:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async registrationSendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\organizationController.js:50:20)
+Date: 04/03/2025, Time: 15:16
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationSendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\organizationService.js:205:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async registrationSendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\organizationController.js:50:20)
+Date: 04/03/2025, Time: 15:16
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationSendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\organizationService.js:205:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async registrationSendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\organizationController.js:50:20)
+Date: 04/03/2025, Time: 15:20
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationSendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\organizationService.js:158:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async registrationSendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\organizationController.js:50:20)

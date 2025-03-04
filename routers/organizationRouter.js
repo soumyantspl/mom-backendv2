@@ -51,5 +51,6 @@ router.post("/verifyOtp", organizationValidator.registrationVerifyOtpValidator, 
 
 router.post("/editEmail/:id", authMiddleware.verifyUserToken, organzationController.editOrganizationEmailController)
 
+router.get("/organizationlogo/:id/logo", organzationController.getOrganizationLogoController);
 
 module.exports = router;

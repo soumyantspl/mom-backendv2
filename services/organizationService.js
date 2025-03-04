@@ -155,7 +155,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
     const logo = process.env.LOGO;
     const emailType = "Send OTP";
     // const emailSubject = "Organization Registration";
-    const { emailSubject, mailData: mailBody } = mailData;
+    
     const mailData =
       await emailTemplates.organizationRegistrationSendOtpTemplate(
         commonHelper.convertFirstLetterOfFullNameToCapital(name),
@@ -163,7 +163,7 @@ const organizationSendOtp = async (id, data, ipAddress) => {
         process.env.CHECK_OTP_VALIDATION_TIME,
         logo
       );
-
+      const { emailSubject, mailData: mailBody } = mailData;
     await emailService.sendEmail(email, emailType, emailSubject, mailBody);
     return {
       data: {
@@ -202,14 +202,14 @@ const organizationSendOtp = async (id, data, ipAddress) => {
   const logo = process.env.LOGO;
   const emailType = "Send OTP";
   // const emailSubject = "Organization Registration";
-  const { emailSubject, mailData: mailBody } = mailData;
+  
   const mailData = await emailTemplates.organizationRegistrationSendOtpTemplate(
     commonHelper.convertFirstLetterOfFullNameToCapital(name),
     otp,
     process.env.CHECK_OTP_VALIDATION_TIME,
     logo
   );
-
+  const { emailSubject, mailData: mailBody } = mailData;
   await emailService.sendEmail(email, emailType, emailSubject, mailBody);
   return {
     data: {
@@ -593,6 +593,22 @@ const viewSingleOrganizationService = async (id) => {
   return result;
 };
 
+/** FUNC - TO GET ORGANIZATION DASHBOARD LOGO **/
+const getOrganizationLogo = async (organizationId) => {
+  if (!ObjectId.isValid(organizationId)) {
+    return false; 
+  }
+
+  
+  const organization = await Organization.findById(organizationId);
+  if (!organization || !organization.dashboardLogo) {
+    return false; 
+  }
+
+  const formattedLogoPath = organization.dashboardLogo.replace(/\\/g, "/");
+  
+  return `${process.env.BASE_URL.replace(/\/$/, '')}/${formattedLogoPath.replace(/^\/+/, '')}`;
+};
 
 module.exports = {
   organizationRegistrationService,
@@ -607,5 +623,6 @@ module.exports = {
   validateOtp,
   verifyOtp,
   editOrganizationEmailService,
-  checkDuplicateOrganizationCode
+  checkDuplicateOrganizationCode,
+  getOrganizationLogo
 };
