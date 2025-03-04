@@ -19,6 +19,7 @@ const contactListValidator = async (req, res, next) => {
           .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
         fromDate: Joi.date().iso(),
         toDate: Joi.date().iso(),
+       // phoneNo: Joi.string()
         // contactStatus: Joi.string().trim().valid("active", "inactive"),
         // organizationId: Joi.string().trim().alphanum().required(),
       });

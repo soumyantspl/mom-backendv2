@@ -3094,3 +3094,39 @@ Stack Trace: TypeError: Cannot destructure property 'limit' of 'params' as it is
     at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
     at contactListValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\validators\adminPanelValidator.js:36:7)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 04/03/2025, Time: 12:42
+Error: Cast to number failed for value "/9192829929/i" (type RegExp) at path "phoneNo" for model "contactus"
+Stack Trace: CastError: Cast to number failed for value "/9192829929/i" (type RegExp) at path "phoneNo" for model "contactus"
+    at SchemaNumber.castForQuery (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schema\number.js:429:13)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:367:39)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:76:20)
+    at Query.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at model.Query._countDocuments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2743:10)
+    at model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.contactUsList (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:88:24)
+    at async getAllContacts (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\adminPanelController.js:19:29)
+Date: 04/03/2025, Time: 12:42
+Error: Cast to number failed for value "/9192829929/i" (type RegExp) at path "phoneNo" for model "contactus"
+Stack Trace: CastError: Cast to number failed for value "/9192829929/i" (type RegExp) at path "phoneNo" for model "contactus"
+    at SchemaNumber.castForQuery (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schema\number.js:429:13)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:367:39)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:76:20)
+    at Query.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at model.Query._countDocuments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2743:10)
+    at model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.contactUsList (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:88:24)
+    at async getAllContacts (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\adminPanelController.js:19:29)
+Date: 04/03/2025, Time: 12:44
+Error: Cast to number failed for value "/9192829929/i" (type RegExp) at path "phoneNo" for model "contactus"
+Stack Trace: CastError: Cast to number failed for value "/9192829929/i" (type RegExp) at path "phoneNo" for model "contactus"
+    at SchemaNumber.castForQuery (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schema\number.js:429:13)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:367:39)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:76:20)
+    at Query.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at model.Query._countDocuments (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2743:10)
+    at model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.contactUsList (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:88:24)
+    at async getAllContacts (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\adminPanelController.js:19:29)

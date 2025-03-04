@@ -61,10 +61,22 @@ const contactUsList = async (params = {}, body = {}) => {
     let query = {};
 
     
-    if (searchKey.length > 0) {
+    // if (searchKey.length > 0) {
+    //     query.$or = [
+    //         { name: { $regex: new RegExp(searchKey, "i") } },
+    //         { email: { $regex: new RegExp(searchKey, "i") } },
+    //         { phoneNo: { $regex: new RegExp(searchKey, "i") } },
+    //     ];
+    // }
+
+    if (!isNaN(searchKey) && searchKey.length > 0) {
+       
+        query.phoneNo = parseInt(searchKey);
+    } else if (searchKey.length > 0) {
+        
         query.$or = [
             { name: { $regex: new RegExp(searchKey, "i") } },
-            { email: { $regex: new RegExp(searchKey, "i") } },
+            { email: { $regex: new RegExp(searchKey, "i") } }
         ];
     }
 
@@ -93,7 +105,7 @@ const contactUsList = async (params = {}, body = {}) => {
 
     const result = await contactUs.find(query, null, options);
 
-    return { totalCount, totalPages, currentPage: page, result };
+    return { totalCount, totalPages, currentPage: page, data:result };
 };
 
 

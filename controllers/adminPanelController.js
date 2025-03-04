@@ -8,22 +8,29 @@ const commonHelper = require("../helpers/commonHelper");
 /** FUNC- TO GET DEMO CLIENT LIST **/
 const getAllContacts = async (req, res) => {
     try {
-      const demoClients = await adminPanelService.contactUsList();
-  
-      return Responses.successResponse(
-        req,
-        res,
-        demoClients,
-        messages.contactListFetched,
-        200
-      );
-    } catch (error) {
-      errorLog(error);
-      console.log("Error fetching demo client list:", error);
-      return Responses.errorResponse(req, res, error);
-    }
-  };
+        const params = {
+            limit: req.query.limit ? parseInt(req.query.limit) : undefined,
+            page: req.query.page ? parseInt(req.query.page) : undefined,
+            order: -1 
+        };
 
+        const body = req.body; 
+
+        const contactList = await adminPanelService.contactUsList(params, body);
+
+        return Responses.successResponse(
+            req,
+            res,
+            contactList,
+            messages.contactListFetched,
+            200
+        );
+    } catch (error) {
+        errorLog(error);
+        console.error("Error fetching contact list:", error);
+        return Responses.errorResponse(req, res, error);
+    }
+};
 
   module.exports = {
     getAllContacts
