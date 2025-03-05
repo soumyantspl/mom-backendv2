@@ -5,6 +5,7 @@ const adminPanelService = require("../services/adminPanelService");
 const commonHelper = require("../helpers/commonHelper");
 
 
+
 /** FUNC- TO GET DEMO CLIENT LIST **/
 const getAllContacts = async (req, res) => {
     try {
@@ -17,6 +18,16 @@ const getAllContacts = async (req, res) => {
         const body = req.body; 
 
         const contactList = await adminPanelService.contactUsList(params, body);
+
+        if (!contactList || contactList.totalCount === 0) {
+            return Responses.errorResponse(
+                req,
+                res,
+                null,
+                messages.recordNotFound,
+                404
+            );
+        }
 
         return Responses.successResponse(
             req,
@@ -31,6 +42,7 @@ const getAllContacts = async (req, res) => {
         return Responses.errorResponse(req, res, error);
     }
 };
+
 
   module.exports = {
     getAllContacts

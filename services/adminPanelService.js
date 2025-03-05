@@ -30,7 +30,10 @@ const contactUsList = async (params = {}, body = {}) => {
 
     if (!isNaN(searchKey) && searchKey.length > 0) {
        
-        query.phoneNo = parseInt(searchKey);
+       // query.phoneNo = parseInt(searchKey);
+       query.$expr = {
+        $regexMatch: { input: { $toString: "$phoneNo" }, regex: searchKey, options: "i" }
+    };
     } else if (searchKey.length > 0) {
         
         query.$or = [
@@ -67,7 +70,7 @@ const contactUsList = async (params = {}, body = {}) => {
     return { 
         totalCount, 
       //  totalPages, 
-        currentPage: page, 
+      //  currentPage: page, 
         data:result };
 };
 

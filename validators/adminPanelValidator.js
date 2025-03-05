@@ -13,10 +13,13 @@ const contactListValidator = async (req, res, next) => {
     //   });
   
       const bodySchema = Joi.object({
-        searchKey: Joi.string()
-          .trim()
-          .pattern(/^[a-zA-Z0-9 ,\-]+$/)
-          .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+        searchKey: Joi.alternatives().try(
+          Joi.string()
+              .trim()
+              .pattern(/^[a-zA-Z0-9 ,\-]+$/)
+              .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+          Joi.number() 
+      ),
         fromDate: Joi.date().iso(),
         toDate: Joi.date().iso(),
        // phoneNo: Joi.string()
