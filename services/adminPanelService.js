@@ -54,7 +54,7 @@ const BASE_URL = process.env.BASE_URL;
 // };
 
 const contactUsList = async (params = {}, body = {}) => {
-    const { limit = 10, page = 1, order = -1 } = params; 
+    const { limit = 5, page = 1, order = -1 } = params; 
     let { searchKey = "", fromDate, toDate } = body;
     searchKey = searchKey.trim();
 
