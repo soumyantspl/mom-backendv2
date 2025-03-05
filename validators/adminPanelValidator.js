@@ -13,10 +13,14 @@ const contactListValidator = async (req, res, next) => {
     //   });
   
       const bodySchema = Joi.object({
-        searchKey: Joi.string()
-          .trim()
-          .pattern(/^[a-zA-Z0-9 ,\-]+$/)
-          .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+        searchKey: Joi.alternatives().try(
+          Joi.string()
+              .trim()
+              .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+              .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+          Joi.number() 
+      ),
+
         fromDate: Joi.date().iso(),
         toDate: Joi.date().iso(),
        // phoneNo: Joi.string()
@@ -25,9 +29,9 @@ const contactListValidator = async (req, res, next) => {
       });
   
       const paramsSchema = Joi.object({
-        limit: Joi.number().optional(),
-        page: Joi.number().optional(),
-        order: Joi.number().optional(),
+        limit: Joi.number().required(),
+        page: Joi.number().required(),
+        order: Joi.number().required(),
       });
   
      // await headerSchema.validateAsync({ headers: req.headers });

@@ -3130,3 +3130,665 @@ Stack Trace: CastError: Cast to number failed for value "/9192829929/i" (type Re
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async Object.contactUsList (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:88:24)
     at async getAllContacts (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\adminPanelController.js:19:29)
+Date: 05/03/2025, Time: 14:45
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:45
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:46
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:46
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:48
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:49
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:49
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:50
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:51
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 14:53
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:20
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:20
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:21
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:22
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:22
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:22
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:22
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:22
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:22
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:31
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:34
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 15:36
+Error: Cannot read properties of null (reading 'message')
+Stack Trace: TypeError: Cannot read properties of null (reading 'message')
+    at Object.errorResponse (D:\MinutesVault V2\mom-backendv2\helpers\response.js:29:24)
+    at getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 05/03/2025, Time: 16:30
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:30
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:31
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:31
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:31
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:32
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:32
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:32
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:36
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:37
+Error: Invalid sort value: { order: undefined }
+Stack Trace: TypeError: Invalid sort value: { order: undefined }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:37
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:37
+Error: Invalid sort value: { order: undefined }
+Stack Trace: TypeError: Invalid sort value: { order: undefined }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:37
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:38
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:41
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:42
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:45
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:46
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 05/03/2025, Time: 16:51
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:57:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 16:54
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:58:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 16:54
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:58:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 16:55
+Error: Invalid sort value: { createdAt: -1 }
+Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:60:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 16:59
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 16:59
+Error: Invalid sort value: { order: undefined }
+Stack Trace: TypeError: Invalid sort value: { order: undefined }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 16:59
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 16:59
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:08
+Error: Invalid sort value: { order: undefined }
+Stack Trace: TypeError: Invalid sort value: { order: undefined }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:08
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:12
+Error: Missing required pagination or sorting parameters from frontend.
+Stack Trace: Error: Missing required pagination or sorting parameters from frontend.
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:52:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:12
+Error: Missing required pagination or sorting parameters from frontend.
+Stack Trace: Error: Missing required pagination or sorting parameters from frontend.
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:52:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:12
+Error: Missing required pagination or sorting parameters from frontend.
+Stack Trace: Error: Missing required pagination or sorting parameters from frontend.
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:52:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:12
+Error: Missing required pagination or sorting parameters from frontend.
+Stack Trace: Error: Missing required pagination or sorting parameters from frontend.
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:52:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:13
+Error: Invalid sort value: { order: undefined }
+Stack Trace: TypeError: Invalid sort value: { order: undefined }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:13
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:13
+Error: Invalid sort value: { order: undefined }
+Stack Trace: TypeError: Invalid sort value: { order: undefined }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 05/03/2025, Time: 17:13
+Error: Invalid sort value: { order: -1 }
+Stack Trace: TypeError: Invalid sort value: { order: -1 }
+    at _handleSortValue (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3085:9)
+    at Query.sort (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:3054:19)
+    at Query.setOptions (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\query.js:1777:17)
+    at Function.find (D:\MinutesVault V2\mom-backendv2\node_modules\mongoose\lib\model.js:2061:6)
+    at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
