@@ -249,7 +249,5 @@ module.exports = {
   deleteDraftFailed,
   draftDeleted,
   draftFailed
-  ///////////////////
-  //////////////////
-  ////////////////////
+  
 };
