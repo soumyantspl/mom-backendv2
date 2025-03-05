@@ -97,7 +97,7 @@ const contactUsList = async (params = {}, body = {}) => {
 
     
     const totalCount = await contactUs.countDocuments(query);
-    const totalPages = Math.ceil(totalCount / limit);
+   // const totalPages = Math.ceil(totalCount / limit);
 
     
     const skip = (page - 1) * limit;
@@ -105,7 +105,11 @@ const contactUsList = async (params = {}, body = {}) => {
 
     const result = await contactUs.find(query, null, options);
 
-    return { totalCount, totalPages, currentPage: page, data:result };
+    return { 
+        totalCount, 
+      //  totalPages, 
+        currentPage: page, 
+        data:result };
 };
 
 
