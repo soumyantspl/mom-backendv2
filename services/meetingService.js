@@ -1128,6 +1128,7 @@ const viewMeeting = async (meetingId, userId) => {
         hostLink: 1,
         date: 1,
         fromTime: 1,
+        profilePicture: 1,
         toTime: 1,
         step: 1,
         meetingStatus: 1,
@@ -1163,6 +1164,7 @@ const viewMeeting = async (meetingId, userId) => {
           empId: 1,
           companyName: 1,
           designation: 1,
+          profilePicture: 1,
         },
         roomDetail: {
           title: 1,
@@ -1233,6 +1235,7 @@ const viewMeeting = async (meetingId, userId) => {
       );
       console.log("attendeeData================", attendeeData);
       if (attendeeData) {
+        item.profilePicture =attendeeData.profilePicture;
         item.name = attendeeData.name;
         item.email = attendeeData.email;
         item.isEmployee = attendeeData.isEmployee;
@@ -1538,6 +1541,7 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
         date: 1,
         fromTime: 1,
         toTime: 1,
+        profilePicture: 1,
         status: 1,
         locationDetails: 1,
         meetingStatus: 1,
@@ -1577,7 +1581,9 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
           companyName: 1,
           isMeetingOrganiser: 1,
           isAdmin: 1,
+          profilePicture: 1, 
         },
+
         parentMeetingDetails: {
           _id: 1,
         },
@@ -1611,6 +1617,7 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
           meetingDataObject["canWriteMOM"] = item.canWriteMOM;
         }
         if (attendeeData) {
+          item.profilePicture = attendeeData.profilePicture
           item.email = attendeeData.email;
           item.name = attendeeData.name;
           item.empId = attendeeData.empId;
@@ -1822,7 +1829,7 @@ const listAttendeesFromPreviousMeetingOld = async (organizationId, userId) => {
 const listAttendeesFromPreviousMeeting = async (organizationId, userId) => {
   const attendeeData = await Employee.find(
     { organizationId: new ObjectId(organizationId), isActive: true },
-    { name: 1, email: 1, _id: 1, isEmployee: 1 }
+    { name: 1, email: 1, _id: 1, isEmployee: 1 ,profilePicture:1}
   );
   // console.log("attendeeData==========",attendeeData)
   // const uniqueAttendeeData = [].concat(...attendeeData);
@@ -1879,6 +1886,7 @@ const viewMeetingActivities = async (meetingId) => {
           _id: 1,
           name: 1,
           email: 1,
+          profilePicture:1,
         },
       },
     },
@@ -4123,6 +4131,7 @@ const fetchCurrentAttendeesList = async (organizationId, parentMeetingId) => {
           _id: 1,
           name: 1,
           isEmployee: 1,
+          profilePicture:1
         },
       },
     },

@@ -726,6 +726,7 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
           name: 1,
           _id: 1,
           email: 1,
+          profilePicture:1,
         },
         attendeesDetail: {
           name: 1,
@@ -1035,15 +1036,12 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       : empData._id;
   }
 
-  // Ensure reassignedUserId is stored correctly in the update object
   const reassignDetails = {
     userId,
     reAssignReason: data.reAssignReason,
     newDueDate: data.dueDate,
-    reAssignedUserId: Array.isArray(reassignedUserId)
-      ? reassignedUserId.map((id) => new ObjectId(id))
-      : new ObjectId(reassignedUserId),
-    priority: data?.priority || "LOW",
+    reAssignedUserId: new ObjectId(reassignedUserId),
+    priority: data?.priority ? data?.priority : "LOW",
   };
 
   const updateData = {
@@ -1051,10 +1049,20 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     isRequested: false,
     isPending: true,
     actionStatus: "REASSIGNED",
-    assignedUserId: Array.isArray(reassignedUserId)
-      ? reassignedUserId.map((id) => new ObjectId(id))
-      : new ObjectId(reassignedUserId),
+    assignedUserId: new ObjectId(reassignedUserId),
   };
+  result = await Minutes.findOneAndUpdate(
+    {
+      _id: new ObjectId(actionId),
+    },
+    updateData,
+    {
+      isNew: false,
+    }
+  );
+  const minuteDetails = await Minutes.findOne({
+    _id: new ObjectId(actionId),
+  });
 
   let userIndex = 0;
   const newRequestDetails = minuteDetails.reassigneRequestDetails.map(
@@ -1068,7 +1076,6 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       ) {
         userIndex = index;
       }
-
       if (index === minuteDetails.reassigneRequestDetails.length - 1) {
         minuteDetails.reassigneRequestDetails[userIndex].isAccepted = true;
         minuteDetails.reassigneRequestDetails[userIndex].actionDateTime =
@@ -1080,10 +1087,8 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       return item;
     }
   );
-
   minuteDetails.reassigneRequestDetails = newRequestDetails;
-  console.log("Updated Minute Details:", minuteDetails);
-
+  console.log("minuteDetails---------------", minuteDetails);
   const minuteData = new Minutes(minuteDetails);
   const newMinutes = await minuteData.save();
 
@@ -1116,24 +1121,20 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
 
   const actionData = new Minutes(data);
   await actionData.save();
-
-  if (data?.lastActionActivityId) {
-    await ActionActivities.findByIdAndUpdate(
-      { _id: new ObjectId(data.lastActionActivityId) },
-      { isRead: true }
-    );
-  }
-
   const actionActivityObject = {
     activityDetails: data.reAssignReason,
     activityTitle: "ACTION FORWARDED",
     minuteId: actionId,
-    reassignedUserId,
+    reassignedUserId: reassignedUserId,
     userId,
     status: "REASSIGNED",
     actionId: minuteDetails.minuteId,
-    isRead: true,
   };
+  "activityObject-->", actionActivityObject;
+  const actionActivitiesResult = await createActionActivity(
+    actionActivityObject
+  );
+  "actionActivitiesResult------------", actionActivitiesResult;
 
   await createActionActivity(actionActivityObject);
 
@@ -1147,25 +1148,19 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     { _id: { $in: reassignedUserId.map((id) => new ObjectId(id)) } },
     { _id: 1, email: 1, name: 1 }
   );
-
-  console.log("Assigned Users:", assignedUserDetail);
-
+  console.log("assignedUserDetail===========5555=", assignedUserDetail)
   const oldAssignedUserDetail = await Employee.findOne(
     { _id: new ObjectId(result?.assignedUserId) },
     { _id: 1, email: 1, name: 1 }
   );
-
-  console.log("Old Assigned User:", oldAssignedUserDetail);
-
+  console.log("meetingDetails===========5555=", oldAssignedUserDetail)
   const allowedUsers = [
     new ObjectId(userId),
     result?.createdById,
     meetingDetails?.createdById,
-    ...reassignedUserId.map((id) => new ObjectId(id)),
+    reassignedUserId,
   ];
-
-  console.log("Allowed Users:", allowedUsers);
-
+  console.log("allowedUsers==============", allowedUsers)
   const notificationData = {
     title: "ACTION FORWARDED",
     organizationId: new ObjectId(result.organizationId),
@@ -1178,30 +1173,29 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     byUserId: userId,
     toUserId: reassignedUserId,
   };
-
-  await notificationService.createNotification(notificationData);
+  const addNotification = await notificationService.createNotification(
+    notificationData
+  );
 
   if (meetingDetails) {
     // const logo = process.env.LOGO;
+    
     const organization = await Organization.findOne({
       _id: new ObjectId(result.organizationId),
     });
-
+  
     const logo = organization?.dashboardLogo
-      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
-      : process.env.LOGO;
-
-    console.log("userData2-->", userData);
+    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}` 
+    : null;
 
     const mailData = await emailTemplates.actionReassignEmailTemplate(
       meetingDetails,
       logo,
       assignedUserDetail,
       data.reAssignReason,
-      userData,
       result
     );
-
+    // const emailSubject = await emailConstants.reassignSubject(result);
     const { emailSubject, mailData: mailBody } = mailData;
 
     assignedUserDetail.forEach((user) => {
@@ -1220,12 +1214,10 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
         assignedUserDetail,
         data.reAssignReason,
         result,
-        userData,
-        oldAssignedUserDetail
+        oldAssignedUserDetail,
+        userData
       );
-    // const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(
-    //   result
-    // );
+    // const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(result)
     const { oldemailSubject, mailOldData: oldmailBody } = mailOldData;
 
     emailService.sendEmail(
@@ -1234,7 +1226,7 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       oldemailSubject,
       oldmailBody
     );
-
+    ////////////////////LOGER START
     const logData = {
       moduleName: logMessages.Action.moduleName,
       userId,
@@ -1249,8 +1241,8 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       organizationId: result?.organizationId,
     };
     await logService.createLog(logData);
+    /////////////////// LOGER END
   }
-
   return result;
 };
 
@@ -2069,11 +2061,13 @@ const viewActionActivity = async (id) => {
           _id: 1,
           name: 1,
           email: 1,
+          profilePicture:1,
         },
         reAssignedUserDetails: {
           _id: 1,
           name: 1,
           email: 1,
+          profilePicture:1,
         },
       },
     },
@@ -3198,6 +3192,7 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
           name: 1,
           _id: 1,
           email: 1,
+          profilePicture:1,
         },
         attendeesDetail: {
           name: 1,
@@ -3596,7 +3591,7 @@ const getMeetingDueActionPriorityDetailsforChart = async (
         fromTime: 1,
         meetingStatus: 1,
         minutesDetail: 1,
-        assignedUserDetails: { name: 1, _id: 1, email: 1 },
+        assignedUserDetails: { name: 1, _id: 1, email: 1,profilePicture:1, },
         attendees: 1,
         attendeesDetail: 1,
       },
@@ -3822,7 +3817,7 @@ const getAttendeesWithPendingActions = async (
           meetingId: 1,
           title: 1,
           minutesDetail: 1,
-          assignedUserDetails: { name: 1, _id: 1, email: 1 },
+          assignedUserDetails: { name: 1, _id: 1, email: 1,profilePicture:1, },
           attendees: 1,
           attendeesDetail: 1,
         },
