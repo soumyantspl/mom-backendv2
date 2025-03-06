@@ -70,8 +70,52 @@ const contactUsList = async (bodyData, queryData) => {
     return { totalCount, data: result };
 };
 
+const organizationList = async (bodyData, queryData) => {
+    const { limit, page, order = -1, sortBy = "createdAt" } = queryData;
+    let { searchKey = "", fromDate, toDate } = bodyData;
+    searchKey = searchKey.trim();
+
+    let query = {};
+
+   
+    if (searchKey.length > 0) {
+        query.$or = [
+            { name: { $regex: new RegExp(searchKey, "i") } },
+            { email: { $regex: new RegExp(searchKey, "i") } },
+            { contactPersonName: { $regex: new RegExp(searchKey, "i") } }
+        ];
+    }
+
+    
+    if (fromDate || toDate) {
+        query.createdAt = {};
+        if (fromDate) {
+            query.createdAt.$gte = new Date(fromDate);
+        }
+        if (toDate) {
+            query.createdAt.$lt = new Date(new Date(toDate).setDate(new Date(toDate).getDate() + 1));
+        }
+    }
+
+    
+    const totalCount = await Organization.countDocuments(query);
+
+    
+    const validLimit = parseInt(limit) || 5; 
+    const validPage = parseInt(page) || 1; 
+    const skip = (validPage - 1) * validLimit;
+
+    
+    const result = await Organization.find(query)
+        .sort({ [sortBy]: parseInt(order) })
+        .skip(skip)
+        .limit(validLimit);
+
+    return { totalCount, data: result };
+};
+
 
   module.exports = {
-  
+    organizationList,
     contactUsList
   };
