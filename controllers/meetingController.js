@@ -1061,14 +1061,6 @@ const downloadZoomRecordingsInZip = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-/**FUNC- TO CREATE A NEW MEETING FROM SCEDULED MEETING**/
-const createGMeeting = async (req, res) => {
-  try {
-   
-    const result = await googleService.createGMeeting();
-    console.log("result=============", result);
-=======
 
 
 const getMeetingActionPriorityDetailsController = async (req, res) => {
@@ -1079,7 +1071,6 @@ const getMeetingActionPriorityDetailsController = async (req, res) => {
       req.userId,
       req.userData
     );
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
     if (!result) {
       return Responses.failResponse(
         req,
@@ -1089,21 +1080,12 @@ const getMeetingActionPriorityDetailsController = async (req, res) => {
         200
       );
     }
-<<<<<<< HEAD
-   
-=======
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
     return Responses.successResponse(
       req,
       res,
       result,
-<<<<<<< HEAD
-      messages.createdSuccess,
-      201
-=======
       messages.recordsFound,
       200
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
     );
   } catch (error) {
     console.log("Controller error:", error);
@@ -1112,8 +1094,6 @@ const getMeetingActionPriorityDetailsController = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -1212,12 +1192,40 @@ const draftMeetingdelete = async (req, res) => {
 };
 
 
+/**FUNC- TO CREATE A NEW MEETING FROM SCEDULED MEETING**/
+const createGMeeting = async (req, res) => {
+  try {
+   
+    const result = await googleService.createGMeeting();
+    console.log("result=============", result);
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+   
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.createdSuccess,
+      201
+    );
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 
 
 
 
 
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 module.exports = {
   createMeeting,
   updateRsvp,
@@ -1248,9 +1256,7 @@ module.exports = {
   getMeetingActionPriotityDetails,
   deleteZoomRecording,
   downloadZoomRecordingsInZip,
-<<<<<<< HEAD
   createGMeeting,
-=======
   checkAttendeeAvailability,
   checkMeetingRoomAvailability,
   checkAttendeeArrayAvailability,
@@ -1259,5 +1265,4 @@ module.exports = {
   notifyMeetingCreatorAboutDraft,
   getMeetingActionPriorityDetailsController,
   draftMeetingdelete
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 };

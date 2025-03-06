@@ -35,9 +35,6 @@ function convertTo12HourFormat(timeStr) {
   const date = new Date();
   date.setHours(Number(hours), Number(minutes), 0);
 
-<<<<<<< HEAD
-  // rooms availability for meeting
-=======
   return date.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
@@ -47,7 +44,6 @@ function convertTo12HourFormat(timeStr) {
 
 // meeting room availability
 const checkMeetingRoomAvailability = async (data) => {
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
   const existingMeeting = await Meeting.findOne({
     organizationId: data.organizationId,
     date: new Date(data.date),
@@ -64,15 +60,6 @@ const checkMeetingRoomAvailability = async (data) => {
         fromTime: { $gte: data.fromTime, $lt: data.toTime },
       },
       {
-<<<<<<< HEAD
-        toTime: { $gt: data.fromTime, $lte: data.toTime },
-      },
-    ],
-  });
-
-  if (existingMeeting) {
-    return { roomUnavailable: true };
-=======
         toTime: { $gt: data.fromTime, $lte: data.toTime }
       }
     ]   
@@ -124,7 +111,6 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
     return {
       inActiveOrganization: true,
     };
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
   }
 
   const inputData = {
@@ -499,7 +485,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
     }
   );
   // const meeting = await Meeting.findOne({ _id: new ObjectId(id) });
-<<<<<<< HEAD
   let meeting = await viewMeeting(id, userId);
   ///////////////START OF UPDATE GOOGLE MEET///////////////
 
@@ -558,13 +543,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
   }
 
   ///////////////END OF UPDATE GOOGLE MEET///////////////
-=======
-  const meeting = await viewMeeting(id, userId);
-  console.log(
-    "meetingUpdate====================2222222222222222222",
-    meetingUpdate
-  );
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 
   if (
     meeting?.hostDetails?.hostType === "ZOOM" &&
@@ -686,10 +664,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
           meeting?.title,
           Math.abs(duration),
           meeting?.date,
-<<<<<<< HEAD
-=======
-
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
           process.env.TZ,
           attendeesEmailids,
           meeting
@@ -945,7 +919,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
           <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
           Agenda Title
           </td>
-<<<<<<< HEAD
           <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${
             agenda.title
           }</td>
@@ -953,30 +926,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
              ${
                agenda.timeLine !== (null || "" || 0)
                  ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
-=======
-          <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
-                }</td>
-          </tr>
-          ${agenda.topic !== (null || "")
-                  ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-                <td
-                  style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                  colspan="6"
-                >
-                  Topic to Discuss
-                </td>
-                <td
-                  colspan="6"
-                  style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-                >
-                  ${commonHelper.decryptWithAES(agenda.topic)}
-                </td>
-              </tr>`
-                  : `<tr style={{display:"none"}}></tr>`
-                }
-             ${agenda.timeLine !== (null || "" || 0)
-                  ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
                    <td
                      style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
                      colspan="6"
@@ -1045,16 +994,11 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
             }
           }
 
-<<<<<<< HEAD
-          console.log(
-            "check here===========1====",
-            meeting?.hostDetails?.hostType
-=======
 
           // const logo = process.env.LOGO;
           const organizationDetails = await Organization.findOne({ _id: meeting?.organizationId });
           const logo = organizationDetails?.dashboardLogo
-            ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+            ? `${BASE_URL}/${organizationDetails.dashboardLogo}`
             : process.env.LOGO;
 
           const mailData = await emailTemplates.reSendScheduledMeetingEmailTemplate(
@@ -1068,42 +1012,22 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
             meetingLinkCode,
             finalMeetingLink,
             hostKey
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
           );
-          const logo = process.env.LOGO;
-          const mailData =
-            await emailTemplates.reSendScheduledMeetingEmailTemplate(
-              meeting,
-              commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
-              logo,
-              agendaData,
-              attendeeData,
-              attendee,
-              attendee?.rsvp,
-              meetingLinkCode,
-              finalMeetingLink,
-              hostKey
-            );
-
+         
           if (meetingUpdate.step == 3) {
             emailSubject = await emailConstants.editMeetingSubject(meeting);
           } else {
             emailSubject = await emailConstants.scheduleMeetingSubject(meeting);
           }
+         
+
+          const { emailSubject, mailData: mailBody } = mailData;
           emailService.sendEmail(
             attendee.email,
             "Meeting Updated",
             emailSubject,
-            mailData
+            mailBody
           );
-
-          // const { emailSubject, mailData: mailBody } = mailData;
-          // emailService.sendEmail(
-          //   attendee.email,
-          //   "Meeting Updated",
-          //   emailSubject,
-          //   mailBody
-          // );
         });
       } else {
         meeting?.attendees?.map(async (attendee) => {
@@ -1125,7 +1049,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
             <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
             Agenda Title
             </td>
-<<<<<<< HEAD
             <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${
               agenda.title
             }</td>
@@ -1133,30 +1056,6 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
                ${
                  agenda.timeLine !== (null || "" || 0)
                    ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
-=======
-            <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
-                }</td>
-            </tr>
-            ${agenda.topic !== (null || "")
-                  ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-                  <td
-                    style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                    colspan="6"
-                  >
-                    Topic to Discuss
-                  </td>
-                  <td
-                    colspan="6"
-                    style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-                  >
-                    ${commonHelper.decryptWithAES(agenda.topic)}
-                  </td>
-                </tr>`
-                  : `<tr style={{display:"none"}}></tr>`
-                }
-               ${agenda.timeLine !== (null || "" || 0)
-                  ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
                      <td
                        style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
                        colspan="6"
@@ -2086,21 +1985,11 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
   const meetingDetails = await viewMeeting(id, userId);
   if (meetingDetails?.attendees?.length !== 0) {
     meetingDetails?.attendees?.map(async (attendee) => {
-<<<<<<< HEAD
-      const logo = process.env.LOGO;
-
-      const { subject: emailSubject, mailBody } =
-        await emailTemplates.sendCancelMeetingEmailTemplate(
-          meetingDetails,
-          attendee.name,
-          logo
-        );
-=======
       // const logo = process.env.LOGO;
 
       const organizationDetails = await Organization.findOne({ _id: meetingDetails.organizationId });
       const logo = organizationDetails?.dashboardLogo
-        ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+        ? `${BASE_URL}/${organizationDetails.dashboardLogo}`
         : process.env.LOGO;
 
 
@@ -2110,7 +1999,6 @@ const cancelMeeting = async (id, userId, data, ipAddress) => {
         attendee.name,
         logo
       );
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
       // const emailSubject = await emailConstants.cancelMeetingSubject(
       //   meetingDetails
       // );
@@ -2616,23 +2504,6 @@ const generateMOM = async (meetingId, userId, data, ipAddress = "1000") => {
     },
     updateData
   );
-<<<<<<< HEAD
-
-  const configTime = await Configuration.findOne(
-    {
-      organizationId: new ObjectId(data.organizationId),
-    },
-    {
-      acceptanceRejectionEndtime: 1,
-    }
-  );
-  console.log("configTime--->", configTime);
-  const momAcceptanceRejectionEndtime = configTime.acceptanceRejectionEndtime
-    ? configTime.acceptanceRejectionEndtime
-    : 0;
-
-=======
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
   if (updateMomDetails) {
     const meetingDetails = await viewMeeting(meetingId, userId);
     if (data.attendees?.length !== 0 && meetingDetails) {
@@ -2870,17 +2741,13 @@ const rescheduleMeeting = async (
 
     if (data.attendees?.length !== 0 && meetingDetails) {
       data.attendees.map(async (attendee) => {
-<<<<<<< HEAD
-        const logo = process.env.LOGO;
-=======
         // const logo = process.env.LOGO;
         const organizationDetails = await Organization.findOne({
           _id: meetingDetails.organizationId,
         });
         const logo = organizationDetails?.dashboardLogo
-          ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
+          ? `${BASE_URL}/${organizationDetails.dashboardLogo}`
           : process.env.LOGO;
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 
         const attendeeData = meetingDetails?.attendees
           .map((attendee) => {
@@ -2897,32 +2764,10 @@ const rescheduleMeeting = async (
         <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
               }</td>
         </tr>
-<<<<<<< HEAD
        
            ${
              agenda.timeLine !== (null || "" || 0)
                ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
-=======
-        ${agenda.topic !== (null || "")
-                ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-              <td
-                style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                colspan="6"
-              >
-                Topic to Discuss
-              </td>
-              <td
-                colspan="6"
-                style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-              >
-                <p>${commonHelper.decryptWithAES(agenda.topic)}</p>
-              </td>
-            </tr>`
-                : `<tr style={{display:"none"}}></tr>`
-              }
-           ${agenda.timeLine !== (null || "" || 0)
-                ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
                  <td
                    style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
                    colspan="6"
@@ -2984,39 +2829,6 @@ const rescheduleMeeting = async (
         }
         console.log("hostKey==============", hostKey);
 
-<<<<<<< HEAD
-=======
-        // mailData = await emailTemplates.sendScheduledMeetingEmailTemplate(
-        //   meeting,
-        //   commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
-        //   logo,
-        //   agendaData,
-        //   attendeeData,
-        //   attendee,
-        //    meetingLinkCode,
-        //   finalMeetingLink,
-        //   hostKey
-        //   // (meetingLink =
-        //   //   meeting?.createdById?.toString() == attendee?._id?.toString()
-        //   //     ? hostLink
-        //   //     : meetingLink)
-        // );
-
-        // const logo = process.env.LOGO;
-        // const mailData = await emailTemplates.reSendScheduledMeetingEmailTemplate(
-        //   meetingDetails,
-        //   commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
-        //   logo,
-        //   agendaData,
-        //   attendeeData,
-        //   attendee,
-        //   attendee?.rsvp,
-        //   meetingLinkCode,
-        //   finalMeetingLink,
-        //   hostKey
-        // );
-
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
         const mailData =
           await emailTemplates.sendReScheduledMeetingEmailTemplate(
             meetingDetails,
@@ -4082,14 +3894,8 @@ const sendAlertTime = async () => {
               <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
               Agenda Title
               </td>
-<<<<<<< HEAD
-              <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${
-                agenda.title
-              }</td>
-=======
               <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
                       }</td>
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
               </tr>
               ${
                 agenda.topic !== (null || "")
@@ -4348,14 +4154,8 @@ const sendMeetingDetails = async (
     <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
     Agenda Title
     </td>
-<<<<<<< HEAD
-    <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${
-      agenda.title
-    }</td>
-=======
     <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
             }</td>
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
     </tr>
     ${
       agenda.topic !== (null || "")
@@ -4830,45 +4630,8 @@ const newMeetingAsRescheduled = async (
         <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
         Agenda Title
         </td>
-<<<<<<< HEAD
         <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${agenda.title}</td>
         </tr>
-=======
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
-                }</td>
-        </tr>
-        ${agenda.topic !== (null || "")
-                  ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-              <td
-                style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                colspan="6"
-              >
-                Topic to Discuss
-              </td>
-              <td colspan="6" style="border: 1px solid black; border-collapse: collapse; width: 50%; padding: 3px;">
-                <p>${agenda?.topic ? parse(commonHelper.decryptWithAES(agenda?.topic)) : ""}</p>
-              </td>
-            </tr>`
-                  : `<tr style={{display:"none"}}></tr>`
-                }
-           ${agenda.timeLine !== (null || "" || 0)
-                  ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
-                 <td
-                   style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
-                   colspan="6"
-                 >
-                   Timeline
-                 </td>
-                 <td
-                   colspan="6"
-                   style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-                 >
-                   ${agenda.timeLine} Mins
-                 </td>
-               </tr>`
-                  : `<tr style={{display:"none"}}></tr>`
-                }
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
         </table><br />`;
             })
             .join(" ");

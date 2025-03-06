@@ -630,11 +630,8 @@ const importEmployee = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 const viewProfile = async (req, res) => {
   try {
     const ip = req.headers.ip || (await commonHelper.getIp(req));
@@ -676,12 +673,6 @@ const viewProfile = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 
 
 
