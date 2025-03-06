@@ -2380,7 +2380,7 @@ const actionCancelEmailTemplate = async (
 
 
 // SEND COMMENT EMAIL TEMPLATE
-const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result) => {
+const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result, mentionedUserName) => {
   const template = await EmailTemplate.findOne({
     templateType: "SENDCOMMENT",
     isActive: true,
@@ -2401,6 +2401,7 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
 
   console.log("Template Body Before Replace:", body);
   subject = subject.replace(/{UserName}/g,userDetail?.name);
+ 
 
   body = body
     .replace(
@@ -2408,6 +2409,7 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
      // commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
       userDetail?.name
     )
+    .replace(/{Greeting}/g, mentionedUserName)
     .replace(/{UserEmail}/g, userDetail?.email)
     .replace("{commentDetails}", result?.commentDescription)
     .replace("{organizerEmail}", meetingDetails.createdByDetail?.email)
@@ -2433,14 +2435,10 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
     </div>`;
 
   return {
-    emailSubject: subject.trim(),
-    mailData: mailBody.trim(),
+    emailSubject: subject,
+    mailData: mailBody,
   };
 };
-
-
-
-
 
 const actionCompleteEmailTemplate = async (  
   meetingData,
@@ -2722,6 +2720,8 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
     }
   });
 };
+
+
 
 module.exports = {
   signInByOtpEmail,

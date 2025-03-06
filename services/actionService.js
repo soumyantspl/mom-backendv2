@@ -126,29 +126,57 @@ const addComments = async (userId, id, data) => {
   console.log("User Details:", userDetail);
 
   const logo = process.env.LOGO;
-  const mailData = await emailTemplates.sendCommentEmailTemplate(
+
+  // Send an email to each mentioned user individually
+  for (const mentionedUser of mentionedUsers) {
+    const personalizedMailData = await emailTemplates.sendCommentEmailTemplate(
+      meetingDetails,
+      logo,
+      userDetail,
+      result,
+      mentionedUser.name 
+    );
+
+    if (!personalizedMailData) {
+      console.error(`Error: Email template generation failed for ${mentionedUser.email}`);
+      continue; 
+    }
+
+    const { emailSubject, mailData: mailBody } = personalizedMailData;
+
+    await emailService.sendEmail(
+      mentionedUser.email,
+      "Comment Created",
+      emailSubject,
+      mailBody
+    );
+
+    console.log(`Email sent to ${mentionedUser.email}`);
+  }
+
+  // Send an email to the meeting creator
+  const organizerMailData = await emailTemplates.sendCommentEmailTemplate(
     meetingDetails,
     logo,
     userDetail,
-    result
+    result,
+    meetingDetails.createdByDetail?.name 
   );
 
-  console.log("MailData from action service:", mailData);
+  if (organizerMailData) {
+    const { emailSubject, mailData: mailBody } = organizerMailData;
+    
+    await emailService.sendEmail(
+      meetingDetails.createdByDetail?.email,
+      "Comment Created",
+      emailSubject,
+      mailBody
+    );
 
-  if (!mailData) {
-    console.error("Error: Email template generation failed.");
-    return false;
+    console.log(`Email sent to Meeting Organizer: ${meetingDetails.createdByDetail?.email}`);
+  } else {
+    console.error("Error: Email template generation failed for meeting organizer.");
   }
-
-  const { emailSubject, mailData: mailBody } = mailData;
-  console.log("MailBody sent:", mailBody);
-
-  await emailService.sendEmail(
-    meetingDetails?.createdByDetail?.email,
-    "Comment Created",
-    emailSubject,
-    mailBody
-  );
 
   result = result.toObject();
   result.userName = userDetail.name;
@@ -202,99 +230,6 @@ const viewActionComment = async (actionId) => {
 
 //   return updatedComment;
 // };
-
-const updateComment = async (userId, commentId, data) => {
-  
-  const existingComment = await ActionComments.findOne({ _id: commentId });
-console.log("Existing comment-----", existingComment);
-  if (!existingComment) {
-    console.error("Error: Comment not found.");
-    return false;
-  }
-
-  
-  const userDetail = await Employee.findOne(
-    { _id: new ObjectId(userId) },
-    { _id: 1, email: 1, name: 1 }
-  );
-// console.log("Userdetail id----",userDetail._id);
-// console.log("Existing comment userid=====",existingComment.userId);
-  if (!userDetail) {
-    console.error("Error: User details not found.");
-    return false;
-  }
-
-  if (existingComment.userId.toString() !== userId.toString()) {
-    console.error("Error: You can only edit your own comment.");
-    return "unauthorized";
-  }
-  
-  const updatedComment = await ActionComments.findOneAndUpdate(
-    { _id: commentId },
-    { commentDescription: data.commentDescription },
-    { new: true }
-  );
-
-  if (!updatedComment) {
-    console.error("Error: Comment update failed.");
-    return false;
-  }
-
-  
-  const actionDetails = await Minutes.findOne({ _id: updatedComment.actionId });
-  if (!actionDetails || !actionDetails.meetingId) {
-    console.error("Error: No meetingId found for the given actionId.");
-    return false;
-  }
-
-  const meetingDetails = await meetingService.viewMeeting(
-    actionDetails.meetingId,
-    userId
-  );
-  if (!meetingDetails) {
-    console.error("Error: Meeting details not found.");
-    return false;
-  }
-
-  
-  const logo = process.env.LOGO;
-  const mailData = await emailTemplates.sendCommentEmailTemplate(
-    meetingDetails,
-    logo,
-    userDetail,
-    updatedComment
-  );
-
-  if (!mailData) {
-    console.error("Error: Email template generation failed.");
-    return false;
-  }
-
-  const { emailSubject, mailData: mailBody } = mailData;
-  console.log("MailBody sent------", mailBody);
-
-  await emailService.sendEmail(
-    meetingDetails?.createdByDetail?.email,
-    "Comment Updated",
-    emailSubject,
-    mailBody
-  );
-
-  return updatedComment;
-};
-
-
-/**FUNC- DELETE ACTION COMMENT */
-const deleteComment = async (userId, commentId) => {
-  const deletedComment = await ActionComments.findOneAndDelete({
-    _id: commentId,
-    userId: userId, 
-  });
-
-  return deletedComment;
-};
-
-
 
 
 /**FUNC- ACTION REASSIGN REQUEST */
@@ -394,7 +329,7 @@ const actionReassignRequest = async (
         meetingDetails?.createdByDetail?.email,
         "Reassign Requested",
         emailSubject,
-        mailBody,
+        mailBody
         //  mailData
       );
     }
@@ -429,16 +364,16 @@ const viewAllAction = async (bodyData, queryData) => {
   const { organizationId, searchKey } = bodyData;
   let query = searchKey
     ? {
-      organizationId: new ObjectId(organizationId),
-      title: { $regex: searchKey, $options: "i" },
-      isActive: true,
-      isAction: true,
-    }
+        organizationId: new ObjectId(organizationId),
+        title: { $regex: searchKey, $options: "i" },
+        isActive: true,
+        isAction: true,
+      }
     : {
-      organizationId: new ObjectId(organizationId),
-      isActive: true,
-      isAction: true,
-    };
+        organizationId: new ObjectId(organizationId),
+        isActive: true,
+        isAction: true,
+      };
   var limit = parseInt(queryData.limit);
   var skip = (parseInt(queryData.page) - 1) * parseInt(limit);
   const totalCount = await Minutes.countDocuments(query);
@@ -484,20 +419,20 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
   const { order } = queryData;
   const { organizationId, searchKey } = bodyData;
   let query = null;
-
+  //Condition
   if (userData.isAdmin) {
     query = searchKey
       ? {
-        organizationId: new ObjectId(organizationId),
-        title: { $regex: searchKey, $options: "i" },
-        isActive: true,
-        isAction: true,
-      }
+          organizationId: new ObjectId(organizationId),
+          title: { $regex: searchKey, $options: "i" },
+          isActive: true,
+          isAction: true,
+        }
       : {
-        organizationId: new ObjectId(organizationId),
-        isActive: true,
-        isAction: true,
-      };
+          organizationId: new ObjectId(organizationId),
+          isActive: true,
+          isAction: true,
+        };
 
     if (bodyData.fromDate && bodyData.toDate) {
       const fromDate = new Date(bodyData.fromDate);
@@ -563,18 +498,18 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
   } else {
     query = searchKey
       ? {
-        organizationId: new ObjectId(organizationId),
-        title: { $regex: searchKey, $options: "i" },
-        isActive: true,
-        isAction: true,
-        //  assignedUserId: userId,
-      }
+          organizationId: new ObjectId(organizationId),
+          title: { $regex: searchKey, $options: "i" },
+          isActive: true,
+          isAction: true,
+          //  assignedUserId: userId,
+        }
       : {
-        organizationId: new ObjectId(organizationId),
-        isActive: true,
-        isAction: true,
-        // assignedUserId: userId,
-      };
+          organizationId: new ObjectId(organizationId),
+          isActive: true,
+          isAction: true,
+          // assignedUserId: userId,
+        };
 
     if (bodyData.fromDate && bodyData.toDate) {
       const fromDate = new Date(bodyData.fromDate);
@@ -1086,6 +1021,19 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     } else {
       reassignedUserId = empData._id;
     }
+  } else if (data.attendeeData) {
+    // If attendeeData is a single object, process it as a single reassigned user
+    const empData = await employeeService.createAttendee(
+      data.attendeeData.name,
+      data.attendeeData.email,
+      data.attendeeData.organizationId,
+      data.attendeeData.designation,
+      data.attendeeData.companyName
+    );
+
+    reassignedUserId = empData.isDuplicate
+      ? empData.duplicateUserId
+      : empData._id;
   }
 
   const reassignDetails = {
@@ -1119,7 +1067,13 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   let userIndex = 0;
   const newRequestDetails = minuteDetails.reassigneRequestDetails.map(
     (item, index) => {
-      if (item.userId.toString() === result?.assignedUserId?.toString()) {
+      if (Array.isArray(result?.assignedUserId)) {
+        if (result?.assignedUserId.includes(item.userId.toString())) {
+          userIndex = index;
+        }
+      } else if (
+        item.userId.toString() === result?.assignedUserId?.toString()
+      ) {
         userIndex = index;
       }
       if (index === minuteDetails.reassigneRequestDetails.length - 1) {
@@ -1138,27 +1092,33 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   const minuteData = new Minutes(minuteDetails);
   const newMinutes = await minuteData.save();
 
-  data["isActive"] = true;
-  data["createdById"] = new ObjectId(userId);
-  data["priority"] = data.priority ? data.priority : "LOW";
-  data["dueDate"] = new Date(data.dueDate);
-  data["mainDueDate"] = new Date(result.mainDueDate);
-  data["assignedUserId"] = reassignedUserId
-    ? reassignedUserId
-    : new ObjectId(userId);
-  data["actionId"] = actionId;
-  data["agendaId"] = result.agendaId;
-  data["meetingId"] = result.meetingId;
-  data["organizationId"] = result.organizationId;
-  data["parentMinuteId"] = actionId;
-  data["minuteId"] = minuteDetails.minuteId;
-  data["description"] = minuteDetails.description;
-  data["title"] = minuteDetails.title;
-  data["attendees"] = minuteDetails.attendees;
-  data["isAction"] = true;
-  data["status"] = result?.status;
-  data["sequence"] = result?.sequence;
-  "inside data-------------------------", data, result?.status;
+  // Assign the updated values to data
+  data = {
+    ...data,
+    isActive: true,
+    createdById: new ObjectId(userId),
+    priority: data.priority || "LOW",
+    dueDate: new Date(data.dueDate),
+    mainDueDate: new Date(result.mainDueDate),
+    assignedUserId: reassignedUserId.length
+      ? reassignedUserId
+      : new ObjectId(userId),
+    actionId,
+    agendaId: result.agendaId,
+    meetingId: result.meetingId,
+    organizationId: result.organizationId,
+    parentMinuteId: actionId,
+    minuteId: minuteDetails.minuteId,
+    description: minuteDetails.description,
+    title: minuteDetails.title,
+    attendees: minuteDetails.attendees,
+    isAction: true,
+    status: result?.status,
+    sequence: result?.sequence,
+  };
+
+  console.log("Final Data Before Saving:", data);
+
   const actionData = new Minutes(data);
   await actionData.save();
   const actionActivityObject = {
@@ -1176,13 +1136,16 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   );
   "actionActivitiesResult------------", actionActivitiesResult;
 
+  await createActionActivity(actionActivityObject);
+
   const meetingDetails = await meetingService.viewMeeting(
     result?.meetingId,
     userId
   );
-  console.log("meetingDetails===========5555=", meetingDetails)
-  const assignedUserDetail = await Employee.findOne(
-    { _id: new ObjectId(reassignedUserId) },
+  console.log("Meeting Details:", meetingDetails);
+
+  const assignedUserDetail = await Employee.find(
+    { _id: { $in: reassignedUserId.map((id) => new ObjectId(id)) } },
     { _id: 1, email: 1, name: 1 }
   );
   console.log("assignedUserDetail===========5555=", assignedUserDetail)
@@ -1234,12 +1197,16 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     );
     // const emailSubject = await emailConstants.reassignSubject(result);
     const { emailSubject, mailData: mailBody } = mailData;
-    emailService.sendEmail(
-      assignedUserDetail?.email,
-      "Action Forwarded",
-      emailSubject,
-      mailBody
-    );
+
+    assignedUserDetail.forEach((user) => {
+      emailService.sendEmail(
+        user.email,
+        "Action Forwarded",
+        emailSubject,
+        mailBody
+      );
+    });
+
     const mailOldData =
       await emailTemplates.actionReassignEmailToOlAssignedUserTemplate(
         meetingDetails,
@@ -1265,24 +1232,12 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       userId,
       action: logMessages.Action.reassignAction,
       ipAddress,
-      details:
-        "Action forwarded from <strong>" +
-        commonHelper.convertFirstLetterOfFullNameToCapital(
-          oldAssignedUserDetail?.name
-        ) +
-        " (" +
-        oldAssignedUserDetail?.email +
-        ") </strong>" +
-        " to <strong>" +
-        commonHelper.convertFirstLetterOfFullNameToCapital(
-          assignedUserDetail?.name
-        ) +
-        " (" +
-        assignedUserDetail?.email +
-        ") </strong>",
-      subDetails: `
-      Action : ${result?.title}</br>
-      Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
+      details: `Action forwarded from <strong>${oldAssignedUserDetail?.name} (${
+        oldAssignedUserDetail?.email
+      })</strong> to <strong>${assignedUserDetail
+        .map((u) => `${u.name} (${u.email})`)
+        .join(", ")}</strong>`,
+      subDetails: `Action: ${result?.title}<br/>Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
       organizationId: result?.organizationId,
     };
     await logService.createLog(logData);
@@ -1290,7 +1245,6 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
   }
   return result;
 };
-
 
 /**FUNC- TO VIEW SINGLE ACTION DETAILS */
 const viewSingleAction2 = async (id) => {
@@ -2122,8 +2076,9 @@ const viewActionActivity = async (id) => {
   "res1", result;
   ("check");
   const modifiedResult = result.map((item) => {
-    item["date"] = `${commonHelper.formatDateTimeFormat(item.createdAt).formattedDate
-      },${commonHelper.formatDateTimeFormat(item.createdAt).formattedTime}`;
+    item["date"] = `${
+      commonHelper.formatDateTimeFormat(item.createdAt).formattedDate
+    },${commonHelper.formatDateTimeFormat(item.createdAt).formattedTime}`;
     return item;
   });
   return modifiedResult;
@@ -2204,7 +2159,7 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
         data?.assignedUserDetails?.email,
         "Action Approved",
         emailSubject,
-        mailBody,
+        mailBody
         //  mailData
       );
       ////////////////////LOGER START
@@ -2458,7 +2413,7 @@ const rejectReasignRequest = async (
         assignedUserDetail?.email,
         "Action Reassign Request Rejected",
         emailSubject,
-        mailBody,
+        mailBody
         //  mailData
       );
       ////////////////////LOGER START
@@ -2569,7 +2524,8 @@ const cancelAction = async (actionId, userId, data, ipAddress, userData) => {
     //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
     const { emailSubject, mailData: mailBody } = mailData;
     "actionCancelEmailTemplate-----------------------maildata", mailData;
-    "actionCancelEmailTemplate-----------------------emailSubject", emailSubject;
+    "actionCancelEmailTemplate-----------------------emailSubject",
+      emailSubject;
 
     emailService.sendEmail(
       // meetingDetails?.createdByDetail?.email,
@@ -2904,8 +2860,6 @@ const getUserActionPriotityDetails = async (
 };
 
 const getAllActionData = async (bodyData, queryData, userId, userData) => {
-
-
   // Initialize counters
   let totalHighPriorityAction = 0;
   let totalHighPriorityDueAction = 0;
@@ -2920,16 +2874,16 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
   if (userData.isAdmin) {
     query = searchKey
       ? {
-        organizationId: new ObjectId(organizationId),
-        title: { $regex: searchKey, $options: "i" },
-        isActive: true,
-        isAction: true,
-      }
+          organizationId: new ObjectId(organizationId),
+          title: { $regex: searchKey, $options: "i" },
+          isActive: true,
+          isAction: true,
+        }
       : {
-        organizationId: new ObjectId(organizationId),
-        isActive: true,
-        isAction: true,
-      };
+          organizationId: new ObjectId(organizationId),
+          isActive: true,
+          isAction: true,
+        };
 
     if (bodyData.fromDate && bodyData.toDate) {
       const fromDate = new Date(bodyData.fromDate);
@@ -3001,18 +2955,18 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
   } else {
     query = searchKey
       ? {
-        organizationId: new ObjectId(organizationId),
-        title: { $regex: searchKey, $options: "i" },
-        isActive: true,
-        isAction: true,
-        //  assignedUserId: userId,
-      }
+          organizationId: new ObjectId(organizationId),
+          title: { $regex: searchKey, $options: "i" },
+          isActive: true,
+          isAction: true,
+          //  assignedUserId: userId,
+        }
       : {
-        organizationId: new ObjectId(organizationId),
-        isActive: true,
-        isAction: true,
-        // assignedUserId: userId,
-      };
+          organizationId: new ObjectId(organizationId),
+          isActive: true,
+          isAction: true,
+          // assignedUserId: userId,
+        };
 
     if (bodyData.fromDate && bodyData.toDate) {
       const fromDate = new Date(bodyData.fromDate);
@@ -3428,8 +3382,6 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
     );
   }
 
-
-
   // Count priority-based actions (from original `actionDatas`)
   actionDatas.forEach((action) => {
     if (action.priority === "HIGH") {
@@ -3459,8 +3411,6 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
   let filteredActionDatas = actionDatas.filter(
     (action) => !action.isComplete && !action.isCancelled
   );
-
-
 
   // Count priority-based actions (from original `actionDatas`)
   actionDatas.forEach((action) => {
@@ -3498,39 +3448,45 @@ const getAllActionData = async (bodyData, queryData, userId, userData) => {
 
     if (action?.isComplete) {
       if (delayCount > 0 && !action.isDelayed) {
-        action["completionStatus"] = "Before " + Math.abs(delayCount) + " " + dayCount;
+        action["completionStatus"] =
+          "Before " + Math.abs(delayCount) + " " + dayCount;
       } else if (delayCount === 0 && !action.isDelayed) {
         action["completionStatus"] = "On time";
       } else {
-        action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+        action["completionStatus"] =
+          "Delayed by " + Math.abs(delayCount) + " " + dayCount;
       }
     } else {
       if (delayCount > 0 && !action?.isDelayed) {
-        action["completionStatus"] = "Remaining " + Math.abs(delayCount) + " " + dayCount;
+        action["completionStatus"] =
+          "Remaining " + Math.abs(delayCount) + " " + dayCount;
       } else if (delayCount === 0) {
         action["completionStatus"] = "Due today";
       } else {
-        action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+        action["completionStatus"] =
+          "Delayed by " + Math.abs(delayCount) + " " + dayCount;
       }
     }
 
     // Format due dates
-    action.dueDate = commonHelper.formatDateTimeFormat(action.dueDate).formattedDate;
-    action.mainDueDate = commonHelper.formatDateTimeFormat(action.mainDueDate).formattedDate;
+    action.dueDate = commonHelper.formatDateTimeFormat(
+      action.dueDate
+    ).formattedDate;
+    action.mainDueDate = commonHelper.formatDateTimeFormat(
+      action.mainDueDate
+    ).formattedDate;
     // const totalCount =actionDatas.length;
     // console.log("totalCount",totalCount);
 
     return action;
   });
 
-
-
   return {
     totalCount: totalCount.length,
     actionDatas: filteredActionDatas,
     type: bodyData.actionStatus,
   };
-}
+};
 
 const getMeetingDueActionPriorityDetailsforChart = async (
   queryData,
@@ -3594,7 +3550,14 @@ const getMeetingDueActionPriorityDetailsforChart = async (
         localField: "_id",
         foreignField: "meetingId",
         pipeline: [
-          { $match: { isActive: true, isComplete: false, isAction: true, actionStatus: { $ne: "REASSIGNED" } } },
+          {
+            $match: {
+              isActive: true,
+              isComplete: false,
+              isAction: true,
+              actionStatus: { $ne: "REASSIGNED" },
+            },
+          },
           { $sort: { _id: -1 } },
           { $group: { _id: "$minuteId", latestEntry: { $first: "$$ROOT" } } },
           { $replaceRoot: { newRoot: "$latestEntry" } },
@@ -3641,30 +3604,36 @@ const getMeetingDueActionPriorityDetailsforChart = async (
   const meetingData = await Meeting.aggregate(pipeLine);
 
   const formatDate = (date) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Intl.DateTimeFormat('en-GB', options).format(date);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return new Intl.DateTimeFormat("en-GB", options).format(date);
   };
 
   let meetingsData = meetingData.map((meeting) => {
     let sortedMinutesDetail = meeting.minutesDetail
-      .filter(action => !action.isCancelled)
+      .filter((action) => !action.isCancelled)
       .sort((a, b) => {
         const priorityOrder = { HIGH: 3, NORMAL: 2, LOW: 1 };
         return priorityOrder[b.priority] - priorityOrder[a.priority];
       });
 
-    sortedMinutesDetail = sortedMinutesDetail.map(action => {
-      const assignedUser = meeting.assignedUserDetails.find(user => user._id.toString() === action.assignedUserId.toString());
+    sortedMinutesDetail = sortedMinutesDetail.map((action) => {
+      const assignedUser = meeting.assignedUserDetails.find(
+        (user) => user._id.toString() === action.assignedUserId.toString()
+      );
 
       const dueDate = new Date(action.dueDate);
       const formattedDueDate = formatDate(dueDate);
-      const completedDate = action.isComplete ? new Date(action.completedDate) : null;
+      const completedDate = action.isComplete
+        ? new Date(action.completedDate)
+        : null;
 
       let completionStatus = "";
       let isDelayed = false;
 
       if (action.isComplete) {
-        let delayInDays = Math.ceil((completedDate - dueDate) / (1000 * 3600 * 24));
+        let delayInDays = Math.ceil(
+          (completedDate - dueDate) / (1000 * 3600 * 24)
+        );
         let dayCount = Math.abs(delayInDays) > 1 ? "days" : "day";
 
         if (delayInDays > 0 && !action.isDelayed) {
@@ -3676,7 +3645,9 @@ const getMeetingDueActionPriorityDetailsforChart = async (
           isDelayed = true;
         }
       } else {
-        let delayInDays = Math.ceil((dueDate - new Date()) / (1000 * 3600 * 24));
+        let delayInDays = Math.ceil(
+          (dueDate - new Date()) / (1000 * 3600 * 24)
+        );
         let dayCount = Math.abs(delayInDays) > 1 ? "days" : "day";
 
         if (delayInDays > 0) {
@@ -3692,18 +3663,21 @@ const getMeetingDueActionPriorityDetailsforChart = async (
       return {
         ...action,
         dueDate: formattedDueDate,
-        assignedUserDetails: assignedUser,
+        assignedUserDetails: assignedUser || {
+          name: "Unknown",
+          email: "unknown@example.com",
+        },
         userDetail: assignedUser,
         meetingDetails: {
           _id: meeting._id,
           title: meeting.title,
           meetingId: meeting.meetingId,
           date: meeting.date,
-          attendees: meeting.attendees.map(attendee => ({
+          attendees: meeting.attendees.map((attendee) => ({
             _id: attendee._id,
             rsvp: attendee.rsvp,
             isAttended: attendee.isAttended,
-            canWriteMOM: attendee.canWriteMOM
+            canWriteMOM: attendee.canWriteMOM,
           })),
           createdById: meeting.createdById,
           attendeesDetail: meeting.attendeesDetail,
@@ -3733,8 +3707,12 @@ const getMeetingDueActionPriorityDetailsforChart = async (
   };
 };
 
-
-const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userData) => {
+const getAttendeesWithPendingActions = async (
+  queryData,
+  bodyData,
+  userId,
+  userData
+) => {
   try {
     const { organizationId, assignedUserId } = bodyData;
 
@@ -3761,7 +3739,6 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
       actionStatus: { $ne: "REASSIGNED" },
     };
 
-
     let orConditions = [];
 
     if (assignedUserId) {
@@ -3776,7 +3753,9 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
 
     if (!userData?.isAdmin) {
       console.log("Fetching meetings created by user:", userId);
-      const meetingIds = await meetingService.getMeetingIdsOfCreatedById(userId);
+      const meetingIds = await meetingService.getMeetingIdsOfCreatedById(
+        userId
+      );
       console.log("Retrieved meeting IDs:", meetingIds);
 
       orConditions.push(
@@ -3849,7 +3828,6 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
       { $match: { activeMinutesCount: { $gt: 0 } } },
     ];
 
-
     const meetingData = await Meeting.aggregate(pipeline);
     console.log("Retrieved Meetings:", meetingData.length);
     console.log("Retrieved Meetings:", meetingData);
@@ -3860,11 +3838,15 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
     };
 
     let meetingsData = meetingData.map((meeting, index) => {
-      console.log(`Processing meeting ${index + 1}/${meetingData.length}:`, meeting.meetingId);
+      console.log(
+        `Processing meeting ${index + 1}/${meetingData.length}:`,
+        meeting.meetingId
+      );
 
       let sortedMinutesDetail = meeting.minutesDetail
         .filter(
-          (action) => !action.isCancelled && !action.isComplete && action.isPending
+          (action) =>
+            !action.isCancelled && !action.isComplete && action.isPending
         )
         .map((action) => {
           if (action.reassignDetails?.length > 0) {
@@ -3874,7 +3856,9 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
         })
         .sort((a, b) => {
           const priorityOrder = { HIGH: 3, NORMAL: 2, LOW: 1 };
-          return (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0);
+          return (
+            (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0)
+          );
         });
 
       sortedMinutesDetail = sortedMinutesDetail
@@ -3883,7 +3867,10 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
             (user) => user._id.toString() === action.assignedUserId.toString()
           );
 
-          return assignedUser && assignedUser._id.toString() === assignedUserId.toString();
+          return (
+            assignedUser &&
+            assignedUser._id.toString() === assignedUserId.toString()
+          );
         })
         .map((action) => {
           const assignedUser = meeting.assignedUserDetails.find(
@@ -3894,7 +3881,9 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
           const formattedDueDate = formatDate(dueDate);
 
           let completionStatus = "";
-          let delayInDays = Math.ceil((dueDate - new Date()) / (1000 * 3600 * 24));
+          let delayInDays = Math.ceil(
+            (dueDate - new Date()) / (1000 * 3600 * 24)
+          );
           let isDelayed = delayInDays < 0;
 
           if (delayInDays > 0) {
@@ -3905,11 +3894,13 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
             completionStatus = `Delayed by ${Math.abs(delayInDays)} day(s)`;
           }
 
-
           let reassignedToUser = null;
           if (action.reassignDetails?.length > 0) {
-            const latestReassign = action.reassignDetails[action.reassignDetails.length - 1];
-            if (latestReassign.userId.toString() === assignedUserId.toString()) {
+            const latestReassign =
+              action.reassignDetails[action.reassignDetails.length - 1];
+            if (
+              latestReassign.userId.toString() === assignedUserId.toString()
+            ) {
               reassignedToUser = latestReassign;
             }
           }
@@ -3917,7 +3908,10 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
           return {
             ...action,
             dueDate: formattedDueDate,
-            assignedUserDetails: assignedUser || { name: "Unknown", email: "unknown@example.com" },
+            assignedUserDetails: assignedUser || {
+              name: "Unknown",
+              email: "unknown@example.com",
+            },
             userDetail: assignedUser,
             meetingDetails: {
               _id: meeting._id,
@@ -3939,7 +3933,9 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
           };
         });
 
-      console.log(`Meeting ${meeting.meetingId} has ${sortedMinutesDetail.length} pending actions.`);
+      console.log(
+        `Meeting ${meeting.meetingId} has ${sortedMinutesDetail.length} pending actions.`
+      );
       return sortedMinutesDetail;
     });
 
@@ -3960,10 +3956,272 @@ const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userD
     };
   } catch (error) {
     console.error("Error in getAttendeesWithPendingActions:", error);
-    throw new Error("Something went wrong while fetching attendees with pending actions.");
+    throw new Error(
+      "Something went wrong while fetching attendees with pending actions."
+    );
   }
 };
 
+/**FUNC- EDIT ACTION COMMENT */
+const updateComment = async (userId, commentId, data) => {
+  const existingComment = await ActionComments.findOne({ _id: commentId });
+  console.log("Existing comment:", existingComment);
+
+  if (!existingComment) {
+    console.error("Error: Comment not found.");
+    return false;
+  }
+
+  const userDetail = await Employee.findOne(
+    { _id: new ObjectId(userId) },
+    { _id: 1, email: 1, name: 1 }
+  ).lean();
+
+  if (!userDetail) {
+    console.error("Error: User details not found.");
+    return false;
+  }
+
+  if (existingComment.userId.toString() !== userId.toString()) {
+    console.error("Error: You can only edit your own comment.");
+    return "unauthorized";
+  }
+
+ 
+  const actionDetails = await Minutes.findOne({ _id: existingComment.actionId }).lean();
+  if (!actionDetails || !actionDetails.meetingId) {
+    console.error("Error: No meetingId found for the given actionId.");
+    return false;
+  }
+
+  const meetingDetails = await meetingService.viewMeeting(actionDetails.meetingId, userId);
+  if (!meetingDetails || !Array.isArray(meetingDetails.attendees)) {
+    console.error("Error: Meeting details or attendees not found.");
+    return false;
+  }
+
+  console.log("Meeting Details:", meetingDetails);
+  console.log("Attendees:", meetingDetails.attendees);
+
+  let mentionedUsers = data.mentionedUsers || [];
+  console.log("mentionedUsers inside update comment:", mentionedUsers);
+  let commentText = data.commentDescription.trim();
+
+ 
+  meetingDetails.attendees.forEach(attendee => {
+    if (!attendee.name) return;
+    const mentionTag = `@${attendee.name}`;
+
+    if (commentText.includes(mentionTag)) {
+      mentionedUsers.push({
+        id: attendee._id.toString(),
+        name: attendee.name,
+        email: attendee.email,
+      });
+      commentText = commentText.replace(mentionTag, "").trim(); 
+    }
+  });
+     // Ensure mentionedUsers are valid attendees
+    //  mentionedUsers = mentionedUsers.filter(user => 
+    //   meetingDetails.attendees.some(attendee => attendee._id.toString() === user.id)
+    // );
+  
+  const updatedComment = await ActionComments.findOneAndUpdate(
+    { _id: commentId },
+    { commentDescription: commentText, mentionedUsers },
+    { new: true }
+  ).lean();
+
+  if (!updatedComment) {
+    console.error("Error: Comment update failed.");
+    return false;
+  }
+
+  console.log("Updated Comment:", updatedComment);
+
+  const logo = process.env.LOGO;
+
+  // Send an email to each mentioned user individually
+  for (const mentionedUser of mentionedUsers) {
+    const personalizedMailData = await emailTemplates.sendCommentEmailTemplate(
+      meetingDetails,
+      logo,
+      userDetail,
+      updatedComment,
+      mentionedUser.name
+    );
+
+    if (!personalizedMailData) {
+      console.error(`Error: Email template generation failed for ${mentionedUser.email}`);
+      continue;
+    }
+
+    const { emailSubject, mailData: mailBody } = personalizedMailData;
+
+    await emailService.sendEmail(
+      mentionedUser.email,
+      "Comment Updated",
+      emailSubject,
+      mailBody
+    );
+
+    console.log(`Email sent to ${mentionedUser.email}`);
+  }
+
+  
+  const organizerMailData = await emailTemplates.sendCommentEmailTemplate(
+    meetingDetails,
+    logo,
+    userDetail,
+    updatedComment,
+    meetingDetails.createdByDetail?.name
+  );
+
+  if (organizerMailData) {
+    const { emailSubject, mailData: mailBody } = organizerMailData;
+
+    await emailService.sendEmail(
+      meetingDetails.createdByDetail?.email,
+      "Comment Updated",
+      emailSubject,
+      mailBody
+    );
+
+    console.log(`Email sent to Meeting Organizer: ${meetingDetails.createdByDetail?.email}`);
+  } else {
+    console.error("Error: Email template generation failed for meeting organizer.");
+  }
+
+  return updatedComment;
+};
+
+
+// const updateComment = async (userId, commentId, data) => {
+//   const existingComment = await ActionComments.findOne({ _id: commentId });
+//   if (!existingComment) {
+//     console.error("Error: Comment not found.");
+//     return false;
+//   }
+
+//   const userDetail = await Employee.findOne(
+//     { _id: new ObjectId(userId) },
+//     { _id: 1, email: 1, name: 1 }
+//   ).lean();
+
+//   if (!userDetail) {
+//     console.error("Error: User details not found.");
+//     return false;
+//   }
+
+//   if (existingComment.userId.toString() !== userId.toString()) {
+//     console.error("Error: You can only edit your own comment.");
+//     return "unauthorized";
+//   }
+
+//   const actionDetails = await Minutes.findOne({ _id: existingComment.actionId }).lean();
+//   if (!actionDetails || !actionDetails.meetingId) {
+//     console.error("Error: No meetingId found for the given actionId.");
+//     return false;
+//   }
+
+//   const meetingDetails = await meetingService.viewMeeting(actionDetails.meetingId, userId);
+//   if (!meetingDetails || !Array.isArray(meetingDetails.attendees)) {
+//     console.error("Error: Meeting details or attendees not found.");
+//     return false;
+//   }
+
+//   console.log("Meeting Details:", meetingDetails);
+//   console.log("Attendees:", meetingDetails.attendees);
+
+//   // Extract mentions from the request payload
+//   let mentionedUsers = data.mentionedUsers || [];
+//   let commentText = data.commentDescription.trim();
+
+//   // Ensure mentionedUsers are valid attendees
+//   mentionedUsers = mentionedUsers.filter(user => 
+//     meetingDetails.attendees.some(attendee => attendee._id.toString() === user.id)
+//   );
+
+//   // Save updated comment with mentionedUsers
+//   const updatedComment = await ActionComments.findOneAndUpdate(
+//     { _id: commentId },
+//     { commentDescription: commentText, mentionedUsers },
+//     { new: true }
+//   ).lean();
+
+//   if (!updatedComment) {
+//     console.error("Error: Comment update failed.");
+//     return false;
+//   }
+
+//   console.log("Updated Comment:", updatedComment);
+
+//   const logo = process.env.LOGO;
+
+//   // Send emails to mentioned users
+//   for (const mentionedUser of mentionedUsers) {
+//     const personalizedMailData = await emailTemplates.sendCommentEmailTemplate(
+//       meetingDetails,
+//       logo,
+//       userDetail,
+//       updatedComment,
+//       mentionedUser.name
+//     );
+
+//     if (!personalizedMailData) {
+//       console.error(`Error: Email template generation failed for ${mentionedUser.email}`);
+//       continue;
+//     }
+
+//     const { emailSubject, mailData: mailBody } = personalizedMailData;
+
+//     await emailService.sendEmail(
+//       mentionedUser.email,
+//       "Comment Updated",
+//       emailSubject,
+//       mailBody
+//     );
+
+//     console.log(`Email sent to ${mentionedUser.email}`);
+//   }
+
+//   // Send email to meeting organizer
+//   const organizerMailData = await emailTemplates.sendCommentEmailTemplate(
+//     meetingDetails,
+//     logo,
+//     userDetail,
+//     updatedComment,
+//     meetingDetails.createdByDetail?.name
+//   );
+
+//   if (organizerMailData) {
+//     const { emailSubject, mailData: mailBody } = organizerMailData;
+
+//     await emailService.sendEmail(
+//       meetingDetails.createdByDetail?.email,
+//       "Comment Updated",
+//       emailSubject,
+//       mailBody
+//     );
+
+//     console.log(`Email sent to Meeting Organizer: ${meetingDetails.createdByDetail?.email}`);
+//   } else {
+//     console.error("Error: Email template generation failed for meeting organizer.");
+//   }
+
+//   return updatedComment;
+// };
+
+
+/**FUNC- DELETE ACTION COMMENT */
+const deleteComment = async (userId, commentId) => {
+  const deletedComment = await ActionComments.findOneAndDelete({
+    _id: commentId,
+    userId: userId, 
+  });
+
+  return deletedComment;
+};
 
 module.exports = {
   addComments,
@@ -3985,7 +4243,7 @@ module.exports = {
   totalActionList,
   getUserActionPriotityDetails,
   getAllActionData,
-    //PRATISHRUTI ----- Action Rechartbar Click
-    getMeetingDueActionPriorityDetailsforChart,
-    getAttendeesWithPendingActions
+  ////////////PRATISHRUTI ----- Action Rechartbar Click
+  getMeetingDueActionPriorityDetailsforChart,
+  getAttendeesWithPendingActions,
 };

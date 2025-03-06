@@ -48,7 +48,7 @@ const viewActionComment = async (req, res) => {
       res,
       result,
       messages.recordsFound,
-      201
+      200
     );
   } catch (error) {
     console.log(error);
@@ -656,6 +656,7 @@ const getAttendeeDueActionPriorityDetails = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
 
 module.exports = {
   actionCommentsCreate,
