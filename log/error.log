@@ -3292,3 +3292,52 @@ Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out 
     at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
     at listOnTimeout (node:internal/timers:594:17)
     at process.processTimers (node:internal/timers:529:7)
+Date: 06/03/2025, Time: 13:37
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 06/03/2025, Time: 13:37
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 06/03/2025, Time: 14:02
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 06/03/2025, Time: 14:02
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 06/03/2025, Time: 14:03
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 06/03/2025, Time: 14:13
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 06/03/2025, Time: 14:16
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 06/03/2025, Time: 14:21
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 06/03/2025, Time: 14:28
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 06/03/2025, Time: 14:38
+Error: "mentionedUsers[0].email" must be a valid email
+Stack Trace: ValidationError: "mentionedUsers[0].email" must be a valid email
+Date: 06/03/2025, Time: 14:39
+Error: "mentionedUsers[0].email" must be a valid email
+Stack Trace: ValidationError: "mentionedUsers[0].email" must be a valid email
+Date: 06/03/2025, Time: 14:42
+Error: "mentionedUsers[1].email" must be a valid email
+Stack Trace: ValidationError: "mentionedUsers[1].email" must be a valid email
+Date: 06/03/2025, Time: 14:43
+Error: "mentionedUsers[0].email" must be a valid email
+Stack Trace: ValidationError: "mentionedUsers[0].email" must be a valid email
