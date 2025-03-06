@@ -3,6 +3,10 @@ const dempoCreateSuccess =
   "Thank you for requesting a demo! Our team will reach out to you shortly to schedule the demo at a convenient time!";
 const createError = "Error while creating!";
 const updateSuccess = "Updated successfully!";
+const commentCreatedSuccess = "Comment Added Successfully."
+const updateFail = "Failed to Update Comment";
+const deleteFail = "Failed to Delete Comment";
+const unauthorizedEdit = "You can only edit your own comment.";
 const meetingUpdateSuccess =
   "Meeting is updated and notification sent to all the attendees successfully.";
 const updateFailedRecordNotFound = "Record not found. Update failed!";
@@ -71,7 +75,7 @@ const otpResendMessage = async (attemptNumbar, email) => {
 };
 const otpResendMaxLimitCrossed = `Sorry! You have reached the maximum limit of 3 OTP resend attempts. Please try again after ${process.env.OTP_MAX_RESEND_TIMEINMINUTES} minutes.`;
 const momGeneratedSuccessfully =
-  "MOM generated Successfully & notification sent to all attendees.";
+  "MOM generated succeffully & notification sent to all attendees.";
 const pleaseAddAttendance = "Please add attendance.";
 const configCreatedSuccess = "Configuration Created successfully!";
 const configUpdateSuccess = "Configuration Updated successfully!";
@@ -89,7 +93,6 @@ const isUnread = "Marked as unread";
 const isImportant = "Marked as important";
 const isDelete = "Deleted successfully";
 const pleaseAddMinute = "Please add minute.";
-const roomUnavailable = "The room is already booked for the selected date and time range.";
 const inActiveOrganization =
   "The Organization has been deactivated, please contact adminstration";
 const isMaxOtpSendOvered = `You have sent maximum number of OTP, Please try after ${process.env.CHECK_OTP_VALIDATION_TIME} minutes`;
@@ -113,16 +116,39 @@ const wrongZoomCredentials = "Please add correct credentials!";
 const recordingsDownloadedSuccessfully = "All recordings downloaded successfully."
 const MOMDownloadedSuccessfully = "MOM downloaded successfully."
 const importSuccess = "Import completed successfully."
-const importFailed = "Import completed with errors.Please check Reason for Failed column"
+const importFailed = "Import completed with errors.Please check 'Reason' column for failed reason"
 const importEroor = "Error in processing Excel file"
 const validationError = "Validation Errors"
+<<<<<<< HEAD
 const validateGauthUrl="Please validate your application by this url"
 const tokenSavedSuccess="Token saved successfully"
 //Pratishruti//
 //view pRofile//
 const currentPasswordIncorrect ="Current Password is Incorrect"
 
+=======
+const attendeeUnavailable = "This attendee is already scheduled for a meeting at the same date and time "
+const roomUnavailable = "The room is already booked for the selected date and time ";
+const organizerUnavailable = "You already have a meeting scheduled on this date from "
+const attendeesFound = "Busy attendees found"
+///Pratishruti//
+//Draft Delete//
+const draftFailed= "Draft Failed";
+
+
+//Pratishruti//
+//view pRofile//
+const currentPasswordIncorrect = "Current Password is Incorrect"
+const notificationSent = "Email sent successfully"
+const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater than Draft MeetingReminder Days"
+const draftDeleted = "Draft Meeting Deleted"
+const deleteDraftFailed = "Faild in Delete Draft Meeting"
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 module.exports = {
+  commentCreatedSuccess,
+  updateFail,
+  deleteFail,
+  unauthorizedEdit,
   pleaseAddMinute,
   isDeleteNotAllowed,
   cancelSuccess,
@@ -224,7 +250,20 @@ module.exports = {
   importEroor,
   validationError,
   currentPasswordIncorrect,
+<<<<<<< HEAD
   roomUnavailable,
   validateGauthUrl,
   tokenSavedSuccess
+=======
+  attendeeUnavailable,
+  roomUnavailable,
+  organizerUnavailable,
+  notificationSent,
+  notValid,
+  deleteDraftFailed,
+  draftDeleted,
+  draftFailed
+  ///////////////////
+  //////////////////
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 };

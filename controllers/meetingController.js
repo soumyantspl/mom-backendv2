@@ -6,6 +6,7 @@ const { errorLog } = require("../middlewares/errorLog");
 const commonHelper = require("../helpers/commonHelper");
 const minutesService = require("../services/minutesService");
 const fs = require("fs");
+const { log } = require("console");
 /**FUNC- TO CREATE MEETING**/
 const createMeeting = async (req, res) => {
   try {
@@ -21,15 +22,18 @@ const createMeeting = async (req, res) => {
         200
       );
     }
-    if (result?.roomUnavailable) {
+
+    if (result?.organizerUnavailable) {
+      const errMsg = messages.organizerUnavailable + result.bookedTimeRange;
       return Responses.failResponse(
         req,
         res,
         null,
-        messages.roomUnavailable,
-        409
+        errMsg,
+        200
       );
     }
+
     if (result?.isDuplicateEmail) {
       return Responses.failResponse(
         req,
@@ -39,6 +43,7 @@ const createMeeting = async (req, res) => {
         200
       );
     }
+
     if (result?.isDuplicateEmpCode) {
       return Responses.failResponse(
         req,
@@ -61,6 +66,90 @@ const createMeeting = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+// attendee availability check
+const checkAttendeeAvailability = async (req, res) => {
+  try{
+    const result = await meetingService.checkAttendeeAvailability(
+      req.body,
+      req.params.id
+    );
+    if (result?.attendeeUnavailable) {
+      const errMsg = messages.attendeeUnavailable + '(' + result.bookedTimeRange + ')';
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        errMsg,
+        200
+      );
+    } 
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        { isScheduleUser: false },
+        messages.recordsNotFound,
+        200
+      );
+    }
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+  }
+  
+  /// check attendee array availability
+  const checkAttendeeArrayAvailability = async (req, res) => {
+    try {
+      const result = await meetingService.checkAttendeeArrayAvailability(req.body);
+  
+      if (!result || result.length === 0) {
+        return Responses.successResponse(req, res, null, messages.recordsNotFound, 200);
+      }
+      const busyMessages = result.map(
+        (attendee) => `${attendee.name} is unavailable due to another meeting (Meeting ID: ${attendee.meetingId}) from ${attendee.fromTime} to ${attendee.toTime}`
+      );
+  
+      return Responses.failResponse(req, res, result, busyMessages, 200);
+    } catch (error) {
+      console.error("Controller error:", error);
+      errorLog(error);
+      return Responses.errorResponse(req, res, error);
+    }
+    const busyMessages = result.map(
+      (attendee) => `${attendee.name} is unavailable due to another meeting (Meeting ID: ${attendee.meetingId}) from ${attendee.fromTime} to ${attendee.toTime}`
+    );
+
+    return Responses.failResponse(req, res, result, busyMessages, 200);
+  }
+
+
+  
+  // meeting room availability
+  const checkMeetingRoomAvailability = async (req, res) => {
+    try{
+      const result = await meetingService.checkMeetingRoomAvailability(
+        req.body
+      );
+      if (result?.roomUnavailable) {
+        const errMsg = messages.roomUnavailable + '(' + result.bookedTimeRange + ')';
+        return Responses.failResponse(
+          req,
+          res,
+          null,
+          errMsg,
+          200
+        );
+      }  
+    } catch (error) {
+      console.log("Controller error:", error);
+      errorLog(error);
+      return Responses.errorResponse(req, res, error);
+    }
+    }
+
 /**FUNC- TO UPDATE RSVP DATA**/
 const updateRsvp = async (req, res) => {
   try {
@@ -97,23 +186,6 @@ const updateRsvp = async (req, res) => {
 /**FUNC- TO UPDATE MEETING**/
 const updateMeeting = async (req, res) => {
   try {
-    // if (req.body.isEditMeeting) {
-    //   const checkCanUpdateMeeting = await minutesService.checkCanUpdateMeeting(
-    //     req.params.id,
-    //     req.body.organizationId
-    //   );
-    //   console.log("checkCanUpdateMeeting-----------", checkCanUpdateMeeting);
-    //   if (!checkCanUpdateMeeting) {
-    //     return Responses.failResponse(
-    //       req,
-    //       res,
-    //       null,
-    //       messages.meetingEditDenied,
-    //       200
-    //     );
-    //   }
-    // }
-
     let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
     const result = await meetingService.updateMeeting(
       req.body,
@@ -989,12 +1061,25 @@ const downloadZoomRecordingsInZip = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 /**FUNC- TO CREATE A NEW MEETING FROM SCEDULED MEETING**/
 const createGMeeting = async (req, res) => {
   try {
    
     const result = await googleService.createGMeeting();
     console.log("result=============", result);
+=======
+
+
+const getMeetingActionPriorityDetailsController = async (req, res) => {
+  try {
+    const result = await meetingService.getMeetingActionPriorityDetailsforChart(
+      req.query,
+      req.body,
+      req.userId,
+      req.userData
+    );
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
     if (!result) {
       return Responses.failResponse(
         req,
@@ -1004,13 +1089,21 @@ const createGMeeting = async (req, res) => {
         200
       );
     }
+<<<<<<< HEAD
    
+=======
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
     return Responses.successResponse(
       req,
       res,
       result,
+<<<<<<< HEAD
       messages.createdSuccess,
       201
+=======
+      messages.recordsFound,
+      200
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
     );
   } catch (error) {
     console.log("Controller error:", error);
@@ -1019,6 +1112,112 @@ const createGMeeting = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+=======
+
+
+
+const notifyMeetingCreatorAboutDraft = async (req, res) => {
+  console.log("Processing draft meeting notification...");
+
+  try {
+    const result = await meetingService.notifyMeetingCreatorAboutDraft();
+
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.notificationSent,
+      200
+    );
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
+const deleteDraftMeeting = async (req, res) => {
+  console.log("Processing draft meeting notification...");
+
+  try {
+    const { meetingId } = req.params;
+    const result = await meetingService.deleteOldDraftMeetings(meetingId);
+
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.deleteSuccess,
+      200
+    );
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
+const draftMeetingdelete = async (req, res) => {
+  try {
+   // console.log("Request Data:", req.params.meetingId); 
+    
+    let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
+
+    const result = await meetingService.deleteDraftMeeting(
+      req.params.meetingId, 
+      req.userId, 
+      req.body, 
+      ip
+    );
+
+    if (!result) {
+      return Responses.failResponse(req, res, null, messages.draftFailed, 409);
+    }
+
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.draftDeleted,
+      200
+    );
+  } catch (error) {
+    console.error("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
+
+
+
+
+
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 module.exports = {
   createMeeting,
   updateRsvp,
@@ -1049,5 +1248,16 @@ module.exports = {
   getMeetingActionPriotityDetails,
   deleteZoomRecording,
   downloadZoomRecordingsInZip,
+<<<<<<< HEAD
   createGMeeting,
+=======
+  checkAttendeeAvailability,
+  checkMeetingRoomAvailability,
+  checkAttendeeArrayAvailability,
+  deleteDraftMeeting,
+  draftMeetingdelete,
+  notifyMeetingCreatorAboutDraft,
+  getMeetingActionPriorityDetailsController,
+  draftMeetingdelete
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 };

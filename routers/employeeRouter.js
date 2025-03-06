@@ -5,11 +5,12 @@ const validator = require("../validators/employeeValidator");
 const authMiddleware = require("../middlewares/authMiddleware");
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
-const path=require('path')
+const path = require('path')
+
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, '../uploads'); 
+    const uploadPath = path.join(__dirname, '../uploads');
     console.log(`File is being uploaded to: ${uploadPath}`);
     cb(null, uploadPath);
   },
@@ -26,10 +27,11 @@ const fileFilter = (req, file, cb) => {
     cb(new Error("Only image files are allowed!"), false);
   }
 };
+
 const uploadpicture = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, 
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 
@@ -71,12 +73,18 @@ router.get(
 /* MASTER DATA */
 router.get(
   "/masterData/:organizationId",
-  validator.masterDataValidator,
+  // validator.masterDataValidator,
   authMiddleware.verifyUserToken,
   employeeController.masterData
 );
-
 /* MASTER DATA */
+router.post(
+  "/masterDataXLSX/:organizationId",
+  // validator.masterDataValidator,
+  // authMiddleware.verifyUserToken,
+  employeeController.masterDataXLSX
+);
+
 router.get(
   "/listOnlyEmployee/:organizationId",
   validator.listOnlyEmployeeValidator,
@@ -104,6 +112,10 @@ router.post(
   upload.single("file"),
   employeeController.importEmployee
 );
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 /* VIEW PROFILE  */
 router.put(
   "/viewProfile/:id",
@@ -113,5 +125,8 @@ router.put(
   employeeController.viewProfile
 );
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
 module.exports = router;

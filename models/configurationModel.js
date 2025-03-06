@@ -25,6 +25,16 @@ const configurationSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    draftMeetingReminderDays: {
+      type: Number,
+      required: true,
+      default: 0, 
+    },
+    draftMeetingCleanupDays: {
+      type: Number,
+      required: true,
+      default: 0, 
+    },
     organizationId: {
       type: mongoose.Schema.ObjectId,
       required: true,

@@ -25,15 +25,41 @@ const createMeetingValidator = async (req, res, next) => {
     });
     const bodySchema = Joi.object({
       sendNotification: Joi.boolean(),
-      title: Joi.string()
-        .trim()
-        .min(3)
-        .max(100)
-        .pattern(regularExpression)
-        .messages({
-          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-        })
-        .required(),
+      // title: Joi.string()
+      //   .trim()
+      //   .min(3)
+      //   .max(100)
+      //   .pattern(regularExpression)
+      //   .messages({
+      //     "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+      //   })
+      //   .required(),
+      //
+
+
+      title: Joi.any().when("isEncrypted", {
+        is: true,
+        then: Joi.string()
+          .trim()
+          // .min(10)
+          // .max(300)
+          //.pattern(/^[A-Za-z0-9+/=]+$/) ///  Ensure encrypted format (Base64-like)
+          .required(),
+        otherwise: Joi.string()
+          .trim()
+          .min(3)
+          // .max(300)
+          // .pattern(regularExpression)
+          // .messages({
+          //   "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+          // })
+          .required(),
+      }),
+      
+      isEncrypted: Joi.boolean().default(false), 
+      
+      
+
       organizationId: Joi.string().trim().alphanum().required(),
       parentMeetingId: Joi.string().trim().alphanum(),
       mode: Joi.string().trim().valid("VIRTUAL", "PHYSICAL").required(),
@@ -139,6 +165,12 @@ const createMeetingValidator = async (req, res, next) => {
       }).required(),
     });
 
+    console.log("Received Body:", req.body);
+console.log("Title:", req.body.title);
+console.log("isEncrypted:", req.body.isEncrypted);
+
+
+
     await headerSchema.validateAsync({ headers: req.headers });
     await bodySchema.validateAsync(req.body);
     next();
@@ -186,12 +218,33 @@ const updateMeetingValidator = async (req, res, next) => {
       reScheduled: Joi.boolean(),
       isUpdate: Joi.boolean().required(),
       sendNotification: Joi.boolean().required(),
-      title: Joi.string()
-        .trim()
-        .min(3)
-        .max(100)
-        .pattern(regularExpression)
-        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+      // title: Joi.string()
+      //   .trim()
+      //   .min(3)
+      //   .max(300)
+      //   .pattern(regularExpression)
+      //   .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+
+      title: Joi.any().when("isEncrypted", {
+        is: true,
+        then: Joi.string()
+          .trim()
+          // .min(10)
+          // .max(300)
+          //.pattern(/^[A-Za-z0-9+/=]+$/) //  Ensure encrypted format (Base64-like)
+          .required(),
+        otherwise: Joi.string()
+          .trim()
+          .min(3)
+          .max(300)
+          .pattern(regularExpression)
+          .messages({
+            "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)`,
+          })
+          // .required(),
+      }),
+      
+      isEncrypted: Joi.boolean().default(false),
 
       organizationId: Joi.string().trim().alphanum().required(),
       mode: Joi.string().trim().valid("VIRTUAL", "PHYSICAL"),
@@ -1104,6 +1157,143 @@ const downloadZoomRecordingsInZipValidaor = async (req, res, next) => {
   }
 };
 
+const forChartClick = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+      }).unknown(true),
+    });
+
+    const bodySchema = Joi.object({
+      organizationId: Joi.string().trim().alphanum().required(),
+      meetingId:Joi.string().trim().required(),
+      searchKey: Joi.string()
+        .trim()
+        .pattern(regularExpression)
+        .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` }),
+    });
+    const paramsSchema = Joi.object({
+      limit: Joi.number().required(),
+      page: Joi.number().required(),
+      order: Joi.number().required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await paramsSchema.validateAsync(req.query);
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+
+// attendee availability validator
+const checkAttendeeAvailabilityValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required()
+      }).unknown(true),
+    });
+    const bodySchema = Joi.object({
+      email: Joi.string().email().optional(),
+      attendeeId: Joi.string().optional(),
+    }).or("email", "attendeeId");
+
+    await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+
+// room availability validator
+const checkRoomAvailabilityValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required()
+      }).unknown(true),
+    });
+    const bodySchema = Joi.object({
+      organizationId: Joi.string().required(),
+      date: Joi.date().iso().required(),
+      roomId: Joi.string().required(),
+      fromTime: Joi.string().required(),
+      toTime: Joi.string().required(),
+    });
+
+    await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+
+// attendee array availability validator
+const checkAttendeeArrayAvailabilityValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required()
+      }).unknown(true),
+    });
+    const bodySchema = Joi.object({
+      date: Joi.date().iso().required(),
+      fromTime: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required(),
+      toTime: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required(),
+      attendees: Joi.array()
+        .items(
+          Joi.object({
+            _id: Joi.string().required(), 
+          }).unknown(true)
+        )
+        .min(1)
+        .required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+const draftMeetingValidator = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+        ip: Joi.string(),
+      }).unknown(true),
+    });
+    const paramsSchema = Joi.object({
+      id: Joi.string().trim().alphanum().required(),
+    });
+    const bodySchema = Joi.object({
+      remarks: Joi.string().trim(),
+    }).required();
+    await bodySchema.validateAsync(req.body);
+    await headerSchema.validateAsync({ headers: req.headers });
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 module.exports = {
   updateMeetingStatusValidator,
   createMeetingValidator,
@@ -1132,5 +1322,10 @@ module.exports = {
   totalMeetingListForChartValidator,
   getMeetingActionPriotityDetailsValidator,
   deleteZoomRecordingValidator,
+  forChartClick,
   downloadZoomRecordingsInZipValidaor,
+  checkAttendeeAvailabilityValidator,
+  checkRoomAvailabilityValidator,
+  checkAttendeeArrayAvailabilityValidator,
+  draftMeetingValidator
 };

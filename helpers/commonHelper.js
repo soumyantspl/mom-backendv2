@@ -742,6 +742,16 @@ const generateAlphaNumericPasscode = (length) => {
   return passcode;
 };
 
+const generateOrganizationCode = (organizationName) => {
+  if (!organizationName) return "";
+
+  let words = organizationName.trim().split(/\s+/);
+
+  let code = words.length > 1 ? words.map(word => word[0]).join('') : organizationName.substring(0, Math.min(4, organizationName.length));
+
+  return code.toUpperCase();
+}
+
 module.exports = {
   generateOtp,
   otpExpiryTime,
@@ -778,5 +788,6 @@ module.exports = {
   generateRandomSixDigitNumber,
   generateAlphaNumericPasscode,
   generateLogObjectDepartment,
-  generateLogObjectForDesignation
+  generateLogObjectForDesignation,
+  generateOrganizationCode
 };

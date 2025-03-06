@@ -11,29 +11,292 @@ const logMessages = require("../constants/logsConstants");
 const logService = require("./logsService");
 const commonHelper = require("../helpers/commonHelper");
 const emailConstants = require("../constants/emailConstants");
-//const emailTemplates = require("../emailSetUp/emailTemplates");
+// const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
 const meetingService = require("../services/meetingService");
 const { pipeline } = require("nodemailer/lib/xoauth2");
+const moment = require('moment');
+
+const Organization = require("../models/organizationModel");
+const BASE_URL = process.env.BASE_URL;
+
+
+// const addComments = async (userId, id, data) => {
+//   // Extract @usernames from comment
+//   const mentionedUsernames = data.commentDescription.match(/@([a-zA-Z0-9_]+)/g);
+
+//   let mentionedUsers = [];
+//   if (mentionedUsernames) {
+//     const usernames = mentionedUsernames.map(name => name.substring(1)); 
+
+//     console.log("Extracted Usernames:", usernames);
+
+//     // Fetch user IDs from the database
+//     mentionedUsers = await Employee.find({ name: { $in: usernames } }).select("_id");
+    
+//     console.log("Matched Users in DB:", mentionedUsers);
+
+//     mentionedUsers = mentionedUsers.map(employee => employee._id); 
+//   }
+
+//   const inputData = {
+//     actionId: id,
+//     userId: userId,
+//     commentDescription: data.commentDescription,
+//     mentionedUsers, 
+//   };
+
+//   const commentData = new ActionComments(inputData);
+//   const result = await commentData.save();
+  
+//   console.log("Final Comment Data:", result);
+  
+//   return result;
+// };
+
+
+
 //FUCNTION TO CREATE COMMENTS
-const comments = async (userId, id, data, ipAddress = "1000") => {
+
+const addComments = async (userId, id, data) => {
+  const actionDetails = await Minutes.findOne({ _id: id }).lean();
+  console.log("Action Details====", actionDetails);
+
+  if (!actionDetails || !actionDetails.meetingId) {
+    console.error("Error: No meetingId found for the given actionId.");
+    return false;
+  }
+
+  const meetingDetails = await meetingService.viewMeeting(
+    actionDetails.meetingId,
+    data.userId
+  );
+
+  if (!meetingDetails || !Array.isArray(meetingDetails.attendees)) {
+    console.error("Error: Meeting details or attendees not found.");
+    return false;
+  }
+
+  console.log("Meeting Details====:", meetingDetails);
+  console.log("Attendees-----", meetingDetails.attendees);
+
+  let mentionedUsers = [];
+  let commentText = data.commentDescription;
+
+  // Extract mentioned attendees based on their names
+  meetingDetails.attendees.forEach(attendee => {
+    if (!attendee.name) return;
+    const mentionTag = `@${attendee.name}`;
+    
+    if (commentText.includes(mentionTag)) {
+      mentionedUsers.push({
+        id: attendee._id.toString(),
+        name: attendee.name,
+        email: attendee.email,
+      });
+      commentText = commentText.replace(mentionTag, "").trim(); 
+    }
+  });
+
   const inputData = {
+    meetingId: actionDetails.meetingId,
     actionId: id,
-    userId: userId,
-    commentDescription: data.commentDescription,
+    userId: data.userId,
+    commentDescription: commentText, 
+    mentionedUsers, 
   };
+
+  console.log("Input Data for ActionComments:", inputData);
+
   const commentData = new ActionComments(inputData);
-  const result = await commentData.save();
+  let result = await commentData.save();
+  console.log("Saved Comment Data:", result);
+
+  const userDetail = await Employee.findOne(
+    { _id: new ObjectId(data.userId) },
+    { _id: 1, email: 1, name: 1 }
+  ).lean();
+
+  if (!userDetail) {
+    console.error("Error: User not found!");
+    return false;
+  }
+
+  console.log("User Details:", userDetail);
+
+  const logo = process.env.LOGO;
+  const mailData = await emailTemplates.sendCommentEmailTemplate(
+    meetingDetails,
+    logo,
+    userDetail,
+    result
+  );
+
+  console.log("MailData from action service:", mailData);
+
+  if (!mailData) {
+    console.error("Error: Email template generation failed.");
+    return false;
+  }
+
+  const { emailSubject, mailData: mailBody } = mailData;
+  console.log("MailBody sent:", mailBody);
+
+  await emailService.sendEmail(
+    meetingDetails?.createdByDetail?.email,
+    "Comment Created",
+    emailSubject,
+    mailBody
+  );
+
+  result = result.toObject();
+  result.userName = userDetail.name;
+  result.userEmail = userDetail.email;
+
   return result;
 };
+
+
+
+
+
 /**FUNC-VIEW ACTION COMMENT */
-const viewActionComment = async (id) => {
-  const viewActionCommentList = await ActionComments.findById(id);
-  return {
-    viewActionCommentList,
-  };
+const viewActionComment = async (actionId) => {
+  const totalComments = await ActionComments.countDocuments({ actionId });
+  const viewActionCommentList = await ActionComments.find({ actionId })
+    .sort({ createdAt: -1 })
+    .lean(); 
+
+    for (let comment of viewActionCommentList) {
+      if (comment.userId) {
+        const userDetail = await Employee.findOne(
+          { _id: new ObjectId(comment.userId) },
+          { _id: 1, email: 1, name: 1 }
+        ).lean();
+  
+        comment.userName = userDetail?.name || 'Unknown';
+        comment.userEmail = userDetail?.email || 'No Email';
+      }
+    }
+  
+  const formattedComments = viewActionCommentList.map(comment => ({
+    ...comment,
+    createdAt: comment.createdAt 
+      ? moment(comment.createdAt).format('MMMM DD, YYYY hh:mm A') 
+      : null,
+  }));
+
+ // console.log("Fetched Data:", formattedComments);
+  return { totalComments, viewActionCommentList: formattedComments };
 };
+
+
+/**FUNC- EDIT ACTION COMMENT */
+// const updateComment = async (userId, commentId, data) => {
+//   const updatedComment = await ActionComments.findOneAndUpdate(
+//     { _id: commentId, userId: userId }, 
+//     { commentDescription: data.commentDescription },
+//     { new: true } 
+//   );
+
+//   return updatedComment;
+// };
+
+const updateComment = async (userId, commentId, data) => {
+  
+  const existingComment = await ActionComments.findOne({ _id: commentId });
+console.log("Existing comment-----", existingComment);
+  if (!existingComment) {
+    console.error("Error: Comment not found.");
+    return false;
+  }
+
+  
+  const userDetail = await Employee.findOne(
+    { _id: new ObjectId(userId) },
+    { _id: 1, email: 1, name: 1 }
+  );
+// console.log("Userdetail id----",userDetail._id);
+// console.log("Existing comment userid=====",existingComment.userId);
+  if (!userDetail) {
+    console.error("Error: User details not found.");
+    return false;
+  }
+
+  if (existingComment.userId.toString() !== userId.toString()) {
+    console.error("Error: You can only edit your own comment.");
+    return "unauthorized";
+  }
+  
+  const updatedComment = await ActionComments.findOneAndUpdate(
+    { _id: commentId },
+    { commentDescription: data.commentDescription },
+    { new: true }
+  );
+
+  if (!updatedComment) {
+    console.error("Error: Comment update failed.");
+    return false;
+  }
+
+  
+  const actionDetails = await Minutes.findOne({ _id: updatedComment.actionId });
+  if (!actionDetails || !actionDetails.meetingId) {
+    console.error("Error: No meetingId found for the given actionId.");
+    return false;
+  }
+
+  const meetingDetails = await meetingService.viewMeeting(
+    actionDetails.meetingId,
+    userId
+  );
+  if (!meetingDetails) {
+    console.error("Error: Meeting details not found.");
+    return false;
+  }
+
+  
+  const logo = process.env.LOGO;
+  const mailData = await emailTemplates.sendCommentEmailTemplate(
+    meetingDetails,
+    logo,
+    userDetail,
+    updatedComment
+  );
+
+  if (!mailData) {
+    console.error("Error: Email template generation failed.");
+    return false;
+  }
+
+  const { emailSubject, mailData: mailBody } = mailData;
+  console.log("MailBody sent------", mailBody);
+
+  await emailService.sendEmail(
+    meetingDetails?.createdByDetail?.email,
+    "Comment Updated",
+    emailSubject,
+    mailBody
+  );
+
+  return updatedComment;
+};
+
+
+/**FUNC- DELETE ACTION COMMENT */
+const deleteComment = async (userId, commentId) => {
+  const deletedComment = await ActionComments.findOneAndDelete({
+    _id: commentId,
+    userId: userId, 
+  });
+
+  return deletedComment;
+};
+
+
+
+
 /**FUNC- ACTION REASSIGN REQUEST */
 const actionReassignRequest = async (
   userId,
@@ -104,19 +367,26 @@ const actionReassignRequest = async (
     console.log("meetingDetails rr-->", meetingDetails);
     console.log("userData-->", userData.name);
     if (meetingDetails) {
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+      const organization = await Organization.findOne({
+        _id: new ObjectId(result.organizationId),
+      });
+
+      const logo = organization?.dashboardLogo
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : process.env.LOGO;
+
       const mailData = await emailTemplates.actionReassignRequestEmailTemplate(
         meetingDetails,
         logo,
         data.requestDetails,
         userData,
-        result,
-       
-        
+        result
       );
       // const emailSubject = await emailConstants.reassignRequestSubject(
       //   meetingDetails
       // );
+
       const { emailSubject, mailData: mailBody } = mailData;
       "sendOtpEmailTemplate-----------------------maildata", mailData;
       "sendOtpEmailTemplate-----------------------emailSubject", emailSubject;
@@ -125,7 +395,7 @@ const actionReassignRequest = async (
         "Reassign Requested",
         emailSubject,
         mailBody,
-       // mailData
+        //  mailData
       );
     }
     //////////////////////LOGER START
@@ -268,7 +538,6 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
       query["actionStatus"] = {
         $in: ["APPROVED", "COMPLETED"],
       }; // Equivalent to OR condition
-
     }
     if (
       bodyData.actionStatus &&
@@ -350,10 +619,7 @@ const viewUserAllAction = async (bodyData, queryData, userId, userData) => {
     //   { meetingId: { $in: [...meetingsIds, ...meetingIds] } },
     // ];
     if (bodyData.actionStatus && bodyData.actionStatus == "COMPLETED") {
-    //  query["actionStatus"] = "COMPLETED";
-      query["actionStatus"] = {
-        $in: ["APPROVED", "COMPLETED"],
-      }; // Equivalent to OR condition
+      query["actionStatus"] = "COMPLETED";
     }
     if (
       bodyData.actionStatus &&
@@ -819,14 +1085,28 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     } else {
       reassignedUserId = empData._id;
     }
+  } else if (data.attendeeData) {
+    // If attendeeData is a single object, process it as a single reassigned user
+    const empData = await employeeService.createAttendee(
+      data.attendeeData.name,
+      data.attendeeData.email,
+      data.attendeeData.organizationId,
+      data.attendeeData.designation,
+      data.attendeeData.companyName
+    );
+
+    reassignedUserId = empData.isDuplicate ? empData.duplicateUserId : empData._id;
   }
 
+  // Ensure reassignedUserId is stored correctly in the update object
   const reassignDetails = {
     userId,
     reAssignReason: data.reAssignReason,
     newDueDate: data.dueDate,
-    reAssignedUserId: new ObjectId(reassignedUserId),
-    priority: data?.priority ? data?.priority : "LOW",
+    reAssignedUserId: Array.isArray(reassignedUserId)
+      ? reassignedUserId.map((id) => new ObjectId(id))
+      : new ObjectId(reassignedUserId),
+    priority: data?.priority || "LOW",
   };
 
   const updateData = {
@@ -834,116 +1114,112 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     isRequested: false,
     isPending: true,
     actionStatus: "REASSIGNED",
-    assignedUserId: new ObjectId(reassignedUserId),
+    assignedUserId: Array.isArray(reassignedUserId)
+      ? reassignedUserId.map((id) => new ObjectId(id))
+      : new ObjectId(reassignedUserId),
   };
-  result = await Minutes.findOneAndUpdate(
-    {
-      _id: new ObjectId(actionId),
-    },
-    updateData,
-    {
-      isNew: false,
-    }
-  );
-  const minuteDetails = await Minutes.findOne({
-    _id: new ObjectId(actionId),
-  });
 
   let userIndex = 0;
   const newRequestDetails = minuteDetails.reassigneRequestDetails.map(
     (item, index) => {
-      if (item.userId.toString() === result?.assignedUserId?.toString()) {
+      if (Array.isArray(result?.assignedUserId)) {
+        if (result?.assignedUserId.includes(item.userId.toString())) {
+          userIndex = index;
+        }
+      } else if (item.userId.toString() === result?.assignedUserId?.toString()) {
         userIndex = index;
       }
+
       if (index === minuteDetails.reassigneRequestDetails.length - 1) {
         minuteDetails.reassigneRequestDetails[userIndex].isAccepted = true;
-        minuteDetails.reassigneRequestDetails[userIndex].actionDateTime =
-          new Date();
-        minuteDetails.reassigneRequestDetails[userIndex].reAssignReason =
-          data.reAssignReason;
+        minuteDetails.reassigneRequestDetails[userIndex].actionDateTime = new Date();
+        minuteDetails.reassigneRequestDetails[userIndex].reAssignReason = data.reAssignReason;
         return item;
       }
       return item;
     }
   );
+
   minuteDetails.reassigneRequestDetails = newRequestDetails;
-  console.log("minuteDetails---------------", minuteDetails);
+  console.log("Updated Minute Details:", minuteDetails);
+
   const minuteData = new Minutes(minuteDetails);
   const newMinutes = await minuteData.save();
 
-  data["isActive"] = true;
-  data["createdById"] = new ObjectId(userId);
-  data["priority"] = data.priority ? data.priority : "LOW";
-  data["dueDate"] = new Date(data.dueDate);
-  data["mainDueDate"] = new Date(result.mainDueDate);
-  data["assignedUserId"] = reassignedUserId
-    ? reassignedUserId
-    : new ObjectId(userId);
-  data["actionId"] = actionId;
-  data["agendaId"] = result.agendaId;
-  data["meetingId"] = result.meetingId;
-  data["organizationId"] = result.organizationId;
-  data["parentMinuteId"] = actionId;
-  data["minuteId"] = minuteDetails.minuteId;
-  data["description"] = minuteDetails.description;
-  data["title"] = minuteDetails.title;
-  data["attendees"] = minuteDetails.attendees;
-  data["isAction"] = true;
-  data["status"] = result?.status;
-  data["sequence"] = result?.sequence;
-  "inside data-------------------------", data, result?.status;
+  // Assign the updated values to data
+  data = {
+    ...data,
+    isActive: true,
+    createdById: new ObjectId(userId),
+    priority: data.priority || "LOW",
+    dueDate: new Date(data.dueDate),
+    mainDueDate: new Date(result.mainDueDate),
+    assignedUserId: reassignedUserId.length ? reassignedUserId : new ObjectId(userId),
+    actionId,
+    agendaId: result.agendaId,
+    meetingId: result.meetingId,
+    organizationId: result.organizationId,
+    parentMinuteId: actionId,
+    minuteId: minuteDetails.minuteId,
+    description: minuteDetails.description,
+    title: minuteDetails.title,
+    attendees: minuteDetails.attendees,
+    isAction: true,
+    status: result?.status,
+    sequence: result?.sequence,
+  };
+
+  console.log("Final Data Before Saving:", data);
+
   const actionData = new Minutes(data);
   await actionData.save();
 
   if (data?.lastActionActivityId) {
-    const updateLatActivity = await ActionActivities.findByIdAndUpdate(
-      {
-        _id: new ObjectId(data.lastActionActivityId),
-      },
+    await ActionActivities.findByIdAndUpdate(
+      { _id: new ObjectId(data.lastActionActivityId) },
       { isRead: true }
     );
-
   }
-
 
   const actionActivityObject = {
     activityDetails: data.reAssignReason,
     activityTitle: "ACTION FORWARDED",
     minuteId: actionId,
-    reassignedUserId: reassignedUserId,
+    reassignedUserId,
     userId,
     status: "REASSIGNED",
     actionId: minuteDetails.minuteId,
-    isRead: true
+    isRead: true,
   };
-  "activityObject-->", actionActivityObject;
-  const actionActivitiesResult = await createActionActivity(
-    actionActivityObject
-  );
-  "actionActivitiesResult------------", actionActivitiesResult;
 
-  const meetingDetails = await meetingService.viewMeeting(
-    result?.meetingId,
-    userId
-  );
-  console.log("meetingDetails===========5555=", meetingDetails);
-  const assignedUserDetail = await Employee.findOne(
-    { _id: new ObjectId(reassignedUserId) },
+  await createActionActivity(actionActivityObject);
+
+  const meetingDetails = await meetingService.viewMeeting(result?.meetingId, userId);
+  console.log("Meeting Details:", meetingDetails);
+
+  const assignedUserDetail = await Employee.find(
+    { _id: { $in: reassignedUserId.map((id) => new ObjectId(id)) } },
     { _id: 1, email: 1, name: 1 }
   );
-  console.log("assignedUserDetail===========5555=", assignedUserDetail);
+
+  console.log("Assigned Users:", assignedUserDetail);
+
   const oldAssignedUserDetail = await Employee.findOne(
     { _id: new ObjectId(result?.assignedUserId) },
     { _id: 1, email: 1, name: 1 }
   );
-  console.log("meetingDetails===========5555=", oldAssignedUserDetail);
+
+  console.log("Old Assigned User:", oldAssignedUserDetail);
+
   const allowedUsers = [
     new ObjectId(userId),
     result?.createdById,
     meetingDetails?.createdById,
-    reassignedUserId,
+    ...reassignedUserId.map((id) => new ObjectId(id)),
   ];
-  console.log("allowedUsers==============", allowedUsers);
+
+  console.log("Allowed Users:", allowedUsers);
+
   const notificationData = {
     title: "ACTION FORWARDED",
     organizationId: new ObjectId(result.organizationId),
@@ -956,14 +1232,21 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
     byUserId: userId,
     toUserId: reassignedUserId,
   };
-  const addNotification = await notificationService.createNotification(
-    notificationData
-  );
+
+  await notificationService.createNotification(notificationData);
 
   if (meetingDetails) {
-    const logo = process.env.LOGO;
-    console.log("userData2-->", userData)
-  
+    // const logo = process.env.LOGO;
+    const organization = await Organization.findOne({
+      _id: new ObjectId(result.organizationId),
+    });
+
+    const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : process.env.LOGO;
+
+    console.log("userData2-->", userData);
+
     const mailData = await emailTemplates.actionReassignEmailTemplate(
       meetingDetails,
       logo,
@@ -972,15 +1255,13 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       userData,
       result
     );
-    // const emailSubject = await emailConstants.reassignSubject(result);
+
     const { emailSubject, mailData: mailBody } = mailData;
 
-    emailService.sendEmail(
-      assignedUserDetail?.email,
-      "Action Forwarded",
-      emailSubject,
-      mailBody
-    );
+    assignedUserDetail.forEach((user) => {
+      emailService.sendEmail(user.email, "Action Forwarded", emailSubject, mailBody);
+    });
+
     const mailOldData =
       await emailTemplates.actionReassignEmailToOlAssignedUserTemplate(
         meetingDetails,
@@ -989,12 +1270,11 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
         data.reAssignReason,
         result,
         userData,
-        oldAssignedUserDetail,
+        oldAssignedUserDetail
       );
     // const emailSubjectForAccept = await emailConstants.reassignAcceptedSubject(
     //   result
     // );
-
     const { oldemailSubject, mailOldData: oldmailBody } = mailOldData;
 
     emailService.sendEmail(
@@ -1003,37 +1283,23 @@ const reAssignAction = async (data, actionId, userId, userData, ipAddress) => {
       oldemailSubject,
       oldmailBody
     );
-    ////////////////////LOGER START
+
     const logData = {
       moduleName: logMessages.Action.moduleName,
       userId,
       action: logMessages.Action.reassignAction,
       ipAddress,
-      details:
-        "Action forwarded from <strong>" +
-        commonHelper.convertFirstLetterOfFullNameToCapital(
-          oldAssignedUserDetail?.name
-        ) +
-        " (" +
-        oldAssignedUserDetail?.email +
-        ") </strong>" +
-        " to <strong>" +
-        commonHelper.convertFirstLetterOfFullNameToCapital(
-          assignedUserDetail?.name
-        ) +
-        " (" +
-        assignedUserDetail?.email +
-        ") </strong>",
-      subDetails: `
-      Action : ${result?.title}</br>
-      Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
+      details: `Action forwarded from <strong>${oldAssignedUserDetail?.name} (${oldAssignedUserDetail?.email})</strong> to <strong>${assignedUserDetail.map(u => `${u.name} (${u.email})`).join(', ')}</strong>`,
+      subDetails: `Action: ${result?.title}<br/>Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
       organizationId: result?.organizationId,
     };
     await logService.createLog(logData);
-    /////////////////// LOGER END
   }
+
   return result;
 };
+
+
 /**FUNC- TO VIEW SINGLE ACTION DETAILS */
 const viewSingleAction2 = async (id) => {
   const actionData = await Minutes.aggregate([
@@ -1727,9 +1993,16 @@ const updateAction = async (id, data, userId, userData, ipAddress) => {
     };
 
     if (meetingDetails) {
-       const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
 
- 
+      const organization = await Organization.findOne({
+        _id: new ObjectId(result.organizationId),
+      });
+
+      const logo = organization?.dashboardLogo
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : null;
+
       const mailData = await emailTemplates.actionCompleteEmailTemplate(
         meetingDetails,
         logo,
@@ -1784,7 +2057,7 @@ const createActionActivity = async (data) => {
     minuteId: data.minuteId,
     userId: data.userId,
     actionId: data.actionId,
-    isRead: data.isRead
+    isRead: data.isRead,
   };
   if (data.status) {
     inputData["status"] = data.status;
@@ -1912,7 +2185,15 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
       notificationData
     );
     if (meetingDetails) {
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+      const organization = await Organization.findOne({
+        _id: new ObjectId(result.organizationId),
+      });
+
+      const logo = organization?.dashboardLogo
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : process.env.LOGO;
+
       const mailData = await emailTemplates.actionApproveEmailTemplate(
         meetingDetails,
         logo,
@@ -1930,7 +2211,7 @@ const approveAction = async (actionId, data, userId, ipAddress, userData) => {
         "Action Approved",
         emailSubject,
         mailBody,
-       // mailData
+        //  mailData
       );
       ////////////////////LOGER START
       const logData = {
@@ -2008,7 +2289,15 @@ const reOpenAction = async (actionId, data, userId, ipAddress, userData) => {
   );
 
   if (meetingDetails) {
-    const logo = process.env.LOGO;
+    // const logo = process.env.LOGO;
+    const organization = await Organization.findOne({
+      _id: new ObjectId(result.organizationId),
+    });
+
+    const logo = organization?.dashboardLogo
+      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+      : null;
+
     const mailData = await emailTemplates.actionReOpenEmailTemplate(
       meetingDetails,
       logo,
@@ -2018,6 +2307,7 @@ const reOpenAction = async (actionId, data, userId, ipAddress, userData) => {
     );
     // const emailSubject = await emailConstants.reOpenSubject(result);
     const { emailSubject, mailData: mailBody } = mailData;
+
     emailSubject;
     emailService.sendEmail(
       data?.assignedUserDetails?.email,
@@ -2144,7 +2434,15 @@ const rejectReasignRequest = async (
     );
 
     if (meetingDetails) {
-      const logo = process.env.LOGO;
+      // const logo = process.env.LOGO;
+      const organization = await Organization.findOne({
+        _id: new ObjectId(result.organizationId),
+      });
+
+      const logo = organization?.dashboardLogo
+        ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
+        : null;
+
       const mailData =
         await emailTemplates.actionReassignRequestRejectEmailTemplate(
           meetingDetails,
@@ -2167,7 +2465,7 @@ const rejectReasignRequest = async (
         "Action Reassign Request Rejected",
         emailSubject,
         mailBody,
-       // mailData
+        //  mailData
       );
       ////////////////////LOGER START
       const logData = {
@@ -2313,6 +2611,7 @@ const cancelAction = async (actionId, userId, data, ipAddress, userData) => {
 
   return result;
 };
+
 /**FUNC- TO VIEW ALL USER ACTIONS */
 const totalActionList = async (organizationId, userId, userData) => {
   let query = null;
@@ -2610,8 +2909,1071 @@ const getUserActionPriotityDetails = async (
   };
 };
 
+const getAllActionData = async (bodyData, queryData, userId, userData) => {
+
+
+  // Initialize counters
+  let totalHighPriorityAction = 0;
+  let totalHighPriorityDueAction = 0;
+  let totalLowPriorityAction = 0;
+  let totalLowPriorityDueAction = 0;
+  let totalNormalPriorityAction = 0;
+  let totalNormalPriorityDueAction = 0;
+  const { order } = queryData;
+  const { organizationId, searchKey } = bodyData;
+  let query = null;
+
+  if (userData.isAdmin) {
+    query = searchKey
+      ? {
+        organizationId: new ObjectId(organizationId),
+        title: { $regex: searchKey, $options: "i" },
+        isActive: true,
+        isAction: true,
+      }
+      : {
+        organizationId: new ObjectId(organizationId),
+        isActive: true,
+        isAction: true,
+      };
+
+    if (bodyData.fromDate && bodyData.toDate) {
+      const fromDate = new Date(bodyData.fromDate);
+      const toDate = new Date(bodyData.toDate);
+      query.dueDate = {
+        $gte: new Date(fromDate.setDate(fromDate.getDate())),
+        $lt: new Date(toDate.setDate(toDate.getDate() + 1)),
+      };
+    }
+    if (bodyData.fromDate && !bodyData.toDate) {
+      const fromDate = new Date(bodyData.fromDate);
+      query.dueDate = {
+        $gte: new Date(fromDate.setDate(fromDate.getDate())),
+      };
+    }
+    if (!bodyData.fromDate && bodyData.toDate) {
+      const toDate = new Date(bodyData.toDate);
+      query.dueDate = {
+        $lt: new Date(toDate.setDate(toDate.getDate() + 1)),
+      };
+    }
+    if (bodyData.priority) {
+      if (bodyData.priority === "LOW") {
+        query["priority"] = "LOW";
+      } else if (bodyData.priority === "NORMAL") {
+        query["priority"] = "NORMAL";
+      } else if (bodyData.priority === "HIGH") {
+        query["priority"] = "HIGH";
+      }
+    }
+    if (bodyData.createdById) {
+      query["createdById"] = new ObjectId(bodyData.createdById);
+      // delete query.assignedUserId;
+    }
+    if (bodyData.assignedUserId) {
+      query["assignedUserId"] = new ObjectId(bodyData.assignedUserId);
+      // delete query.assignedUserId;
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "PENDING") {
+      // query["actionStatus"] = "PENDING";
+      query["actionStatus"] = {
+        $in: ["PENDING", "REQUESTFORREASSIGN", "REOPENED"],
+      }; // Equivalent to OR condition
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "COMPLETED") {
+      query["actionStatus"] = "COMPLETED";
+    }
+    if (
+      bodyData.actionStatus &&
+      bodyData.actionStatus == "REQUESTFORREASSIGN"
+    ) {
+      query["actionStatus"] = "REQUESTFORREASSIGN";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "REASSIGNED") {
+      query["actionStatus"] = "REASSIGNED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "REOPENED") {
+      query["actionStatus"] = "REOPENED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "APPROVED") {
+      query["actionStatus"] = "APPROVED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "CANCELLED") {
+      query["actionStatus"] = "CANCELLED";
+    }
+    if (bodyData.meetingId) {
+      query["meetingId"] = new ObjectId(bodyData.meetingId);
+    }
+  } else {
+    query = searchKey
+      ? {
+        organizationId: new ObjectId(organizationId),
+        title: { $regex: searchKey, $options: "i" },
+        isActive: true,
+        isAction: true,
+        //  assignedUserId: userId,
+      }
+      : {
+        organizationId: new ObjectId(organizationId),
+        isActive: true,
+        isAction: true,
+        // assignedUserId: userId,
+      };
+
+    if (bodyData.fromDate && bodyData.toDate) {
+      const fromDate = new Date(bodyData.fromDate);
+      const toDate = new Date(bodyData.toDate);
+      query.dueDate = {
+        $gte: new Date(fromDate.setDate(fromDate.getDate())),
+        $lt: new Date(toDate.setDate(toDate.getDate() + 1)),
+      };
+    }
+
+    if (bodyData.fromDate && !bodyData.toDate) {
+      const fromDate = new Date(bodyData.fromDate);
+      query.dueDate = {
+        $gte: new Date(fromDate.setDate(fromDate.getDate())),
+      };
+    }
+
+    if (!bodyData.fromDate && bodyData.toDate) {
+      const toDate = new Date(bodyData.toDate);
+      query.dueDate = {
+        $lt: new Date(toDate.setDate(toDate.getDate() + 1)),
+      };
+      if (bodyData.priority) {
+        if (bodyData.priority === "LOW") {
+          query["priority"] = "LOW";
+        } else if (bodyData.priority === "NORMAL") {
+          query["priority"] = "NORMAL";
+        } else if (bodyData.priority === "HIGH") {
+          query["priority"] = "HIGH";
+        }
+      }
+    }
+
+    if (bodyData.assignedUserId) {
+      query["assignedUserId"] = new ObjectId(bodyData.assignedUserId);
+      // delete query.assignedUserId;
+    }
+
+    if (bodyData.createdById) {
+      query["createdById"] = new ObjectId(bodyData.createdById);
+      // delete query.assignedUserId;
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "PENDING") {
+      query["actionStatus"] = {
+        $in: ["PENDING", "REQUESTFORREASSIGN", "REOPENED"],
+      }; // Equivalent to OR condition
+    }
+    // query["$or"] = [
+    //   // { assignedUserId: new ObjectId(userId) },
+    //   { createdById: new ObjectId(userId) },
+    //   { meetingId: { $in: [...meetingsIds, ...meetingIds] } },
+    // ];
+    if (bodyData.actionStatus && bodyData.actionStatus == "COMPLETED") {
+      query["actionStatus"] = "COMPLETED";
+    }
+    if (
+      bodyData.actionStatus &&
+      bodyData.actionStatus == "REQUESTFORREASSIGN"
+    ) {
+      query["actionStatus"] = "REQUESTFORREASSIGN";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "REASSIGNED") {
+      query["actionStatus"] = "REASSIGNED";
+    }
+
+    if (bodyData.actionStatus && bodyData.actionStatus == "REOPENED") {
+      query["actionStatus"] = "REOPENED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "APPROVED") {
+      query["actionStatus"] = "APPROVED";
+    }
+    if (bodyData.actionStatus && bodyData.actionStatus == "CANCELLED") {
+      query["actionStatus"] = "CANCELLED";
+    }
+    if (bodyData.meetingId) {
+      query["meetingId"] = new ObjectId(bodyData.meetingId);
+    }
+    if (bodyData.meetingId) {
+      query["meetingId"] = new ObjectId(bodyData.meetingId);
+    }
+  }
+  var limit = parseInt(queryData.limit);
+  var skip = (parseInt(queryData.page) - 1) * parseInt(limit);
+  console.log("query==============================", query);
+  let pipeLine = [
+    {
+      $match: query,
+    },
+    {
+      $addFields: {
+        completedDate: {
+          $cond: {
+            if: {
+              $and: [
+                { $gt: [{ $arrayElemAt: ["$isCompleteDetails", -1] }, null] },
+                { $eq: ["$isReopened", false] },
+              ],
+            },
+            then: { $arrayElemAt: ["$isCompleteDetails.dateTime", -1] }, // Use last element of the array
+            //  then: { $arrayElemAt: ["$isCompleteDetails.dateTime", -1] }, // Use last element of the array
+            else: "$$NOW", // Set to null or a default value
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        completedDate: {
+          $dateTrunc: {
+            date: "$completedDate",
+            unit: "day",
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        delayCountInDays: {
+          $dateDiff: {
+            startDate: "$completedDate",
+            endDate: "$mainDueDate",
+            unit: "day",
+          },
+        },
+        isDelayed: {
+          $gt: [
+            {
+              $dateDiff: {
+                startDate: "$mainDueDate",
+                endDate: "$completedDate",
+                unit: "day",
+              },
+            },
+            0,
+          ],
+        },
+      },
+    },
+    // {
+    //   $addFields: {
+    //     isDelayed: {
+    //       $cond: {
+    //         if: { $eq: ["$isReopened", false] },
+    //         then: "$isDelayed", // Use last element of the array
+    //         else: true, // Set to null or a default value
+    //       },
+    //     },
+    //   },
+    // },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "createdById",
+        foreignField: "_id",
+        as: "userDetail",
+      },
+    },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "assignedUserId",
+        foreignField: "_id",
+        as: "assignedUserDetails",
+      },
+    },
+    {
+      $lookup: {
+        from: "meetings",
+        localField: "meetingId",
+        foreignField: "_id",
+        as: "meetingDetails",
+      },
+    },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "meetingDetails.attendees._id",
+        foreignField: "_id",
+        as: "attendeesDetail",
+      },
+    },
+    {
+      $project: {
+        createdById: 1,
+        completedDate: 1,
+        delayCountInDays: 1,
+        isDelayed: 1,
+        dueDate: 1,
+        isComplete: 1,
+        description: 1,
+        title: 1,
+        meetingId: 1,
+        priority: 1,
+        isActive: 1,
+        updatedAt: 1,
+        isReopened: 1,
+        isRequested: 1,
+        isPending: 1,
+        minuteId: 1,
+        isApproved: 1,
+        assignedUserId: 1,
+        organizationId: 1,
+        isAction: 1,
+        reassignDetails: 1,
+        reassigneRequestDetails: 1,
+        isCompleteDetails: 1,
+        actionStatus: 1,
+        mainDueDate: 1,
+        isCancelled: 1,
+        userDetail: {
+          name: 1,
+          _id: 1,
+        },
+        meetingDetails: {
+          title: 1,
+          meetingId: 1,
+          _id: 1,
+          attendees: 1,
+          date: 1,
+          createdById: 1,
+        },
+        assignedUserDetails: {
+          name: 1,
+          _id: 1,
+          email: 1,
+        },
+        attendeesDetail: {
+          name: 1,
+          _id: 1,
+          email: 1,
+        },
+      },
+    },
+    { $unwind: "$meetingDetails" },
+    { $unwind: "$assignedUserDetails" },
+    // {
+    //   $match: {
+    //     $expr: {
+    //       $gt: [
+    //         {
+    //           $dateDiff: {
+    //             // startDate: "$$NOW",
+    //             // endDate: "$dueDate",
+    //             startDate: "$$NOW",
+    //             endDate: "$mainDueDate",
+    //             unit: "day",
+    //           },
+    //         },
+    //         0,
+    //       ],
+    //     },
+    //   },
+    // },
+    {
+      $sort: { _id: -1 },
+    },
+    {
+      $group: {
+        _id: "$minuteId",
+        latestEntry: { $first: "$$ROOT" },
+      },
+    },
+    {
+      $replaceRoot: { newRoot: "$latestEntry" },
+    },
+  ];
+  console.log("userData============================>>>>>>>>>>", userData);
+
+  if (userData.isAdmin == false) {
+    const meetingIds = await meetingService.getMeetingIdsOfCreatedById(userId);
+    console.log("meetingIds============================>>>>>>>>>>", meetingIds);
+    if (bodyData.priority) {
+      pipeLine.push({
+        $match: {
+          ...query,
+          priority: bodyData.priority, // this will check for LOW, NORMAL, or HIGH
+        },
+      });
+    }
+    pipeLine.push({
+      $match: {
+        ...query,
+        // isCancelled: false,
+        isActive: true,
+        $or: [
+          { assignedUserId: new ObjectId(userId) },
+          { createdById: new ObjectId(userId) },
+          { meetingId: { $in: meetingIds } },
+        ],
+      },
+    });
+  }
+  if (userData.isAdmin == true) {
+    pipeLine.push({
+      $match: {
+        ...query,
+        isActive: true,
+      },
+    });
+  }
+
+  if (bodyData.actionStatus && bodyData.actionStatus == "NOTDELAYED") {
+    pipeLine.push({
+      $match: {
+        ...query,
+        actionStatus: { $ne: "CANCELLED" },
+        isDelayed: false,
+        // $expr: {
+        //   $gt: [
+        //     {
+        //       $dateDiff: {
+        //         // startDate: "$$NOW",
+        //         // endDate: "$dueDate",
+        //         startDate: "$$NOW",
+        //         endDate: "$mainDueDate",
+        //         unit: "day",
+        //       },
+        //     },
+        //     0,
+        //   ],
+        // },
+      },
+    });
+  }
+
+  if (bodyData.delayStatus == "NOTDELAYED") {
+    pipeLine.push({
+      $match: {
+        ...query,
+        actionStatus: { $ne: "CANCELLED" },
+        isDelayed: false,
+        // $expr: {
+        //   $gt: [
+        //     {
+        //       $dateDiff: {
+        //         // startDate: "$$NOW",
+        //         // endDate: "$dueDate",
+        //         startDate: "$$NOW",
+        //         endDate: "$mainDueDate",
+        //         unit: "day",
+        //       },
+        //     },
+        //     0,
+        //   ],
+        // },
+      },
+    });
+  }
+
+  if (bodyData.delayStatus == "DELAYED") {
+    pipeLine.push({
+      $match: {
+        ...query,
+        actionStatus: { $ne: "CANCELLED" },
+        isDelayed: true,
+        // $expr: {
+        //   $gt: [
+        //     {
+        //       $dateDiff: {
+        //         // startDate: "$$NOW",
+        //         // endDate: "$dueDate",
+        //         startDate: "$$NOW",
+        //         endDate: "$mainDueDate",
+        //         unit: "day",
+        //       },
+        //     },
+        //     0,
+        //   ],
+        // },
+      },
+    });
+  }
+
+  if (bodyData.actionStatus && bodyData.actionStatus == "DELAYED") {
+    pipeLine.push({
+      $match: {
+        ...query,
+        actionStatus: { $ne: "CANCELLED" },
+        isDelayed: true,
+        // $expr: {
+        //   $gt: [
+        //     {
+        //       $dateDiff: {
+        //         // startDate: "$$NOW",
+        //         // endDate: "$dueDate",
+        //         startDate: "$mainDueDate",
+        //         endDate: "$$NOW",
+        //         unit: "day",
+        //       },
+        //     },
+        //     0,
+        //   ],
+        // },
+      },
+    });
+  }
+  console.log(pipeLine);
+
+  console.log("query========================", query);
+  let totalCount = await Minutes.aggregate(pipeLine);
+  let actionDatas = await Minutes.aggregate(pipeLine)
+    .sort({ updatedAt: parseInt(order) })
+    .skip(skip)
+    .limit(limit);
+
+  console.log("actionDatas---------", actionDatas);
+
+  // Prioritize the filtering based on bodyData.priority
+  if (bodyData?.priority) {
+    actionDatas = actionDatas.filter(
+      (action) => action?.priority === bodyData.priority
+    );
+  }
+
+
+
+  // Count priority-based actions (from original `actionDatas`)
+  actionDatas.forEach((action) => {
+    if (action.priority === "HIGH") {
+      totalHighPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalHighPriorityDueAction++;
+      }
+    }
+
+    if (action.priority === "LOW") {
+      totalLowPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalLowPriorityDueAction++;
+      }
+    }
+
+    if (action.priority === "NORMAL") {
+      totalNormalPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalNormalPriorityDueAction++;
+      }
+    }
+  });
+
+  // Map over filtered actions and update completionStatus
+  // Filter only incomplete and not canceled actions (DO NOT override actionDatas)
+  let filteredActionDatas = actionDatas.filter(
+    (action) => !action.isComplete && !action.isCancelled
+  );
+
+
+
+  // Count priority-based actions (from original `actionDatas`)
+  actionDatas.forEach((action) => {
+    if (action.priority === "HIGH") {
+      totalHighPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalHighPriorityDueAction++;
+      }
+    }
+
+    if (action.priority === "LOW") {
+      totalLowPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalLowPriorityDueAction++;
+      }
+    }
+
+    if (action.priority === "NORMAL") {
+      totalNormalPriorityAction++;
+      if (!action.isComplete && !action.isCancelled) {
+        totalNormalPriorityDueAction++;
+      }
+    }
+  });
+
+  // Map over filtered actions and update completionStatus
+  filteredActionDatas = filteredActionDatas.map((action) => {
+    let delayCount = action?.delayCountInDays;
+    let dayCount = Math.abs(delayCount) > 1 ? "days" : "day";
+
+    console.log("dayCount-------------", dayCount);
+    console.log("delayCount-------------", delayCount);
+    console.log("action.isDelayed-------------", action.isDelayed);
+    console.log("action.isComplete-------------", action.isComplete);
+
+    if (action?.isComplete) {
+      if (delayCount > 0 && !action.isDelayed) {
+        action["completionStatus"] = "Before " + Math.abs(delayCount) + " " + dayCount;
+      } else if (delayCount === 0 && !action.isDelayed) {
+        action["completionStatus"] = "On time";
+      } else {
+        action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+      }
+    } else {
+      if (delayCount > 0 && !action?.isDelayed) {
+        action["completionStatus"] = "Remaining " + Math.abs(delayCount) + " " + dayCount;
+      } else if (delayCount === 0) {
+        action["completionStatus"] = "Due today";
+      } else {
+        action["completionStatus"] = "Delayed by " + Math.abs(delayCount) + " " + dayCount;
+      }
+    }
+
+    // Format due dates
+    action.dueDate = commonHelper.formatDateTimeFormat(action.dueDate).formattedDate;
+    action.mainDueDate = commonHelper.formatDateTimeFormat(action.mainDueDate).formattedDate;
+    // const totalCount =actionDatas.length;
+    // console.log("totalCount",totalCount);
+
+    return action;
+  });
+
+
+
+  return {
+    totalCount: totalCount.length,
+    actionDatas: filteredActionDatas,
+    type: bodyData.actionStatus,
+  };
+}
+
+const getMeetingDueActionPriorityDetailsforChart = async (
+  queryData,
+  bodyData,
+  userId,
+  userData
+) => {
+  const { order } = queryData;
+  const { organizationId, searchKey, meetingId } = bodyData;
+
+  let query = {
+    organizationId: new ObjectId(organizationId),
+    isActive: true,
+    $and: [
+      {
+        $or: [
+          { "meetingStatus.status": "scheduled" },
+          { "meetingStatus.status": "closed" },
+          { "meetingStatus.status": "rescheduled" },
+        ],
+      },
+    ],
+  };
+
+  let minuteQuery = {
+    isActive: true,
+    isAction: true,
+  };
+
+  if (meetingId) {
+    query.meetingId = meetingId;
+  }
+
+  if (searchKey) {
+    query["$and"].push({
+      $or: [
+        { title: { $regex: searchKey, $options: "i" } },
+        { meetingId: { $regex: searchKey, $options: "i" } },
+      ],
+    });
+  }
+
+  if (!userData?.isAdmin) {
+    const meetingIds = await meetingService.getMeetingIdsOfCreatedById(userId);
+    query["$or"] = [
+      { "attendees._id": new ObjectId(userId) },
+      { createdById: new ObjectId(userId) },
+    ];
+    minuteQuery["$or"] = [
+      { assignedUserId: new ObjectId(userId) },
+      { createdById: new ObjectId(userId) },
+      { meetingId: { $in: meetingIds } },
+    ];
+  }
+
+  const pipeLine = [
+    { $match: query },
+    {
+      $lookup: {
+        from: "minutes",
+        localField: "_id",
+        foreignField: "meetingId",
+        pipeline: [
+          { $match: { isActive: true, isComplete: false, isAction: true, actionStatus: { $ne: "REASSIGNED" } } },
+          { $sort: { _id: -1 } },
+          { $group: { _id: "$minuteId", latestEntry: { $first: "$$ROOT" } } },
+          { $replaceRoot: { newRoot: "$latestEntry" } },
+          { $match: minuteQuery },
+        ],
+        as: "minutesDetail",
+      },
+    },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "minutesDetail.assignedUserId",
+        foreignField: "_id",
+        as: "assignedUserDetails",
+      },
+    },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "attendees._id",
+        foreignField: "_id",
+        as: "attendeesDetail",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        meetingId: 1,
+        title: 1,
+        date: 1,
+        fromTime: 1,
+        meetingStatus: 1,
+        minutesDetail: 1,
+        assignedUserDetails: { name: 1, _id: 1, email: 1 },
+        attendees: 1,
+        attendeesDetail: 1,
+      },
+    },
+    { $addFields: { activeMinutesCount: { $size: "$minutesDetail" } } },
+    { $match: { activeMinutesCount: { $gt: 0 } } },
+    { $sort: { activeMinutesCount: -1 } },
+  ];
+
+  const meetingData = await Meeting.aggregate(pipeLine);
+
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Intl.DateTimeFormat('en-GB', options).format(date);
+  };
+
+  let meetingsData = meetingData.map((meeting) => {
+    let sortedMinutesDetail = meeting.minutesDetail
+      .filter(action => !action.isCancelled)
+      .sort((a, b) => {
+        const priorityOrder = { HIGH: 3, NORMAL: 2, LOW: 1 };
+        return priorityOrder[b.priority] - priorityOrder[a.priority];
+      });
+
+    sortedMinutesDetail = sortedMinutesDetail.map(action => {
+      const assignedUser = meeting.assignedUserDetails.find(user => user._id.toString() === action.assignedUserId.toString());
+
+      const dueDate = new Date(action.dueDate);
+      const formattedDueDate = formatDate(dueDate);
+      const completedDate = action.isComplete ? new Date(action.completedDate) : null;
+
+      let completionStatus = "";
+      let isDelayed = false;
+
+      if (action.isComplete) {
+        let delayInDays = Math.ceil((completedDate - dueDate) / (1000 * 3600 * 24));
+        let dayCount = Math.abs(delayInDays) > 1 ? "days" : "day";
+
+        if (delayInDays > 0 && !action.isDelayed) {
+          completionStatus = `Before ${Math.abs(delayInDays)} ${dayCount}`;
+        } else if (delayInDays === 0 && !action.isDelayed) {
+          completionStatus = "On time";
+        } else {
+          completionStatus = `Delayed by ${Math.abs(delayInDays)} ${dayCount}`;
+          isDelayed = true;
+        }
+      } else {
+        let delayInDays = Math.ceil((dueDate - new Date()) / (1000 * 3600 * 24));
+        let dayCount = Math.abs(delayInDays) > 1 ? "days" : "day";
+
+        if (delayInDays > 0) {
+          completionStatus = `Remaining ${Math.abs(delayInDays)} ${dayCount}`;
+        } else if (delayInDays === 0) {
+          completionStatus = "Due today";
+        } else {
+          completionStatus = `Delayed by ${Math.abs(delayInDays)} ${dayCount}`;
+          isDelayed = true;
+        }
+      }
+
+      return {
+        ...action,
+        dueDate: formattedDueDate,
+        assignedUserDetails: assignedUser || { name: "Unknown", email: "unknown@example.com" },
+        userDetail: assignedUser,
+        meetingDetails: {
+          _id: meeting._id,
+          title: meeting.title,
+          meetingId: meeting.meetingId,
+          date: meeting.date,
+          attendees: meeting.attendees.map(attendee => ({
+            _id: attendee._id,
+            rsvp: attendee.rsvp,
+            isAttended: attendee.isAttended,
+            canWriteMOM: attendee.canWriteMOM
+          })),
+          createdById: meeting.createdById,
+          attendeesDetail: meeting.attendeesDetail,
+        },
+        completionStatus,
+        isDelayed,
+      };
+    });
+
+    return sortedMinutesDetail;
+  });
+
+  const limit = parseInt(queryData.limit) || 10;
+  const page = parseInt(queryData.page) || 1;
+  const skip = (page - 1) * limit;
+
+  const flatMeetingData = meetingsData.flat();
+
+  const totalCount = flatMeetingData.length;
+  console.log("totalCount:", totalCount);
+
+  const paginatedData = flatMeetingData.slice(skip, skip + limit);
+
+  return {
+    totalCount,
+    actionDatas: paginatedData,
+  };
+};
+
+
+const getAttendeesWithPendingActions = async (queryData, bodyData, userId, userData) => {
+  try {
+    const { organizationId, assignedUserId } = bodyData;
+
+    let query = {
+      organizationId: new ObjectId(organizationId),
+      isActive: true,
+      $and: [
+        {
+          $or: [
+            { "meetingStatus.status": "scheduled" },
+            { "meetingStatus.status": "closed" },
+            { "meetingStatus.status": "rescheduled" },
+          ],
+        },
+      ],
+    };
+
+    let minuteQuery = {
+      isActive: true,
+      isAction: true,
+      isComplete: false,
+      isCancelled: false,
+      isPending: true,
+      actionStatus: { $ne: "REASSIGNED" },
+    };
+
+
+    let orConditions = [];
+
+    if (assignedUserId) {
+      console.log("Filtering by assigned user:", assignedUserId);
+      orConditions.push({ "attendees._id": new ObjectId(assignedUserId) });
+      minuteQuery["$or"] = [
+        { assignedUserId: new ObjectId(assignedUserId) },
+        { createdById: new ObjectId(assignedUserId) },
+        { "reassigneRequestDetails.userId": new ObjectId(assignedUserId) },
+      ];
+    }
+
+    if (!userData?.isAdmin) {
+      console.log("Fetching meetings created by user:", userId);
+      const meetingIds = await meetingService.getMeetingIdsOfCreatedById(userId);
+      console.log("Retrieved meeting IDs:", meetingIds);
+
+      orConditions.push(
+        { "attendees._id": new ObjectId(userId) },
+        { createdById: new ObjectId(userId) }
+      );
+
+      if (meetingIds.length > 0) {
+        minuteQuery["$or"] = [
+          { assignedUserId: new ObjectId(userId) },
+          { createdById: new ObjectId(userId) },
+          { meetingId: { $in: meetingIds } },
+          { "reassigneRequestDetails.userId": new ObjectId(userId) },
+        ];
+      }
+    }
+
+    if (orConditions.length > 0) {
+      query["$or"] = orConditions;
+    }
+
+    console.log("Aggregation Query:", JSON.stringify(query, null, 2));
+
+    const pipeline = [
+      { $match: query },
+      {
+        $lookup: {
+          from: "minutes",
+          localField: "_id",
+          foreignField: "meetingId",
+          pipeline: [
+            { $match: minuteQuery },
+            { $sort: { _id: -1 } },
+            { $group: { _id: "$minuteId", latestEntry: { $first: "$$ROOT" } } },
+            { $replaceRoot: { newRoot: "$latestEntry" } },
+          ],
+          as: "minutesDetail",
+        },
+      },
+      {
+        $lookup: {
+          from: "employees",
+          localField: "minutesDetail.assignedUserId",
+          foreignField: "_id",
+          as: "assignedUserDetails",
+        },
+      },
+      {
+        $lookup: {
+          from: "employees",
+          localField: "attendees._id",
+          foreignField: "_id",
+          as: "attendeesDetail",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          meetingId: 1,
+          title: 1,
+          minutesDetail: 1,
+          assignedUserDetails: { name: 1, _id: 1, email: 1 },
+          attendees: 1,
+          attendeesDetail: 1,
+        },
+      },
+      {
+        $addFields: { activeMinutesCount: { $size: "$minutesDetail" } },
+      },
+      { $match: { activeMinutesCount: { $gt: 0 } } },
+    ];
+
+
+    const meetingData = await Meeting.aggregate(pipeline);
+    console.log("Retrieved Meetings:", meetingData.length);
+    console.log("Retrieved Meetings:", meetingData);
+
+    const formatDate = (date) => {
+      const options = { year: "numeric", month: "short", day: "numeric" };
+      return new Intl.DateTimeFormat("en-GB", options).format(date);
+    };
+
+    let meetingsData = meetingData.map((meeting, index) => {
+      console.log(`Processing meeting ${index + 1}/${meetingData.length}:`, meeting.meetingId);
+
+      let sortedMinutesDetail = meeting.minutesDetail
+        .filter(
+          (action) => !action.isCancelled && !action.isComplete && action.isPending
+        )
+        .map((action) => {
+          if (action.reassignDetails?.length > 0) {
+            action.priority = action.reassignDetails[0].priority;
+          }
+          return action;
+        })
+        .sort((a, b) => {
+          const priorityOrder = { HIGH: 3, NORMAL: 2, LOW: 1 };
+          return (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0);
+        });
+
+      sortedMinutesDetail = sortedMinutesDetail
+        .filter((action) => {
+          const assignedUser = meeting.assignedUserDetails.find(
+            (user) => user._id.toString() === action.assignedUserId.toString()
+          );
+
+          return assignedUser && assignedUser._id.toString() === assignedUserId.toString();
+        })
+        .map((action) => {
+          const assignedUser = meeting.assignedUserDetails.find(
+            (user) => user._id.toString() === action.assignedUserId.toString()
+          );
+
+          const dueDate = new Date(action.dueDate);
+          const formattedDueDate = formatDate(dueDate);
+
+          let completionStatus = "";
+          let delayInDays = Math.ceil((dueDate - new Date()) / (1000 * 3600 * 24));
+          let isDelayed = delayInDays < 0;
+
+          if (delayInDays > 0) {
+            completionStatus = `Remaining ${Math.abs(delayInDays)} day(s)`;
+          } else if (delayInDays === 0) {
+            completionStatus = "Due today";
+          } else {
+            completionStatus = `Delayed by ${Math.abs(delayInDays)} day(s)`;
+          }
+
+
+          let reassignedToUser = null;
+          if (action.reassignDetails?.length > 0) {
+            const latestReassign = action.reassignDetails[action.reassignDetails.length - 1];
+            if (latestReassign.userId.toString() === assignedUserId.toString()) {
+              reassignedToUser = latestReassign;
+            }
+          }
+
+          return {
+            ...action,
+            dueDate: formattedDueDate,
+            assignedUserDetails: assignedUser || { name: "Unknown", email: "unknown@example.com" },
+            userDetail: assignedUser,
+            meetingDetails: {
+              _id: meeting._id,
+              title: meeting.title,
+              meetingId: meeting.meetingId,
+              attendees: meeting.attendees.map((attendee) => ({
+                _id: attendee._id,
+                rsvp: attendee.rsvp,
+                isAttended: attendee.isAttended,
+                canWriteMOM: attendee.canWriteMOM,
+              })),
+              createdById: meeting.createdById,
+              attendeesDetail: meeting.attendeesDetail,
+            },
+            completionStatus,
+            delayCountInDays: Math.abs(delayInDays),
+            isDelayed,
+            reassignedToUser,
+          };
+        });
+
+      console.log(`Meeting ${meeting.meetingId} has ${sortedMinutesDetail.length} pending actions.`);
+      return sortedMinutesDetail;
+    });
+
+    const limit = parseInt(queryData.limit) || 10;
+    const page = parseInt(queryData.page) || 1;
+    const skip = (page - 1) * limit;
+
+    const flatMeetingData = meetingsData.flat();
+
+    const totalCount = flatMeetingData.length;
+    console.log("totalCount:", totalCount);
+
+    const paginatedData = flatMeetingData.slice(skip, skip + limit);
+
+    return {
+      totalCount,
+      actionDatas: paginatedData,
+    };
+  } catch (error) {
+    console.error("Error in getAttendeesWithPendingActions:", error);
+    throw new Error("Something went wrong while fetching attendees with pending actions.");
+  }
+};
+
+
 module.exports = {
-  comments,
+  addComments,
+  updateComment,
+  deleteComment,
   viewActionComment,
   actionReassignRequest,
   viewSingleAction,
@@ -2627,4 +3989,8 @@ module.exports = {
   cancelAction,
   totalActionList,
   getUserActionPriotityDetails,
+  getAllActionData,
+    //PRATISHRUTI ----- Action Rechartbar Click
+    getMeetingDueActionPriorityDetailsforChart,
+    getAttendeesWithPendingActions
 };
