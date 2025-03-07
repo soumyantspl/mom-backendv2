@@ -131,7 +131,12 @@ const notificationSent = "Email sent successfully"
 const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater than Draft MeetingReminder Days"
 const draftDeleted = "Draft Meeting Deleted"
 const deleteDraftFailed = "Faild in Delete Draft Meeting"
+
+const contactListFetched = "Contact list fetched successfully."
+const organizationsFetched = "Orgaizations Fetched successfully"
 module.exports = {
+  organizationsFetched,
+  contactListFetched,
   pleaseAddMinute,
   isDeleteNotAllowed,
   cancelSuccess,
