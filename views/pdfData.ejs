@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -281,7 +282,7 @@ p {
           <td class="fw-bolder" width="150px">Meeting Title </td>
           <td colspan="3" class="td-fontsize">
             
-              <%=meetingData?.meetingDetail?.title%>
+              <%=commonHelper.decryptWithAES(meetingData?.meetingDetail?.title)%>
           
           </br><span class="detail-date-time ">
             <span style="font-weight: bold;font-size:12px;">Meeting ID:</span> <%=meetingData?.meetingDetail?.meetingId%>
@@ -374,7 +375,7 @@ p {
                     <tr>
                       <td colspan="5" class="td-fontsize">
                        
-                          <%=agenda.title %>
+                          <%=commonHelper.decryptWithAES(agenda.title) %>
                        
                       </td>
                     </tr>
@@ -396,7 +397,7 @@ p {
  
                         <div class="text-editor">
   
-      <%- agenda.topic.replace(/<\/?h[1-6]>/g, (match) => {
+      <%- commonHelper.decryptWithAES(agenda.topic).replace(/<\/?h[1-6]>/g, (match) => {
         return match.startsWith('</') ? '</p>' : '<p>' ; }).replace(/<br\s*\/?>/g, '').replace(/<\/p>(?!.*<\/p>)/, '</span>').replace(/<p>(?!.*<p>)/, '<span>'); %>
 </div>
                       </td>
@@ -430,7 +431,7 @@ p {
                                 <span class="fw-bolder">
                                   Minute Title</span>
                                 <br>
-                                 <span><%=minute.title %></span> 
+                                 <span><%=commonHelper.decryptWithAES(minute.title) %></span> 
                                  <br>
                                  <br>
                                 <span class="fw-bolder">
@@ -441,7 +442,7 @@ p {
 
 <div class="text-editor">
   
-  <%- minute.description.replace(/<\/?h[1-6]>/g, (match) => {
+  <%- commonHelper.decryptWithAES(minute.description).replace(/<\/?h[1-6]>/g, (match) => {
     return match.startsWith('</') ? '</p>' : '<p>' ; }).replace(/<br\s*\/?>/g, '').replace(/<\/p>(?!.*<\/p>)/, '</span>').replace(/<p>(?!.*<p>)/, '<span>'); %>
 </div>
                               </td>
