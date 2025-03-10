@@ -295,6 +295,7 @@ const viewAgendas = async (meetingId, userId) => {
         organizationId: 1,
         meetingId: 1,
         isMOMGenerated: 1,
+        profilePicture: 1,
         sequence: 1,
         meetingDetail: {
           linkType: 1,
@@ -361,6 +362,7 @@ const viewAgendas = async (meetingId, userId) => {
           empId: 1,
           companyName: 1,
           designation: 1,
+          profilePicture: 1,
         },
         momAcceptDetails: {
           _id: 1,
@@ -384,6 +386,7 @@ const viewAgendas = async (meetingId, userId) => {
           createdById: 1,
           meetingId: 1,
           attendanceType: 1,
+          profilePicture:1,
           createdAt: 1,
         },
         parentMeetingDetails: {
@@ -458,6 +461,7 @@ const viewAgendas = async (meetingId, userId) => {
             (attendee) => attendee._id.toString() == item._id.toString()
           );
           //      ("attendeeData---------", attendeeData);
+          item.profilePicture = attendeeData.profilePicture
           item.name = attendeeData.name;
           item.email = attendeeData.email;
           item.isEmployee = attendeeData.isEmployee;
@@ -476,6 +480,7 @@ const viewAgendas = async (meetingId, userId) => {
 
           data.attendanceDetails.map((attendeeItem) => {
             if (attendeeItem.attendeeId.toString() == item._id.toString()) {
+              attendeeItem.profilePicture=attendeeData.profilePicture;
               attendeeItem.name = attendeeData.name;
               attendeeItem.email = attendeeData.email;
               attendeeItem.empId = attendeeData.empId;

@@ -2963,9 +2963,9 @@ const actionAssignAdminEmailTemplate = async (
 module.exports = {
   //signInByOtpEmail,
   //updateMeeting,
-  sendOtpEmailTemplate,
-  sendOtpDemoEmailTemplate,
-  sendContactUsEmailTemplate,
+  sendOtpEmailTemplate,//done
+  sendOtpDemoEmailTemplate,//done
+  sendContactUsEmailTemplate,//done
   sendCancelMeetingEmailTemplate,
   sendScheduledMeetingEmailTemplate,
   sendCreateMinutesEmailTemplate,
@@ -2990,10 +2990,10 @@ module.exports = {
   sendOtpDemoEmailTemplate,
   sendAttendanceDetailsEmailTemplate,
   sendDemoInquiryEmailTemplate,
-  organizationRegistrationSendOtpTemplate,
+  organizationRegistrationSendOtpTemplate,//done
   organizationRegistration,
   actionAssignEmailTemplate,
-  registrationWelcomeMail,
+  registrationWelcomeMail,//done
   actionAssignAdminEmailTemplate
 };
 

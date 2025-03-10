@@ -5,6 +5,8 @@ const { errorLog } = require("../middlewares/errorLog");
 const commonHelper = require("../helpers/commonHelper");
 const minutesService = require("../services/minutesService");
 const fs = require("fs");
+const Meetings = require("../models/meetingModel");
+const ObjectId = require("mongoose").Types.ObjectId;
 const { log } = require("console");
 /**FUNC- TO CREATE MEETING**/
 const createMeeting = async (req, res) => {
@@ -24,13 +26,7 @@ const createMeeting = async (req, res) => {
 
     if (result?.organizerUnavailable) {
       const errMsg = messages.organizerUnavailable + result.bookedTimeRange;
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        errMsg,
-        200
-      );
+      return Responses.failResponse(req, res, null, errMsg, 200);
     }
 
     if (result?.isDuplicateEmail) {
@@ -65,89 +61,6 @@ const createMeeting = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
-
-// attendee availability check
-const checkAttendeeAvailability = async (req, res) => {
-  try{
-    const result = await meetingService.checkAttendeeAvailability(
-      req.body,
-      req.params.id
-    );
-    if (result?.attendeeUnavailable) {
-      const errMsg = messages.attendeeUnavailable + '(' + result.bookedTimeRange + ')';
-      return Responses.failResponse(
-        req,
-        res,
-        null,
-        errMsg,
-        200
-      );
-    } 
-    if (!result) {
-      return Responses.failResponse(
-        req,
-        res,
-        { isScheduleUser: false },
-        messages.recordsNotFound,
-        200
-      );
-    }
-  } catch (error) {
-    console.log("Controller error:", error);
-    errorLog(error);
-    return Responses.errorResponse(req, res, error);
-  }
-  }
-  
-  /// check attendee array availability
-  const checkAttendeeArrayAvailability = async (req, res) => {
-    try {
-      const result = await meetingService.checkAttendeeArrayAvailability(req.body);
-  
-      if (!result || result.length === 0) {
-        return Responses.successResponse(req, res, null, messages.recordsNotFound, 200);
-      }
-      const busyMessages = result.map(
-        (attendee) => `${attendee.name} is unavailable due to another meeting (Meeting ID: ${attendee.meetingId}) from ${attendee.fromTime} to ${attendee.toTime}`
-      );
-  
-      return Responses.failResponse(req, res, result, busyMessages, 200);
-    } catch (error) {
-      console.error("Controller error:", error);
-      errorLog(error);
-      return Responses.errorResponse(req, res, error);
-    }
-    const busyMessages = result.map(
-      (attendee) => `${attendee.name} is unavailable due to another meeting (Meeting ID: ${attendee.meetingId}) from ${attendee.fromTime} to ${attendee.toTime}`
-    );
-
-    return Responses.failResponse(req, res, result, busyMessages, 200);
-  }
-
-
-  
-  // meeting room availability
-  const checkMeetingRoomAvailability = async (req, res) => {
-    try{
-      const result = await meetingService.checkMeetingRoomAvailability(
-        req.body
-      );
-      if (result?.roomUnavailable) {
-        const errMsg = messages.roomUnavailable + '(' + result.bookedTimeRange + ')';
-        return Responses.failResponse(
-          req,
-          res,
-          null,
-          errMsg,
-          200
-        );
-      }  
-    } catch (error) {
-      console.log("Controller error:", error);
-      errorLog(error);
-      return Responses.errorResponse(req, res, error);
-    }
-    }
 
 /**FUNC- TO UPDATE RSVP DATA**/
 const updateRsvp = async (req, res) => {
@@ -185,6 +98,158 @@ const updateRsvp = async (req, res) => {
 /**FUNC- TO UPDATE MEETING**/
 const updateMeeting = async (req, res) => {
   try {
+
+    let meetingresult
+    let attendeeArrayBody
+    if (!req.body.date && !req.body.fromTime && !req.body.toTime){
+      console.log("innnnnnnnnnnnnnnnnnnnnn11111111")
+      const getMeetingById = await Meetings.findOne(
+        { _id: new ObjectId(req.params.id) },
+        { 
+          _id: 1, 
+          date: 1, 
+          organizationId: 1,
+          fromTime: 1, 
+          toTime: 1, 
+          attendees: 1, 
+          meetingStatus: 1, 
+          organizationId: 1, 
+          "locationDetails.roomId": 1
+        }
+      );
+      const requestBodyRoom = {
+        date: getMeetingById.date,
+        organizationId: getMeetingById.organizationId,
+        fromTime: getMeetingById.fromTime,
+        toTime: getMeetingById.toTime,
+        roomId: getMeetingById.locationDetails?.roomId,
+        meetingStatus: getMeetingById.meetingStatus,
+        meetingId:req.params.id
+      };
+      attendeeArrayBody = {
+        date: req.body.step?req.body.step:getMeetingById.date,
+        fromTime: req.body.step?req.body.step:getMeetingById.fromTime,
+        toTime: req.body.step?req.body.step:getMeetingById.toTime,
+        meetingStatus: getMeetingById.meetingStatus,
+        meetingId:req.params.id,
+        organizationId: getMeetingById.organizationId,
+      };
+      // await checkMeetingRoomAvailability({
+      //       ...data,
+      //       _id: { $ne: data?.meetingId },
+      //     });
+      console.log("requestBodyRoom======================2222",requestBodyRoom)
+      meetingresult = await meetingService.checkMeetingRoomAvailability(
+        requestBodyRoom
+      );
+if(!req.body.attendees){
+  attendeeArrayBody.attendees=getMeetingById?.attendees
+}
+      const attendeeMergedBody = { ...req.body, ...attendeeArrayBody };
+      const attendeearrayresult = await meetingService.checkAttendeeArrayAvailability(attendeeMergedBody);
+      if (attendeearrayresult.length > 0){
+        const busyMessages = attendeearrayresult.map((attendee) => {
+          const meetingDetails = attendee.meetings
+            .map(
+              (meeting) =>
+                `(Meeting ID: ${meeting.meetingId}) from ${meeting.fromTime} to ${meeting.toTime}`
+            )
+            .join(", ");
+    if(req.body.step==1){
+        const errMsg = messages.organizerUnavailable +`from ${meeting.fromTime} to ${meeting.toTime} of meeting ${meeting?.meetingId}`;
+      return errMsg;
+    }
+    else{
+      return `${attendee.name} is unavailable due to another meeting: ${meetingDetails}`;
+    }
+          
+        });
+        return Responses.failResponse(req, res, attendeearrayresult, busyMessages, 200);
+      }
+
+    } else {
+      console.log("innnnnnnnnnnnnnnnnnnnnn222222222222222")
+      const getMeetingById = await Meetings.findOne(
+        { _id: new ObjectId(req.params.id) },
+        { 
+          _id: 1, 
+          date: 1, 
+          organizationId: 1,
+          fromTime: 1, 
+          toTime: 1, 
+          attendees: 1, 
+          meetingStatus: 1, 
+          organizationId: 1, 
+          "locationDetails.roomId": 1
+        }
+      );
+      const roomCheckBody = {
+        meetingStatus: getMeetingById.meetingStatus,
+        meetingId:req.params.id,
+      };
+    
+      const mergedBody = { ...req.body, ...roomCheckBody };
+      meetingresult = await meetingService.checkMeetingRoomAvailability(
+        mergedBody
+      );
+      attendeeArrayBody = {
+        date: req.body.step?req.body.step:getMeetingById.date,
+        fromTime: req.body.step?req.body.step:getMeetingById.fromTime,
+        toTime: req.body.step?req.body.step:getMeetingById.toTime,
+        meetingStatus: getMeetingById.meetingStatus,
+        meetingId:req.params.id,
+        organizationId: getMeetingById.organizationId
+      };
+      if(!req.body.attendees){
+        attendeeArrayBody.attendees=getMeetingById?.attendees
+      }
+      const attendeeMergedBody = { ...req.body, ...attendeeArrayBody };
+      const attendeearrayresult = await meetingService.checkAttendeeArrayAvailability(attendeeMergedBody);
+      if (attendeearrayresult.length > 0){
+        const busyMessages = attendeearrayresult.map((attendee) => {
+          const meetingDetails = attendee.meetings
+            .map(
+              (meeting) =>
+                `(Meeting ID: ${meeting.meetingId}) from ${meeting.fromTime} to ${meeting.toTime}`
+            )
+            .join(", ");
+    
+          return `${attendee.name} is unavailable due to another meeting: ${meetingDetails}`;
+        });
+        return Responses.failResponse(req, res, attendeearrayresult, busyMessages, 200);
+      }
+    }
+console.log("meetingresult=======================",meetingresult)
+    if (meetingresult?.roomUnavailable) {
+      const errMsg = messages.roomUnavailable + '(' + meetingresult.bookedTimeRange + ')';
+      return Responses.failResponse(
+      req,
+      res,
+      null,
+      errMsg,
+      200
+    );
+    }
+
+
+
+    if (req.body.isEditMeeting) {
+      const checkCanUpdateMeeting = await minutesService.checkCanUpdateMeeting(
+        req.params.id,
+        req.body.organizationId
+      );
+      console.log("checkCanUpdateMeeting-----------", checkCanUpdateMeeting);
+      if (!checkCanUpdateMeeting) {
+        return Responses.failResponse(
+          req,
+          res,
+          null,
+          messages.meetingEditDenied,
+          200
+        );
+      }
+    }
+  
     let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
     const result = await meetingService.updateMeeting(
       req.body,
@@ -1059,8 +1124,6 @@ const downloadZoomRecordingsInZip = async (req, res) => {
   }
 };
 
-
-
 const getMeetingActionPriorityDetailsController = async (req, res) => {
   try {
     const result = await meetingService.getMeetingActionPriorityDetailsforChart(
@@ -1092,9 +1155,6 @@ const getMeetingActionPriorityDetailsController = async (req, res) => {
   }
 };
 
-
-
-
 const notifyMeetingCreatorAboutDraft = async (req, res) => {
   console.log("Processing draft meeting notification...");
 
@@ -1124,7 +1184,6 @@ const notifyMeetingCreatorAboutDraft = async (req, res) => {
     return Responses.errorResponse(req, res, error);
   }
 };
-
 
 const deleteDraftMeeting = async (req, res) => {
   console.log("Processing draft meeting notification...");
@@ -1157,17 +1216,16 @@ const deleteDraftMeeting = async (req, res) => {
   }
 };
 
-
 const draftMeetingdelete = async (req, res) => {
   try {
-   // console.log("Request Data:", req.params.meetingId); 
-    
+    // console.log("Request Data:", req.params.meetingId);
+
     let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
 
     const result = await meetingService.deleteDraftMeeting(
-      req.params.meetingId, 
-      req.userId, 
-      req.body, 
+      req.params.meetingId,
+      req.userId,
+      req.body,
       ip
     );
 
@@ -1189,11 +1247,93 @@ const draftMeetingdelete = async (req, res) => {
   }
 };
 
+// attendee availability check
+const checkAttendeeAvailability = async (req, res) => {
+  try {
+    const result = await meetingService.checkAttendeeAvailability(
+      req.body,
+      req.params.id
+    );
+    if (result?.attendeeUnavailable) {
+      const errMsg = `${messages.attendeeUnavailable} ( Meeting ID: ${result.meetingId}) on the same date and time (${result.bookedTimeRange})`;
+      // const errMsg = messages.attendeeUnavailable + '(' + result.bookedTimeRange + ')';
+      return Responses.failResponse(req, res, null, errMsg, 200);
+    }
+    if (!result) {
+      return Responses.failResponse(
+        req,
+        res,
+        { isScheduleUser: false },
+        messages.recordsNotFound,
+        200
+      );
+    }
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 
+/// check attendee array availability
+const checkAttendeeArrayAvailability = async (req, res) => {
+  try {
+    const result = await meetingService.checkAttendeeArrayAvailability(
+      req.body
+    );
 
+    if (!result || result.length === 0) {
+      return Responses.successResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+    const busyMessages = result.map((attendee) => {
+      const meetingDetails = attendee.meetings
+        .map(
+          (meeting) =>
+            `(Meeting ID: ${meeting.meetingId}) from ${meeting.fromTime} to ${meeting.toTime}`
+        )
+        .join(", ");
 
+      return `${attendee.name} is unavailable due to another meeting: ${meetingDetails}`;
+    });
 
+    return Responses.failResponse(req, res, result, busyMessages, 200);
+  } catch (error) {
+    console.error("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 
+// meeting room availability
+const checkMeetingRoomAvailability = async (req, res) => {
+  try {
+    const result = await meetingService.checkMeetingRoomAvailability(req.body);
+    if (!result) {
+      return Responses.successResponse(
+        req,
+        res,
+        null,
+        messages.recordsNotFound,
+        200
+      );
+    }
+    if (result?.roomUnavailable) {
+      const errMsg =
+        messages.roomUnavailable + "(" + result.bookedTimeRange + ")";
+      return Responses.failResponse(req, res, null, errMsg, 200);
+    }
+  } catch (error) {
+    console.log("Controller error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
 
 module.exports = {
   createMeeting,
@@ -1232,5 +1372,5 @@ module.exports = {
   draftMeetingdelete,
   notifyMeetingCreatorAboutDraft,
   getMeetingActionPriorityDetailsController,
-  draftMeetingdelete
+  draftMeetingdelete,
 };

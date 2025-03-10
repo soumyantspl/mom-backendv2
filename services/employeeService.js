@@ -542,9 +542,10 @@ const viewSingleEmployee = async (id) => {
 };
 
 /**FUNC- TO VERIFY ACTIVE USER*/
-const verifyEmployee = async (empId) => {
+const verifyEmployee = async (empId,token) => {
+  console.log(empId,token)
   return await Employee.findOne(
-    { _id: new ObjectId(empId), isActive: true },
+    { _id: new ObjectId(empId), isActive: true ,token},
     {
       _id: 1,
       email: 1,
@@ -1029,11 +1030,7 @@ const importEmployee = async (employeeData, organizationId) => {
 
 
 
-
-
-
-
-const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
+const updateProfile = async (userId, id, data, ipAddress, profilePicture) => {
   if (profilePicture && profilePicture.filename) {
     const filePath = `/uploads/${profilePicture.filename}`;
     data.profilePicture = filePath;
@@ -1041,16 +1038,16 @@ const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
     console.log("No new profile picture provided.");
   }
 
-
   const employee = await Employee.findById(id);
   if (!employee) {
     return { error: "Employee not found." };
   }
 
   let logDetails = [];
-  const employeeName = employee.name || "Unknown Employee";
-  const email = employee.email || "Email not available";
+  const employeeName = employee.name ;
+  const email = employee.email ;
 
+  // Password update logic
   if (data.password && data.confirmPassword) {
     if (data.password.trim() !== data.confirmPassword.trim()) {
       return { error: "New password and Confirm Password do not match." };
@@ -1094,6 +1091,7 @@ const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
     return { error: "Update failed." };
   }
 
+  // Track changes
   if (result.name !== employee.name) {
     logDetails.push(`Name changed from <strong>${employee.name}</strong> to <strong>${result.name}</strong>`);
   }
@@ -1107,8 +1105,31 @@ const viewProfile = async (userId, id, data, ipAddress, profilePicture) => {
     logDetails.push(`Profile Picture updated.`);
   }
 
-  return { data: result, logs: logDetails };
+  // ✅ Designation change tracking
+  if (result.designationId?.toString() !== employee.designationId?.toString()) {
+    const oldDesignation = await Designations.findById(employee.designationId);
+    const newDesignation = await Designations.findById(result.designationId);
+    logDetails.push(
+      `Designation changed from <strong>${oldDesignation?.name || "N/A"}</strong> to <strong>${newDesignation?.name || "N/A"}</strong>`
+    );
+  }
+
+  // ✅ Department change tracking
+  if (result.departmentId?.toString() !== employee.departmentId?.toString()) {
+    const oldDepartment = await Department.findById(employee.departmentId);
+    const newDepartment = await Department.findById(result.departmentId);
+    logDetails.push(
+      `Department changed from <strong>${oldDepartment?.name || "N/A"}</strong> to <strong>${newDepartment?.name || "N/A"}</strong>`
+    );
+  }
+
+  // ❌ Skipping Unit Tracking (as requested)
+
+  const userType = result.isEmployee ? "Employee" : "Guest Employee";
+
+  return { data: result, logs: logDetails, userType };
 };
+
 
 
 module.exports = {
@@ -1126,5 +1147,6 @@ module.exports = {
   createAttendees,
   getEmployeeListAsPerUnit,
   importEmployee,
-  viewProfile
+  updateProfile
 };
+//////////

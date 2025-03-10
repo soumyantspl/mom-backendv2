@@ -41,37 +41,7 @@ function convertTo12HourFormat(timeStr) {
   });
 }
 
-// meeting room availability
-const checkMeetingRoomAvailability = async (data) => {
-  const existingMeeting = await Meeting.findOne({
-    organizationId: data.organizationId,
-    date: new Date(data.date),
-    "locationDetails.roomId": data.roomId,
-    "locationDetails.isMeetingRoom": true,
-    isActive: true,
-    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
-    $or: [
-      {
-        fromTime: { $lt: data.toTime },
-        toTime: { $gt: data.fromTime }
-      },
-      {
-        fromTime: { $gte: data.fromTime, $lt: data.toTime }
-      },
-      {
-        toTime: { $gt: data.fromTime, $lte: data.toTime }
-      }
-    ]   
-  });
-  if (existingMeeting) {
-    const fromTimeFormatted = convertTo12HourFormat(existingMeeting.fromTime);
-    const toTimeFormatted = convertTo12HourFormat(existingMeeting.toTime);
-    return {
-      roomUnavailable: true,
-      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
-    };
-  }
-}
+
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -184,88 +154,7 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
   return newMeeting;
 };
 
-// attendee availability checking
-const checkAttendeeAvailability = async (data, id) => {
-  let attendeeIds;
-  if (data.email) {
-    const employee = await Employee.findOne({ email: data.email }, { _id: 1 });
-    if (employee) {
-      attendeeIds = new ObjectId(employee._id);
-    } else {
-      console.log("Employee not found with email:", data.email);
-    }
-  }
-  if (data.attendeeId) {
-    attendeeIds = new ObjectId(data.attendeeId);
-  }
-  const fromToTime = await Meetings.findOne(
-    { _id: new ObjectId(id) },
-    { date: 1, fromTime: 1, toTime: 1, isActive: 1, meetingStatus: 1 }
-  );
-  const existingAttendee = await Meetings.findOne({
-    date: fromToTime.date,
-    isActive: true,
-    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
-    $or: [
-      {
-        fromTime: { $lt: fromToTime.toTime },
-        toTime: { $gt: fromToTime.fromTime }
-      },
-      {
-        fromTime: { $gte: fromToTime.fromTime, $lt: fromToTime.toTime }
-      },
-      {
-        toTime: { $gt: fromToTime.fromTime, $lte: fromToTime.toTime }
-      }
-    ],
-    attendees: { $elemMatch: { _id: { $in: attendeeIds } } }
-  });
-  if (existingAttendee) {
-    const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
-    const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
-    return {
-      attendeeUnavailable: true,
-      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
-    };
-  }
-}
 
-/// attendee array availability
-const checkAttendeeArrayAvailability = async (data) => {
-  let attendeeAvailability = [];
-  for (const a of data.attendees) {
-    const meetings = await Meetings.find(
-      {
-        "attendees._id": new ObjectId(a._id),
-        date: new Date(data.date),
-        isActive: true,
-        "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
-        $or: [
-          { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
-          { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
-          { toTime: { $gt: data.fromTime, $lte: data.toTime } }
-        ],
-      },
-      { fromTime: 1, toTime: 1, _id: 1, meetingId: 1 }
-    );
-    if (meetings.length > 0) {
-      const employee = await Employee.findOne(
-        { _id: new ObjectId(a._id) },
-        { name: 1 }
-      );
-      meetings.forEach((meeting) => {
-        attendeeAvailability.push({
-          attendeeId: new ObjectId(a._id),
-          name: employee?.name,
-          meetingId: meeting.meetingId,
-          fromTime: convertTo12HourFormat(meeting.fromTime),
-          toTime: convertTo12HourFormat(meeting.toTime),
-        });
-      });
-    }
-  }
-  return attendeeAvailability;
-};
 
 
 /**FUNC- UPDATE MEETING */
@@ -1128,6 +1017,7 @@ const viewMeeting = async (meetingId, userId) => {
         hostLink: 1,
         date: 1,
         fromTime: 1,
+        profilePicture: 1,
         toTime: 1,
         step: 1,
         meetingStatus: 1,
@@ -1163,6 +1053,7 @@ const viewMeeting = async (meetingId, userId) => {
           empId: 1,
           companyName: 1,
           designation: 1,
+          profilePicture: 1,
         },
         roomDetail: {
           title: 1,
@@ -1233,6 +1124,7 @@ const viewMeeting = async (meetingId, userId) => {
       );
       console.log("attendeeData================", attendeeData);
       if (attendeeData) {
+        item.profilePicture =attendeeData.profilePicture;
         item.name = attendeeData.name;
         item.email = attendeeData.email;
         item.isEmployee = attendeeData.isEmployee;
@@ -1538,6 +1430,7 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
         date: 1,
         fromTime: 1,
         toTime: 1,
+        profilePicture: 1,
         status: 1,
         locationDetails: 1,
         meetingStatus: 1,
@@ -1577,7 +1470,9 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
           companyName: 1,
           isMeetingOrganiser: 1,
           isAdmin: 1,
+          profilePicture: 1, 
         },
+
         parentMeetingDetails: {
           _id: 1,
         },
@@ -1611,6 +1506,7 @@ const viewAllMeetings = async (bodyData, queryData, userId, userData) => {
           meetingDataObject["canWriteMOM"] = item.canWriteMOM;
         }
         if (attendeeData) {
+          item.profilePicture = attendeeData.profilePicture
           item.email = attendeeData.email;
           item.name = attendeeData.name;
           item.empId = attendeeData.empId;
@@ -1822,7 +1718,7 @@ const listAttendeesFromPreviousMeetingOld = async (organizationId, userId) => {
 const listAttendeesFromPreviousMeeting = async (organizationId, userId) => {
   const attendeeData = await Employee.find(
     { organizationId: new ObjectId(organizationId), isActive: true },
-    { name: 1, email: 1, _id: 1, isEmployee: 1 }
+    { name: 1, email: 1, _id: 1, isEmployee: 1 ,profilePicture:1}
   );
   // console.log("attendeeData==========",attendeeData)
   // const uniqueAttendeeData = [].concat(...attendeeData);
@@ -1879,6 +1775,7 @@ const viewMeetingActivities = async (meetingId) => {
           _id: 1,
           name: 1,
           email: 1,
+          profilePicture:1,
         },
       },
     },
@@ -4123,6 +4020,7 @@ const fetchCurrentAttendeesList = async (organizationId, parentMeetingId) => {
           _id: 1,
           name: 1,
           isEmployee: 1,
+          profilePicture:1
         },
       },
     },
@@ -5383,7 +5281,206 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
   return result;
 };
 
+// attendee availability checking
+const checkAttendeeAvailability = async (data, id) => {
+  let attendeeIds;
+  if (data.email) {
+    const employee = await Employee.findOne({ email: data.email }, { _id: 1 });
+    if (employee) {
+      attendeeIds = new ObjectId(employee._id);
+    } else {
+      console.log("Employee not found with email:", data.email);
+    }
+  }
+  if (data.attendeeId) {
+    attendeeIds = new ObjectId(data.attendeeId);
+  }
+  const fromToTime = await Meetings.findOne(
+    { _id: new ObjectId(id) },
+    {
+      date: 1,
+      fromTime: 1,
+      toTime: 1,
+      isActive: 1,
+      meetingStatus: 1,
+      meetingId: 1,
+      organizationId:1
+    }
+  );
+  const existingAttendee = await Meetings.findOne(
+    {
+      date: fromToTime.date,
+      organizationId:fromToTime?.organizationId,
+      isActive: true,
+      "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+      $or: [
+        {
+          fromTime: { $lt: fromToTime.toTime },
+          toTime: { $gt: fromToTime.fromTime },
+        },
+        {
+          fromTime: { $gte: fromToTime.fromTime, $lt: fromToTime.toTime },
+        },
+        {
+          toTime: { $gt: fromToTime.fromTime, $lte: fromToTime.toTime },
+        },
+      ],
+      attendees: { $elemMatch: { _id: { $in: attendeeIds } } },
+    },
+    { meetingId: 1, fromTime: 1, toTime: 1 }
+  );
+  if (existingAttendee) {
+    const fromTimeFormatted = convertTo12HourFormat(existingAttendee.fromTime);
+    const toTimeFormatted = convertTo12HourFormat(existingAttendee.toTime);
+    return {
+      attendeeUnavailable: true,
+      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`,
+      meetingId: existingAttendee.meetingId,
+    };
+  }
+};
 
+/// attendee array availability
+const checkAttendeeArrayAvailability = async (data) => {
+  console.log("attendees array inside checkAttendeeArrayAvailability:", data);
+
+  let attendeeAvailabilityMap = new Map();
+
+  for (const a of data.attendees) {
+    const query = data?.meetingId
+      ? {
+        organizationId:data?.organizationId,
+          _id: { $ne: data?.meetingId },
+          "attendees._id": new ObjectId(a._id),
+          date: new Date(data.date),
+          isActive: true,
+          "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+          $or: [
+            { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
+            { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
+            { toTime: { $gt: data.fromTime, $lte: data.toTime } },
+          ],
+        }
+      : {
+        organizationId:data?.organizationId,
+          "attendees._id": new ObjectId(a._id),
+          date: new Date(data.date),
+          isActive: true,
+          "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+          $or: [
+            { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
+            { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
+            { toTime: { $gt: data.fromTime, $lte: data.toTime } },
+          ],
+        };
+console.log(query)
+
+    const meetings = await Meetings.find(query, {
+      fromTime: 1,
+      toTime: 1,
+      _id: 1,
+      meetingId: 1,
+    });
+
+    console.log("meetings=============3333333333", meetings);
+   // yyyyyyyyyyy
+    if (meetings.length > 0) {
+      const employee = await Employee.findOne(
+        { _id: new ObjectId(a._id) },
+        { name: 1 }
+      );
+      if (attendeeAvailabilityMap.has(a._id.toString())) {
+        let existingData = attendeeAvailabilityMap.get(a._id.toString());
+        existingData.meetings.push(
+          ...meetings.map((meeting) => ({
+            meetingId: meeting.meetingId,
+            fromTime: convertTo12HourFormat(meeting.fromTime),
+            toTime: convertTo12HourFormat(meeting.toTime),
+          }))
+        );
+        attendeeAvailabilityMap.set(a._id.toString(), existingData);
+      } else {
+        attendeeAvailabilityMap.set(a._id.toString(), {
+          attendeeId: new ObjectId(a._id),
+          name: employee?.name,
+          meetings: meetings.map((meeting) => ({
+            meetingId: meeting.meetingId,
+            fromTime: convertTo12HourFormat(meeting.fromTime),
+            toTime: convertTo12HourFormat(meeting.toTime),
+          })),
+        });
+      }
+    }
+  }
+
+  return Array.from(attendeeAvailabilityMap.values());
+};
+
+// meeting room availability
+const checkMeetingRoomAvailability = async (data) => {
+  console.log(
+    "Dta in checkMeetingRoomAvailability---",
+    data,
+    data.locationDetails?.roomId
+  );
+  const roomId = data.roomId ? data.roomId : data.locationDetails?.roomId;
+  console.log("roomId=================", roomId);
+
+  const query = data?.meetingId
+    ? {
+        _id: { $ne: data?.meetingId },
+        organizationId: data.organizationId,
+        date: new Date(data.date),
+        "locationDetails.roomId": roomId,
+        "locationDetails.isMeetingRoom": true,
+        isActive: true,
+        "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+        $or: [
+          {
+            fromTime: { $lt: data.toTime },
+            toTime: { $gt: data.fromTime },
+          },
+          {
+            fromTime: { $gte: data.fromTime, $lt: data.toTime },
+          },
+          {
+            toTime: { $gt: data.fromTime, $lte: data.toTime },
+          },
+        ],
+      }
+    : {
+        organizationId: data.organizationId,
+        date: new Date(data.date),
+        "locationDetails.roomId": roomId,
+        "locationDetails.isMeetingRoom": true,
+        isActive: true,
+        "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+        $or: [
+          {
+            fromTime: { $lt: data.toTime },
+            toTime: { $gt: data.fromTime },
+          },
+          {
+            fromTime: { $gte: data.fromTime, $lt: data.toTime },
+          },
+          {
+            toTime: { $gt: data.fromTime, $lte: data.toTime },
+          },
+        ],
+      };
+
+  const existingMeeting = await Meeting.findOne(query);
+  console.log("existingMeeting===========", existingMeeting);
+  if (existingMeeting) {
+    const fromTimeFormatted = convertTo12HourFormat(existingMeeting.fromTime);
+    const toTimeFormatted = convertTo12HourFormat(existingMeeting.toTime);
+    return {
+      roomUnavailable: true,
+      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted} of meeting ${existingMeeting?.meetingId}`,
+    };
+  }
+  return false;
+};
 
 exports.viewMeeting = viewMeeting;
 exports.createMeeting = createMeeting;
