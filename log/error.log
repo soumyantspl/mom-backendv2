@@ -3341,3 +3341,24 @@ Stack Trace: ValidationError: "mentionedUsers[1].email" must be a valid email
 Date: 06/03/2025, Time: 14:43
 Error: "mentionedUsers[0].email" must be a valid email
 Stack Trace: ValidationError: "mentionedUsers[0].email" must be a valid email
+Date: 10/03/2025, Time: 11:09
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 10/03/2025, Time: 11:15
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 10/03/2025, Time: 12:01
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 10/03/2025, Time: 12:01
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 10/03/2025, Time: 12:05
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 10/03/2025, Time: 12:11
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
+Date: 10/03/2025, Time: 12:13
+Error: "mentionedUsers[0].email" is not allowed to be empty
+Stack Trace: ValidationError: "mentionedUsers[0].email" is not allowed to be empty
