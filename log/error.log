@@ -3531,3 +3531,26 @@ Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out 
 Date: 06/03/2025, Time: 15:02
 Error: "email" is required
 Stack Trace: ValidationError: "email" is required
+Date: 10/03/2025, Time: 12:17
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (E:\Ongoing\V2\BE\TESTING\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 10/03/2025, Time: 12:17
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 10/03/2025, Time: 12:36
+Error: self-signed certificate in certificate chain
+Stack Trace: Error: self-signed certificate in certificate chain
+    at TLSSocket.onConnectSecure (node:_tls_wrap:1674:34)
+    at TLSSocket.emit (node:events:519:28)
+    at TLSSocket._finishInit (node:_tls_wrap:1085:8)
+    at ssl.onhandshakedone (node:_tls_wrap:871:12)

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 const validator = require("../validators/authValidator");
-
+const authMiddleware = require("../middlewares/authMiddleware");
 /* SEND OTP AT SIGN IN USER BY OTP */
 router.post("/sendOtp", validator.sendOtpValidator, authController.sendOtp);
 
@@ -41,6 +41,22 @@ router.post(
   "/logInByGmail",
   //validator.signInByPasswordValidator,
   authController.loginByGmail
+);
+
+/* SIGN IN BY GMAIL */
+router.post(
+  "/logOut",
+  validator.logOut,
+  authMiddleware.verifyUserToken,
+  authController.logOut
+);
+
+/* SIGN IN BY GMAIL */
+router.post(
+  "/singleSignOn",
+  validator.loginBySigleSignOn,
+  //validator.signInByPasswordValidator,
+  authController.loginBySigleSignOn
 );
 
 module.exports = router;
