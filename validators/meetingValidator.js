@@ -1205,6 +1205,7 @@ const checkAttendeeAvailabilityValidator = async (req, res, next) => {
     const bodySchema = Joi.object({
       email: Joi.string().email().optional(),
       attendeeId: Joi.string().optional(),
+      meetingId: Joi.string().trim().alphanum(),
     }).or("email", "attendeeId");
 
     await headerSchema.validateAsync({ headers: req.headers });
@@ -1231,6 +1232,7 @@ const checkRoomAvailabilityValidator = async (req, res, next) => {
       roomId: Joi.string().required(),
       fromTime: Joi.string().required(),
       toTime: Joi.string().required(),
+      meetingId: Joi.string(),
     });
 
     await headerSchema.validateAsync({ headers: req.headers });
@@ -1252,6 +1254,7 @@ const checkAttendeeArrayAvailabilityValidator = async (req, res, next) => {
       }).unknown(true),
     });
     const bodySchema = Joi.object({
+      meetingId: Joi.string().trim().alphanum().required(),
       date: Joi.date().iso().required(),
       fromTime: Joi.string()
         .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
@@ -1277,6 +1280,8 @@ const checkAttendeeArrayAvailabilityValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error, 200);
   }
 };
+
+
 const draftMeetingValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
