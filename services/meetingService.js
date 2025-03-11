@@ -101,6 +101,26 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
     };
   }
 
+  // // Check for Zoom meetings at the same date and time
+  // if (data.linkType === "ZOOM") {
+  //   const existingZoomMeeting = await Meeting.findOne({
+  //     date: new Date(data.date),
+  //     linkType: "ZOOM",
+  //     $or: [
+  //       { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
+  //       { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
+  //       { toTime: { $gt: data.fromTime, $lte: data.toTime } }
+  //     ],
+  //     isActive: true,
+  //     "meetingStatus.status": { $in: ["scheduled", "rescheduled", "draft"] },
+  //   });
+
+  //   if (existingZoomMeeting) {
+  //     return { existingZoomMeeting: true };
+  //   }
+  // }
+
+
   let parentMeetingData = null;
   const meetingId = await commonHelper.customMeetingId(
     data.date,
@@ -1822,7 +1842,7 @@ const listAttendeesFromPreviousMeeting = async (organizationId, userId) => {
   const attendeeData = await Employee.find(
     { organizationId: new ObjectId(organizationId), isActive: true },
     { name: 1, email: 1, _id: 1, isEmployee: 1 }
-  );
+  ).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
   // console.log("attendeeData==========",attendeeData)
   // const uniqueAttendeeData = [].concat(...attendeeData);
   // const filetrData = uniqueAttendeeData.filter(
@@ -5382,6 +5402,37 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
   return result;
 };
 
+const checkZoomMeetingAvailability = async (data) => {
+
+  const existingZoomMeeting = await Meeting.findOne({
+    date: new Date(data.date),
+    organizationId: data.organizationId,
+    linkType: "ZOOM",
+    $or: [
+      { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
+      { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
+      { toTime: { $gt: data.fromTime, $lte: data.toTime } }
+    ],
+    isActive: true,
+    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+  });
+
+  if (existingZoomMeeting) {
+    const fromTimeFormatted = convertTo12HourFormat(existingZoomMeeting.fromTime);
+    const toTimeFormatted = convertTo12HourFormat(existingZoomMeeting.toTime);
+    
+    return {
+      existingZoomMeeting: true,
+      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`,
+    //  message: `A Zoom meeting is already scheduled on this date from ${fromTimeFormatted} to ${toTimeFormatted}.`
+    };
+  }
+
+  return { existingZoomMeeting: false };
+};
+
+
+
 
 
 exports.viewMeeting = viewMeeting;
@@ -5424,3 +5475,4 @@ exports.notifyMeetingCreatorAboutDraft = notifyMeetingCreatorAboutDraft;
 exports.deleteOldDraftMeetings = deleteOldDraftMeetings;
 exports.getMeetingActionPriorityDetailsforChart = getMeetingActionPriorityDetailsforChart;
 exports.deleteDraftMeeting = deleteDraftMeeting;
+exports.checkZoomMeetingAvailability = checkZoomMeetingAvailability ;

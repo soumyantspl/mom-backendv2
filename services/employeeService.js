@@ -180,17 +180,17 @@ const masterData = async (organizationId) => {
     name: 1,
     isActive: 1,
     isDelete: 1,
-  });
+  }).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
   const departmentList = await Department.find(query, {
     name: 1,
     isActive: 1,
     isDelete: 1,
-  });
+  }).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
   const unitList = await Units.find(query, {
     name: 1,
     isActive: 1,
     isDelete: 1,
-  });
+  }).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
   const message = `${designationList.length} designation found , ${departmentList.length} department found &  ${unitList.length} unit found `;
   const masterData = { designationList, departmentList, unitList };
   return {
@@ -745,7 +745,7 @@ const listOnlyEmployee = async (organizationId) => {
     organizationId,
     isDelete: false,
     isEmployee: true,
-  }).sort({ _id: -1 });
+  }).sort({ name: 1 }).collation({ locale: "en", strength: 2 });// added for ascending order by sunil
   return allEmployees;
 };
 /**FUNC- TO SEE LIST OF ONLY EMPLOYEE */
@@ -755,7 +755,7 @@ const getEmployeeListAsPerUnit = async (unitId) => {
     isDelete: false,
     unitId,
     isEmployee: true,
-  }).sort({ _id: -1 });
+  }).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
   return allEmployees;
 };
 

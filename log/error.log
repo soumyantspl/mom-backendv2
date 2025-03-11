@@ -1877,3 +1877,317 @@ Stack Trace: TypeError: Invalid sort value: { createdAt: -1 }
     at Object.organizationList (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:172:39)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async getOrganizations (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\adminPanelController.js:54:34)
+Date: 07/03/2025, Time: 13:20
+Error: "email" must be a valid email
+Stack Trace: ValidationError: "email" must be a valid email
+Date: 10/03/2025, Time: 12:34
+Error: "unitId" is not allowed to be empty
+Stack Trace: ValidationError: "unitId" is not allowed to be empty
+Date: 10/03/2025, Time: 12:58
+Error: "email" must be a valid email
+Stack Trace: ValidationError: "email" must be a valid email
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:09
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 11:52
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 11/03/2025, Time: 12:28
+Error: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+Stack Trace: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+    at new ObjectId (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\bson\lib\bson.cjs:2523:23)
+    at Object.viewMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1166:14)
+    at viewMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:294:41)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 12:29
+Error: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+Stack Trace: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+    at new ObjectId (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\bson\lib\bson.cjs:2523:23)
+    at Object.viewMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1166:14)
+    at viewMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:294:41)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 12:53
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 11/03/2025, Time: 15:27
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1202:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 15:27
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1202:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 15:28
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1202:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 15:37
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 15:52
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 15:53
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 15:57
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:05
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:06
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:07
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:07
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:08
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.failResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:12:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:11
+Error: Invalid status code: undefined
+Stack Trace: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at ServerResponse.writeHead (node:_http_server:351:11)
+    at ServerResponse._implicitHeader (node:_http_server:337:8)
+    at write_ (node:_http_outgoing:985:9)
+    at ServerResponse.end (node:_http_outgoing:1102:5)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:232:10)
+    at ServerResponse.json (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:278:15)
+    at ServerResponse.send (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\response.js:162:21)
+    at Object.successResponse (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\response.js:3:33)
+    at checkZoomMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:1203:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:46
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 11/03/2025, Time: 17:09
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 11/03/2025, Time: 18:42
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)

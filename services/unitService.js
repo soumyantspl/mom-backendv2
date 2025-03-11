@@ -167,7 +167,7 @@ const listAllUnitForMeeting = async (userId, bodyData, queryData) => {
     isDelete: false,
   };
   const totalCount = await Units.countDocuments(query);
-  const unitData = await Units.find(query);
+  const unitData = await Units.find(query).sort({ name: 1 });
   const formattedUnitData = unitData.map((t) => {
     const { formattedTime, formattedDate } = commonHelper.formatDateTimeFormat(
       t.updatedAt

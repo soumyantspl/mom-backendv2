@@ -22,6 +22,7 @@ const createMeeting = async (req, res) => {
       );
     }
 
+    
     if (result?.organizerUnavailable) {
       const errMsg = messages.organizerUnavailable + result.bookedTimeRange;
       return Responses.failResponse(
@@ -42,6 +43,7 @@ const createMeeting = async (req, res) => {
         200
       );
     }
+   
 
     if (result?.isDuplicateEmpCode) {
       return Responses.failResponse(
@@ -1189,6 +1191,23 @@ const draftMeetingdelete = async (req, res) => {
   }
 };
 
+const checkZoomMeeting = async (req, res) => {
+  try {
+    const result = await meetingService.checkZoomMeetingAvailability(req.body);
+
+    if (result?.existingZoomMeeting) {
+      const errMsg = `A Zoom meeting is already scheduled on this date from ${result.bookedTimeRange}.`;
+      return Responses.failResponse(req, res,{ existingZoomMeeting: true }, errMsg, 200); 
+    }
+
+    return Responses.successResponse(req, res, result, messages.noZoomMeeting, 200); 
+  } catch (error) {
+    console.error("Check Zoom Meeting API Error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
 
 
 
@@ -1232,5 +1251,6 @@ module.exports = {
   draftMeetingdelete,
   notifyMeetingCreatorAboutDraft,
   getMeetingActionPriorityDetailsController,
-  draftMeetingdelete
+  draftMeetingdelete,
+  checkZoomMeeting
 };

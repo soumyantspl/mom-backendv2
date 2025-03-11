@@ -32,6 +32,22 @@ const contactUsSchema = new mongoose.Schema(
       default: false,
     },
     ip: { type: String, required: false },
+    leadStatus: {
+      status: {
+        type: String,
+        enum: ["cancelled", "closed", "rejected", "forwarded"],
+        default: "pending",
+      },
+      reason: { 
+        type: String, 
+        required: false 
+      },
+      timeAndDate: {
+        type: Date,
+        required: true,
+        default: Date.now(),
+      },
+    },
   },
   {
     timestamps: true,
