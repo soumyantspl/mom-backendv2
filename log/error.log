@@ -3688,3 +3688,13 @@ Date: 11/03/2025, Time: 12:47
 Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
 Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
     at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 11/03/2025, Time: 14:45
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 11/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 11/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
