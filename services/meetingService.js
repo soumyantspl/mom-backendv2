@@ -2284,9 +2284,8 @@ const rescheduleMeeting = async (
   // const existingMeeting = await Meeting.findById(id);
   const existingMeeting = await Meeting.findOne({ _id: new ObjectId(id) });
   console.log("existingMeeting in rescheduleMeeting", existingMeeting);
-
-  if (existingMeeting?.locationDetails.roomId) {
-    data.organizationId = existingMeeting.organizationId;
+  data.organizationId = existingMeeting.organizationId;
+  if (existingMeeting?.locationDetails.roomId) {  
     data.roomId = existingMeeting.locationDetails.roomId;
     const roomAvailability = await checkMeetingRoomAvailability({
       ...data,
