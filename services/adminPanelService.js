@@ -156,7 +156,7 @@ const closeLead = async (contactId, data) => {
     }
     
     contact.leadStatus.status = data.status;
-    contact.leadStatus.remarks = data.reason;
+    contact.leadStatus.reason = data.reason;
     contact.leadStatus.timeAndDate = new Date();
     
     await contact.save();
@@ -172,7 +172,7 @@ const rejectLead = async (contactId, data) => {
     }
     
     contact.leadStatus.status = data.status;
-    contact.leadStatus.remarks = data.reason;
+    contact.leadStatus.reason = data.reason;
     contact.leadStatus.timeAndDate = new Date();
     
     await contact.save();

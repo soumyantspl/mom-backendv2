@@ -21,6 +21,19 @@ const createMeeting = async (req, res) => {
         200
       );
     }
+  // if (result?.existingZoomMeeting) {
+    //   const errMsg = messages.zoomMeetingExists + result.bookedTimeRange;
+    //   return Responses.failResponse(req, res,null, errMsg, 200); 
+    // }
+    if (req.body.linkType === "ZOOM") {
+      console.log("Checking Zoom meeting availability...",req.body.linkType);
+      const zoomConflict = await meetingService.checkZoomMeetingAvailability(req.body);
+
+      if (zoomConflict.existingZoomMeeting) {
+        const zoomerrMsg = messages.zoomMeetingExists + zoomConflict.bookedTimeRange ;
+        return Responses.failResponse(req, res, null, zoomerrMsg, 200);
+      }
+    }
 
     
     if (result?.organizerUnavailable) {
@@ -34,6 +47,7 @@ const createMeeting = async (req, res) => {
       );
     }
 
+  
     if (result?.isDuplicateEmail) {
       return Responses.failResponse(
         req,
@@ -204,11 +218,26 @@ const updateMeeting = async (req, res) => {
         200
       );
     }
+
+    if (req.body.linkType === "ZOOM") {
+      console.log("Link type...",req.body.linkType);
+      const zoomConflict = await meetingService.checkZoomMeetingAvailability(req.body);
+
+      if (zoomConflict.existingZoomMeeting) {
+        const errMsg = messages.zoomMeetingExists + zoomConflict.bookedTimeRange ;
+        return Responses.failResponse(req, res, null, errMsg, 200);
+      }
+    }
+
     if (req.body.step === 3) {
       req.app
         .get("io")
         .emit("notification", "calling from backend controller ");
     }
+   
+
+   
+
     return Responses.successResponse(
       req,
       res,
@@ -527,6 +556,21 @@ const rescheduleMeeting = async (req, res) => {
         200
       );
     }
+    
+    if (result?.existingZoomMeeting) {
+      const errMsg = messages.zoomMeetingExists + result.bookedTimeRange;
+      return Responses.failResponse(req, res,null, errMsg, 200); 
+    }
+//added for zoom meeting check
+// if (req.body.linkType === "ZOOM") {
+//   console.log("Link type---",req.body.linkType);
+//   const zoomConflict = await meetingService.checkZoomMeetingAvailability(req.body);
+
+//   if (zoomConflict.existingZoomMeeting) {
+//     const errMsg = messages.zoomMeetingExists + zoomConflict.bookedTimeRange ;
+//     return Responses.failResponse(req, res, null, errMsg, 200);
+//   }
+// }
     req.app.get("io").emit("notification", "calling from backend controller ");
     return Responses.successResponse(
       req,

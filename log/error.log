@@ -2191,3 +2191,29 @@ Date: 11/03/2025, Time: 18:42
 Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
 Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
     at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 12/03/2025, Time: 11:01
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 12/03/2025, Time: 14:52
+Error: Meeting is not defined
+Stack Trace: ReferenceError: Meeting is not defined
+    at updateMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:227:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 12/03/2025, Time: 18:08
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 12/03/2025, Time: 18:48
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 12/03/2025, Time: 18:50
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)

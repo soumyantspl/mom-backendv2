@@ -79,6 +79,10 @@ const BASE_URL = process.env.BASE_URL;
 const createMeeting = async (data, userId, ipAddress = 1000) => {
   console.log("data99999999999999999999999-------------------", data);
 
+
+
+
+
   // meeting organizer validation
   const existingUserMeeting = await Meeting.findOne({
     createdById: new ObjectId(userId),
@@ -301,6 +305,18 @@ const updateMeeting = async (data, id, userId, userData, ipAddress) => {
   let finalAttendeeMessage = "NA";
   let finalAgendaMessage = "NA";
   let getNewAttendees = [];
+
+//added for zoom meeting check
+  if (linkType === "ZOOM") {
+    console.log("Checking Zoom meeting conflicts...");
+    const zoomConflict = await meetingService.checkZoomMeetingAvailability(data);
+
+    if (zoomConflict?.existingZoomMeeting) {
+      console.error("Zoom meeting detected:", zoomConflict.bookedTimeRange);
+      return { existingZoomMeeting: false};
+    }
+  }
+
   //dfsdfdfdasfd
   const stepCheck = data.step;
   if (data.step == 2) {
@@ -2395,6 +2411,30 @@ const downloadMOM = async (meetingId, userId, ipAddress = "1000") => {
 const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
   const updatedMeeting = null;
 
+    //added for zoom meeting check
+    const zoomMeeting = await Meeting.findOne({ _id: new ObjectId(id) });
+    console.log("existingMeeting in rescheduleMeeting", zoomMeeting);
+  
+    
+    if (zoomMeeting.linkType === "ZOOM") {
+      data.organizationId = zoomMeeting.organizationId;
+  
+      const zoomAvailability = await checkZoomMeetingAvailability({
+        ...data,
+       // _id: { $ne: new ObjectId(id) }, 
+      });
+  
+      console.log("zoomAvailability in rescheduleMeeting", zoomAvailability);
+  
+      if (zoomAvailability?.existingZoomMeeting) {
+        return {
+          existingZoomMeeting: true,
+          bookedTimeRange: zoomAvailability.bookedTimeRange,
+        };
+      }
+    }
+ 
+
   const isUpdated = await Meeting.findOneAndUpdate(
     {
       _id: new ObjectId(id),
@@ -2413,6 +2453,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
   );
   if (isUpdated) {
     const meetingDetails = await viewMeeting(id, userId);
+    
 
     if (meetingDetails?.hostDetails?.hostType === "ZOOM") {
       const attendeesEmailids = meetingDetails?.attendees.map((item) => {

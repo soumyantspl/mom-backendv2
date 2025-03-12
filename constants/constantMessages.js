@@ -134,7 +134,7 @@ const deleteDraftFailed = "Faild in Delete Draft Meeting"
 
 const contactListFetched = "Contact list fetched successfully."
 const organizationsFetched = "Orgaizations Fetched successfully"
-const zoomMeetingExists = "There is already a meeting scheduled on Zoom at that time."
+const zoomMeetingExists = "A Zoom meeting is already scheduled on this date from "
 const noZoomMeeting = "No Zoom meeting exists in this time slot."
 const leadUpdated = "Lead status updated successfully"
 module.exports = {
