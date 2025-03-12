@@ -132,9 +132,9 @@ const updateMeeting = async (req, res) => {
         meetingId:req.params.id
       };
       attendeeArrayBody = {
-        date: req.body.step?req.body.step:getMeetingById.date,
-        fromTime: req.body.step?req.body.step:getMeetingById.fromTime,
-        toTime: req.body.step?req.body.step:getMeetingById.toTime,
+        date: req.body.date?req.body.date:getMeetingById.date,
+        fromTime: req.body.fromTime?req.body.fromTime:getMeetingById.fromTime,
+        toTime: req.body.toTime?req.body.toTime:getMeetingById.toTime,
         meetingStatus: getMeetingById.meetingStatus,
         meetingId:req.params.id,
         organizationId: getMeetingById.organizationId,
@@ -198,9 +198,9 @@ if(!req.body.attendees){
         mergedBody
       );
       attendeeArrayBody = {
-        date: req.body.step?req.body.step:getMeetingById.date,
-        fromTime: req.body.step?req.body.step:getMeetingById.fromTime,
-        toTime: req.body.step?req.body.step:getMeetingById.toTime,
+        date: req.body.date?req.body.date:getMeetingById.date,
+        fromTime: req.body.fromTime?req.body.fromTime:getMeetingById.fromTime,
+        toTime: req.body.toTime?req.body.toTime:getMeetingById.toTime,
         meetingStatus: getMeetingById.meetingStatus,
         meetingId:req.params.id,
         organizationId: getMeetingById.organizationId
