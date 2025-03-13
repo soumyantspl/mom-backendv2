@@ -138,7 +138,13 @@ const deleteDraftFailed = "Faild in Delete Draft Meeting"
 
 const contactListFetched = "Contact list fetched successfully."
 const leadUpdated = "Lead status updated successfully"
+const alreadyCancelled = "Lead is already cancelled"
+const alreadyClosed = "Lead is already closed"
+const alreadyRejected = "Lead is already rejecteded"
 module.exports = {
+  alreadyRejected,
+  alreadyClosed,
+  alreadyCancelled,
   leadUpdated,
   contactListFetched,
   commentCreatedSuccess,

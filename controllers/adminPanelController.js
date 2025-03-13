@@ -90,7 +90,33 @@ const cancelLead = async (req, res) => {
         );
 
         if (!result) {
-            return Responses.failResponse(req, res, null, "Contact not found", 404);
+            return Responses.failResponse(req, res, null, messages.recordNotFound, 200);
+        }
+        if (result.alreadyCancelled) {
+            return Responses.failResponse(req, res, null, messages.alreadyCancelled, 200);
+        }
+        return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
+    } catch (error) {    
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error.message, 500);
+    }
+};
+
+
+// Function to Close Lead
+const closeLead = async (req, res) => {
+    try {
+        const result = await adminPanelService.closeLead(
+            req.params.contactId,
+            req.body,
+
+        );
+
+        if (!result) {
+            return Responses.failResponse(req, res, null, messages.recordNotFound, 200);
+        }
+        if (result.alreadyCancelled) {
+            return Responses.failResponse(req, res, null, messages.alreadyClosed, 200);
         }
 
         return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
@@ -100,41 +126,46 @@ const cancelLead = async (req, res) => {
     }
 };
 
-// Function to Close Lead
-const closeLead = async (req, res) => {
-    const { contactId } = req.params;
-    const { status, reason } = req.body;
+// Function to Reject Lead
+const rejectLead = async (req, res) => {
+    try {
+        const result = await adminPanelService.rejectLead(
+            req.params.contactId,
+            req.body,
 
-    if (!status || !reason) {
-        return Responses.failResponse(req, res, null, "Status and reason are required", 400);
-    }
+        );
 
-    const result = await adminPanelService.closeLead(contactId, { status, reason });
+        if (!result) {
+            return Responses.failResponse(req, res, null, messages.recordNotFound, 200);
+        }
+        if (result.alreadyRejected) {
+            return Responses.failResponse(req, res, null, messages.alreadyRejected, 200);
+        }
 
-    if (result) {
         return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
-    } else {
-        console.error("Error: Contact not found");
-        return Responses.errorResponse(req, res, null, "Contact not found", 404);
+    } catch (error) {
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error.message, 500);
     }
 };
 
-// Function to Reject Lead
-const rejectLead = async (req, res) => {
-    const { contactId } = req.params;
-    const { status, reason } = req.body;
+// Function to Forward Lead
+const forwardLead = async (req, res) => {
+    try {
+        const result = await adminPanelService.forwardLead(
+            req.params.contactId,
+            req.body,
 
-    if (!status || !reason) {
-        return Responses.failResponse(req, res, null, "Status and reason are required", 400);
-    }
+        );
 
-    const result = await adminPanelService.rejectLead(contactId, { status, reason });
+        if (!result) {
+            return Responses.failResponse(req, res, null, messages.recordNotFound, 200);
+        }
 
-    if (result) {
-        return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
-    } else {
-        console.error("Error: Contact not found");
-        return Responses.errorResponse(req, res, null, "Contact not found", 404);
+        return Responses.successResponse(req, res, result, messages.leadFowarded, 200);
+    } catch (error) {
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error.message, 500);
     }
 };
 
@@ -143,6 +174,7 @@ const rejectLead = async (req, res) => {
     getAllContacts,
     cancelLead,
     closeLead,
-    rejectLead
+    rejectLead,
+    forwardLead
   };
   

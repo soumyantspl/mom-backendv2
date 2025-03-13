@@ -18,7 +18,8 @@ const contactUsList = async (bodyData, queryData) => {
     let { searchKey = "", fromDate, toDate } = bodyData;
     searchKey = searchKey.trim();
 
-    let query = {};
+   // let query = {};
+   let query = { isDelete: false };
 
    
     if (searchKey.length > 0) {
@@ -116,16 +117,21 @@ const organizationList = async (bodyData, queryData) => {
 
 //Function to Cancel Lead
 const cancelLead = async (contactId, data) => {
-    const contact = await contactUs.findById(contactId);
+    const contact = await contactUs.findOne({ _id: contactId });
     
     if (!contact) {
-        return null;
+        return false;
     }
     
+    if (contact.leadStatus.status === "cancelled") {
+        return { alreadyCancelled: true };
+    }
+
     contact.leadStatus.status = "cancelled";
     contact.leadStatus.reason = data.reason;
     contact.leadStatus.timeAndDate = new Date();
     
+    contact.isDelete = true;
     await contact.save();
     return contact;
 };
@@ -134,13 +140,17 @@ const cancelLead = async (contactId, data) => {
 
 // Function to Close Lead
 const closeLead = async (contactId, data) => {
-    const contact = await contactUs.findById(contactId);
+    const contact = await contactUs.findById({ _id: contactId });
     
     if (!contact) {
-        return null;
+        return false;
+    }
+
+    if (contact.leadStatus.status === "closed") {
+        return { alreadyClosed: true };
     }
     
-    contact.leadStatus.status = data.status;
+    contact.leadStatus.status = "closed";
     contact.leadStatus.reason = data.reason;
     contact.leadStatus.timeAndDate = new Date();
     
@@ -150,13 +160,16 @@ const closeLead = async (contactId, data) => {
 
 // Function to Reject Lead
 const rejectLead = async (contactId, data) => {
-    const contact = await contactUs.findById(contactId);
+    const contact = await contactUs.findById({ _id: contactId });
     
     if (!contact) {
-        return null;
+        return false;
+    }
+    if (contact.leadStatus.status === "rejected") {
+        return { alreadyRejected: true };
     }
     
-    contact.leadStatus.status = "cancelled";
+    contact.leadStatus.status = "rejected";
     contact.leadStatus.reason = data.reason;
     contact.leadStatus.timeAndDate = new Date();
     
@@ -165,10 +178,36 @@ const rejectLead = async (contactId, data) => {
 };
 
 
+
+const forwardLead = async (contactId, data) => {
+    const contact = await contactUs.findById({ _id: contactId });
+    if (!contact) {
+        return false;
+    }
+
+    // Find employee details using the provided ID
+    const employee = await Employee.findById(data.forwardedTo);
+    if (!employee) {
+        return false;
+    }
+console.log("employeeeeee---", employee);
+    // Update lead status
+    contact.leadStatus.status = "forwarded";
+    contact.leadStatus.reason = data.reason;
+    contact.leadStatus.forwardedTo = data.forwardedTo;
+ 
+
+    contact.leadStatus.timeAndDate = new Date();
+
+    await contact.save();
+    return  contact ;
+};
+
   module.exports = {
     organizationList,
     contactUsList,
     cancelLead,
     closeLead,
-    rejectLead
+    rejectLead,
+    forwardLead
   };

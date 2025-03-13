@@ -20,9 +20,9 @@ router.post("/organization-list",
         adminPanelController.closeLead);
     
     
-    router.put("/reject-lead/:contactId",
-        adminPanelValidator.rejectLeadValidator,  
-        adminPanelController.rejectLead);
-       
+        router.post("/forward-lead/:contactId", 
+            adminPanelValidator.forwardLeadValidator,
+            adminPanelController.forwardLead);
+        
 
 module.exports = router;

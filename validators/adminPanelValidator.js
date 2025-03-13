@@ -41,7 +41,7 @@ const contactListValidator = async (req, res, next) => {
       next();
     } catch (error) {
       console.log(error);
-      return Responses.errorResponse(req, res, error, 200);
+      return Responses.errorResponse(req, res, error, 500);
     }
   };
   
@@ -82,18 +82,67 @@ const contactListValidator = async (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        return Responses.errorResponse(req, res, error, 200);
+        return Responses.errorResponse(req, res, error, 500);
     }
 };
 
 
 //CANCEL LEAD VALIDATOR
 const cancelLeadValidator = async (req, res, next) => {
+    try {
+        // const headerSchema = Joi.object({
+        //     authorization: Joi.string().required()
+        //     .messages({ "any.required": "Authorization token is required" }),
+        // }).unknown(true);
+
+        const paramsSchema = Joi.object({
+            contactId: Joi.string().required(), 
+        });
+
+        const bodySchema = Joi.object({
+            status: Joi.string()
+                .valid("cancelled") 
+                .optional()
+                .messages({ "any.only": "Status must be 'cancelled'" }),
+
+            reason: Joi.string()
+                .trim()
+                .min(3)
+                .max(255)
+                .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+                .allow("") 
+                .optional()
+                .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" }),
+                
+            forwardedTo: Joi.string()
+            .trim()
+            .min(3)
+            .max(255)
+           // .allow("")
+            .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+            .optional()
+            .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
+  
+        });
+
+       // await headerSchema.validateAsync(req.headers);
+        await paramsSchema.validateAsync(req.params);
+        await bodySchema.validateAsync(req.body);
+
+        next();
+    } catch (error) {
+        console.log(error);
+        return Responses.errorResponse(req, res, error, 500);
+    }
+};
+
+
+//CLOSE LEAD VALIDATOR
+const closeLeadValidator = async (req, res, next) => {
   try {
-      // const headerSchema = Joi.object({
-      //     authorization: Joi.string().required()
-      //     .messages({ "any.required": "Authorization token is required" }),
-      // }).unknown(true);
+    //   const headerSchema = Joi.object({
+    //       authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
+    //   }).unknown(true);
 
       const paramsSchema = Joi.object({
           contactId: Joi.string().required(), 
@@ -101,17 +150,17 @@ const cancelLeadValidator = async (req, res, next) => {
 
       const bodySchema = Joi.object({
           status: Joi.string()
-              .valid("cancelled") 
-              .optional()
-              .messages({ "any.only": "Status must be 'cancelled'" }),
+              .valid("closed") 
+              .required()
+              .messages({ "any.only": "Status must be 'closed'" }),
 
           reason: Joi.string()
               .trim()
               .min(3)
               .max(255)
-              .allow("")
-              .pattern(/^[a-zA-Z0-9 @.,\-]+$/) 
-             // .optional()
+              .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+              .allow("") 
+              .optional()
               .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
       });
 
@@ -122,92 +171,100 @@ const cancelLeadValidator = async (req, res, next) => {
       next();
   } catch (error) {
       console.log(error);
-      return Responses.errorResponse(req, res, error, 200);
+      return Responses.errorResponse(req, res, error, 500);
   }
-};
-
-
-//CLOSE LEAD VALIDATOR
-const closeLeadValidator = async (req, res, next) => {
-try {
-    // const headerSchema = Joi.object({
-    //     authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
-    // }).unknown(true);
-
-    const paramsSchema = Joi.object({
-        contactId: Joi.string().required(), 
-    });
-
-    const bodySchema = Joi.object({
-        status: Joi.string()
-            .valid("closed") 
-            .required()
-            .messages({ "any.only": "Status must be 'closed'" }),
-
-        reason: Joi.string()
-            .trim()
-            .min(3)
-            .max(255)
-            .pattern(/^[a-zA-Z0-9 @.,\-]+$/) 
-            .optional()
-            .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
-    });
-
-  //  await headerSchema.validateAsync(req.headers);
-    await paramsSchema.validateAsync(req.params);
-    await bodySchema.validateAsync(req.body);
-
-    next();
-} catch (error) {
-    console.log(error);
-    return Responses.errorResponse(req, res, error, 200);
-}
 };
 
 
 //REJECT LEAD VALIDATOR
 const rejectLeadValidator = async (req, res, next) => {
-try {
-    // const headerSchema = Joi.object({
-    //     authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
-    // }).unknown(true);
+  try {
+    //   const headerSchema = Joi.object({
+    //       authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
+    //   }).unknown(true);
 
-    const paramsSchema = Joi.object({
-        contactId: Joi.string().required(), 
-    });
+      const paramsSchema = Joi.object({
+          contactId: Joi.string().required(), 
+      });
 
-    const bodySchema = Joi.object({
-        status: Joi.string()
-            .valid("rejected") 
-            .required()
-            .messages({ "any.only": "Status must be 'rejected'" }),
+      const bodySchema = Joi.object({
+          status: Joi.string()
+              .valid("rejected") 
+              .required()
+              .messages({ "any.only": "Status must be 'rejected'" }),
 
-        reason: Joi.string()
-            .trim()
-            .min(3)
-            .max(255)
-            .pattern(/^[a-zA-Z0-9 @.,\-]+$/) // Allowed characters
-            .optional()
-            .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
-    });
+          reason: Joi.string()
+              .trim()
+              .min(3)
+              .max(255)
+              .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+              .allow("") 
+              .optional()
+              .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
+      });
 
-   // await headerSchema.validateAsync(req.headers);
-    await paramsSchema.validateAsync(req.params);
-    await bodySchema.validateAsync(req.body);
+     // await headerSchema.validateAsync(req.headers);
+      await paramsSchema.validateAsync(req.params);
+      await bodySchema.validateAsync(req.body);
 
-    next();
-} catch (error) {
-    console.log(error);
-    return Responses.errorResponse(req, res, error, 200);
-}
+      next();
+  } catch (error) {
+      console.log(error);
+      return Responses.errorResponse(req, res, error, 500);
+  }
 };
 
+// FORWARD LEAD VALIDATOR
+const forwardLeadValidator = async (req, res, next) => {
+    try {
+        // const headerSchema = Joi.object({
+        //     authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
+        // }).unknown(true);
+  
+        const paramsSchema = Joi.object({
+            contactId: Joi.string().required(),
+        });
+  
+        const bodySchema = Joi.object({
+            status: Joi.string()
+              .valid("rejected") 
+              .optional()
+              .messages({ "any.only": "Status must be 'rejected'" }),
+
+          reason: Joi.string()
+              .trim()
+              .min(3)
+              .max(255)
+              .pattern(/^[a-zA-Z0-9 @.,\-]+$/) 
+              .optional()
+              .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" }),
+
+            forwardedTo: Joi.string()
+                .trim()
+                .min(3)
+                .max(255)
+                .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+                .required()
+                .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
+        });
+  
+      //  await headerSchema.validateAsync(req.headers);
+        await paramsSchema.validateAsync(req.params);
+        await bodySchema.validateAsync(req.body);
+  
+        next();
+    } catch (error) {
+        console.log(error);
+        return Responses.errorResponse(req, res, error, 500);
+    }
+  };
 
   module.exports = {
     contactListValidator,
     organizationListValidator,
     cancelLeadValidator,
     closeLeadValidator,
-    rejectLeadValidator
+    rejectLeadValidator,
+    forwardLeadValidator
   };
   
