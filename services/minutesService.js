@@ -1209,7 +1209,7 @@ const acceptMinutes = async (data, meetingId, userId, ipAddress = "1000") => {
       (item) => item._id.toString() === userId.toString()
     );
 
-    // const logo = process.env.LOGO;
+     const logo = process.env.LOGO;
 
     const mailData = await emailTemplates.acceptMinuteEmailTemplate(
       meetingDetails,

@@ -269,6 +269,10 @@ router.delete(
   meetingController.draftMeetingdelete
 );
 
+router.post("/check-zoom-meeting",
+  meetingValidator.checkZoomMeetingValidator,
+  authMiddleware.verifyUserToken,
+  meetingController.checkZoomMeeting);
 
 
 module.exports = router;

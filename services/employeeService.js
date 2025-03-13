@@ -1122,7 +1122,7 @@ const updateProfile = async (userId, id, data, ipAddress, profilePicture) => {
     );
   }
 
-  // ❌ Skipping Unit Tracking (as requested)
+ 
 
   const userType = result.isEmployee ? "Employee" : "Guest Employee";
 

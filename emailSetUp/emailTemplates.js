@@ -2963,37 +2963,36 @@ const actionAssignAdminEmailTemplate = async (
 module.exports = {
   //signInByOtpEmail,
   //updateMeeting,
-  sendOtpEmailTemplate,//done
-  sendOtpDemoEmailTemplate,//done
-  sendContactUsEmailTemplate,//done
-  sendCancelMeetingEmailTemplate,
-  sendScheduledMeetingEmailTemplate,
-  sendCreateMinutesEmailTemplate,
-  sendReScheduledMeetingEmailTemplate,
-  actionReassignRequestEmailTemplate,
-  actionReassignEmailTemplate,
-  actionReOpenEmailTemplate,
-  actionApproveEmailTemplate,
+  sendOtpEmailTemplate,//done 7
+  sendOtpDemoEmailTemplate,//done 1 3
+  sendContactUsEmailTemplate,//done 4
+  sendCancelMeetingEmailTemplate,//done 17
+  sendScheduledMeetingEmailTemplate,//done 9
+  sendCreateMinutesEmailTemplate,//doubt
+  sendReScheduledMeetingEmailTemplate,////done 15
+  actionReassignRequestEmailTemplate,//done 11
+  actionReassignEmailTemplate,//done 18
+  actionReOpenEmailTemplate,//////done 20
+  actionApproveEmailTemplate,//done 19
   sendAmendmentCreatedEmailTemplate,
-  acceptMinuteEmailTemplate,
+  acceptMinuteEmailTemplate,// done 21
   meetingRemindersEmailTemplate,
-  actionCancelEmailTemplate,
-  actionCompleteEmailTemplate,
-  actionReassignRequestRejectEmailTemplate,
+  actionCancelEmailTemplate,//done 13
+  actionCompleteEmailTemplate,//done 12
+  actionReassignRequestRejectEmailTemplate,//done 24
   sampleTest,
-  createNewEmployeeEmailTemplate,
-  sendGiveWriteMOMPermissionEmailTemplate,
-  actionReassignForOlAssigneeEmailTemplate,
+  createNewEmployeeEmailTemplate,//donee 8
+  sendGiveWriteMOMPermissionEmailTemplate,//doubttttttttttt
+  actionReassignForOlAssigneeEmailTemplate,//donne 23
   sendActionDueReminderEmailTemplate,
-  actionReassignEmailToOlAssignedUserTemplate,
-  reSendScheduledMeetingEmailTemplate,
-  sendOtpDemoEmailTemplate,
-  sendAttendanceDetailsEmailTemplate,
-  sendDemoInquiryEmailTemplate,
-  organizationRegistrationSendOtpTemplate,//done
+  actionReassignEmailToOlAssignedUserTemplate,//done 22
+  reSendScheduledMeetingEmailTemplate,//done 16
+  sendAttendanceDetailsEmailTemplate,//done 14
+  sendDemoInquiryEmailTemplate,//done 2
+  organizationRegistrationSendOtpTemplate,//done 5
   organizationRegistration,
-  actionAssignEmailTemplate,
-  registrationWelcomeMail,//done
+  actionAssignEmailTemplate,//done 10
+  registrationWelcomeMail,//done 6
   actionAssignAdminEmailTemplate
 };
 
