@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const mongoose = require("mongoose");
 const validator = require("validator");
 const contactUsSchema = new mongoose.Schema(
@@ -41,6 +42,11 @@ const contactUsSchema = new mongoose.Schema(
       reason: { 
         type: String, 
         required: false 
+      },
+      forwardedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Employee",
+        required: false, 
       },
       timeAndDate: {
         type: Date,

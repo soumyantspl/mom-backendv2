@@ -39,7 +39,7 @@ const contactListValidator = async (req, res, next) => {
       next();
     } catch (error) {
       console.log(error);
-      return Responses.errorResponse(req, res, error, 200);
+      return Responses.errorResponse(req, res, error, 500);
     }
   };
   
@@ -80,61 +80,74 @@ const contactListValidator = async (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        return Responses.errorResponse(req, res, error, 200);
+        return Responses.errorResponse(req, res, error, 500);
     }
 };
 
-
+//CANCEL LEAD VALIDATOR
 const cancelLeadValidator = async (req, res, next) => {
     try {
-        const headerSchema = Joi.object({
-            authorization: Joi.string().required()
-            .messages({ "any.required": "Authorization token is required" }),
-        }).unknown(true);
+        // const headerSchema = Joi.object({
+        //     authorization: Joi.string().required()
+        //     .messages({ "any.required": "Authorization token is required" }),
+        // }).unknown(true);
 
         const paramsSchema = Joi.object({
-            contactId: Joi.string().required(), // Ensures contactId is provided
+            contactId: Joi.string().required(), 
         });
 
         const bodySchema = Joi.object({
             status: Joi.string()
-                .valid("cancelled") // Only "cancelled" is allowed
-                .required()
+                .valid("cancelled") 
+                .optional()
                 .messages({ "any.only": "Status must be 'cancelled'" }),
 
             reason: Joi.string()
                 .trim()
                 .min(3)
                 .max(255)
-                .pattern(/^[a-zA-Z0-9 @.,\-]+$/) // Allowed characters
-                .required()
-                .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
+                .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+                .allow("") 
+                .optional()
+                .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" }),
+                
+            forwardedTo: Joi.string()
+            .trim()
+            .min(3)
+            .max(255)
+           // .allow("")
+            .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+            .optional()
+            .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
+  
         });
 
-        await headerSchema.validateAsync(req.headers);
+       // await headerSchema.validateAsync(req.headers);
         await paramsSchema.validateAsync(req.params);
         await bodySchema.validateAsync(req.body);
 
         next();
     } catch (error) {
         console.log(error);
-        return Responses.errorResponse(req, res, error, 200);
+        return Responses.errorResponse(req, res, error, 500);
     }
 };
 
+
+//CLOSE LEAD VALIDATOR
 const closeLeadValidator = async (req, res, next) => {
   try {
-      const headerSchema = Joi.object({
-          authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
-      }).unknown(true);
+    //   const headerSchema = Joi.object({
+    //       authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
+    //   }).unknown(true);
 
       const paramsSchema = Joi.object({
-          contactId: Joi.string().required(), // Ensures contactId is provided
+          contactId: Joi.string().required(), 
       });
 
       const bodySchema = Joi.object({
           status: Joi.string()
-              .valid("closed") // Only "closed" is allowed
+              .valid("closed") 
               .required()
               .messages({ "any.only": "Status must be 'closed'" }),
 
@@ -142,35 +155,38 @@ const closeLeadValidator = async (req, res, next) => {
               .trim()
               .min(3)
               .max(255)
-              .pattern(/^[a-zA-Z0-9 @.,\-]+$/) // Allowed characters
-              .required()
+              .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+              .allow("") 
+              .optional()
               .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
       });
 
-      await headerSchema.validateAsync(req.headers);
+    //  await headerSchema.validateAsync(req.headers);
       await paramsSchema.validateAsync(req.params);
       await bodySchema.validateAsync(req.body);
 
       next();
   } catch (error) {
       console.log(error);
-      return Responses.errorResponse(req, res, error, 200);
+      return Responses.errorResponse(req, res, error, 500);
   }
 };
 
+
+//REJECT LEAD VALIDATOR
 const rejectLeadValidator = async (req, res, next) => {
   try {
-      const headerSchema = Joi.object({
-          authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
-      }).unknown(true);
+    //   const headerSchema = Joi.object({
+    //       authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
+    //   }).unknown(true);
 
       const paramsSchema = Joi.object({
-          contactId: Joi.string().required(), // Ensures contactId is provided
+          contactId: Joi.string().required(), 
       });
 
       const bodySchema = Joi.object({
           status: Joi.string()
-              .valid("rejected") // Only "rejected" is allowed
+              .valid("rejected") 
               .required()
               .messages({ "any.only": "Status must be 'rejected'" }),
 
@@ -178,22 +194,70 @@ const rejectLeadValidator = async (req, res, next) => {
               .trim()
               .min(3)
               .max(255)
-              .pattern(/^[a-zA-Z0-9 @.,\-]+$/) // Allowed characters
-              .required()
+              .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+              .allow("") 
+              .optional()
               .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
       });
 
-      await headerSchema.validateAsync(req.headers);
+     // await headerSchema.validateAsync(req.headers);
       await paramsSchema.validateAsync(req.params);
       await bodySchema.validateAsync(req.body);
 
       next();
   } catch (error) {
       console.log(error);
-      return Responses.errorResponse(req, res, error, 200);
+      return Responses.errorResponse(req, res, error, 500);
   }
 };
 
+// FORWARD LEAD VALIDATOR
+const forwardLeadValidator = async (req, res, next) => {
+    try {
+        // const headerSchema = Joi.object({
+        //     authorization: Joi.string().required().messages({ "any.required": "Authorization token is required" }),
+        // }).unknown(true);
+  
+        const paramsSchema = Joi.object({
+            contactId: Joi.string().required(),
+        });
+  
+        const bodySchema = Joi.object({
+            status: Joi.string()
+              .valid("rejected") 
+              .optional()
+              .messages({ "any.only": "Status must be 'rejected'" }),
+
+          reason: Joi.string()
+              .trim()
+              .min(3)
+              .max(255)
+              .pattern(/^[a-zA-Z0-9 @.,\-]+$/) 
+              .optional()
+              .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" }),
+
+            forwardedTo: Joi.string()
+                .trim()
+                .min(3)
+                .max(255)
+                .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+                .required()
+                .messages({ "Allowed Inputs": "(a-z, A-Z, 0-9, @, ., space, comma, dash)" })
+        });
+  
+      //  await headerSchema.validateAsync(req.headers);
+        await paramsSchema.validateAsync(req.params);
+        await bodySchema.validateAsync(req.body);
+  
+        next();
+    } catch (error) {
+        console.log(error);
+        return Responses.errorResponse(req, res, error, 500);
+    }
+  };
+  
+
+  
 
 // const leadStatusValidator = async (req, res, next) => {
 //   try {
@@ -232,6 +296,7 @@ const rejectLeadValidator = async (req, res, next) => {
     organizationListValidator,
     cancelLeadValidator,
     closeLeadValidator,
-    rejectLeadValidator
+    rejectLeadValidator,
+    forwardLeadValidator
   //  leadStatusValidator
 };

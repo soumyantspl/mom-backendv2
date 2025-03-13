@@ -137,7 +137,16 @@ const organizationsFetched = "Orgaizations Fetched successfully"
 const zoomMeetingExists = "A Zoom meeting is already scheduled on this date from "
 const noZoomMeeting = "No Zoom meeting exists in this time slot."
 const leadUpdated = "Lead status updated successfully"
+const leadFowarded = "Lead forwarded successfully"
+const alreadyCancelled = "Lead is already cancelled"
+const alreadyClosed = "Lead is already closed"
+const alreadyRejected = "Lead is already rejected"
+
 module.exports = {
+  alreadyRejected,
+  alreadyClosed,
+  alreadyCancelled,
+  leadFowarded,
   leadUpdated,
   noZoomMeeting,
   zoomMeetingExists,

@@ -26,5 +26,10 @@ router.put("/close-lead/:contactId",
 router.put("/reject-lead/:contactId",
     adminPanelValidator.rejectLeadValidator,  
     adminPanelController.rejectLead);
-   
+
+ router.post("/forward-lead/:contactId", 
+    adminPanelValidator.forwardLeadValidator,
+    adminPanelController.forwardLead);
+
+
  module.exports = router;
