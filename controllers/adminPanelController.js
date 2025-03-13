@@ -80,9 +80,69 @@ const getOrganizations = async (req, res) => {
     }
 };
 
+//FUNCTION TO CANCEL LEAD
+const cancelLead = async (req, res) => {
+    try {
+        const result = await adminPanelService.cancelLead(
+            req.params.contactId, 
+            req.body, 
+            req.userData
+        );
+
+        if (!result) {
+            return Responses.failResponse(req, res, null, "Contact not found", 404);
+        }
+
+        return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
+    } catch (error) {
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error.message, 500);
+    }
+};
+
+// Function to Close Lead
+const closeLead = async (req, res) => {
+    const { contactId } = req.params;
+    const { status, reason } = req.body;
+
+    if (!status || !reason) {
+        return Responses.failResponse(req, res, null, "Status and reason are required", 400);
+    }
+
+    const result = await adminPanelService.closeLead(contactId, { status, reason });
+
+    if (result) {
+        return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
+    } else {
+        console.error("Error: Contact not found");
+        return Responses.errorResponse(req, res, null, "Contact not found", 404);
+    }
+};
+
+// Function to Reject Lead
+const rejectLead = async (req, res) => {
+    const { contactId } = req.params;
+    const { status, reason } = req.body;
+
+    if (!status || !reason) {
+        return Responses.failResponse(req, res, null, "Status and reason are required", 400);
+    }
+
+    const result = await adminPanelService.rejectLead(contactId, { status, reason });
+
+    if (result) {
+        return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
+    } else {
+        console.error("Error: Contact not found");
+        return Responses.errorResponse(req, res, null, "Contact not found", 404);
+    }
+};
 
   module.exports = {
     getOrganizations,
-    getAllContacts
+    getAllContacts,
+    cancelLead,
+    closeLead,
+    rejectLead
   };
   

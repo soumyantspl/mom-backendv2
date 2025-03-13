@@ -114,8 +114,61 @@ const organizationList = async (bodyData, queryData) => {
     return { totalCount, data: result };
 };
 
+//Function to Cancel Lead
+const cancelLead = async (contactId, data) => {
+    const contact = await contactUs.findById(contactId);
+    
+    if (!contact) {
+        return null;
+    }
+    
+    contact.leadStatus.status = "cancelled";
+    contact.leadStatus.reason = data.reason;
+    contact.leadStatus.timeAndDate = new Date();
+    
+    await contact.save();
+    return contact;
+};
+
+
+
+// Function to Close Lead
+const closeLead = async (contactId, data) => {
+    const contact = await contactUs.findById(contactId);
+    
+    if (!contact) {
+        return null;
+    }
+    
+    contact.leadStatus.status = data.status;
+    contact.leadStatus.reason = data.reason;
+    contact.leadStatus.timeAndDate = new Date();
+    
+    await contact.save();
+    return contact;
+};
+
+// Function to Reject Lead
+const rejectLead = async (contactId, data) => {
+    const contact = await contactUs.findById(contactId);
+    
+    if (!contact) {
+        return null;
+    }
+    
+    contact.leadStatus.status = "cancelled";
+    contact.leadStatus.reason = data.reason;
+    contact.leadStatus.timeAndDate = new Date();
+    
+    await contact.save();
+    return contact;
+};
+
 
   module.exports = {
     organizationList,
-    contactUsList
+    contactUsList,
+    cancelLead,
+    closeLead,
+    rejectLead
   };

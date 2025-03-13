@@ -11,5 +11,18 @@ router.post("/organization-list",
     adminPanelValidator.organizationListValidator,
     adminPanelController.getOrganizations);
 
+    router.put("/cancel-lead/:contactId",
+        adminPanelValidator.cancelLeadValidator, 
+        adminPanelController.cancelLead);
+    
+    router.put("/close-lead/:contactId",
+        adminPanelValidator.closeLeadValidator,  
+        adminPanelController.closeLead);
+    
+    
+    router.put("/reject-lead/:contactId",
+        adminPanelValidator.rejectLeadValidator,  
+        adminPanelController.rejectLead);
+       
 
 module.exports = router;

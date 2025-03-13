@@ -137,7 +137,9 @@ const draftDeleted = "Draft Meeting Deleted"
 const deleteDraftFailed = "Faild in Delete Draft Meeting"
 
 const contactListFetched = "Contact list fetched successfully."
+const leadUpdated = "Lead status updated successfully"
 module.exports = {
+  leadUpdated,
   contactListFetched,
   commentCreatedSuccess,
   updateFail,
