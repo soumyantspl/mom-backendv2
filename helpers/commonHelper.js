@@ -382,6 +382,8 @@ const convertFirstLetterOfFullNameToCapital = (textData) => {
 
 //The Function Below To Decrypt Text
 const decryptWithAES = (ciphertext) => {
+  console.log("ciphertext",ciphertext);
+  
   const passphrase = process.env.PASSWORD_KEY;
   const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
   const originalText = bytes.toString(CryptoJS.enc.Utf8);

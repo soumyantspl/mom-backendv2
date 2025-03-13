@@ -247,6 +247,7 @@ const verifyContactUsOtp = async (req, res) => {
   }
 };
 
+
 module.exports = {
   contactUsendOtp,
   verifyContactUsOtp,

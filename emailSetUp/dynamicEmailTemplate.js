@@ -101,12 +101,12 @@ const sendCancelMeetingEmailTemplate = async (meetingData, attendeeName, logo) =
       throw new Error(`No active template found for type: MEETINGCANCEL`);
     }
 
-  //  let salutation = '';
+    //  let salutation = '';
     let body = '';
     let subject = '';
 
     if (template.meetingCancelCredentials) {
-    //  salutation = template.dear || '';
+      //  salutation = template.dear || '';
       body = template.meetingCancelCredentials.body || '';
       subject = template.subject || '';
     } else {
@@ -114,8 +114,8 @@ const sendCancelMeetingEmailTemplate = async (meetingData, attendeeName, logo) =
     }
 
 
-  //  salutation = salutation.replace('{attendeeName}', attendeeName);
-    
+    //  salutation = salutation.replace('{attendeeName}', attendeeName);
+
     body = body
       .replace('{attendeeName}', attendeeName)
       .replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title))
@@ -178,12 +178,12 @@ const sendScheduledMeetingEmailTemplate = async (
       throw new Error("No active template found for type: SENDSCHEDULEMEETING");
     }
 
-   // let salutation = "";
+    // let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.sendScheduledMeetingCredentials) {
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       body = template.sendScheduledMeetingCredentials.body;
       subject = template.subject;
     } else {
@@ -205,9 +205,9 @@ const sendScheduledMeetingEmailTemplate = async (
     // );
 
     body = body
-      .replace("{meetingdetailLink}",`${process.env.FRONTEND_URL}/view-meeting-details/${meetingData?._id}`)
+      .replace("{meetingdetailLink}", `${process.env.FRONTEND_URL}/view-meeting-details/${meetingData?._id}`)
       .replace("{userManualLink}", process.env.USER_MANUAL_LINK)
-      .replace("{meetingMode}",commonHelper.convertFirstLetterToCapital(meetingData.mode))
+      .replace("{meetingMode}", commonHelper.convertFirstLetterToCapital(meetingData.mode))
       .replace("{meetingId}", meetingData?.meetingId)
       .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingLink}", link)
@@ -254,7 +254,7 @@ const sendScheduledMeetingEmailTemplate = async (
       `<img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />` +
       `</a>` +
       `<div style="padding: 20px; font-family: Arial, sans-serif; color: #000;">` +
-    // `${salutation}` +
+      // `${salutation}` +
       `${body}` +
       `</div>` +
       `</div>` +
@@ -294,12 +294,12 @@ const sendReScheduledMeetingEmailTemplate = async (
       throw new Error("No active template found for type: RESCHEDULE");
     }
 
-  //  let salutation = "";
+    //  let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.rescheduleCredentials) {
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       body = template.rescheduleCredentials.body;
       subject = template.subject;
     } else {
@@ -429,12 +429,12 @@ const sendCreateMinutesEmailTemplate = async (
       throw new Error("No active template found for type: GENERATEMOM");
     }
 
-  //  let salutation = "";
+    //  let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.generateMomCredentials) {
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       body = template.generateMomCredentials.body;
       subject = template.subject;
     } else {
@@ -547,7 +547,7 @@ const actionReassignEmailToOlAssignedUserTemplate = async (
         .replace(/{organizerEmail}/g, meetingData?.createdByDetail?.email)
 
       body = body
-      .replace('{oldAssignedUserName}', oldAssignedUserDetails?.name)
+        .replace('{oldAssignedUserName}', oldAssignedUserDetails?.name)
         .replace(/{actionDescription}/g, commonHelper.decryptWithAES(action?.description))
         .replace(/{reason}/g, reason)
         .replace(/{assignedUserName}/g, assignedUserDetails?.name)
@@ -703,7 +703,8 @@ const actionAssignEmailTemplate = async (
           )
         )
         .replace("{organizerEmail}", userData.email);
-      subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(action.title));
+        console.log("action",action)
+      subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(action?.title));
 
       mailBody =
         `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
@@ -749,13 +750,13 @@ const actionReOpenEmailTemplate = async (
       }
 
       let mailBody = "";
-     // let salutation = "";
+      // let salutation = "";
       let body = "";
       let subject = "";
 
       if (template.actionReOpenCredentials) {
         body = template.actionReOpenCredentials.body || "";
-      //  salutation = template.dear || "";
+        //  salutation = template.dear || "";
         subject = template.subject;
       } else {
         return reject(
@@ -1128,13 +1129,13 @@ const actionReassignRequestRejectEmailTemplate = async (
     }
 
     let mailBody = "";
-  //  let salutation = "";
+    //  let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.actionReassignRequestRejectCredentials) {
       body = template.actionReassignRequestRejectCredentials.body;
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       subject = template.subject;
     } else {
       throw new Error(
@@ -1145,10 +1146,10 @@ const actionReassignRequestRejectEmailTemplate = async (
     console.log("Attendee Details:", attendeeDetails);
     console.log("Template Body Before Replace:", body);
 
-  //  salutation = salutation.replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital(attendeeDetails.name));
+    //  salutation = salutation.replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital(attendeeDetails.name));
     body = body
       .replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital(attendeeDetails.name))
-      .replace( "{actionlink}", `${process.env.FRONTEND_URL}/view-action-detail/${actionDetails?._id}`)
+      .replace("{actionlink}", `${process.env.FRONTEND_URL}/view-action-detail/${actionDetails?._id}`)
       .replace("{rejectReason}", remark)
 
       .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
@@ -1156,7 +1157,7 @@ const actionReassignRequestRejectEmailTemplate = async (
       .replace("{description}", commonHelper.decryptWithAES(actionDetails?.description))
       .replace("{organizerName}", meetingData?.createdByDetail?.name)
       .replace("{organizerEmail}", meetingData?.createdByDetail?.email)
-    //  .replace("{assignedUserName}", attendeeDetails.name)
+      //  .replace("{assignedUserName}", attendeeDetails.name)
       .replace("{assignedUserEmail}", attendeeDetails.email);
 
     //  subject = subject.replace('{organizerName}', meetingData?.createdByDetail?.name);
@@ -1201,13 +1202,13 @@ const createNewEmployeeEmailTemplate = async (adminDetails, logo, empData) => {
     }
 
     let mailBody = "";
-  //  let salutation = "";
+    //  let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.addEmployeeCredentials) {
       body = template.addEmployeeCredentials.body;
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       subject = template.subject;
     } else {
       throw new Error("No body found for template type: ADDEMPLOYEE");
@@ -1215,10 +1216,10 @@ const createNewEmployeeEmailTemplate = async (adminDetails, logo, empData) => {
 
     console.log("Template Body Before Replace:", body);
 
-  //  salutation = salutation.replace("{employeeName}",commonHelper.convertFirstLetterOfFullNameToCapital(empData.name));
+    //  salutation = salutation.replace("{employeeName}",commonHelper.convertFirstLetterOfFullNameToCapital(empData.name));
 
     body = body
-    .replace("{employeeName}",commonHelper.convertFirstLetterOfFullNameToCapital(empData.name))
+      .replace("{employeeName}", commonHelper.convertFirstLetterOfFullNameToCapital(empData.name))
       .replace("{frontendUrlLink}", `${process.env.FRONTEND_URL}`)
       .replace("{userManualLink}", `${process.env.USER_MANUAL_LINK}`)
       .replace("{employeeEmail}", empData.email)
@@ -1262,22 +1263,22 @@ const sendGiveWriteMOMPermissionEmailTemplate = async (meetingData, attendeeName
       throw new Error(`No active template found for type: GIVEWRITMOMPERMISSION`);
     }
 
-  //  let salutation = '';
+    //  let salutation = '';
     let body = '';
     let subject = '';
 
     if (template.giveWritemomPermissionCredentials) {
-    //  salutation = template.dear || '';
+      //  salutation = template.dear || '';
       body = template.giveWritemomPermissionCredentials.body || '';
       subject = template.subject || '';
     } else {
       throw new Error(`No credentials found for template type: GIVEWRITMOMPERMISSION`);
     }
 
-   // salutation = salutation.replace('{attendeeName}', attendeeName);
-    
+    // salutation = salutation.replace('{attendeeName}', attendeeName);
+
     body = body
-    .replace('{attendeeName}', attendeeName)
+      .replace('{attendeeName}', attendeeName)
       .replace('{meetingTitle}', commonHelper.decryptWithAES(meetingData.title))
       .replace('{meetingId}', meetingData.meetingId)
       .replace('{meetingLink}', `${process.env.FRONTEND_URL}/view-meeting-details/${meetingData._id}`)
@@ -1658,12 +1659,12 @@ const sendAttendanceDetailsEmailTemplate = async (
       throw new Error("No active template found for type: SENDATTENDANCEDETAILS");
     }
 
-   // let salutation = "";
+    // let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.sendAttendanceDetailsCredentials) {
-     // salutation = template.dear;
+      // salutation = template.dear;
       body = template.sendAttendanceDetailsCredentials.body;
       subject = template.subject;
     } else {
@@ -1740,13 +1741,13 @@ const sendOtpEmailTemplate = (userData, otp, time, supportData, logo) => {
       }
 
       let mailBody = "";
-    //  let salutation = "";
+      //  let salutation = "";
       let body = "";
       let subject = "";
 
       if (template.loginsendOtpCredentials) {
         body = template.loginsendOtpCredentials.body || "";
-      //  salutation = template.dear || "";
+        //  salutation = template.dear || "";
         subject = template.subject || "";
       } else {
         return reject(
@@ -1758,7 +1759,7 @@ const sendOtpEmailTemplate = (userData, otp, time, supportData, logo) => {
         .replace(/{name}/g, userData.name)
         .replace(/{expiryTime}/g, time)
         .replace("{otp}", otp);
-    //  salutation = salutation.replace(/{name}/g, userData.name);
+      //  salutation = salutation.replace(/{name}/g, userData.name);
       body = body
         .replace("{otp}", otp)
         .replace(/{expiryTime}/g, time)
@@ -1882,22 +1883,22 @@ const sendOtpDemoEmailTemplate = async (
     }
 
     let mailBody = "";
-   // let salutation = "";
+    // let salutation = "";
     let body = "";
 
     if (template.demoSendOtpCredentials) {
       body = template.demoSendOtpCredentials.body || "";
-    //  salutation = template.dear || "";
+      //  salutation = template.dear || "";
       subject = template.subject;
     } else {
       throw new Error(`No body found for template type: DEMOSENDOTP`);
     }
 
-   // salutation = salutation.replace("{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name));
+    // salutation = salutation.replace("{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name));
     body = body
-      
+
       .replace("{otp}", otp)
-      .replace( "{name}",commonHelper.convertFirstLetterOfFullNameToCapital(name))
+      .replace("{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name))
       .replace("{expiryTime}", time);
 
     subject = subject
@@ -1945,26 +1946,26 @@ const sendDemoInquiryEmailTemplate = async (
       throw new Error("No active template found for type: SAVEDEMODETAILS");
     }
 
-   // let salutation = "";
+    // let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.savedemoCredentials) {
       body = template.savedemoCredentials.body;
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       subject = template.subject;
     } else {
       throw new Error("No body found for template type: SAVEDEMODETAILS");
     }
 
-   // salutation = salutation.replace( "{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name));
+    // salutation = salutation.replace( "{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name));
     body = body
-      .replace("{name}",  commonHelper.convertFirstLetterOfFullNameToCapital(name))
+      .replace("{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name))
       .replace("{email}", email)
       .replace("{phoneNo}", phoneNo)
       .replace("{message}", message);
     subject = subject
-      .replace( "{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name) )
+      .replace("{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name))
       .replace("{typeMessage}", typeMessage);
 
     // const mailBody = `\n${salutation}\n\n${body}\n`;
@@ -2012,22 +2013,22 @@ const actionReassignRequestEmailTemplate = async (
     }
 
     let mailBody = "";
-   // let salutation = "";
+    // let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.actionReassignRequestCredentials) {
       body = template.actionReassignRequestCredentials.body;
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       subject = template.subject;
     } else {
       throw new Error("No body found for template type: ACTIONREASSIGNREQUEST");
     }
 
-  //  salutation = salutation.replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital( meetingData?.createdByDetail?.name));
+    //  salutation = salutation.replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital( meetingData?.createdByDetail?.name));
     body = body
-    .replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital( meetingData?.createdByDetail?.name))
-      .replace( "{actionlink}",`${process.env.FRONTEND_URL}/view-action-detail/${actionDetails._id}`)
+      .replace("{organizerName}", commonHelper.convertFirstLetterOfFullNameToCapital(meetingData?.createdByDetail?.name))
+      .replace("{actionlink}", `${process.env.FRONTEND_URL}/view-action-detail/${actionDetails._id}`)
       .replace("{requestDetails}", requestDetails)
       .replace('{assignedUserName}', assignedUserDetail.name)
       .replace("{assignedUserEmail}", assignedUserDetail.email);
@@ -2084,28 +2085,28 @@ const actionApproveEmailTemplate = async (
     }
 
     let mailBody = "";
-  //  let salutation = "";
+    //  let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.actionApproveCredentials) {
       body = template.actionApproveCredentials.body;
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       subject = template.subject;
     } else {
       throw new Error("No body found for template type: ACTIONAPPROVE");
     }
 
-  //  salutation = salutation.replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital( assignedUserDetails?.name));
-    
+    //  salutation = salutation.replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital( assignedUserDetails?.name));
+
     body = body
-      .replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital( assignedUserDetails?.name))
-      .replace( "{actionlink}",`${process.env.FRONTEND_URL}/view-action-detail/${action._id}`)
+      .replace("{assignedUserName}", commonHelper.convertFirstLetterOfFullNameToCapital(assignedUserDetails?.name))
+      .replace("{actionlink}", `${process.env.FRONTEND_URL}/view-action-detail/${action._id}`)
       .replace("{actionDescription}", commonHelper.decryptWithAES(action?.description))
       .replace("{approvalRemark}", reason)
       .replace("{meetingTitle}", commonHelper.decryptWithAES(meetingData.title))
       .replace("{meetingId}", meetingData.meetingId)
-      .replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital(meetingData.createdByDetail.name))
+      .replace("{organizerName}", commonHelper.convertFirstLetterOfFullNameToCapital(meetingData.createdByDetail.name))
       .replace("{organizerEmail}", meetingData.createdByDetail.email);
 
     subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(action.title));
@@ -2152,13 +2153,13 @@ const sendContactUsEmailTemplate = async (
       throw new Error("No active template found for type: SAVECONTACTDETAILS");
     }
 
-  //  let salutation = "";
+    //  let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.saveContactCredentials) {
       body = template.saveContactCredentials.body;
-    //  salutation = template.dear;
+      //  salutation = template.dear;
       subject = template.subject;
     } else {
       throw new Error("No body found for template type: SAVECONTACTDETAILS");
@@ -2225,12 +2226,12 @@ const sendOtpContactEmailTemplate = async (
       throw new Error(`No active template found for type: CONTACTUS`);
     }
 
-  //  let salutation = "";
+    //  let salutation = "";
     let body = "";
     let subject = "";
 
     if (template.contactUsOtpCredentials) {
-    //  salutation = template.dear || "";
+      //  salutation = template.dear || "";
       body = template.contactUsOtpCredentials.body || "";
       subject = template.subject || "";
     } else {
@@ -2304,13 +2305,13 @@ const actionCancelEmailTemplate = async (
       }
 
       let mailBody = "";
-    //  let salutation = "";
+      //  let salutation = "";
       let body = "";
       let subject = "";
 
       if (template.actionCancelCredentials) {
         body = template.actionCancelCredentials.body || "";
-       // salutation = template.dear || "";
+        // salutation = template.dear || "";
         subject = template.subject || "";
       } else {
         return reject(
@@ -2406,7 +2407,7 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
   body = body
     .replace(
       /{UserName}/g,
-     // commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
+      // commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
       userDetail?.name
     )
     .replace(/{Greeting}/g, mentionedUserName)
@@ -2414,7 +2415,7 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
     .replace("{commentDetails}", result?.commentDescription)
     .replace("{organizerEmail}", meetingDetails.createdByDetail?.email)
     .replace(
-      "{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital(meetingDetails.createdByDetail?.name))
+      "{organizerName}", commonHelper.convertFirstLetterOfFullNameToCapital(meetingDetails.createdByDetail?.name))
     .replace(
       "{actionlink}",
       `${process.env.FRONTEND_URL}/view-action-detail/${result?.actionId}`
@@ -2475,11 +2476,11 @@ const actionCompleteEmailTemplate = async (
         );
       }
 
-    //  salutation = salutation.replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital( meetingData.createdByDetail.name));
-      
+      //  salutation = salutation.replace("{organizerName}",commonHelper.convertFirstLetterOfFullNameToCapital( meetingData.createdByDetail.name));
+
       subject = subject.replace("{actionTitle}", commonHelper.decryptWithAES(actionDetails?.title));
-      console.log("Subject----",subject);
-      console.log("actionDetails----",actionDetails);
+      console.log("Subject----", subject);
+      console.log("actionDetails----", actionDetails);
       body = body
         .replace(
           "{actionlink}",
@@ -2544,23 +2545,23 @@ const registrationWelcomeMail = async (name, logo) => {
       }
 
       let mailBody = "";
-     // let salutation = "";
+      // let salutation = "";
       let body = "";
 
       if (template.organizationWelcomCredentials) {
         body = template.organizationWelcomCredentials.body || "";
-      //  salutation = template.dear || "";
+        //  salutation = template.dear || "";
       } else {
         return reject(
           new Error(`No body found for template type: ORGANIZATIONWELCOME`)
         );
       }
 
-    //  salutation = salutation.replace("{name}",commonHelper.convertFirstLetterOfFullNameToCapital(name));
-      
+      //  salutation = salutation.replace("{name}",commonHelper.convertFirstLetterOfFullNameToCapital(name));
+
       body = body
-      .replace("{name}",commonHelper.convertFirstLetterOfFullNameToCapital(name))
-      .replace("{loginlink}", `${process.env.FRONTEND_URL}/login`);
+        .replace("{name}", commonHelper.convertFirstLetterOfFullNameToCapital(name))
+        .replace("{loginlink}", `${process.env.FRONTEND_URL}/login`);
       console.log("Body ======", body);
 
       mailBody =
@@ -2593,7 +2594,7 @@ const actionAssignAdminEmailTemplate = async (
   assignedUserDetails,
   action,
   userData
-) =>{
+) => {
   return new Promise(async (resolve, reject) => {
     try {
       const template = await EmailTemplate.findOne({ templateType: 'ACTIONASSIGNADMIN', isActive: true });
@@ -2638,18 +2639,18 @@ const actionAssignAdminEmailTemplate = async (
             assignedUserDetails?.name
           )
         )
-       
-      mailBody = 
-      `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
-      `<div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">` +
-      `<div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">` +
-        `<a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">` + 
-          `<img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />` +
+
+      mailBody =
+        `<div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">` +
+        `<div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">` +
+        `<div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">` +
+        `<a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">` +
+        `<img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />` +
         "</a>" +
         `${body}` +
+        "</div>";
       "</div>";
-    "</div>";
-    "</div>";
+      "</div>";
 
       resolve({
         emailSubject: subject,
