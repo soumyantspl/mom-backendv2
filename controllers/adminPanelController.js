@@ -162,7 +162,7 @@ const getOrganizations = async (req, res) => {
     } catch (error) {
         errorLog(error);
         console.error("Error fetching organization list:", error);
-        return Responses.errorResponse(req, res, error);
+        return Responses.errorResponse(req, res, error,500);
     }
 };
 

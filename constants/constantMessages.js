@@ -132,6 +132,7 @@ const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater tha
 const draftDeleted = "Draft Meeting Deleted"
 const deleteDraftFailed = "Faild in Delete Draft Meeting"
 
+//sunil
 const contactListFetched = "Contact list fetched successfully."
 const organizationsFetched = "Orgaizations Fetched successfully"
 const zoomMeetingExists = "A Zoom meeting is already scheduled on this date from "
@@ -141,8 +142,18 @@ const leadFowarded = "Lead forwarded successfully"
 const alreadyCancelled = "Lead is already cancelled"
 const alreadyClosed = "Lead is already closed"
 const alreadyRejected = "Lead is already rejected"
+const subscriptionAdded = "Subscription added successfully"
+const subscriptionsFetched = "Subscription list fetched successfully"
+const subscriptionExists = "Subscription already exists"
+const subscriptionUpdated = "Subscription updated succsessfully"
+const subscriptionDeleted = "Subscription deleted succsessfully"
 
 module.exports = {
+  subscriptionDeleted,
+  subscriptionUpdated,
+  subscriptionExists,
+  subscriptionsFetched,
+  subscriptionAdded,
   alreadyRejected,
   alreadyClosed,
   alreadyCancelled,

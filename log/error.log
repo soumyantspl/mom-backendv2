@@ -2217,3 +2217,8 @@ Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or
     at Writable.end (node:internal/streams/writable:823:17)
     at Immediate.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
     at process.processImmediate (node:internal/timers:491:21)
+Date: 14/03/2025, Time: 16:05
+Error: Cannot read properties of undefined (reading 'length')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'length')
+    at getSubscriptions (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\subscriptionController.js:28:85)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

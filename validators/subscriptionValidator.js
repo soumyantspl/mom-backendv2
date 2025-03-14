@@ -10,8 +10,7 @@ const addSubscriptionValidator = async (req, res, next) => {
                 .messages({ "any.only": "Plan type must be 'free', 'basic', or 'premium'" }),
 
             participantLimit: Joi.number()
-                .required()
-                .messages({ "any.required": "Participant limit is required" }),
+                .required(),
 
             meetingCount: Joi.number()
                 .required()
@@ -47,6 +46,120 @@ const addSubscriptionValidator = async (req, res, next) => {
     }
 };
 
+
+const updateSubscriptionValidator = async (req, res, next) => {
+    try {
+        // Validate headers if needed
+        // const headerSchema = Joi.object({
+        //     authorization: Joi.string().required(),
+        // }).unknown(true);
+
+        const paramsSchema = Joi.object({
+            id: Joi.string()
+                .required()
+                .messages({ "any.invalid": "Invalid MongoDB ObjectId" }),
+        });
+
+        const bodySchema = Joi.object({
+            planType: Joi.string()
+                .valid("free", "basic", "premium")
+                .messages({ "any.only": "Plan type must be 'free', 'basic', or 'premium'" }),
+
+            participantLimit: Joi.number().integer()
+                .messages({ "number.base": "Participant limit must be a valid number" }),
+
+            meetingCount: Joi.number().integer()
+                .messages({ "number.base": "Meeting count must be a valid number" }),
+
+            meetingDuration: Joi.number().integer()
+                .messages({ "number.base": "Meeting duration must be a valid number" }),
+
+            price: Joi.number().integer()
+                .messages({ "number.base": "Price must be a valid number" }),
+
+            billingCycle: Joi.string()
+                .valid("monthly", "early", "3year")
+                .messages({ "any.only": "Billing cycle must be 'monthly', 'early', or '3year'" }),
+
+            validity: Joi.number().integer()
+                .messages({ "number.base": "Validity must be a valid number" }),
+        });
+
+        await paramsSchema.validateAsync(req.params);
+        await bodySchema.validateAsync(req.body);
+
+        next();
+    } catch (error) {
+        return Responses.errorResponse(req, res, error, 500);
+    }
+};
+
+
+const deleteSubscriptionValidator = async (req, res, next) => {
+    try {
+       
+        // const headerSchema = Joi.object({
+        //     authorization: Joi.string().required(),
+        // }).unknown(true);
+
+        
+        const paramsSchema = Joi.object({
+            id: Joi.string().required(),
+        });
+
+      //  await headerSchema.validateAsync(req.headers);
+        await paramsSchema.validateAsync(req.params);
+
+        next();
+    } catch (error) {
+        return Responses.errorResponse(req, res, error, 500);
+    }
+};
+
+
+// const subscriptionListValidator = async (req, res, next) => {
+//     try {
+       
+//         // const headerSchema = Joi.object({
+//         //     authorization: Joi.string().required(),
+//         // }).unknown(true);
+
+        
+//         const bodySchema = Joi.object({
+//             searchKey: Joi.alternatives().try(
+//                 Joi.string()
+//                     .trim()
+//                     .allow("")
+//                     .pattern(/^[a-zA-Z0-9 @.,\-]+$/)
+//                     .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash, @, .)` }),
+//                 Joi.number()
+//             ),
+//             fromDate: Joi.date().iso().optional(),
+//             toDate: Joi.date().iso().optional(),
+//         });
+
+        
+//         const paramsSchema = Joi.object({
+//             limit: Joi.number().required(),
+//             page: Joi.number().required(),
+//             order: Joi.number().required(),
+//         });
+
+       
+//        // await headerSchema.validateAsync(req.headers);
+//         await paramsSchema.validateAsync(req.query);
+//         await bodySchema.validateAsync(req.body);
+
+//         next();
+//     } catch (error) {
+//         console.log(error);
+//         return Responses.errorResponse(req, res, error, 500);
+//     }
+// };
+
 module.exports = {
-    addSubscriptionValidator
+    addSubscriptionValidator,
+    updateSubscriptionValidator,
+    deleteSubscriptionValidator
+  //  subscriptionListValidator
 };
