@@ -18,7 +18,10 @@ router.post("/organization-list",
     router.put("/close-lead/:contactId",
         adminPanelValidator.closeLeadValidator,  
         adminPanelController.closeLead);
-    
+        
+        router.put("/reject-lead/:contactId",
+            adminPanelValidator.rejectLeadValidator,  
+            adminPanelController.rejectLead);    
     
         router.post("/forward-lead/:contactId", 
             adminPanelValidator.forwardLeadValidator,

@@ -100,11 +100,7 @@ const cancelLeadValidator = async (req, res, next) => {
         });
 
         const bodySchema = Joi.object({
-            status: Joi.string()
-                .valid("cancelled") 
-                .optional()
-                .messages({ "any.only": "Status must be 'cancelled'" }),
-
+      
             reason: Joi.string()
                 .trim()
                 .min(3)
@@ -149,11 +145,6 @@ const closeLeadValidator = async (req, res, next) => {
       });
 
       const bodySchema = Joi.object({
-          status: Joi.string()
-              .valid("closed") 
-              .required()
-              .messages({ "any.only": "Status must be 'closed'" }),
-
           reason: Joi.string()
               .trim()
               .min(3)
@@ -188,10 +179,6 @@ const rejectLeadValidator = async (req, res, next) => {
       });
 
       const bodySchema = Joi.object({
-          status: Joi.string()
-              .valid("rejected") 
-              .required()
-              .messages({ "any.only": "Status must be 'rejected'" }),
 
           reason: Joi.string()
               .trim()
@@ -226,11 +213,7 @@ const forwardLeadValidator = async (req, res, next) => {
         });
   
         const bodySchema = Joi.object({
-            status: Joi.string()
-              .valid("rejected") 
-              .optional()
-              .messages({ "any.only": "Status must be 'rejected'" }),
-
+       
           reason: Joi.string()
               .trim()
               .min(3)
