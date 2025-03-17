@@ -3792,3 +3792,72 @@ Stack Trace: TypeError: Invalid sort value: { order: -1 }
     at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+Date: 17/03/2025, Time: 10:16
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:16
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:26
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:26
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:45
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:45
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:46
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:47
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:48
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:48
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:48
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:48
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:51
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:56
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:56
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 10:57
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 11:06
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 11:06
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 11:06
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 11:22
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 11:23
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 11:25
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 17/03/2025, Time: 11:25
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
