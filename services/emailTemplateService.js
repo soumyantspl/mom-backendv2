@@ -68,6 +68,7 @@ const updateEmailTemplate = async (organizationId, data) => {
 
     "SENDCOMMENT": [ "{actionTitle}", "{UserName}","{UserEmail}", "{actionlink}", "{organizerName}", "{organizerEmail}", "{commentDetails}"],
    
+    "LEADFORWARD": [ "{remark}", "{assignedUserName}", "{actionlink}", "{adminName}", "{adminEmail}","{leadName}", "{leadEmail}", "{leadPhone}","{leadMessage}"],
 };
 
   const templateCredentials = {
@@ -98,6 +99,7 @@ const updateEmailTemplate = async (organizationId, data) => {
     "ACTIONREASSIGNTOOLDUSER": "actionAssignToOldAssignedUserCredentials",
     "ACTIONASSIGNADMIN": "actionAssignAdminCredentials",
     "SENDCOMMENT": "sendCommentCredentials",
+    "LEADFORWARD":"leadForwardCredentials",
     
   };
 

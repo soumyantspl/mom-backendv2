@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const adminPanelValidator = require("../validators/adminPanelValidator");
+const authMiddleware = require("../middlewares/authMiddleware");
 const adminPanelController = require("../controllers/adminPanelController");
 
 router.post("/contact-list",
@@ -23,9 +24,10 @@ router.post("/organization-list",
             adminPanelValidator.rejectLeadValidator,  
             adminPanelController.rejectLead);    
     
-        router.post("/forward-lead/:contactId", 
-            adminPanelValidator.forwardLeadValidator,
-            adminPanelController.forwardLead);
+            router.post("/forward-lead/:contactId", 
+                adminPanelValidator.forwardLeadValidator,
+               // authMiddleware.verifyUserToken,
+                adminPanelController.forwardLead);
         
 
 module.exports = router;

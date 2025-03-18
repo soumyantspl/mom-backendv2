@@ -98,7 +98,7 @@ const cancelLead = async (req, res) => {
         return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
     } catch (error) {    
         console.error("Error:", error);
-        return Responses.errorResponse(req, res, error.message, 500);
+        return Responses.errorResponse(req, res, error);
     }
 };
 
@@ -122,7 +122,7 @@ const closeLead = async (req, res) => {
         return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
     } catch (error) {
         console.error("Error:", error);
-        return Responses.errorResponse(req, res, error.message, 500);
+        return Responses.errorResponse(req, res, error);
     }
 };
 
@@ -145,7 +145,7 @@ const rejectLead = async (req, res) => {
         return Responses.successResponse(req, res, result, messages.leadUpdated, 200);
     } catch (error) {
         console.error("Error:", error);
-        return Responses.errorResponse(req, res, error.message, 500);
+        return Responses.errorResponse(req, res, error);
     }
 };
 
@@ -155,6 +155,7 @@ const forwardLead = async (req, res) => {
         const result = await adminPanelService.forwardLead(
             req.params.contactId,
             req.body,
+            req.userData,
 
         );
 
@@ -165,7 +166,7 @@ const forwardLead = async (req, res) => {
         return Responses.successResponse(req, res, result, messages.leadFowarded, 200);
     } catch (error) {
         console.error("Error:", error);
-        return Responses.errorResponse(req, res, error.message, 500);
+        return Responses.errorResponse(req, res, error);
     }
 };
 

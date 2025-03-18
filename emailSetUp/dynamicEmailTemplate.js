@@ -2724,6 +2724,60 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
   });
 };
 
+const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, reason }) => {
+  const template = await EmailTemplate.findOne({
+    templateType: "LEADFORWARD",
+    isActive: true,
+  });
+
+  if (!template) {
+    console.error("No email template found!");
+    return { subject: "", mailBody: "" }; 
+  }
+
+  if (!template.leadForwardCredentials) {
+    console.error("LeadForwardCredentials missing in template!");
+    return { subject: "", mailBody: "" };
+  }
+
+  let body = template.leadForwardCredentials.body || "";
+  let subject = template.subject ;
+
+  // Debugging: Log contact and employee details
+  console.log("Contact Details:", contact);
+  console.log("Employee Details:", employee);
+  console.log("adminEmail:", userData?.email);
+
+  subject = subject.replace(/{adminName}/g, userData?.name);
+  // Replace placeholders in email body
+  body = body
+    .replace(/{assignedUserName}/g, employee?.name )
+    //.replace(/{UserEmail}/g, employee?.email )
+    .replace(/{remark}/g, reason )
+    .replace(/{adminEmail}/g, userData?.email || "admin@example.com")
+    .replace(/{adminName}/g, userData?.name)
+    .replace(/{leadName}/g, contact?.name )
+    .replace(/{leadEmail}/g, contact?.email )
+    .replace(/{leadPhone}/g, contact?.phoneNo )
+    .replace(/{leadMessage}/g, contact?.message );
+
+  // Construct email body
+  const mailBody = `
+    <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
+      <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
+        <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
+          <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
+            <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
+          </a>
+          ${body}
+        </div>
+      </div>
+    </div>`;
+
+  return { subject, mailBody };
+};
+
+
 module.exports = {
   signInByOtpEmail,
   //updateMeeting,
@@ -2769,4 +2823,5 @@ module.exports = {
   sendAttendanceDetailsEmailTemplate, // c
   actionReassignForOlAssigneeEmailTemplate,
   sendCommentEmailTemplate,
+  forwardLeadEmailTemplate,
 }

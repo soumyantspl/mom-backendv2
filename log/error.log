@@ -3861,3 +3861,154 @@ Stack Trace: ValidationError: "headers.authorization" is required
 Date: 17/03/2025, Time: 11:25
 Error: "headers.authorization" is required
 Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 12:58
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 12:58
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 12:59
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 14:23
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 14:26
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 14:26
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 14:28
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 14:28
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 14:37
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 18/03/2025, Time: 14:42
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 18/03/2025, Time: 14:47
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 18/03/2025, Time: 15:00
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:00
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:04
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:05
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:07
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:07
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:07
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:07
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:07
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:07
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:09
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:09
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:09
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:09
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:10
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:10
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\validators\adminPanelValidator.js:238:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 18/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:11
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:12
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:15
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:15
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:17
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:17
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 18/03/2025, Time: 15:24
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\validators\adminPanelValidator.js:238:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
