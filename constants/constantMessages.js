@@ -133,6 +133,12 @@ const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater tha
 const draftDeleted = "Draft Meeting Deleted"
 const deleteDraftFailed = "Faild in Delete Draft Meeting"
 const zoomMeetingExists = "There is already a meeting scheduled on Zoom at that time."
+const subscriptionAdded = "Subscription added successfully"
+const subscriptionsFetched = "Subscription list fetched successfully"
+const subscriptionExists = "Subscription already exists"
+const subscriptionUpdated = "Subscription updated succsessfully"
+const subscriptionDeleted = "Subscription deleted succsessfully"
+
 module.exports = {
   zoomMeetingExists,
   commentCreatedSuccess,
@@ -244,6 +250,10 @@ module.exports = {
   notValid,
   deleteDraftFailed,
   draftDeleted,
-  draftFailed
-  
+  draftFailed,
+  subscriptionAdded,
+  subscriptionsFetched,
+  subscriptionExists,
+  subscriptionUpdated,
+  subscriptionDeleted,
 };

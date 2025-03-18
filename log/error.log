@@ -4388,3 +4388,36 @@ Stack Trace: TypeError: Invalid sort value: { order: -1 }
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
 >>>>>>> e355e131b0adfef3024d69af955df68527b44a5a
+Date: 14/03/2025, Time: 13:28
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationSendOtp (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:158:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async registrationSendOtp (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:50:20)
+Date: 14/03/2025, Time: 13:28
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationSendOtp (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:205:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async registrationSendOtp (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:50:20)
+Date: 14/03/2025, Time: 16:04
+Error: Cannot read properties of undefined (reading 'length')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'length')
+    at getSubscriptions (D:\MinutesVault V2\mom-backendv2\controllers\subscriptionController.js:28:85)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 14/03/2025, Time: 18:14
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 14/03/2025, Time: 18:14
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required

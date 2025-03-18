@@ -1,29 +1,29 @@
 const Minutes = require("../models/minutesModel");
 const Agenda = require("../models/agendaModel");
-const he = require("he");
 const MomAcceptStatus = require("../models/momAcceptStatusModel");
 const agendaService = require("../services/agendaService");
 const employeeService = require("./employeeService");
 const notificationService = require("./notificationService");
-const logMessages = require("../constants/logsConstants");
-const logService = require("./logsService");
 const Rooms = require("../models/roomModel");
 let ejs = require("ejs");
+const puppeteer = require("puppeteer");
+const pdfTemplates = require("../templates/pdfTemplate");
+//const { getAllAttendees } = require("./meetingService");
+//const { createMeetingActivities } = require("./meetingService");
 const fileService = require("./fileService");
 const Meetings = require("../models/meetingModel");
-const Employee = require("../models/employeeModel");
 const ObjectId = require("mongoose").Types.ObjectId;
-const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
-//const emailTemplates = require("../emailSetUp/emailTemplates");
+const emailTemplates = require("../emailSetUp/emailTemplates");
 const meetingService = require("../services/meetingService");
-const actionService = require("../services/actionService");
 const emailConstants = require("../constants/emailConstants");
 const emailService = require("./emailService");
 const commonHelper = require("../helpers/commonHelper");
-const Config = require("../models/configurationModel");
-const Organization = require("../models/organizationModel");
 //FUNCTION TO ACCEPT OR REJECT MINUTES
 const acceptRejectMinutes = async (data, minuteId, userId) => {
+  console.log("data-----------", data);
+  console.log("userId---------------", userId);
+  console.log("minuteid-------------", minuteId);
+
   const result = await Minutes.findOneAndUpdate(
     {
       "attendees.id": new ObjectId(userId),
@@ -33,95 +33,42 @@ const acceptRejectMinutes = async (data, minuteId, userId) => {
       $set: { "attendees.$.status": data.status },
     }
   );
+
+  console.log("RESULT DATA", result);
   if (result) {
+    // const activityObject = {
+    //   activityDetails: data.status,
+    //   activityTitle:
+    //     data.status == "ACCEPTED" ? "Minute accepted" : "Minute Rejected",
+    //   meetingId: data.meetingId,
+    //   // userId,
+    // };
     const activityObject = {
       activityDetails: result.description,
       activityTitle: data.status == "ACCEPTED" ? "Accepted" : "Rejected",
       meetingId: data.meetingId,
     };
+    console.log("activityObject-->", activityObject);
     const meetingActivitiesResult =
       await meetingService.createMeetingActivities(activityObject, userId);
+    console.log("meetingActivities------------", meetingActivitiesResult);
   }
   return result;
 };
+
 //FUNCTION RO CREATE MINUTES
-const createMinutes = async (
-  minutes,
-  meetingId,
-  userId,
-  userData,
-  ipAddress = "1000"
-) => {
+
+const createMinutes = async (minutes, meetingId, userId) => {
+  console.log(minutes);
   const meetingDetails = await meetingService.viewMeeting(meetingId, userId);
-  const configResult = await Config.findOne(
-    {
-      organizationId: new ObjectId(meetingDetails?.organizationId),
-    },
-    { writeMinuteMaxTimeInHour: 1, _id: 1 }
-  );
-  console.log(meetingDetails?.meetingStatus?.status);
-
-  if (
-    meetingDetails?.meetingStatus?.status == "closed" ||
-    meetingDetails?.meetingStatus?.status == "draft" ||
-    meetingDetails?.meetingStatus?.status == "cancelled"
-  ) {
-    console.log("innnnnnnnnnnnnnnnnnnnnn");
-    const writeMinuteMaxTimeInMilliSec =
-      parseInt(configResult?.writeMinuteMaxTimeInHour) * 3600000;
-    const currentDateTime = new Date().getTime();
-    const closedTime = meetingDetails?.meetingCloseDetails?.closedAt
-      ? new Date(meetingDetails?.meetingCloseDetails?.closedAt).getTime()
-      : 0;
-    const isWriteMinuteAllowedForClosedMinutes =
-      currentDateTime - closedTime > writeMinuteMaxTimeInMilliSec
-        ? false
-        : true;
-    if (isWriteMinuteAllowedForClosedMinutes === false) {
-      return {
-        isWriteMinuteNotAllowedForClosedMinutes: true,
-      };
-    }
-    console.log(
-      "configResult?.writeMinuteMaxTimeInHour------------",
-      configResult?.writeMinuteMaxTimeInHour
-    );
-    console.log("current date", new Date());
-    console.log(
-      " meetingDetails?.meetingCloseDetails?.closedAt",
-      meetingDetails?.meetingCloseDetails?.closedAt
-    );
-    console.log(
-      "isWriteMinuteAllowedForClosedMinutes-------------------",
-      isWriteMinuteAllowedForClosedMinutes
-    );
-  }
-
+  console.log("meetingDetails-------------------------", meetingDetails);
   minutes.map(async (data) => {
-    const logData = {
-      moduleName: logMessages.Minute.moduleName,
-      userId,
-      action: logMessages.Minute.createMinute,
-      ipAddress,
-      details: data.assignedUserId
-        ? "Action Created: <strong>" + data.title + "</strong>"
-        : "Minute Created: <strong>" + data.title + "</strong>",
-      organizationId: data.organizationId,
-      subDetails: ` Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
-    };
-
-    const organization = await Organization.findOne({ email: data.email }); 
-    const logo = organization?.dashboardLogo
-      ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
-      : process.env.LOGO;
-
+    console.log("44444", data, userId);
     if (data.isNewUser) {
       const empData = await employeeService.createAttendee(
         data.name,
         data.email,
-        data.organizationId,
-        data.designation,
-        data.companyName
+        data.organizationId
       );
       if (empData.isDuplicate) {
         //return empData;
@@ -130,111 +77,89 @@ const createMinutes = async (
         data["assignedUserId"] = new ObjectId(empData._id);
       }
     }
-    (data["title"] = data?.title?.trimStart()),
-      (data["description"] = data?.description?.trimStart()),
-      (data["isActive"] = true);
+    data["isActive"] = true;
     data["createdById"] = new ObjectId(userId);
     data["priority"] = data.priority ? data.priority : "LOW";
     data["dueDate"] = data.dueDate
       ? new Date(data.dueDate)
       : new Date(meetingDetails?.date);
-    data["mainDueDate"] = data.dueDate
-      ? new Date(data.dueDate)
-      : new Date(meetingDetails?.date);
-
     data["assignedUserId"] = data.assignedUserId
       ? data.assignedUserId
       : new ObjectId(userId);
-
-    const minuteDetails = await Minutes.find(
-      { meetingId: new ObjectId(meetingDetails?._id), isActive: true },
-      { _id: 1, sequence: 1 }
-    );
-    console.log("minuteDetails------------444", minuteDetails);
-    data["sequence"] =
-      minuteDetails.length !== 0
-        ? minuteDetails[minuteDetails.length - 1].sequence + 1
-        : 1;
-    console.log("hhhhhhhhhhhhhhh", data);
-    //yyyyyyyyyyyyyyyyyy
+    console.log("inside data-------------------------", data);
     const minuteData = new Minutes(data);
     const newMinutes = await minuteData.save();
-    await Minutes.findByIdAndUpdate(
-      { _id: new ObjectId(newMinutes._id) },
-      { minuteId: new ObjectId(newMinutes._id) }
-    );
-    if (data?.isAction) {
-      const actionActivityObject = {
-        //activityDetails: data.reAssignReason,
-        activityTitle: "ACTION CREATED",
-        minuteId: newMinutes._id,
-        userId,
-        actionId: newMinutes._id,
-      };
-      const actionActivitiesResult = await actionService.createActionActivity(
-        actionActivityObject
-      );
-      const assignedUserDetail = await Employee.findOne(
-        { _id: new ObjectId(data?.assignedUserId) },
-        { email: 1, name: 1, _id: 1 }
-      );
-      // const logo = process.env.LOGO;
-      const mailData = await emailTemplates.actionAssignEmailTemplate(
-        meetingDetails,
-        logo,
-        assignedUserDetail,
-        userData,
-        newMinutes,
-      );
-      // const emailSubject = await emailConstants.assignSubject(newMinutes);
-      const { emailSubject, mailData: mailBody } = mailData;
 
-      console.log("userData->", userData)
-      if (assignedUserDetail) {
-        emailService.sendEmail(
-          assignedUserDetail?.email,
-          "Action Created",
-          emailSubject,
-          mailBody
-        );
-      }
-
-      if (userData._id.toString() !== meetingDetails.createdById.toString()) {
-        const mailData = await emailTemplates.actionAssignAdminEmailTemplate(
-          meetingDetails,
-          logo,
-          assignedUserDetail,
-          newMinutes,
-          userData
-        );
-        // const emailSubject = await emailConstants.assignSubject(newMinutes);
-        const { emailSubject, mailData: mailBody } = mailData;
-        console.log("userData->", userData)
-        console.log("emailSubject->", emailSubject)
-        console.log("Meeting details start", meetingDetails)
-        console.log("Meeting details end")
-        emailService.sendEmail(
-          meetingDetails.createdByDetail.email,
-          "Action Created",
-          emailSubject,
-          mailBody
-        );
-      }
-    }
-
+    console.log("createdBy---", newMinutes.description);
     const activityObject = {
-      activityDetails:
-        newMinutes?.isAction === true
-          ? newMinutes.title + " (action)"
-          : newMinutes.title + " (minute)",
+      activityDetails: newMinutes.description,
       activityTitle: "CREATED",
       meetingId: data.meetingId,
     };
+    console.log("activityObject-->", activityObject);
     const meetingActivitiesResult =
       await meetingService.createMeetingActivities(activityObject, userId);
-    await logService.createLog(logData);
+    console.log("meetingActivities------------", meetingActivitiesResult);
   });
+
+  // if (meetingDetails?.attendees?.length !== 0) {
+  //   meetingDetails.attendees.map(async (attendee) => {
+  //     //  console.log("attendeesEmails-------------------------", attendeesEmails);
+
+  //     const logo =
+  //       "https://d3uom8aq23ax4d.cloudfront.net/wp-content/themes/ntspl-corporate-website/images/ntspl_logo.png";
+  //     const mailData = await emailTemplates.sendCreateMinutesEmailTemplate(
+  //       meetingDetails,
+  //       attendee.name,
+  //       logo
+  //     );
+  //     //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
+  //     const emailSubject = await emailConstants.createMinuteSubject(
+  //       meetingDetails
+  //     );
+  //     console.log(
+  //       "sendOtpEmailTemplate-----------------------maildata",
+  //       mailData
+  //     );
+  //     console.log(
+  //       "sendOtpEmailTemplate-----------------------emailSubject",
+  //       emailSubject
+  //     );
+  //     await emailService.sendEmail(
+  //       attendee.email,
+  //       "Create Meeting Minutes",
+  //       emailSubject,
+  //       mailData
+  //     );
+  //   });
+  // }
+
   return true;
+  //
+  // const attendeesData = await getAllAttendees(data.meetingId);
+  // const attendeeArr = JSON.stringify(attendeesData.attendees);
+  // console.log("Required data-->>", attendeeArr);
+  // const attendeeResult = JSON.parse(attendeeArr).map((item) => {
+  //   console.log("---------------", item);
+  //   item["status"] = "PENDING";
+  //   return item;
+  // });
+  //  console.log("attendeeResult-->", attendeeResult);
+  // const inputData = {
+  //   createdById: userId,
+  //   organizationId: data.organizationId,
+  //   meetingId: data.meetingId,
+  //   description: data.description,
+  //   dueDate: data.dueDate,
+  //   priority: data.priority,
+  //   assignedUserId: data.assignedUserId,
+  //   isAction: data.isAction,
+  //   attendees: attendeeResult,
+  // };
+
+  //   return {
+  //     data: newMinutes,
+  //   };
 };
 
 //FUNCTION TO DOWNLOAD MINUTES
@@ -243,6 +168,7 @@ const downLoadMinutes1 = async (meetingId) => {
     {
       $match: {
         meetingId: new ObjectId(meetingId),
+        //  isAction:false,
       },
     },
 
@@ -287,6 +213,7 @@ const downLoadMinutes1 = async (meetingId) => {
         as: "assignedUserDetail",
       },
     },
+
     {
       $lookup: {
         from: "employees",
@@ -307,6 +234,12 @@ const downLoadMinutes1 = async (meetingId) => {
         dueDate: 1,
         reassignedUserId: 1,
         assignedUserId: 1,
+        // mode: 1,
+        // link: 1,
+        // date: 1,
+        // fromTime: 1,
+        // toTime: 1,
+        // locationDetails: 1,
         organizationDetail: {
           name: 1,
         },
@@ -321,12 +254,18 @@ const downLoadMinutes1 = async (meetingId) => {
         },
         amendmentDetail: {
           name: 1,
+          // details:1,
+          // status:1
         },
         assignedUserDetail: {
           name: 1,
+          // details:1,
+          // status:1
         },
         reAssignedUserDetail: {
           name: 1,
+          // details:1,
+          // status:1
         },
       },
     },
@@ -336,14 +275,34 @@ const downLoadMinutes1 = async (meetingId) => {
     { $unwind: "$assignedUserDetail" },
     { $unwind: "$reAssignedUserDetail" },
   ]);
+  console.log("minutesData--------------", minutesData);
+
+  // attendees: [
+  //   {
+  //     id: {
+  //       type: mongoose.Schema.ObjectId,
+  //       required: true,
+  //     },
+  //     status: {
+  //       type: String,
+  //       enum: ["ACCEPTED", "REJECT", "PENDING"],
+  //       required: true,
+  //     },
+  //   },
+  // ],
   let pendingUsers = [];
   let rejectedBy = [];
   let acceptedBy = [];
   const newData = minutesData.map((item, index) => {
+    console.log("attendeesDetails---------------", item.attendeesDetails);
     item.attendeesDetails.map((attendee) => {
+      console.log("item.attendees--------", item.attendees);
+      console.log("attendees--------", attendee);
       const currentAttendee = item.attendees.find(
         (i) => i.id.toString() == attendee._id
       );
+
+      console.log("currentAttendee--------", currentAttendee);
       if (currentAttendee.status == "ACCEPTED") {
         acceptedBy.push(attendee.name);
       }
@@ -358,15 +317,19 @@ const downLoadMinutes1 = async (meetingId) => {
         rejectedBy,
         acceptedBy,
       };
+      console.log("actionData---------------", actionData);
       minutesData[index]["actionData"] = actionData;
       return item;
     });
   });
+  console.log(rejectedBy);
+  console.log("newData--------------------", minutesData[0].actionData);
   return await fileService.generatePdf(minutesData);
 };
 
 //FUNCTION TO DOWNLOAD MINUTES
 const downLoadMinutes2 = async (meetingId, userId) => {
+  console.log("meetingId", meetingId);
   const pipeLine = [
     {
       $match: {
@@ -382,6 +345,7 @@ const downLoadMinutes2 = async (meetingId, userId) => {
         as: "meetingDetail",
       },
     },
+
     {
       $unwind: {
         path: "$meetingDetail",
@@ -420,6 +384,14 @@ const downLoadMinutes2 = async (meetingId, userId) => {
         as: "reAssignedUserDetail",
       },
     },
+    // {
+    //   $lookup: {
+    //     from: "employees",
+    //     localField: "createdById",
+    //     foreignField: "_id",
+    //     as: "createdByDetails",
+    //   },
+    // },
     {
       $project: {
         _id: 1,
@@ -453,6 +425,7 @@ const downLoadMinutes2 = async (meetingId, userId) => {
           createdById: 1,
         },
         attendeesDetails: {
+          // email: 1,
           _id: 1,
           name: 1,
           status: 1,
@@ -465,19 +438,33 @@ const downLoadMinutes2 = async (meetingId, userId) => {
           _id: 1,
           name: 1,
         },
+
+        // locationDetails: {
+        //   location: 1,
+        // },
       },
     },
+    //  { $unwind: "$assignedUserDetail" },
   ];
   const meetingData = await Agenda.aggregate(pipeLine);
+  ///.limit(1);
+  console.log("meetingData-------------", meetingData);
+
   if (meetingData.length !== 0) {
     if (meetingData[0].meetingDetail.locationDetails.roomId) {
+      console.log(
+        "meetingData[0]--------------",
+        meetingData[0].meetingDetail.locationDetails.roomId
+      );
       const roomId =
         meetingData[0].meetingDetail.locationDetails.roomId.toString();
+      console.log("roomId", roomId);
       var roomsData = await Rooms.findById(roomId, {
         _id: 1,
         title: 1,
         location: 1,
       });
+      console.log("roomsData-----------", roomsData);
     }
     const meetingDataObject = {
       agendaDetails: [],
@@ -495,6 +482,8 @@ const downLoadMinutes2 = async (meetingId, userId) => {
     meetingDataObject.meetingDetail.location = roomsData
       ? roomsData.location
       : meetingDataObject.meetingDetail.locationDetails.location;
+    console.log("meetingDataObject---------------------", meetingDataObject);
+
     meetingDataObject.agendaDetails.map((item) => {
       item.minutesDetail.map((minutesItem) => {
         const assignedUserDetails = item.assignedUserDetail.find(
@@ -504,22 +493,69 @@ const downLoadMinutes2 = async (meetingId, userId) => {
         const reAssignedUserDetails = item.reAssignedUserDetail.find(
           (i) => i._id.toString() == minutesItem.reassignedUserId
         );
+
+        console.log("assignedUserDetails--------", assignedUserDetails);
+        console.log("reAssignedUserDetails--------", reAssignedUserDetails);
         minutesItem.reassignedUserName = reAssignedUserDetails?.name;
+
         minutesItem.assignedUserName = assignedUserDetails?.name;
+
         return minutesItem;
       });
     });
 
+    // const newData = minutesData.map((item, index) => {
+    //   console.log("attendeesDetails---------------", item.attendeesDetails);
+    //   item.attendeesDetails.map((attendee) => {
+    //     console.log("item.attendees--------", item.attendees);
+    //     console.log("attendees--------", attendee);
+    //     const currentAttendee = item.attendees.find(
+    //       (i) => i.id.toString() == attendee._id
+    //     );
+
+    //     console.log("currentAttendee--------", currentAttendee);
+    //     if (currentAttendee.status == "ACCEPTED") {
+    //       acceptedBy.push(attendee.name);
+    //     }
+    //     if (currentAttendee.status == "REJECTED") {
+    //       rejectedBy.push(attendee.name);
+    //     }
+    //     if (currentAttendee.status == "PENDING") {
+    //       pendingUsers.push(attendee.name);
+    //     }
+    //     const actionData = {
+    //       pendingUsers,
+    //       rejectedBy,
+    //       acceptedBy,
+    //     };
+    //     console.log("actionData---------------", actionData);
+    //     minutesData[index]["actionData"] = actionData;
+    //     return item;
+    //   });
+    // });
+
     meetingDataObject.agendaDetails.map((mainItem) => {
+      console.log("--------7777777777777777777777---------", mainItem);
       mainItem.minutesDetail.map((minuteItem) => {
+        console.log("--------88888888888888---------", minuteItem);
+
         let pendingUsers = [];
         let rejectedBy = [];
         let acceptedBy = [];
+        //  minuteItem.attendees?.map((attendeeItem)=>{
+
+        // console.log('--------attendeeItem---------',attendeeItem)
+
+        // const currentAttendee = meetingDataObject.meetingDetail.attendeesDetails?.find(
+        //   (i) => i._id.toString() == attendeeItem.id.toString()
+        // );
 
         meetingDataObject.meetingDetail.attendeesDetails.map((attendeeItem) => {
           const currentAttendee = minuteItem.attendees?.find(
             (i) => i.id.toString() == attendeeItem._id.toString()
           );
+
+          console.log("currentAttendee--------", currentAttendee);
           if (currentAttendee?.status == "ACCEPTED") {
             acceptedBy.push(attendeeItem.name);
           }
@@ -534,13 +570,29 @@ const downLoadMinutes2 = async (meetingId, userId) => {
             rejectedBy,
             acceptedBy,
           };
+          console.log("actionData---------------", actionData);
           minuteItem["actionData"] = actionData;
           return minuteItem;
+
+          //   console.log('--------attendeeItem---------',attendeeItem)
+          //   console.log("meetingData-----------4444444",meetingDataObject.meetingDetail.attendeesDetails)
+          //   const currentAttendee = meetingDataObject.meetingDetail.attendeesDetails       attendeeItem.find(
+          //           (i) => i._id.toString() == attendeeItem.id.toString()
+          //         );
+          //         console.log('--------99999999999999---------',currentAttendee)
         });
       });
     });
+    console.log(
+      "meetingDataObject.agendaDetails--------------------------------------@@@@@@@",
+      meetingDataObject.agendaDetails[0].minutesDetail
+    );
+
     return await fileService.generateMinutesPdf(meetingDataObject);
+
+    // return meetingDataObject;
   }
+
   return false;
 };
 
@@ -549,15 +601,20 @@ const downLoadMinutes = async (meetingId, userId) => {
 };
 const testPdf = async () => {
   return await fileService.generateMinutesPdf();
+  // return meetingDataObject;
 };
 
 //FUNCTION TO ACCEPT OR REJECT MINUTES
 const createAmendmentRequest = async (data, minuteId, userId) => {
+  console.log("data-----------", data);
+  console.log("userId---------------", userId);
+  console.log("minuteid-------------", minuteId);
   const amendmentDetail = {
     createdById: new ObjectId(userId),
     details: data.details,
     status: "PENDING",
   };
+  console.log(amendmentDetail);
   const result = await Minutes.findOneAndUpdate(
     {
       $or: [
@@ -581,38 +638,52 @@ const createAmendmentRequest = async (data, minuteId, userId) => {
     }
   );
 
-  const organization = await Organization.findOne({ email: data.email });
-  const logo = organization?.dashboardLogo
-    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
-    : process.env.LOGO;
-
+  console.log("RESULT DATA", result);
   if (result) {
     const activityObject = {
       activityDetails: data.details,
       activityTitle: "AMENDMENT CREATED",
       meetingId: result.meetingId,
+      // userId,
     };
+    console.log("activityObject-->", activityObject);
     const meetingActivitiesResult =
       await meetingService.createMeetingActivities(activityObject, userId);
+    console.log("meetingActivities------------", meetingActivitiesResult);
 
     const meetingDetails = await meetingService.viewMeeting(
       result.meetingId,
       userId
     );
 
-
     if (meetingDetails) {
+      console.log("userId------------------------", userId);
+      console.log(
+        "meetingDetails.attendees---------------------",
+        meetingDetails.attendees
+      );
       const attendeeDetails = meetingDetails.attendees.find(
         (item) => item._id.toString() === userId.toString()
       );
-      // const logo = process.env.LOGO;
+      console.log("attendeeDetails", attendeeDetails);
+      const logo = process.env.LOGO;
+
       const mailData = await emailTemplates.sendAmendmentCreatedEmailTemplate(
         meetingDetails,
         attendeeDetails,
         logo
       );
+      //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
       const emailSubject = await emailConstants.sendAmendmentCreatedSubject(
         meetingDetails
+      );
+      console.log(
+        "sendAmendmentCreatedEmailTemplate-----------------------maildata",
+        mailData
+      );
+      console.log(
+        "sendAmendmentCreatedEmailTemplate-----------------------emailSubject",
+        emailSubject
       );
       emailService.sendEmail(
         meetingDetails?.createdByDetail?.email,
@@ -620,6 +691,7 @@ const createAmendmentRequest = async (data, minuteId, userId) => {
         emailSubject,
         mailData
       );
+
       const allowedUsers = [
         new ObjectId(userId),
         result?.createdById,
@@ -635,7 +707,11 @@ const createAmendmentRequest = async (data, minuteId, userId) => {
           toDetails: null,
         },
         allowedUsers,
+        // actionId,
       };
+
+      console.log("result----&&&>>>", result);
+
       const addNotification = await notificationService.createNotification(
         notificationData
       );
@@ -647,6 +723,10 @@ const createAmendmentRequest = async (data, minuteId, userId) => {
 
 //FUNCTION TO ACCEPT OR REJECT MINUTES
 const updateAmendmentRequest = async (data, minuteId, userId) => {
+  console.log("data-----------", data);
+  console.log("userId---------------", userId);
+  console.log("minuteid-------------", minuteId);
+
   const result = await Minutes.findOneAndUpdate(
     {
       "amendmentDetails.createdById": new ObjectId(data.createdById),
@@ -657,6 +737,22 @@ const updateAmendmentRequest = async (data, minuteId, userId) => {
       $set: { "amendmentDetails.$.status": data.status },
     }
   );
+
+  console.log("RESULT DATA", result);
+  // if (result) {
+  //   const activityObject = {
+  //     activityDetails: data.status,
+  //     activityTitle:
+  //       data.status == "ACCEPTED" ? "Minute accepted" : "Minute Rejected",
+  //     meetingId: data.meetingId,
+  //     // userId,
+  //   };
+  //   console.log("activityObject-->", activityObject);
+  //   const meetingActivitiesResult =
+  //     await meetingService.createMeetingActivities(activityObject, userId);
+  //   console.log("meetingActivities------------", meetingActivitiesResult);
+  // }
+
   const allowedUsers = [
     new ObjectId(userId),
     result?.createdById,
@@ -679,7 +775,11 @@ const updateAmendmentRequest = async (data, minuteId, userId) => {
       toDetails: null,
     },
     allowedUsers,
+    // actionId,
   };
+
+  console.log("result----&&&>>>", result);
+
   const addNotification = await notificationService.createNotification(
     notificationData
   );
@@ -688,15 +788,12 @@ const updateAmendmentRequest = async (data, minuteId, userId) => {
 };
 
 //FUNCTION TO GET ONLY MEETING LIST OF ATTENDEES
-const getMeetingListOfAttendees = async (organizationId, userId, userData) => {
-  const matchData =
-    userData?.isAdmin || userData.isMeetingOrganizer
-      ? {
-        organizationId: new ObjectId(organizationId),
-        isActive: true,
-        isAction: true,
-      }
-      : {
+const getMeetingListOfAttendees = async (organizationId, userId) => {
+  console.log(organizationId);
+  console.log(userId);
+  const pipeLine = [
+    {
+      $match: {
         organizationId: new ObjectId(organizationId),
         $or: [
           {
@@ -711,10 +808,7 @@ const getMeetingListOfAttendees = async (organizationId, userId, userData) => {
         ],
         isActive: true,
         isAction: true,
-      };
-  const pipeLine = [
-    {
-      $match: matchData,
+      },
     },
     {
       $lookup: {
@@ -733,14 +827,6 @@ const getMeetingListOfAttendees = async (organizationId, userId, userData) => {
       },
     },
     {
-      $lookup: {
-        from: "employees",
-        localField: "assignedUserId",
-        foreignField: "_id",
-        as: "assigneeDetails",
-      },
-    },
-    {
       $project: {
         _id: 1,
         createdById: 1,
@@ -754,29 +840,24 @@ const getMeetingListOfAttendees = async (organizationId, userId, userData) => {
           email: 1,
           name: 1,
         },
-        assigneeDetails: {
-          _id: 1,
-          email: 1,
-          name: 1,
-        },
       },
     },
 
     { $unwind: "$meetingDetail" },
     { $unwind: "$createdByDetails" },
-    { $unwind: "$assigneeDetails" },
   ];
 
   const result = await Minutes.aggregate(pipeLine);
+  console.log("result-----------------------------77-", result);
   const meetingDetail = [];
   const ownerDetails = [];
-  const assigneeDetails = [];
   const finalResult = result.map((item) => {
     if (meetingDetail.length !== 0) {
       const checkMeeting = meetingDetail.find(
         (meeting) =>
           meeting._id.toString() === item.meetingDetail._id.toString()
       );
+      console.log("checkMeeting", checkMeeting);
       if (!checkMeeting) {
         meetingDetail.push(item.meetingDetail);
       }
@@ -785,307 +866,87 @@ const getMeetingListOfAttendees = async (organizationId, userId, userData) => {
     }
 
     if (ownerDetails.length !== 0) {
-      const checkOwner = ownerDetails?.find(
-        (owner) =>
-          owner?._id?.toString() === item?.createdByDetails?._id?.toString()
+      const checkOwner = ownerDetails.find(
+        (owner) => owner._id.toString() === item.createdByDetails._id.toString()
       );
+      console.log("checkOwner", checkOwner);
       if (!checkOwner) {
-        ownerDetails.push(item?.createdByDetails);
+        ownerDetails.push(item.createdByDetails);
       }
     } else {
-      ownerDetails.push(item?.createdByDetails);
-    }
-    if (assigneeDetails.length !== 0) {
-      const checkAssignee = assigneeDetails?.find(
-        (assignee) =>
-          assignee?._id?.toString() === item?.assigneeDetails?._id?.toString()
-      );
-      if (!checkAssignee) {
-        assigneeDetails.push(item?.assigneeDetails);
-      }
-    } else {
-      assigneeDetails.push(item?.assigneeDetails);
+      ownerDetails.push(item.createdByDetails);
     }
   });
+  console.log("finalResult-----------------------------78-", finalResult);
   return {
     ownerDetails,
     meetingDetail,
-    assigneeDetails,
   };
 };
 
 //FUNCTION TO ACCEPT OR REJECT MINUTES
-const updateMinute = async (data, minuteId, userId, userData, ipAddress = "1000") => {
-  const meetingDetails = await meetingService.viewMeeting(
-    data?.meetingId,
-    userId
-  );
-  console.log("Meeting Details", meetingDetails)
+const updateMinute = async (data, minuteId, userId) => {
+  console.log("data-----------", data);
+  console.log("userId---------------", userId);
+  console.log("minuteid-------------", minuteId);
+  if (data.isAction == false) {
+    data.dueDate = null;
+    data.assignedUserId = null;
+    data.priority = null;
+  }
 
-  const configResult = await Config.findOne(
-    {
-      organizationId: new ObjectId(meetingDetails?.organizationId),
-    },
-    { writeMinuteMaxTimeInHour: 1, _id: 1 }
-  );
-  console.log(meetingDetails?.meetingStatus?.status);
-
-  if (
-    meetingDetails?.meetingStatus?.status == "closed" ||
-    meetingDetails?.meetingStatus?.status == "draft" ||
-    meetingDetails?.meetingStatus?.status == "cancelled"
-  ) {
-    console.log("innnnnnnnnnnnnnnnnnnnnn");
-    const writeMinuteMaxTimeInMilliSec =
-      parseInt(configResult?.writeMinuteMaxTimeInHour) * 3600000;
-    const currentDateTime = new Date().getTime();
-    const closedTime = meetingDetails?.meetingCloseDetails?.closedAt
-      ? new Date(meetingDetails?.meetingCloseDetails?.closedAt).getTime()
-      : 0;
-    const isWriteMinuteAllowedForClosedMinutes =
-      currentDateTime - closedTime > writeMinuteMaxTimeInMilliSec
-        ? false
-        : true;
-    console.log(
-      "isWriteMinuteAllowedForClosedMinutes------------",
-      isWriteMinuteAllowedForClosedMinutes
+  if (data.isNewUser) {
+    const empData = await employeeService.createAttendee(
+      data.name,
+      data.email,
+      data.organizationId
     );
-    if (isWriteMinuteAllowedForClosedMinutes === false) {
-      return {
-        isWriteMinuteNotAllowedForClosedMinutes: true,
-      };
+    if (empData.isDuplicate) {
+      //return empData;
+      data["assignedUserId"] = empData.duplicateUserId;
+    } else {
+      data["assignedUserId"] = new ObjectId(empData._id);
     }
   }
-  console.log("outttttttttttttttttttt");
-  let result = null;
-  const getParentId = await Minutes.findOne(
+
+  data["assignedUserId"] = data.assignedUserId
+    ? data.assignedUserId
+    : new ObjectId(userId);
+
+  const result = await Minutes.findByIdAndUpdate(
     { _id: new ObjectId(minuteId) },
-    { _id: 1, parentMinuteId: 1 }
+    data,
+    {
+      new: true,
+    }
   );
-
-  if (getParentId) {
-    const parentMinuteId = getParentId?.parentMinuteId;
-    if (data.isAction == false) {
-      data.dueDate = null;
-      data.assignedUserId = null;
-      data.priority = null;
-      data["mainDueDate"] = null;
-    }
-    if (data.isAction == true) {
-      data["mainDueDate"] = data.dueDate;
-      if (data.isNewUser) {
-        const empData = await employeeService.createAttendee(
-          data.name,
-          data.email,
-          data.organizationId
-        );
-        if (empData.isDuplicate) {
-          data["assignedUserId"] = empData.duplicateUserId;
-        } else {
-          data["assignedUserId"] = new ObjectId(empData._id);
-        }
-      }
-    }
-    await Minutes.findByIdAndUpdate(
-      { _id: new ObjectId(parentMinuteId) },
-
-      data,
-
-      {
-        new: false,
-      }
-    );
-
-    result = await Minutes.findByIdAndUpdate(
-      { _id: new ObjectId(minuteId) },
-      data,
-      {
-        new: false,
-      }
-    );
-  } else {
-    if (data.isAction == false) {
-      data.dueDate = null;
-      data.assignedUserId = null;
-      data.priority = null;
-      data["mainDueDate"] = null;
-    }
-
-    if (data.isAction == true) {
-      data["mainDueDate"] = data.dueDate;
-      if (data.isNewUser) {
-        const empData = await employeeService.createAttendee(
-          data.name,
-          data.email,
-          data.organizationId
-        );
-        if (empData.isDuplicate) {
-          data["assignedUserId"] = empData.duplicateUserId;
-        } else {
-          data["assignedUserId"] = new ObjectId(empData._id);
-        }
-      }
-    }
-    data["assignedUserId"] = data.assignedUserId
-      ? data.assignedUserId
-      : new ObjectId(userId);
-
-    result = await Minutes.findByIdAndUpdate(
-      { _id: new ObjectId(minuteId) },
-      data,
-      {
-        new: false,
-      }
-    );
-  }
-
+  console.log("RESULT DATA", result);
   if (result) {
-    if (
-      data.isAction == true &&
-      data?.assignedUserId?.toString() != result?.assignedUserId?.toString()
-    ) {
-      const assignedUserDetail = await Employee.findOne(
-        { _id: new ObjectId(data?.assignedUserId) },
-        { email: 1, name: 1, _id: 1 }
-      );
-      // const logo = process.env.LOGO;
-      const mailData = await emailTemplates.actionAssignEmailTemplate(
-        meetingDetails,
-        logo,
-        assignedUserDetail,
-        result,
-        userData
-      );
-      // const emailSubject = await emailConstants.assignSubject(result);
-      const { emailSubject, mailData: mailBody } = mailData;
-
-      if (assignedUserDetail) {
-        emailService.sendEmail(
-          assignedUserDetail?.email,
-          "Action Created",
-          emailSubject,
-          mailBody
-        );
-
-      }
-
-      if (userData._id.toString() !== meetingDetails.createdById.toString()) {
-        const mailData = await emailTemplates.actionAssignAdminEmailTemplate(
-          meetingDetails,
-          logo,
-          assignedUserDetail,
-          result,
-          userData
-        );
-        // const emailSubject = await emailConstants.assignSubject(result);
-        const { emailSubject, mailData: mailBody } = mailData;
-        console.log("userData->", userData)
-        console.log("emailSubject->", emailSubject)
-        console.log("Meeting details start", meetingDetails)
-        console.log("Meeting details end")
-        emailService.sendEmail(
-          meetingDetails.createdByDetail.email,
-          "Action Created",
-          emailSubject,
-          mailBody
-        );
-      }
-
-    }
-
+    // const activityObject = {
+    //   activityDetails: "MINUTE UPDATED",
+    //   activityTitle: "MINUTE UPDATED",
+    //   meetingId: data.meetingId,
+    //   userId,
+    // };
     const activityObject = {
-      activityDetails:
-        result?.isAction === true
-          ? result.title + " (action)"
-          : result.title + " (minute)",
+      activityDetails: result.description,
       activityTitle: "Updated",
       userId,
       meetingId: data.meetingId,
     };
+    console.log("activityObject-->", activityObject);
     const meetingActivitiesResult =
       await meetingService.createMeetingActivities(activityObject, userId);
-    let logDetails = await commonHelper.generateMinuteLogObject(
-      result,
-      userId,
-      data
-    );
-    if (
-      data?.assignedUserId &&
-      result?.assignedUserId &&
-      data?.assignedUserId?.toString() !== result?.assignedUserId?.toString() &&
-      data?.isAction == true
-    ) {
-      const newUser = await Employee.findOne(
-        { _id: new ObjectId(data.assignedUserId) },
-        { _id: 1, name: 1, email: 1 }
-      );
-      const oldUser = await Employee.findOne(
-        { _id: new ObjectId(result.assignedUserId) },
-        { _id: 1, name: 1, email: 1 }
-      );
-      logDetails.push(
-        `Assigned User changed from <strong>${commonHelper.convertFirstLetterToCapital(
-          oldUser.name
-        )}</strong> to <strong>${commonHelper.convertFirstLetterToCapital(
-          newUser.name
-        )}</strong>`
-      );
-    }
-
-    if (logDetails.length !== 0) {
-      const meetingDetails = await meetingService.viewMeeting(
-        result.meetingId,
-        userId
-      );
-      const logData = {
-        moduleName: logMessages.Minute.moduleName,
-        userId,
-        action: data?.isAction
-          ? logMessages.Minute.updateMinute
-          : logMessages.Action.updateAction,
-        ipAddress,
-        details: logDetails.join(" , "),
-        subDetails: `
-        Minute : ${data.title}</br>
-        Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
-        organizationId: result.organizationId,
-      };
- 
-      await logService.createLog(logData);
-    }
-    if (data?.isAction==true && result?.isAction==false) {
-      const actionActivityObject = {
-        //activityDetails: data.reAssignReason,
-        activityTitle: "ACTION CREATED",
-        minuteId: result._id,
-        userId,
-        actionId: result._id,
-      };
-      const actionActivitiesResult = await actionService.createActionActivity(
-        actionActivityObject
-      );
+    console.log("meetingActivities------------", meetingActivitiesResult);
   }
-    return result;
-  } else {
-  }
+  return result;
 };
 
 //FUNCTION TO DELETE MINUTES
-const deleteMinute = async (
-  meetingId,
-  minuteId,
-  userId,
-  ipAddress = "1000"
-) => {
-  const meetingDetails = await Meetings.findOne(
-    { _id: new ObjectId(minuteId) },
-    { _id: 1, momGenerationDetails: 1 }
-  );
-  if (meetingDetails?.momGenerationDetails?.length === 0) {
-    return {
-      isDeleteNotAllowed: true,
-    };
-  }
+const deleteMinute = async (meetingId, minuteId, userId) => {
+  console.log("userId---------------", userId);
+  console.log("minuteid-------------", minuteId);
+
   const result = await Minutes.findOneAndUpdate(
     {
       _id: new ObjectId(minuteId),
@@ -1095,50 +956,48 @@ const deleteMinute = async (
     }
   );
 
+  console.log("RESULT DATA", result);
   if (result) {
+    // const activityObject = {
+    //   activityDetails: "DELETED",
+    //   activityTitle: "MINUTE DELETED",
+    //   meetingId: meetingId,
+    //   // userId,
+    // };
     const activityObject = {
-      activityDetails:
-        result?.isAction === true
-          ? result.title + " (action)"
-          : result.title + " (minute)",
+      activityDetails: result.description,
       activityTitle: "Deleted",
       userId,
       meetingId: meetingId,
     };
+    console.log("activityObject-->", activityObject);
     const meetingActivitiesResult =
       await meetingService.createMeetingActivities(activityObject, userId);
-    const meeting = await Meetings.findOne(
-      { _id: new ObjectId(result.meetingId) },
-      { _id: 1, title: 1, meetingId: 1 }
-    );
-    const logData = {
-      moduleName: logMessages.Minute.moduleName,
-      userId,
-      action: logMessages.Minute.deleteMinute,
-      ipAddress,
-      details: "Minute Title: <strong>" + result.description + "</strong>",
-      subDetails: ` Meeting Title: ${meeting.title} (${meeting.meetingId})`,
-      organizationId: result.organizationId,
-    };
-    await logService.createLog(logData);
+    console.log("meetingActivities------------", meetingActivitiesResult);
   }
   return result;
 };
 
 //FUNCTION TO ACCEPT MINUTES
-const acceptMinutes = async (data, meetingId, userId, ipAddress = "1000") => {
+const acceptMinutes = async (data, meetingId, userId,ipAddress) => {
+  //Meetings
+  console.log("userId---------------", userId, meetingId, data);
+  // console.log("minuteid-------------", minuteId);
+
   const result = await Minutes.updateMany(
     {
       meetingId: new ObjectId(meetingId),
       isActive: true,
       "attendees.id": new ObjectId(userId),
     },
+
     {
       $set: {
         "attendees.$.status": "ACCEPTED",
       },
     }
   );
+  console.log("result-------------", result);
   const getUpdatedResult = await Minutes.find(
     {
       meetingId: new ObjectId(meetingId),
@@ -1147,6 +1006,7 @@ const acceptMinutes = async (data, meetingId, userId, ipAddress = "1000") => {
     },
     { createdById: 1 }
   );
+  console.log("getUpdatedResult--------------------", getUpdatedResult);
   const inputData = {
     userId,
     meetingId,
@@ -1154,14 +1014,30 @@ const acceptMinutes = async (data, meetingId, userId, ipAddress = "1000") => {
   };
   const minuteData = new MomAcceptStatus(inputData);
   const acceptDetails = await minuteData.save();
+  console.log("acceptDetails-------------", acceptDetails);
+  // await Meetings.findOneAndUpdate(
+  //   {
+  //     _id: new ObjectId(meetingId),
+  //     isActive: true,
+  //   },
+  //   {
+  //     $set: { isMinutesAccepted: true },
+  //   }
+  // );
+
+  // console.log("RESULT DATA", result);
   if (acceptDetails) {
     const activityObject = {
       activityDetails: "ALL MINUTES",
       activityTitle: "ACCEPTED",
       meetingId: meetingId,
+      // userId,
     };
+
+    console.log("activityObject-->", activityObject);
     const meetingActivitiesResult =
       await meetingService.createMeetingActivities(activityObject, userId);
+    console.log("meetingActivities------------", meetingActivitiesResult);
   }
 
   const meetingDetails = await meetingService.viewMeeting(meetingId, userId);
@@ -1181,62 +1057,69 @@ const acceptMinutes = async (data, meetingId, userId, ipAddress = "1000") => {
         toDetails: null,
       },
       allowedUsers,
+      // actionId,
     };
+
+    console.log("result----&&&>>>", result);
 
     const addNotification = await notificationService.createNotification(
       notificationData
     );
-    const userDetails = await Employee.findOne(
-      { _id: new ObjectId(userId) },
-      { _id: 1, name: 1, email: 1 }
+
+    console.log("userId------------------------", userId);
+    console.log(
+      "meetingDetails.attendees---------------------",
+      meetingDetails.attendees
     );
-    const logData = {
-      moduleName: logMessages.Minute.moduleName,
-      userId,
-      action: logMessages.Minute.acceptMinute,
-      ipAddress,
-      details:
-        "MOM is accepted by <strong>" +
-        userDetails.name +
-        " (" +
-        userDetails.email +
-        ")</strong>",
-      organizationId: meetingDetails.organizationId,
-      subDetails: ` Meeting Title: ${meetingDetails.title} (${meetingDetails.meetingId})`,
-    };
-    await logService.createLog(logData);
+
     const attendeeDetails = meetingDetails.attendees.find(
       (item) => item._id.toString() === userId.toString()
     );
+    console.log("attendeeDetails", attendeeDetails);
 
-     const logo = process.env.LOGO;
+    const logo = process.env.LOGO;
 
     const mailData = await emailTemplates.acceptMinuteEmailTemplate(
       meetingDetails,
       attendeeDetails,
       logo
     );
-    // const emailSubject = await emailConstants.acceptMinuteSubject(
-    //   meetingDetails
-    // );
-
-    const { emailSubject, mailData: mailBody } = mailData;
-
+    //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
+    const emailSubject = await emailConstants.acceptMinuteSubject(
+      meetingDetails
+    );
+    console.log(
+      "acceptMinuteEmailTemplate-----------------------maildata",
+      mailData
+    );
+    console.log(
+      "acceptMinuteEmailTemplate-----------------------emailSubject",
+      emailSubject
+    );
     emailService.sendEmail(
       meetingDetails?.createdByDetail?.email,
       "Create Minutes Amendment",
       emailSubject,
-      mailBody
+      mailData
     );
   }
+
   return acceptDetails;
 };
 //FUNCTION TO CHECK MOM WRITE PERMISSION
 const checkMomWritePermission = async (meetingId, userId) => {
+  console.log("userId---------------", userId);
+  console.log("meetingId-------------", meetingId);
+
   const checkMomWritePermission = await Meetings.findOne(
     {
       _id: new ObjectId(meetingId),
       isActive: true,
+
+      // $and: [
+      //   {  "attendees._id": new ObjectId(userId) },
+      //   { "attendees.canWriteMOM":true },
+      // ],
       $and: [
         {
           $or: [
@@ -1251,23 +1134,27 @@ const checkMomWritePermission = async (meetingId, userId) => {
     },
     { _id: 1 }
   );
+  console.log(
+    "checkMomWritePermission-----------------------------",
+    checkMomWritePermission
+  );
   if (checkMomWritePermission) {
     return true;
   }
   return false;
 };
+
+const configService = require("../services/configService");
+const Config = require("../models/configurationModel");
+
 //FUNCTION TO ACCEPT MINUTES BY CRON
 const acceptAllPendingMoms = async () => {
+  //GET TIME FROM CONFIGURATION
   const configTimeDetails = await Config.find(
     { isActive: true },
-    {
-      acceptanceRejectionEndtime: 1,
-      _id: 1,
-      organizationId: 1,
-      writeMinuteMaxTimeInHour: 1,
-    }
+    { acceptanceRejectionEndtime: 1, _id: 1, organizationId: 1 }
   );
-  console.log(configTimeDetails);
+  console.log("configTimeDetails", configTimeDetails);
   if (configTimeDetails?.length !== 0) {
     configTimeDetails.map(async (data) => {
       const meetingDataArray = await Meetings.find(
@@ -1275,55 +1162,44 @@ const acceptAllPendingMoms = async () => {
           organizationId: new ObjectId(data.organizationId),
           isActive: true,
           momGenerationDetails: { $exists: true, $not: { $size: 0 } },
-          isMOMAutoAccepted: false,
-          "meetingStatus.status": "closed",
-          date: {
-            $gte: new Date().toISOString().split("T")[0], // Greater than or equal to startDate
-            $lte: new Date().toISOString().split("T")[0], // Less than or equal to endDate
-          },
         },
-        {
-          _id: 1,
-          attendees: 1,
-          momGenerationDetails: 1,
-          date: 1,
-          fromTime: 1,
-          meetingCloseDetails: 1,
-        }
+        { _id: 1, attendees: 1, momGenerationDetails: 1, date: 1, fromTime: 1 }
       );
-      console.log(meetingDataArray);
+      console.log(
+        "meetingDataArray-----------",
+        meetingDataArray.length,
+        data.organizationId
+      );
+
       if (meetingDataArray?.length !== 0) {
         meetingDataArray.map(async (meeting) => {
-          console.log(
-            "meetingClosedTime-----------",
-            meeting?.meetingCloseDetails?.closedAt
-          );
-          const meetingClosedTime = new Date(
-            meeting?.meetingCloseDetails?.closedAt
+          console.log("meeting------------------", meeting);
+          const meetingDateTime = combineDateAndTime(
+            meeting.date,
+            meeting.fromTime
           ).getTime();
-
-          console.log(data.writeMinuteMaxTimeInHour);
-          console.log(data.acceptanceRejectionEndtime);
-          console.log("add time--------", (480000 + 480000) / 1000 / 60);
-          const targetTime =
-            meetingClosedTime +
-            data.writeMinuteMaxTimeInHour * 60 * 60 * 1000 +
-            data.acceptanceRejectionEndtime * 60 * 60 * 1000;
           console.log(
-            "currentDateTime-----------",
-            new Date(commonHelper.convertIsoFormat(new Date()))
+            "meeting date----------------",
+            combineDateAndTime(meeting.date, meeting.fromTime)
           );
-          const currentDateTime = new Date(
-            commonHelper.convertIsoFormat(new Date())
-          ).getTime();
-          //  console.log("currentDateTime", currentDateTime);
-          //  console.log("targetTime", targetTime);
-          if (currentDateTime >= targetTime) {
-            console.log("innnnnnnnnnnnnnnnnnnnnnnn-----------");
+          console.log("meetingDateTime -----------", meetingDateTime);
+          console.log("current date---------", new Date());
+          const currentDateTime = new Date().getTime();
+          console.log("currentDateTime-----------------", currentDateTime);
+          const diffTime = data.acceptanceRejectionEndtime * 60 * 60 * 1000;
+          const diff = meetingDateTime - currentDateTime;
+          console.log("diffTime----------------------------------", diffTime);
+          console.log("diff----------------------------------", diff);
+          console.log(
+            "target time --------------------",
+            currentDateTime + diffTime
+          );
+          if (diffTime >= diff && diff >= 0) {
             const momId =
               meeting?.momGenerationDetails[
                 meeting?.momGenerationDetails.length - 1
               ].momId;
+
             if (meeting.attendees.length !== 0) {
               meeting.attendees.map(async (attendee) => {
                 const checkAleardyAccepted = await MomAcceptStatus.findOne({
@@ -1342,105 +1218,96 @@ const acceptAllPendingMoms = async () => {
                   };
                   const minuteData = new MomAcceptStatus(inputData);
                   const acceptDetails = await minuteData.save();
+                  console.log("acceptDetails-------------", acceptDetails);
                 }
               });
-              await Meetings.findOneAndUpdate(
-                {
-                  _id: new ObjectId(meeting._id),
-                  isActive: true,
-                  isMOMAutoAccepted: false,
-                },
-                { isMOMAutoAccepted: true }
-              );
             }
           } else {
-            console.log("out---------------------------");
+            console.log("not counted");
           }
         });
       }
     });
   }
 };
+
+//FUNCTION TO ACCEPT MINUTES BY CRON
 const chaseOfActionService = async () => {
+  //GET TIME FROM CONFIGURATION
   const configTimeDetails = await Config.find(
     { isActive: true },
     { chaseOfAction: 1, _id: 1, organizationId: 1 }
   );
-  console.log("configTimeDetails-----11--------", configTimeDetails);
-  let now = new Date();
-
+  console.log("configTimeDetails", configTimeDetails);
   if (configTimeDetails?.length !== 0) {
     configTimeDetails.map(async (data) => {
-      let targetDate = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() + (parseInt(data.chaseOfAction) + 1)
-      );
-      //let targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 4);
-      console.log("targetDate========", targetDate);
-      console.log(
-        "only date===========",
-        targetDate.toISOString().split("T")[0]
-      );
       const minuteDataArray = await Minutes.find(
         {
           organizationId: new ObjectId(data.organizationId),
           isActive: true,
-          isAction: true,
-          isComplete: false,
-          mainDueDate: {
-            $gte: targetDate, // Greater than or equal to startDate
-            $lte: targetDate, // Less than or equal to endDate
-          },
         },
-        {
-          _id: 1,
-          attendees: 1,
-          dueDate: 1,
-          assignedUserId: 1,
-          meetingId: 1,
-          createdById: 1,
-          description: 1,
-          mainDueDate: 1,
-        }
+        { _id: 1, attendees: 1, dueDate: 1, assignedUserId: 1 }
       );
-      //.limit(1);
-      console.log("minuteDataArray-----11--------", minuteDataArray);
+      console.log(
+        "minuteDataArray-----------",
+        minuteDataArray.length,
+        data.organizationId
+      );
 
       if (minuteDataArray?.length !== 0) {
         minuteDataArray.map(async (minute) => {
-          const meetingDetails = await meetingService.viewMeeting(
-            minute.meetingId,
-            minute.createdById
-          );
-          const assignedUserDetail = await Employee.findOne(
-            { _id: new ObjectId(minute.assignedUserId) },
-            { _id: 1, email: 1, name: 1 }
-          );
-          // const logo = process.env.LOGO;
-          const organizationDetails = await Organization.findOne(
-            { _id: new ObjectId(data.organizationId) },
-            { dashboardLogo: 1, loginLogo: 1 }
-          );
-          const logo = organizationDetails?.dashboardLogo;
+          console.log("minute------------------", minute);
+          const minuteDuteDate = new Date(minute.dueDate);
 
-          const mailData =
-            await emailTemplates.sendActionDueReminderEmailTemplate(
-              meetingDetails,
-              minute,
-              assignedUserDetail,
-              logo
+          console.log("minuteDuteDate -----------", minuteDuteDate);
+          console.log("current date---------", new Date());
+          const currentDate = new Date();
+          console.log("currentDateTime-----------------", currentDateTime);
+          const diffTime = data.chaseOfAction;
+          const diff = minuteDuteDate - currentDate;
+          console.log("diffTime----------------------------------", diffTime);
+          console.log("diff----------------------------------", diff);
+          console.log(
+            "target time --------------------",
+            currentDateTime + diffTime
+          );
+          if (diffTime == diff) {
+            const assignedUserDetail = await Employee.findOne(
+              { _id: new ObjectId(minute.assignedUserId) },
+              { _id: 1, email: 1, name: 1 }
             );
-          const emailSubject = await emailConstants.actionDueReminderSubject(
-            minute
-          );
-          emailService.sendEmail(
-            assignedUserDetail?.email,
-            "Chase Action Due",
-            emailSubject,
-            mailData
-          );
+            console.log(
+              "assignedUserDetail-----------------",
+              assignedUserDetail
+            );
+            const logo = process.env.LOGO;
+            const mailData =
+              await emailTemplates.sendActionDueReminderEmailTemplate(
+                minute,
+                assignedUserDetail,
+                logo
+              );
+            const emailSubject = await emailConstants.actionDueReminderSubject(
+              minute
+            );
+            console.log(
+              "sendActionDueReminderEmailTemplate-----------------------maildata",
+              mailData
+            );
+            console.log(
+              "sendActionDueReminderEmailTemplate-----------------------emailSubject",
+              emailSubject
+            );
+            emailService.sendEmail(
+              assignedUserDetail?.email,
+              "Chase Action Due",
+              emailSubject,
+              mailData
+            );
+          }
         });
+      } else {
+        console.log("not counted");
       }
     });
   }
@@ -1477,103 +1344,75 @@ const getMomAcceptDetails = async (meetingId, userId) => {
           name: 1,
           status: 1,
           profilePicture:1,
-        }, 
+        },
       },
     },
     { $unwind: "$userDetails" },
   ]);
+
+  console.log("userDetails after lookup and unwind:", JSON.stringify(result, null, 2));
   return result;
 };
 
 const generateMinutesPdftest = async (meetingId, userId) => {
-  const filenumber = Math.floor(Math.random() * 100000000000 + 1);
+  console.log("testing--------------");
+
+  const headerTemplate =
+    '<span style="font-size: 30px; width: 200px; height: 200px; background-color: black; color: white; ">Header 1</span>';
+  const footerTemplate =
+    '<span style="font-size: 30px; width: 50px; height: 50px; background-color: red; color:black;">Footer</span>';
+  const path = require("path");
   const meetingAllData = await agendaService.viewAgendas2(meetingId, userId);
-  console.log("meetingAllData========================", meetingAllData);
+  const filenumber = Math.floor(Math.random() * 100000000000 + 1);
   const filePath = `pdfFiles/${filenumber}.pdf`;
-  const { jsPDF } = require("jspdf");
+  // const momCreationDate = new Date(
+  //   meetingAllData?.meetingDetail?.momGenerationDetails[
+  //     meetingAllData?.meetingDetail?.momGenerationDetails.length - 1
+  //   ].createdAt
+  // );
+  let pdf = require("html-pdf");
   const momCreationDate = new Date();
-  // const viewParentAgendas = await meetingService.viewParentAgendas(
-  //   meetingAllData?.meetingDetail?._id,
-  //   userId
-  // );
-  // console.log("viewParentAgendas========================", viewParentAgendas);
-  // viewParentAgendas.map((parentAgenda)=>{
-
-  // })
-  // const isActionAvailable = viewParentAgendas[0]?.agendas?.filter(
-  //   (agenda) => {
-  //     if (agenda.minutesDetail) {
-  //       const abc = agenda.minutesDetail.filter(
-  //         (minute) => minute.isAction === true
-  //       );
-  //       if (abc.length !== 0) {
-  //         return agenda;
-  //       }
-  //     }
-  //   }
-  // );
-
-
-  // console.log("isActionAvailable========================", isActionAvailable);
-  const organizationDetails = await Organization.findOne(
-    { _id: new ObjectId(meetingAllData?.meetingDetail?.organizationId) },
-    { dashboardLogo: 1, loginLogo: 1 }
-  );
-  const logo = organizationDetails?.dashboardLogo;
-
+  const htmlContent = "Hello World. This is custom HTML content.";
+  console.log("meetingAllData----------------", momCreationDate);
+  //render the ejs file
   const reportHtml = await ejs.renderFile("./views/pdfData.ejs", {
     meetingData: meetingAllData,
-   // parentMeetingAgendaData: viewParentAgendas?.length !== 0 ? viewParentAgendas : [],
     commonHelper,
-    logo,
-    momCreationDate
+    logo: process.env.logo,
+    momCreationDate,
+  });
+   //const browser = await puppeteer.launch({ headless: "new" });
+ // const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions']});
+  // const browser = await puppeteer.launch({
+  //   executablePath: '/usr/bin/chromium-browser'
+  // })
+  const browser = await puppeteer.launch({
+    headless:false,
+    args: ["--no-sandbox"]
+});
+  const page = await browser.newPage();
+
+  await page.setContent(reportHtml);
+
+  // Generate PDF for the report
+  await page.pdf({
+    path: filePath,
+    format: "A4",
+    preferCSSPageSize: true,
+    // displayHeaderFooter: true,
+    // headerTemplate: headerTemplate,
+    // footerTemplate: footerTemplate,
+    // margin: { top: 100, bottom: 60 }
+    //   margin: {
+    //     top: "0px",
+    //     right: "0px",
+    //     bottom: "0px",
+    //     left: "0px"
+    // },
   });
 
-  // console.log("isActionAvailable-->", isActionAvailable)
-  const playwright = require("playwright");
-  const browser = await playwright.chromium.launch();
-  const page = await browser.newPage();
-  await page.setContent(reportHtml);
-  await page.emulateMedia('print');
-  await page.pdf({
-    margin: {
-      bottom: "15mm",
-    },
-    path: filePath,
-    printBackground: true, // Ensure backgrounds are printed
-    format: "A4",
-    scale: 1.0, // Adjust this if necessary to fit content
-    //scale: 0.9,  // Adjust the scale factor to fit content
-    displayHeaderFooter: true,
-  //  margin: { top: '20mm', bottom: '30mm' }, // Adjust margins to leave space for footer
-    footerTemplate: `
-      <div style="font-size: 10px; color: gray; width: 100%; text-align: center; padding: 5px 0;">
-        Page <span class="pageNumber"></span> of <span class="totalPages"></span>
-      </div>
-    `,
-    headerTemplate: '<div></div>', // Empty header if not needed
-  });
   await browser.close();
   return filePath;
-};
-
-const checkCanUpdateMeeting = async (meetingId, organizationId) => {
-  console.log("meetingId=======", meetingId);
-  const minuteData = await Minutes.findOne(
-    {
-      organizationId: new ObjectId(organizationId),
-      meetingId: new ObjectId(meetingId),
-      isActive: true,
-    },
-    {
-      _id: 1,
-    }
-  );
-  console.log("minuteData----------", minuteData);
-  if (!minuteData) {
-    return true;
-  }
-  return false;
 };
 
 exports.generateMinutesPdftest = generateMinutesPdftest;
@@ -1594,5 +1433,4 @@ module.exports = {
   acceptAllPendingMoms,
   generateMinutesPdftest,
   chaseOfActionService,
-  checkCanUpdateMeeting,
 };
