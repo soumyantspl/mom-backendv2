@@ -21,5 +21,9 @@ router.delete("/delete-subscription/:id",
     subscriptionValidator.deleteSubscriptionValidator, 
     subscriptionController.deleteSubscription); 
 
+    router.get("/subscriptionbyid/:id",
+        subscriptionValidator.getSubscriptionByIdValidator, 
+        subscriptionController.getSubscriptionById);
+
 
 module.exports = router;

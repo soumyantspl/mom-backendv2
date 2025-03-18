@@ -15,7 +15,7 @@ const addSubscription = async (req, res) => {
         return Responses.successResponse(req, res, result, messages.subscriptionAdded, 201);
     } catch (error) {
         
-        return Responses.errorResponse(req, res, error.message, 500);
+        return Responses.errorResponse(req, res, error.message);
     }
 };
 
@@ -46,7 +46,7 @@ const getSubscriptions = async (req, res) => {
     } catch (error) {
         errorLog(error);
         console.error("Error fetching subscription list:", error);
-        return Responses.errorResponse(req, res, error, 500);
+        return Responses.errorResponse(req, res, error);
     }
 };
 
@@ -64,7 +64,7 @@ const updateSubscription = async (req, res) => {
 
         return Responses.successResponse(req, res, result, messages.subscriptionUpdated, 200);
     } catch (error) {
-        return Responses.errorResponse(req, res, error.message, 500);
+        return Responses.errorResponse(req, res, error.message);
     }
 };
 
@@ -78,7 +78,22 @@ const deleteSubscription = async (req, res) => {
 
         return Responses.successResponse(req, res, result, messages.subscriptionDeleted, 200);
     } catch (error) {
-        return Responses.errorResponse(req, res, error.message, 500);
+        return Responses.errorResponse(req, res, error.message);
+    }
+};
+
+const getSubscriptionById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const subscription = await subscriptionService.getSubscriptionById(id);
+
+        if (!subscription) {
+            return Responses.failResponse(req, res, null, messages.recordNotFound,200);
+        }
+
+        return Responses.successResponse(req, res, subscription, messages.subscriptionsFetched, 200);
+    } catch (error) {
+        return Responses.errorResponse(req, res, error);
     }
 };
 
@@ -86,5 +101,6 @@ module.exports = {
     addSubscription,
     getSubscriptions,
     updateSubscription,
-    deleteSubscription
+    deleteSubscription,
+    getSubscriptionById
 };

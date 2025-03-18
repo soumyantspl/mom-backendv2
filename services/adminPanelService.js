@@ -195,34 +195,74 @@ const rejectLead = async (contactId, data) => {
 
 
 
-const forwardLead = async (contactId, data) => {
+// const forwardLead = async (contactId, data) => {
+//     const contact = await contactUs.findById({ _id: contactId });
+//     if (!contact) {
+//         return false;
+//     }
+
+    
+//     const employee = await Employee.findById(data.forwardedTo);
+//     if (!employee) {
+//         return false;
+//     }
+// console.log("employeeeeee---", employee);
+//     // Update lead status
+//     contact.leadStatus.status = "forwarded";
+//     contact.leadStatus.reason = data.reason;
+//     contact.leadStatus.forwardedTo = data.forwardedTo;
+ 
+
+//     contact.leadStatus.timeAndDate = new Date();
+
+//     await contact.save();
+//     return  contact ;
+// };
+
+const forwardLead = async (contactId, data, userData) => {
     const contact = await contactUs.findById({ _id: contactId });
     if (!contact) {
         return false;
     }
 
-    // Find employee details using the provided ID
     const employee = await Employee.findById(data.forwardedTo);
     if (!employee) {
         return false;
     }
-console.log("employeeeeee---", employee);
-    // Update lead status
+
+    console.log("employeeeeee---", employee);
+
+    
     contact.leadStatus.status = "forwarded";
     contact.leadStatus.reason = data.reason;
     contact.leadStatus.forwardedTo = data.forwardedTo;
- 
-
     contact.leadStatus.timeAndDate = new Date();
 
     await contact.save();
-    return  contact ;
+
+    console.log("userData---", userData);
+    const logo = process.env.LOGO;
+  
+   
+    
+    const mailData = await emailTemplates.forwardLeadEmailTemplate({
+        contact,
+       employee,
+       userData,
+        logo,
+        reason: data.reason,
+    });
+
+    
+    await emailService.sendEmail(
+        employee.email, 
+        "Lead Forwarded Notification",
+        mailData.subject,  
+        mailData.mailBody  
+    );
+
+    return contact;
 };
-
-
-
-
-
 
 
 

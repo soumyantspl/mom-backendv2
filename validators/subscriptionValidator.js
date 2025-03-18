@@ -116,6 +116,21 @@ const deleteSubscriptionValidator = async (req, res, next) => {
     }
 };
 
+const getSubscriptionByIdValidator = async (req, res, next) => {
+    try {
+        const paramsSchema = Joi.object({
+            id: Joi.string()
+                .required()
+                .messages({ "any.required": "Subscription ID is required" }),
+        });
+
+        await paramsSchema.validateAsync(req.params);
+        next();
+    } catch (error) {
+        return Responses.errorResponse(req, res, error, 500);
+    }
+};
+
 
 // const subscriptionListValidator = async (req, res, next) => {
 //     try {
@@ -160,6 +175,7 @@ const deleteSubscriptionValidator = async (req, res, next) => {
 module.exports = {
     addSubscriptionValidator,
     updateSubscriptionValidator,
-    deleteSubscriptionValidator
+    deleteSubscriptionValidator,
+    getSubscriptionByIdValidator,
   //  subscriptionListValidator
 };

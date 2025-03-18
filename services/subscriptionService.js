@@ -108,9 +108,22 @@ const deleteSubscription = async (id) => {
     return deletedSubscription;  
 };
 
+const getSubscriptionById = async (id) => {
+    const subscription = await Subscription.findById(id);
+    
+    if (!subscription) {
+        return null;
+    }
+
+    return subscription;
+};
+
+
+
 module.exports = {
     addSubscription,
     subscriptionList,
     updateSubscription,
-    deleteSubscription
+    deleteSubscription,
+    getSubscriptionById
 };

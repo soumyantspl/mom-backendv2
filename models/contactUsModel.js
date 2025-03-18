@@ -36,7 +36,7 @@ const contactUsSchema = new mongoose.Schema(
     leadStatus: {
       status: {
         type: String,
-        enum: ["cancelled", "closed", "rejected", "forwarded"],
+        enum: ["pending","cancelled", "closed", "rejected", "forwarded"],
         default: "pending",
       },
       reason: { 

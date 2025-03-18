@@ -2222,3 +2222,95 @@ Error: Cannot read properties of undefined (reading 'length')
 Stack Trace: TypeError: Cannot read properties of undefined (reading 'length')
     at getSubscriptions (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\subscriptionController.js:28:85)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 18/03/2025, Time: 11:32
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 18/03/2025, Time: 12:12
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 18/03/2025, Time: 12:22
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 18/03/2025, Time: 12:49
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\validators\adminPanelValidator.js:236:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 18/03/2025, Time: 12:49
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\validators\adminPanelValidator.js:236:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 18/03/2025, Time: 13:12
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 18/03/2025, Time: 14:59
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\validators\adminPanelValidator.js:236:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 18/03/2025, Time: 15:33
+Error: contactus validation failed: leadStatus.status: `pending` is not a valid enum value for path `leadStatus.status`.
+Stack Trace: ValidationError: contactus validation failed: leadStatus.status: `pending` is not a valid enum value for path `leadStatus.status`.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 18/03/2025, Time: 15:33
+Error: contactus validation failed: leadStatus.status: `pending` is not a valid enum value for path `leadStatus.status`.
+Stack Trace: ValidationError: contactus validation failed: leadStatus.status: `pending` is not a valid enum value for path `leadStatus.status`.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 18/03/2025, Time: 15:36
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 18/03/2025, Time: 15:36
+Error: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+Stack Trace: TypeError [ESTREAM]: The "chunk" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Object
+    at _write (node:internal/streams/writable:482:13)
+    at Writable.end (node:internal/streams/writable:823:17)
+    at Immediate.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\nodemailer\lib\mime-node\index.js:997:35)
+    at process.processImmediate (node:internal/timers:491:21)
+Date: 18/03/2025, Time: 15:43
+Error: contactus validation failed: leadStatus.status: `pending` is not a valid enum value for path `leadStatus.status`.
+Stack Trace: ValidationError: contactus validation failed: leadStatus.status: `pending` is not a valid enum value for path `leadStatus.status`.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 18/03/2025, Time: 15:55
+Error: contactus validation failed: leadStatus.status: `pending` is not a valid enum value for path `leadStatus.status`.
+Stack Trace: ValidationError: contactus validation failed: leadStatus.status: `pending` is not a valid enum value for path `leadStatus.status`.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 18/03/2025, Time: 17:14
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\validators\adminPanelValidator.js:236:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

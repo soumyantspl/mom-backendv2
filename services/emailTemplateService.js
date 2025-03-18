@@ -65,6 +65,8 @@ const updateEmailTemplate = async (organizationId, data) => {
     "{actionDescription}", "{reason}"],
     
     "ACTIONASSIGNADMIN": ["{name}", "{actionTitle}", "{assignedUserName}", "{actionlink}", "{organizerName}", "{organizerEmail}"],
+
+    "LEADFORWARD": [ "{remark}", "{assignedUserName}", "{actionlink}", "{adminName}", "{adminEmail}","{leadName}", "{leadEmail}", "{leadPhone}","{leadMessage}"],
    
 };
 
@@ -95,6 +97,7 @@ const updateEmailTemplate = async (organizationId, data) => {
     "MEETINGCANCEL":"meetingCancelCredentials",
     "ACTIONREASSIGNTOOLDUSER": "actionAssignToOldAssignedUserCredentials",
     "ACTIONASSIGNADMIN": "actionAssignAdminCredentials",
+    "LEADFORWARD":"leadForwardCredentials",
     
   };
 

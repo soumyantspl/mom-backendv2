@@ -22,7 +22,7 @@ const emailTemplateSchema = new mongoose.Schema({
              "ORGANIZATIONREGISTRATIONSENDOTP","GENERATEMOM", "ACTIONREOPEN","ACTIONAPPROVE",
              "RESCHEDULE", "RESENDSCHEDULEMEETING","SENDSCHEDULEMEETING" ,
             "GIVEWRITMOMPERMISSION", "ACCEPTMINUTES", "SENDATTENDANCEDETAILS",
-             "ACTIONREASSIGNTOOLDUSER","MEETINGCANCEL", "ACTIONASSIGNADMIN"]
+             "ACTIONREASSIGNTOOLDUSER","MEETINGCANCEL", "ACTIONASSIGNADMIN", "LEADFORWARD"]
   },
   moduleName: {
     type: String,
@@ -200,6 +200,12 @@ const emailTemplateSchema = new mongoose.Schema({
     type: bodySchema, 
     required: function () {
       return this.templateType === "ACTIONASSIGNADMIN";
+    }
+  },
+  leadForwardCredentials: {
+    type: bodySchema, 
+    required: function () {
+      return this.templateType === "LEADFORWARD";
     }
   },
   
