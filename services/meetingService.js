@@ -81,7 +81,8 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
 
   // meeting organizer validation
   const existingUserMeeting = await Meeting.findOne({
-    createdById: new ObjectId(userId),
+    // createdById: new ObjectId(userId),
+    attendees: { $elemMatch: { _id: { $in: new ObjectId(userId)}}},
     date: new Date(data.date),
     $or: [
       { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
@@ -100,6 +101,7 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
       bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`
     };
   }
+
 
   let parentMeetingData = null;
   const meetingId = await commonHelper.customMeetingId(
@@ -5391,6 +5393,34 @@ const deleteDraftMeeting = async (id, userId, data, ipAddress) => {
   return result;
 };
 
+const checkZoomMeetingAvailability = async (data) => {
+
+  const existingZoomMeeting = await Meeting.findOne({
+    date: new Date(data.date),
+    organizationId: data.organizationId,
+    linkType: "ZOOM",
+    $or: [
+      { fromTime: { $lt: data.toTime }, toTime: { $gt: data.fromTime } },
+      { fromTime: { $gte: data.fromTime, $lt: data.toTime } },
+      { toTime: { $gt: data.fromTime, $lte: data.toTime } }
+    ],
+    isActive: true,
+    "meetingStatus.status": { $in: ["scheduled", "rescheduled"] },
+  });
+
+  if (existingZoomMeeting) {
+    const fromTimeFormatted = convertTo12HourFormat(existingZoomMeeting.fromTime);
+    const toTimeFormatted = convertTo12HourFormat(existingZoomMeeting.toTime);
+    
+    return {
+      existingZoomMeeting: true,
+      bookedTimeRange: `${fromTimeFormatted} to ${toTimeFormatted}`,
+     // message: `A Zoom meeting is already scheduled on this date from ${fromTimeFormatted} to ${toTimeFormatted}.`
+    };
+  }
+
+  return { existingZoomMeeting: false };
+};
 
 
 exports.viewMeeting = viewMeeting;
@@ -5433,3 +5463,4 @@ exports.notifyMeetingCreatorAboutDraft = notifyMeetingCreatorAboutDraft;
 exports.deleteOldDraftMeetings = deleteOldDraftMeetings;
 exports.getMeetingActionPriorityDetailsforChart = getMeetingActionPriorityDetailsforChart;
 exports.deleteDraftMeeting = deleteDraftMeeting;
+exports.checkZoomMeetingAvailability = checkZoomMeetingAvailability;

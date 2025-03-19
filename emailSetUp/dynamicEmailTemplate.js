@@ -2381,7 +2381,7 @@ const actionCancelEmailTemplate = async (
 
 
 // SEND COMMENT EMAIL TEMPLATE
-const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result) => {
+const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result, mentionedUserName) => {
   const template = await EmailTemplate.findOne({
     templateType: "SENDCOMMENT",
     isActive: true,
@@ -2401,7 +2401,8 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
   let subject = template.subject || "";
 
   console.log("Template Body Before Replace:", body);
-  subject = subject.replace(/{UserName}/g, userDetail?.name);
+  subject = subject.replace(/{UserName}/g,userDetail?.name);
+ 
 
   body = body
     .replace(
@@ -2409,6 +2410,7 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
       // commonHelper.convertFirstLetterOfFullNameToCapital(userDetail?.name)
       userDetail?.name
     )
+    .replace(/{Greeting}/g, mentionedUserName)
     .replace(/{UserEmail}/g, userDetail?.email)
     .replace("{commentDetails}", result?.commentDescription)
     .replace("{organizerEmail}", meetingDetails.createdByDetail?.email)
@@ -2434,16 +2436,12 @@ const sendCommentEmailTemplate = async (meetingDetails, logo, userDetail, result
     </div>`;
 
   return {
-    emailSubject: subject.trim(),
-    mailData: mailBody.trim(),
+    emailSubject: subject,
+    mailData: mailBody,
   };
 };
 
-
-
-
-
-const actionCompleteEmailTemplate = async (
+const actionCompleteEmailTemplate = async (  
   meetingData,
   logo,
   attendeeDetails,
@@ -2724,6 +2722,7 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
   });
 };
 
+<<<<<<< HEAD
 const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, reason }) => {
   const template = await EmailTemplate.findOne({
     templateType: "LEADFORWARD",
@@ -2776,6 +2775,8 @@ const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, rea
 
   return { subject, mailBody };
 };
+=======
+>>>>>>> 832c9ce1eb51bd1d5c51c5136d9bd3071a78a573
 
 
 module.exports = {

@@ -1834,6 +1834,7 @@ Stack Trace: ValidationError: emailLogs validation failed: subject: Path `subjec
 >>>>>>> 684b56a0dca4f8de83c0bcb089304748abf1fa0a
 >>>>>>> 225cd03fa5aeddf73d0bebcca3385e75758098e1
 <<<<<<< HEAD
+<<<<<<< HEAD
 Date: 24/02/2025, Time: 14:10
 Error: "departments" is not allowed
 Stack Trace: ValidationError: "departments" is not allowed
@@ -2061,6 +2062,276 @@ Stack Trace: Error: Something went wrong while fetching attendees with pending a
     at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
     at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+=======
+Date: 24/02/2025, Time: 15:26
+Error: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+Stack Trace: MongoParseError: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+    at new ConnectionString (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongodb-connection-string-url\lib\index.js:86:19)
+    at parseOptions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\connection_string.js:203:17)
+    at new MongoClient (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\mongo_client.js:52:61)
+    at NativeConnection.createClient (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:328:14)
+    at NativeConnection.openUri (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\connection.js:1069:34)
+    at Mongoose.connect (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\mongoose.js:446:15)
+    at connectDB (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\dbLayer\connection.js:8:33)
+    at Object.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\server.js:63:1)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1689:10)
+Date: 24/02/2025, Time: 15:27
+Error: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+Stack Trace: MongoParseError: Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"
+    at new ConnectionString (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongodb-connection-string-url\lib\index.js:86:19)
+    at parseOptions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\connection_string.js:203:17)
+    at new MongoClient (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\node_modules\mongodb\lib\mongo_client.js:52:61)
+    at NativeConnection.createClient (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:328:14)
+    at NativeConnection.openUri (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\connection.js:1069:34)
+    at Mongoose.connect (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\mongoose.js:446:15)
+    at connectDB (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\dbLayer\connection.js:8:33)
+    at Object.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\server.js:63:1)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1689:10)
+Date: 24/02/2025, Time: 18:48
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:49
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:49
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:49
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:49
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:50
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:50
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:51
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:57
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 24/02/2025, Time: 18:58
+Error: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+Stack Trace: CastError: Cast to date failed for value "Invalid Date" (type Date) at path "date" for model "meetings"
+    at SchemaDate.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:377:11)
+    at SchemaType.applySetters (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1255:12)
+    at SchemaDate.castForQuery (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\schema\date.js:412:19)
+    at cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\cast.js:390:32)
+    at Query.cast (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._findOne (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:2648:8)
+    at model.Query.exec (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.checkMeetingRoomAvailability (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\meetingService.js:46:27)
+Date: 25/02/2025, Time: 16:39
+Error: moment is not defined
+Stack Trace: ReferenceError: moment is not defined
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:51:24
+    at Array.map (<anonymous>)
+    at Object.viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:49:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\controllers\actionController.js:36:20)
+Date: 25/02/2025, Time: 16:39
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 25/02/2025, Time: 16:39
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 25/02/2025, Time: 16:41
+Error: moment is not defined
+Stack Trace: ReferenceError: moment is not defined
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:51:24
+    at Array.map (<anonymous>)
+    at Object.viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:49:51)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async viewActionComment (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\controllers\actionController.js:36:20)
+Date: 28/02/2025, Time: 14:27
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 28/02/2025, Time: 14:28
+Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+Stack Trace: Error: querySrv ESERVFAIL _mongodb._tcp.ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 28/02/2025, Time: 15:09
+Error: commentRegex is not defined
+Stack Trace: ReferenceError: commentRegex is not defined
+    at actionCommentsValidator (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\validators\actionValidator.js:601:18)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 28/02/2025, Time: 15:11
+Error: "userId" is required
+Stack Trace: ValidationError: "userId" is required
+Date: 28/02/2025, Time: 15:12
+Error: "actionId" is required
+Stack Trace: ValidationError: "actionId" is required
+Date: 28/02/2025, Time: 15:12
+Error: "userId" is required
+Stack Trace: ValidationError: "userId" is required
+Date: 28/02/2025, Time: 15:15
+Error: "meetingId" is not allowed
+Stack Trace: ValidationError: "meetingId" is not allowed
+Date: 28/02/2025, Time: 15:16
+Error: emailTemplates.sendCommentEmailTemplate is not a function
+Stack Trace: TypeError: emailTemplates.sendCommentEmailTemplate is not a function
+    at Object.addComments (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\services\actionService.js:111:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async actionCommentsCreate (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\controllers\actionController.js:11:20)
+Date: 28/02/2025, Time: 15:22
+Error: "userId" is required
+Stack Trace: ValidationError: "userId" is required
+Date: 28/02/2025, Time: 16:12
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 28/02/2025, Time: 16:13
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 28/02/2025, Time: 16:13
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 28/02/2025, Time: 16:15
+Error: "authorization" is required
+Stack Trace: ValidationError: "authorization" is required
+Date: 28/02/2025, Time: 16:15
+Error: "authorization" is required
+Stack Trace: ValidationError: "authorization" is required
+Date: 28/02/2025, Time: 16:18
+Error: "authorization" is required
+Stack Trace: ValidationError: "authorization" is required
+>>>>>>> a30189855633c8958c606f1f4761fb60f45a7656
 =======
 Date: 24/02/2025, Time: 11:39
 Error: "actionId" is required
@@ -3069,9 +3340,333 @@ Date: 01/03/2025, Time: 11:51
 Error: "reAssignedUsers" is required
 Stack Trace: ValidationError: "reAssignedUsers" is required
 >>>>>>> 9986d28ffd3b1b150a7b539c036379988260f5bd
+<<<<<<< HEAD
 Date: 01/03/2025, Time: 14:45
 Error: "email" is required
 Stack Trace: ValidationError: "email" is required
+<<<<<<< HEAD
+=======
+Date: 01/03/2025, Time: 17:24
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 01/03/2025, Time: 17:25
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 03/03/2025, Time: 16:25
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 03/03/2025, Time: 16:30
+Error: "commentDescription" length must be less than or equal to 50 characters long
+Stack Trace: ValidationError: "commentDescription" length must be less than or equal to 50 characters long
+Date: 03/03/2025, Time: 18:02
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 03/03/2025, Time: 18:03
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 04/03/2025, Time: 11:26
+Error: "mentionedUsers" is not allowed
+Stack Trace: ValidationError: "mentionedUsers" is not allowed
+Date: 04/03/2025, Time: 12:47
+Error: "commentDescription" is not allowed to be empty
+Stack Trace: ValidationError: "commentDescription" is not allowed to be empty
+Date: 04/03/2025, Time: 12:48
+Error: "commentDescription" is not allowed to be empty
+Stack Trace: ValidationError: "commentDescription" is not allowed to be empty
+Date: 04/03/2025, Time: 15:34
+Error: "commentDescription" length must be less than or equal to 50 characters long
+Stack Trace: ValidationError: "commentDescription" length must be less than or equal to 50 characters long
+Date: 04/03/2025, Time: 15:35
+Error: "commentDescription" length must be less than or equal to 50 characters long
+Stack Trace: ValidationError: "commentDescription" length must be less than or equal to 50 characters long
+Date: 04/03/2025, Time: 15:37
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 04/03/2025, Time: 15:43
+Error: HTML tags & Special letters are not allowed!
+Stack Trace: ValidationError: HTML tags & Special letters are not allowed!
+Date: 04/03/2025, Time: 15:55
+Error: "mentionedUsers" is not allowed
+Stack Trace: ValidationError: "mentionedUsers" is not allowed
+Date: 04/03/2025, Time: 15:57
+Error: "mentionedUsers" is not allowed
+Stack Trace: ValidationError: "mentionedUsers" is not allowed
+Date: 04/03/2025, Time: 16:04
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:09
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:11
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:24
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:27
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:30
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:37
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 16:55
+Error: No recipients defined
+Stack Trace: Error: No recipients defined
+    at SMTPConnection._formatError (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:809:19)
+    at SMTPConnection._setEnvelope (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1047:34)
+    at SMTPConnection.send (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:631:14)
+    at sendMessage (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:228:28)
+    at D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-transport\index.js:286:25
+    at SMTPConnection._actionAUTHComplete (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:1602:9)
+    at SMTPConnection.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:556:26)
+    at SMTPConnection._processResponse (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:993:20)
+    at SMTPConnection._onData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:774:14)
+    at SMTPConnection._onSocketData (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\nodemailer\lib\smtp-connection\index.js:195:44)
+Date: 04/03/2025, Time: 17:56
+Error: "mentionedUsers" is not allowed
+Stack Trace: ValidationError: "mentionedUsers" is not allowed
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 04/03/2025, Time: 18:07
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+>>>>>>> a30189855633c8958c606f1f4761fb60f45a7656
+Date: 06/03/2025, Time: 14:24
+Error: logo is not defined
+Stack Trace: ReferenceError: logo is not defined
+    at Object.acceptMinutes (D:\MinutesVault V2\mom-backendv2\services\minutesService.js:1217:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async acceptMinutes (D:\MinutesVault V2\mom-backendv2\controllers\minutesController.js:345:20)
+Date: 06/03/2025, Time: 14:25
+Error: logo is not defined
+Stack Trace: ReferenceError: logo is not defined
+    at Object.acceptMinutes (D:\MinutesVault V2\mom-backendv2\services\minutesService.js:1217:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async acceptMinutes (D:\MinutesVault V2\mom-backendv2\controllers\minutesController.js:345:20)
+Date: 11/03/2025, Time: 12:41
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 11/03/2025, Time: 14:46
+Error: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+Stack Trace: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+    at new ObjectId (D:\MinutesVault V2\mom-backendv2\node_modules\bson\lib\bson.cjs:2517:23)
+    at Object.viewMeeting (D:\MinutesVault V2\mom-backendv2\services\meetingService.js:1064:14)
+    at viewMeeting (D:\MinutesVault V2\mom-backendv2\controllers\meetingController.js:295:41)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 14:47
+Error: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+Stack Trace: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+    at new ObjectId (D:\MinutesVault V2\mom-backendv2\node_modules\bson\lib\bson.cjs:2517:23)
+    at Object.viewMeeting (D:\MinutesVault V2\mom-backendv2\services\meetingService.js:1064:14)
+    at viewMeeting (D:\MinutesVault V2\mom-backendv2\controllers\meetingController.js:295:41)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 14:48
+Error: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+Stack Trace: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+    at new ObjectId (D:\MinutesVault V2\mom-backendv2\node_modules\bson\lib\bson.cjs:2517:23)
+    at Object.viewMeeting (D:\MinutesVault V2\mom-backendv2\services\meetingService.js:1064:14)
+    at viewMeeting (D:\MinutesVault V2\mom-backendv2\controllers\meetingController.js:295:41)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 14:55
+Error: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+Stack Trace: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+    at new ObjectId (D:\MinutesVault V2\mom-backendv2\node_modules\bson\lib\bson.cjs:2517:23)
+    at Object.viewMeeting (D:\MinutesVault V2\mom-backendv2\services\meetingService.js:1064:14)
+    at viewMeeting (D:\MinutesVault V2\mom-backendv2\controllers\meetingController.js:295:41)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:01
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:01
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:02
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:07
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:07
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 11/03/2025, Time: 16:42
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 11/03/2025, Time: 16:42
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 11/03/2025, Time: 16:42
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 11/03/2025, Time: 16:42
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 11/03/2025, Time: 16:49
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 11/03/2025, Time: 16:54
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 11/03/2025, Time: 17:01
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 11/03/2025, Time: 17:01
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 11/03/2025, Time: 17:03
+Error: "organizationId" is not allowed
+Stack Trace: ValidationError: "organizationId" is not allowed
+Date: 13/03/2025, Time: 10:55
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+=======
 Date: 04/03/2025, Time: 11:02
 Error: ContactUs is not defined
 Stack Trace: ReferenceError: ContactUs is not defined
@@ -3792,6 +4387,7 @@ Stack Trace: TypeError: Invalid sort value: { order: -1 }
     at Object.contactUsList (D:\MinutesVault V2\mom-backendv2\services\adminPanelService.js:56:36)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async getAllContacts (D:\MinutesVault V2\mom-backendv2\controllers\adminPanelController.js:22:23)
+<<<<<<< HEAD
 Date: 17/03/2025, Time: 10:16
 Error: "headers.authorization" is required
 Stack Trace: ValidationError: "headers.authorization" is required
@@ -4012,3 +4608,39 @@ Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith
     at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
     at forwardLeadValidator (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\validators\adminPanelValidator.js:238:9)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+=======
+>>>>>>> e355e131b0adfef3024d69af955df68527b44a5a
+Date: 14/03/2025, Time: 13:28
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationSendOtp (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:158:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async registrationSendOtp (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:50:20)
+Date: 14/03/2025, Time: 13:28
+Error: Cannot access 'mailData' before initialization
+Stack Trace: ReferenceError: Cannot access 'mailData' before initialization
+    at Object.organizationSendOtp (D:\MinutesVault V2\mom-backendv2\services\organizationService.js:205:48)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async registrationSendOtp (D:\MinutesVault V2\mom-backendv2\controllers\organizationController.js:50:20)
+Date: 14/03/2025, Time: 16:04
+Error: Cannot read properties of undefined (reading 'length')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'length')
+    at getSubscriptions (D:\MinutesVault V2\mom-backendv2\controllers\subscriptionController.js:28:85)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 14/03/2025, Time: 18:14
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 14/03/2025, Time: 18:14
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+>>>>>>> 832c9ce1eb51bd1d5c51c5136d9bd3071a78a573

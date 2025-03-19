@@ -4,9 +4,6 @@ const dempoCreateSuccess =
 const createError = "Error while creating!";
 const updateSuccess = "Updated successfully!";
 const commentCreatedSuccess = "Comment Added Successfully."
-const updateFail = "Failed to Update Comment";
-const deleteFail = "Failed to Delete Comment";
-const unauthorizedEdit = "You can only edit your own comment.";
 const meetingUpdateSuccess =
   "Meeting is updated and notification sent to all the attendees successfully.";
 const updateFailedRecordNotFound = "Record not found. Update failed!";
@@ -135,7 +132,14 @@ const notificationSent = "Email sent successfully"
 const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater than Draft MeetingReminder Days"
 const draftDeleted = "Draft Meeting Deleted"
 const deleteDraftFailed = "Faild in Delete Draft Meeting"
+const zoomMeetingExists = "There is already a meeting scheduled on Zoom at that time."
+const subscriptionAdded = "Subscription added successfully"
+const subscriptionsFetched = "Subscription list fetched successfully"
+const subscriptionExists = "Subscription already exists"
+const subscriptionUpdated = "Subscription updated succsessfully"
+const subscriptionDeleted = "Subscription deleted succsessfully"
 
+<<<<<<< HEAD
 const contactListFetched = "Contact list fetched successfully."
 const leadUpdated = "Lead status updated successfully"
 const alreadyCancelled = "Lead is already cancelled"
@@ -149,10 +153,11 @@ module.exports = {
   alreadyCancelled,
   leadUpdated,
   contactListFetched,
+=======
+module.exports = {
+  zoomMeetingExists,
+>>>>>>> 832c9ce1eb51bd1d5c51c5136d9bd3071a78a573
   commentCreatedSuccess,
-  updateFail,
-  deleteFail,
-  unauthorizedEdit,
   pleaseAddMinute,
   isDeleteNotAllowed,
   cancelSuccess,
@@ -261,6 +266,10 @@ module.exports = {
   notValid,
   deleteDraftFailed,
   draftDeleted,
-  draftFailed
-  
+  draftFailed,
+  subscriptionAdded,
+  subscriptionsFetched,
+  subscriptionExists,
+  subscriptionUpdated,
+  subscriptionDeleted,
 };

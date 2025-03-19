@@ -1300,6 +1300,37 @@ const draftMeetingValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
+const checkZoomMeetingValidator = async (req, res, next) => {
+  try {
+    
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        authorization: Joi.required(),
+        ip: Joi.string(),
+      }).unknown(true),
+    });
+
+    
+    const bodySchema = Joi.object({
+      organizationId: Joi.string().trim().required(),
+      date: Joi.string().isoDate().required(),
+      fromTime: Joi.string().trim().required(),
+      toTime: Joi.string().trim().required(),
+    });
+
+    await headerSchema.validateAsync({ headers: req.headers });
+    await bodySchema.validateAsync(req.body);
+
+    next();
+  } catch (error) {
+    console.log("Validation Error:", error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error);
+  }
+};
+
+
 module.exports = {
   updateMeetingStatusValidator,
   createMeetingValidator,
@@ -1333,5 +1364,6 @@ module.exports = {
   checkAttendeeAvailabilityValidator,
   checkRoomAvailabilityValidator,
   checkAttendeeArrayAvailabilityValidator,
-  draftMeetingValidator
+  draftMeetingValidator,
+  checkZoomMeetingValidator
 };
