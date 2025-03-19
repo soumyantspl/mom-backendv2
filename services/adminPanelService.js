@@ -10,6 +10,8 @@ const contactUs = require("../models/contactUsModel");
 const ObjectId = require("mongoose").Types.ObjectId;
 const Organization = require("../models/organizationModel");
 const Employee = require ("../models/employeeModel");
+const AdminPanel = require("../models/adminPanelModel");
+const authMiddleware = require("../middlewares/authMiddleware");
 const BASE_URL = process.env.BASE_URL;
 
 
@@ -128,7 +130,22 @@ const contactUsList = async (bodyData, queryData) => {
 
     const result = await contactUs.find(query, null, options);
 
-    return { totalCount, data: result };
+     // Format createdAt field in 12-hour format
+     const formattedResult = result.map(item => ({
+        ...item._doc,
+        createdAt: commonHelper.formatTimeFormat(item.createdAt.toISOString()), 
+    
+        // Convert leadStatus.timeAndDate to 12-hour format if it exists
+        leadStatus: item.leadStatus
+            ? {
+                ...item.leadStatus,
+                timeAndDate: commonHelper.formatTimeFormat(new Date(item.leadStatus.timeAndDate).toISOString())
+            }
+            : null
+    }));
+    
+
+    return { totalCount, data: formattedResult };
 };
 
 //Function to Cancel Lead
@@ -238,7 +255,10 @@ const forwardLead = async (contactId, data, userData) => {
     contact.leadStatus.forwardedTo = data.forwardedTo;
     contact.leadStatus.timeAndDate = new Date();
 
+    
     await contact.save();
+    const formattedTime = commonHelper.formatTimeFormat(contact.leadStatus.timeAndDate.toISOString());
+
 
     console.log("userData---", userData);
     const logo = process.env.LOGO;
@@ -261,10 +281,25 @@ const forwardLead = async (contactId, data, userData) => {
         mailData.mailBody  
     );
 
-    return contact;
+    return {
+        ...contact.toObject(),
+        leadStatus: {
+            ...contact.leadStatus,
+            formattedTime,
+        },
+    };
 };
 
 
+const viewSingleLeadById = async (contactId) => {
+    const lead = await contactUs.findOne({ _id: contactId, isDelete: false });
+
+    if (!lead) {
+        return null;
+    }
+
+    return lead;
+};
 
 
 
@@ -310,10 +345,94 @@ const organizationList = async (bodyData, queryData) => {
         .skip(skip)
         .limit(validLimit);
 
-    return { totalCount, data: result };
+        const formattedResult = result.map(item => ({
+            ...item._doc,
+            createdAt: commonHelper.formatTimeFormat(item.createdAt.toISOString()) // Convert Date to String
+        }));
+
+    return { totalCount, data: formattedResult };
 };
 
 
+const loginByPassword = async (bodyData) => {
+    const { email, password } = bodyData;
+
+   
+    const user = await AdminPanel.findOne({ email });
+
+    console.log("User Found:", user); 
+
+    
+    if (!user) {
+        return false; 
+    }
+
+    
+    const passwordIsValid = await commonHelper.verifyPassword(password, user.password);
+
+    if (!passwordIsValid) {
+        return "invalidPassword"; 
+    }
+    const token = await authMiddleware.generateUserToken({
+        userId: user._id,
+        name: user.name,
+      });
+      delete user.password;
+    return {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        token,
+    };
+};
+
+
+const setPassword = async (bodyData) => {
+    const { email, newPassword } = bodyData;
+
+    
+    const user = await AdminPanel.findOne({ email });
+
+    if (!user) {
+        return false; 
+    }
+
+    const hashedPassword = await commonHelper.generetHashPassword(newPassword);
+    user.password = hashedPassword;
+    await user.save();
+
+    return true; 
+};
+
+const addAdmin = async (bodyData) => {
+    const { name, email, password } = bodyData;
+
+    // Check if email already exists
+    const existingAdmin = await AdminPanel.findOne({ email });
+    if (existingAdmin) {
+        return { success: false, message: "Email already registered" };
+    }
+
+    // Create new admin
+    const newAdmin = new AdminPanel({
+        name,
+        email,
+        password
+    });
+
+    // Save to database
+    const savedAdmin = await newAdmin.save();
+
+    return {
+        success: true,
+        message: "Admin added successfully",
+        data: {
+            _id: savedAdmin._id,
+            name: savedAdmin.name,
+            email: savedAdmin.email
+        }
+    };
+};
 
 
 
@@ -325,5 +444,9 @@ const organizationList = async (bodyData, queryData) => {
     cancelLead,
     closeLead, 
     rejectLead ,
-    forwardLead
+    forwardLead,
+    viewSingleLeadById,
+    loginByPassword,
+    setPassword,
+    addAdmin
   };

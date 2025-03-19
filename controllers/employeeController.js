@@ -337,7 +337,8 @@ const listOnlyEmployee = async (req, res) => {
 const getEmployeeListAsPerUnit = async (req, res) => {
   try {
     const result = await employeeService.getEmployeeListAsPerUnit(
-      req.params.unitId
+      req.params.unitId,
+      req.userId
     );
     if (result.length == 0) {
       return Responses.failResponse(

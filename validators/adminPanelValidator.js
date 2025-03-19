@@ -39,7 +39,7 @@ const contactListValidator = async (req, res, next) => {
       next();
     } catch (error) {
       console.log(error);
-      return Responses.errorResponse(req, res, error, 500);
+      return Responses.errorResponse(req, res, error);
     }
   };
   
@@ -80,7 +80,7 @@ const contactListValidator = async (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        return Responses.errorResponse(req, res, error, 500);
+        return Responses.errorResponse(req, res, error);
     }
 };
 
@@ -125,7 +125,7 @@ const cancelLeadValidator = async (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        return Responses.errorResponse(req, res, error, 500);
+        return Responses.errorResponse(req, res, error);
     }
 };
 
@@ -160,7 +160,7 @@ const closeLeadValidator = async (req, res, next) => {
       next();
   } catch (error) {
       console.log(error);
-      return Responses.errorResponse(req, res, error, 500);
+      return Responses.errorResponse(req, res, error);
   }
 };
 
@@ -195,7 +195,7 @@ const rejectLeadValidator = async (req, res, next) => {
       next();
   } catch (error) {
       console.log(error);
-      return Responses.errorResponse(req, res, error, 500);
+      return Responses.errorResponse(req, res, error);
   }
 };
 
@@ -236,12 +236,72 @@ const forwardLeadValidator = async (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        return Responses.errorResponse(req, res, error, 500);
+        return Responses.errorResponse(req, res, error);
     }
   };
   
+  const viewSingleLeadValidator = async (req, res, next) => {
+    try {
+        // const headerSchema = Joi.object({
+        //     authorization: Joi.string().required().messages({
+        //         "any.required": "Authorization token is required",
+        //     }),
+        // }).unknown(true);
 
-  
+        const paramsSchema = Joi.object({
+            contactId: Joi.string().required()
+        });
+
+       // await headerSchema.validateAsync(req.headers);
+        await paramsSchema.validateAsync(req.params);
+
+        next();
+    } catch (error) {
+        console.log("Validation Error:", error);
+        return Responses.errorResponse(req, res, error);
+    }
+};
+
+
+const loginByPasswordValidator = async (req, res, next) => {
+  try {
+      // const headerSchema = Joi.object({
+      //     authorization: Joi.string().required(),
+      // }).unknown(true);
+
+      const bodySchema = Joi.object({
+          email: Joi.string().email().required(),
+          password: Joi.string().required(),
+      });
+
+     // await headerSchema.validateAsync(req.headers);
+      await bodySchema.validateAsync(req.body);
+
+      next();
+  } catch (error) {
+      console.log(error);
+      return Responses.errorResponse(req, res, error);
+  }
+};
+
+const setPasswordValidator = async (req, res, next) => {
+  try {
+    // const headerSchema = Joi.object({
+      //     authorization: Joi.string().required(),
+      // }).
+
+      const bodySchema = Joi.object({
+          email: Joi.string().email().required(),
+          newPassword: Joi.string().min(6).max(50).required()
+      });
+
+       // await headerSchema.validateAsync(req.headers);
+      await bodySchema.validateAsync(req.body);
+      next();
+  } catch (error) {
+      return Responses.errorResponse(req, res, error);
+  }
+};
 
 // const leadStatusValidator = async (req, res, next) => {
 //   try {
@@ -281,6 +341,9 @@ const forwardLeadValidator = async (req, res, next) => {
     cancelLeadValidator,
     closeLeadValidator,
     rejectLeadValidator,
-    forwardLeadValidator
+    forwardLeadValidator,
+    viewSingleLeadValidator,
+    loginByPasswordValidator,
+    setPasswordValidator
   //  leadStatusValidator
 };

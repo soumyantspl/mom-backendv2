@@ -2314,3 +2314,70 @@ Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith
     at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
     at forwardLeadValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\validators\adminPanelValidator.js:236:9)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 19/03/2025, Time: 10:51
+Error: jwt is not defined
+Stack Trace: ReferenceError: jwt is not defined
+    at Object.getEmployeeListAsPerUnit (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\employeeService.js:765:19)
+    at getEmployeeListAsPerUnit (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\employeeController.js:339:42)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 19/03/2025, Time: 15:01
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at setPasswordValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\validators\adminPanelValidator.js:300:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 19/03/2025, Time: 16:47
+Error: time.split is not a function
+Stack Trace: TypeError: time.split is not a function
+    at Object.formatTimeFormat (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\helpers\commonHelper.js:277:26)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:136:33
+    at Array.map (<anonymous>)
+    at Object.contactUsList (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:134:37)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 19/03/2025, Time: 16:50
+Error: Cannot read properties of undefined (reading 'toISOString')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'toISOString')
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:136:69
+    at Array.map (<anonymous>)
+    at Object.contactUsList (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\adminPanelService.js:134:37)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getAllContacts (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\adminPanelController.js:20:28)
+Date: 19/03/2025, Time: 18:33
+Error: Can't use $en
+Stack Trace: Error: Can't use $en
+    at SchemaType.castForQuery (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1667:13)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:367:39)
+    at Query.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._find (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2352:8)
+    at model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.listAttendeesFromPreviousMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1882:24)
+    at async listAttendeesFromPreviousMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:342:20)
+Date: 19/03/2025, Time: 18:33
+Error: Can't use $en
+Stack Trace: Error: Can't use $en
+    at SchemaType.castForQuery (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1667:13)
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:367:39)
+    at Query.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._find (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2352:8)
+    at model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.listAttendeesFromPreviousMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1882:24)
+    at async listAttendeesFromPreviousMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:342:20)
+Date: 19/03/2025, Time: 18:53
+Error: Cannot access 'createdById' before initialization
+Stack Trace: ReferenceError: Cannot access 'createdById' before initialization
+    at Object.listAttendeesFromPreviousMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\services\meetingService.js:1874:67)
+    at listAttendeesFromPreviousMeeting (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\controllers\meetingController.js:342:41)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:30:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

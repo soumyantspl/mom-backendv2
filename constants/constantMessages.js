@@ -147,8 +147,12 @@ const subscriptionsFetched = "Subscription list fetched successfully"
 const subscriptionExists = "Subscription already exists"
 const subscriptionUpdated = "Subscription updated succsessfully"
 const subscriptionDeleted = "Subscription deleted succsessfully"
+const leadFetched = "Lead fetched successfully"
+const invalidCredentials = "Invalid Credential"
 
 module.exports = {
+  invalidCredentials,
+  leadFetched,
   subscriptionDeleted,
   subscriptionUpdated,
   subscriptionExists,

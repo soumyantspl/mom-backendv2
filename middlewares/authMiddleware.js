@@ -21,6 +21,7 @@ const verifyUserToken = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_USER_SECRET);
     const userId = decoded.userId;
     const isActiveUser = await employeeService.verifyEmployee(userId);
+    
     if (isActiveUser) {
       req.userId = userId;
       req.organizationId = isActiveUser.organizationId.toString();

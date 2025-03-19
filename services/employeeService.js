@@ -749,12 +749,15 @@ const listOnlyEmployee = async (organizationId) => {
   return allEmployees;
 };
 /**FUNC- TO SEE LIST OF ONLY EMPLOYEE */
-const getEmployeeListAsPerUnit = async (unitId) => {
+const getEmployeeListAsPerUnit = async (unitId, userId) => {
   const allEmployees = await Employee.find({
     isActive: true,
     isDelete: false,
     unitId,
     isEmployee: true,
+    isMeetingOrganizer: { $ne: true },
+   // _id: { $ne: new ObjectId(userId) }
+    
   }).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
   return allEmployees;
 };

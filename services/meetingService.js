@@ -1856,7 +1856,7 @@ const listAttendeesFromPreviousMeetingOld = async (organizationId, userId) => {
 // /**FUNC- TO VIEW LIST OF ATTENDEES FROM PREVIOUS MEETING */
 const listAttendeesFromPreviousMeeting = async (organizationId, userId) => {
   const attendeeData = await Employee.find(
-    { organizationId: new ObjectId(organizationId), isActive: true },
+    { organizationId: new ObjectId(organizationId), isActive: true ,_id: { $ne: new ObjectId(userId) } },
     { name: 1, email: 1, _id: 1, isEmployee: 1 }
   ).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
   // console.log("attendeeData==========",attendeeData)
@@ -1868,6 +1868,10 @@ const listAttendeesFromPreviousMeeting = async (organizationId, userId) => {
   // const finalData = filetrData.filter((attendee) => attendee.isActive);
   return attendeeData;
 };
+
+
+
+
 //FUNCTION TO GET ATTENDEES//
 const getAllAttendees = async (meetingId) => {
   const result = await Meeting.findById(meetingId, { "attendees.id": 1 });

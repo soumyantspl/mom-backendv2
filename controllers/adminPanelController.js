@@ -136,7 +136,21 @@ const forwardLead = async (req, res) => {
     }
 };
 
+/** FUNC- TO VIEW LEAD BY ID **/
+const viewSingleLeadById = async (req, res) => {
+    try {
+        const result = await adminPanelService.viewSingleLeadById(req.params.contactId);
 
+        if (!result) {
+            return Responses.failResponse(req, res, null, messages.recordNotFound, 200);
+        }
+
+        return Responses.successResponse(req, res, result, messages.leadFetched, 200);
+    } catch (error) {
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error);
+    }
+};
 
 /** FUNC- TO GET ORGANIZATION LIST **/
 const getOrganizations = async (req, res) => {
@@ -168,7 +182,55 @@ const getOrganizations = async (req, res) => {
 };
 
 
+const loginByPassword = async (req, res) => {
+    try {
+        const result = await adminPanelService.loginByPassword(req.body, req.userData);
 
+        if (!result) {
+            return Responses.failResponse(req, res, null, messages.invalidCredentials, 200);
+        }
+
+        if (result === "invalidPassword") {
+            return Responses.failResponse(req, res, null, messages.incorrectPassword, 200);
+        }
+
+        return Responses.successResponse(req, res, result, messages.signInSuccess, 200);
+    } catch (error) {
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error);
+    }
+};
+
+const setPassword = async (req, res) => {
+    try {
+        const result = await adminPanelService.setPassword(req.body);
+
+        if (!result) {
+            return Responses.failResponse(req, res, null, messages.userNotFound, 200);
+        }
+
+        return Responses.successResponse(req, res, null, messages.passwordResetSuccess, 200);
+    } catch (error) {
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error);
+    }
+};
+
+
+const addAdminController = async (req, res) => {
+    try {
+        const result = await adminPanelService.addAdmin(req.body);
+
+        if (!result.success) {
+            return Responses.failResponse(req, res, null, result.message, 200);
+        }
+
+        return Responses.successResponse(req, res, result.data, result.message, 201);
+    } catch (error) {
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error);
+    }
+};
 
 
   module.exports = {
@@ -177,5 +239,9 @@ const getOrganizations = async (req, res) => {
     cancelLead,
     closeLead, 
     rejectLead,
-    forwardLead
+    forwardLead,
+    viewSingleLeadById,
+    loginByPassword,
+    setPassword,
+    addAdminController
   };

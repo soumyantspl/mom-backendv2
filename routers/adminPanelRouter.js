@@ -5,6 +5,16 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const adminPanelController = require("../controllers/adminPanelController");
 
 
+router.post("/add-admin", adminPanelController.addAdminController);
+
+router.post("/loginByPassword", 
+    adminPanelValidator.loginByPasswordValidator, 
+    adminPanelController.loginByPassword);
+
+router.post("/set-password", 
+    adminPanelValidator.setPasswordValidator,
+   // authMiddleware.verifyUserToken, 
+    adminPanelController.setPassword);
 
 
 router.post("/contact-list", 
@@ -32,6 +42,10 @@ router.put("/reject-lead/:contactId",
     adminPanelValidator.forwardLeadValidator,
     authMiddleware.verifyUserToken,
     adminPanelController.forwardLead);
+
+router.get("/lead/:contactId", 
+    adminPanelValidator.viewSingleLeadValidator, 
+    adminPanelController.viewSingleLeadById);
 
 
  module.exports = router;
