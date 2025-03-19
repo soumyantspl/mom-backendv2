@@ -139,7 +139,6 @@ const subscriptionExists = "Subscription already exists"
 const subscriptionUpdated = "Subscription updated succsessfully"
 const subscriptionDeleted = "Subscription deleted succsessfully"
 
-<<<<<<< HEAD
 const contactListFetched = "Contact list fetched successfully."
 const leadUpdated = "Lead status updated successfully"
 const alreadyCancelled = "Lead is already cancelled"
@@ -153,10 +152,7 @@ module.exports = {
   alreadyCancelled,
   leadUpdated,
   contactListFetched,
-=======
-module.exports = {
   zoomMeetingExists,
->>>>>>> 832c9ce1eb51bd1d5c51c5136d9bd3071a78a573
   commentCreatedSuccess,
   pleaseAddMinute,
   isDeleteNotAllowed,

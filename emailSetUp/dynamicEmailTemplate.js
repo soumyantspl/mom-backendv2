@@ -2722,7 +2722,6 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
   });
 };
 
-<<<<<<< HEAD
 const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, reason }) => {
   const template = await EmailTemplate.findOne({
     templateType: "LEADFORWARD",
@@ -2775,8 +2774,6 @@ const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, rea
 
   return { subject, mailBody };
 };
-=======
->>>>>>> 832c9ce1eb51bd1d5c51c5136d9bd3071a78a573
 
 
 module.exports = {
