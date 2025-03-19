@@ -28,6 +28,11 @@ router.post("/organization-list",
                 adminPanelValidator.forwardLeadValidator,
                // authMiddleware.verifyUserToken,
                 adminPanelController.forwardLead);
-        
+
+ router.get("/lead/:contactId", 
+    adminPanelValidator.viewSingleLeadValidator, 
+    adminPanelController.viewSingleLeadById);
+                
+                      
 
 module.exports = router;

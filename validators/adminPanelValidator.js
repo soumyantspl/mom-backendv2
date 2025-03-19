@@ -242,12 +242,36 @@ const forwardLeadValidator = async (req, res, next) => {
     }
   };
 
+  const viewSingleLeadValidator = async (req, res, next) => {
+    try {
+        // const headerSchema = Joi.object({
+        //     authorization: Joi.string().required().messages({
+        //         "any.required": "Authorization token is required",
+        //     }),
+        // }).unknown(true);
+
+        const paramsSchema = Joi.object({
+            contactId: Joi.string().required()
+        });
+
+       // await headerSchema.validateAsync(req.headers);
+        await paramsSchema.validateAsync(req.params);
+
+        next();
+    } catch (error) {
+        console.log("Validation Error:", error);
+        return Responses.errorResponse(req, res, error, 400);
+    }
+};
+
+
   module.exports = {
     contactListValidator,
     organizationListValidator,
     cancelLeadValidator,
     closeLeadValidator,
     rejectLeadValidator,
-    forwardLeadValidator
+    forwardLeadValidator,
+    viewSingleLeadValidator
   };
   

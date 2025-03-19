@@ -68,7 +68,22 @@ const contactUsList = async (bodyData, queryData) => {
 
     const result = await contactUs.find(query, null, options);
 
-    return { totalCount, data: result };
+      // Format createdAt field in 12-hour format
+      const formattedResult = result.map(item => ({
+        ...item._doc,
+        createdAt: commonHelper.formatTimeFormat(item.createdAt.toISOString()), 
+    
+        // Convert leadStatus.timeAndDate to 12-hour format if it exists
+        leadStatus: item.leadStatus
+            ? {
+                ...item.leadStatus,
+                timeAndDate: commonHelper.formatTimeFormat(new Date(item.leadStatus.timeAndDate).toISOString())
+            }
+            : null
+    }));
+
+
+    return { totalCount, data: formattedResult };
 };
 
 const organizationList = async (bodyData, queryData) => {
@@ -112,7 +127,12 @@ const organizationList = async (bodyData, queryData) => {
         .skip(skip)
         .limit(validLimit);
 
-    return { totalCount, data: result };
+        const formattedResult = result.map(item => ({
+            ...item._doc,
+            createdAt: commonHelper.formatTimeFormat(item.createdAt.toISOString()) // Convert Date to String
+        }));
+
+    return { totalCount, data: formattedResult };
 };
 
 //Function to Cancel Lead
@@ -246,6 +266,7 @@ const forwardLead = async (contactId, data, userData) => {
     contact.leadStatus.timeAndDate = new Date();
 
     await contact.save();
+    const formattedTime = commonHelper.formatTimeFormat(contact.leadStatus.timeAndDate.toISOString());
 
     console.log("userData---", userData);
     const logo = process.env.LOGO;
@@ -268,10 +289,26 @@ const forwardLead = async (contactId, data, userData) => {
         mailData.mailBody  
     );
 
-    return contact;
+  //  return contact;
+  
+return {
+    ...contact.toObject(),
+    leadStatus: {
+        ...contact.leadStatus,
+        formattedTime,
+    },
+};
 };
 
+const viewSingleLeadById = async (contactId) => {
+    const lead = await contactUs.findOne({ _id: contactId, isDelete: false });
 
+    if (!lead) {
+        return null;
+    }
+
+    return lead;
+};
 
 
   module.exports = {
@@ -280,5 +317,6 @@ const forwardLead = async (contactId, data, userData) => {
     cancelLead,
     closeLead,
     rejectLead,
-    forwardLead
+    forwardLead,
+    viewSingleLeadById
   };

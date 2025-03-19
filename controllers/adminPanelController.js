@@ -170,12 +170,29 @@ const forwardLead = async (req, res) => {
     }
 };
 
+/** FUNC- TO VIEW LEAD BY ID **/
+const viewSingleLeadById = async (req, res) => {
+    try {
+        const result = await adminPanelService.viewSingleLeadById(req.params.contactId);
+
+        if (!result) {
+            return Responses.failResponse(req, res, null, messages.recordNotFound, 200);
+        }
+
+        return Responses.successResponse(req, res, result, messages.leadFetched, 200);
+    } catch (error) {
+        console.error("Error:", error);
+        return Responses.errorResponse(req, res, error);
+    }
+};
+
   module.exports = {
     getOrganizations,
     getAllContacts,
     cancelLead,
     closeLead,
     rejectLead,
-    forwardLead
+    forwardLead,
+    viewSingleLeadById
   };
   

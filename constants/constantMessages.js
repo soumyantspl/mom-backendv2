@@ -145,7 +145,9 @@ const alreadyCancelled = "Lead is already cancelled"
 const alreadyClosed = "Lead is already closed"
 const alreadyRejected = "Lead is already rejecteded"
 const leadFowarded = "Lead forwarded successfully"
+const leadFetched = "Lead fetched successfully"
 module.exports = {
+  leadFetched,
   leadFowarded,
   alreadyRejected,
   alreadyClosed,
