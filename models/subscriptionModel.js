@@ -4,7 +4,7 @@ const subscriptionSchema = new mongoose.Schema(
   {
     planType: {
       type: String,
-      enum: ["free", "basic", "premium"],
+     // enum: ["free", "basic", "premium"],
       required: true,
     },
     participantLimit: {

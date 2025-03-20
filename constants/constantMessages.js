@@ -146,6 +146,8 @@ const alreadyClosed = "Lead is already closed"
 const alreadyRejected = "Lead is already rejecteded"
 const leadFowarded = "Lead forwarded successfully"
 const leadFetched = "Lead fetched successfully"
+const deactivatedOrganization = "Organization is deactivated"
+const activatedOrganization = "Organization is activated"
 module.exports = {
   leadFetched,
   leadFowarded,
@@ -270,4 +272,6 @@ module.exports = {
   subscriptionExists,
   subscriptionUpdated,
   subscriptionDeleted,
-};
+  deactivatedOrganization,
+  activatedOrganization
+}; 

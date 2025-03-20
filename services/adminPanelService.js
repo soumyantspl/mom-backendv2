@@ -1,16 +1,9 @@
 const commonHelper = require("../helpers/commonHelper");
-//const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
 const emailService = require("./emailService");
-const emailConstants = require("../constants/emailConstants");
-const otpDemoLogs = require("../models/otpDemoLogsModel");
-const otpContactUsLogs = require("../models/contactUsOtpLogs");
-const DemoClient = require("../models/demoClientsSchema");
 const contactUs = require("../models/contactUsModel");
 const Employee = require("../models/employeeModel")
 const Organization = require("../models/organizationModel");
-const BASE_URL = process.env.BASE_URL;
-
 
 
 const contactUsList = async (bodyData, queryData) => {
@@ -246,70 +239,74 @@ const rejectLead = async (contactId, data) => {
 //     await contact.save();
 //     return  contact ;
 // };
+
 const forwardLead = async (contactId, data, userData) => {
-    const contact = await contactUs.findById({ _id: contactId });
-    if (!contact) {
+    
+    const contact = await contactUs.findById(contactId);
+    if (contact) {
+
+        const forwardedUser = await Employee.findById(data.forwardedTo);
+
+    if (!forwardedUser) {
         return false;
     }
 
-    const employee = await Employee.findById(data.forwardedTo);
-    if (!employee) {
-        return false;
-    }
+    console.log("forwardedUser---", forwardedUser);
 
-    console.log("employeeeeee---", employee);
+    contact.leadStatus = {
+        status: "forwarded",
+        reason: data.reason,
+        forwardedTo: data.forwardedTo,
+        forwardedUserName : forwardedUser.name,
+        timeAndDate: new Date(),
+    };
 
     
-    contact.leadStatus.status = "forwarded";
-    contact.leadStatus.reason = data.reason;
-    contact.leadStatus.forwardedTo = data.forwardedTo;
-    contact.leadStatus.timeAndDate = new Date();
-
     await contact.save();
-    const formattedTime = commonHelper.formatTimeFormat(contact.leadStatus.timeAndDate.toISOString());
 
     console.log("userData---", userData);
     const logo = process.env.LOGO;
-  
-   
+
     
     const mailData = await emailTemplates.forwardLeadEmailTemplate({
         contact,
-       employee,
-       userData,
+        forwardedUser,
+        userData,
         logo,
         reason: data.reason,
     });
 
     
     await emailService.sendEmail(
-        employee.email, 
+        forwardedUser.email,
         "Lead Forwarded Notification",
-        mailData.subject,  
-        mailData.mailBody  
+        mailData.subject,
+        mailData.mailBody
     );
-
-  //  return contact;
-  
-return {
-    ...contact.toObject(),
-    leadStatus: {
-        ...contact.leadStatus,
-        formattedTime,
-    },
-};
+    
+    return contact ;
+     
+    }
+ 
+    return false;
 };
 
 const viewSingleLeadById = async (contactId) => {
     const lead = await contactUs.findOne({ _id: contactId, isDelete: false });
-
     if (!lead) {
         return null;
     }
-
     return lead;
 };
 
+const OrganizationStatusById =  async(orgId, data) => {
+    const updatedOrganization = await Organization.findByIdAndUpdate(
+        orgId,
+        { isActive: data.isActive },
+        { new: true }
+    );
+    return updatedOrganization;
+}
 
   module.exports = {
     organizationList,
@@ -318,5 +315,6 @@ const viewSingleLeadById = async (contactId) => {
     closeLead,
     rejectLead,
     forwardLead,
-    viewSingleLeadById
+    viewSingleLeadById,
+    OrganizationStatusById
   };

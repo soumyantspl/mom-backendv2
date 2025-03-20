@@ -48,6 +48,10 @@ const contactUsSchema = new mongoose.Schema(
         ref: "Employee",
         required: false, 
       },
+      forwardedUserName: {
+        type: String,
+        required: false, 
+      },
       timeAndDate: {
         type: Date,
         required: true,

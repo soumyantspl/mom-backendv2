@@ -2722,7 +2722,7 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
   });
 };
 
-const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, reason }) => {
+const forwardLeadEmailTemplate = async ({ contact, forwardedUser, userData, logo, reason }) => {
   const template = await EmailTemplate.findOne({
     templateType: "LEADFORWARD",
     isActive: true,
@@ -2743,13 +2743,13 @@ const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, rea
 
   // Debugging: Log contact and employee details
   console.log("Contact Details:", contact);
-  console.log("Employee Details:", employee);
+  console.log("Employee Details:", forwardedUser);
   console.log("adminEmail:", userData?.email);
 
   subject = subject.replace(/{adminName}/g, userData?.name);
   // Replace placeholders in email body
   body = body
-    .replace(/{assignedUserName}/g, employee?.name )
+    .replace(/{assignedUserName}/g, forwardedUser?.name )
     //.replace(/{UserEmail}/g, employee?.email )
     .replace(/{remark}/g, reason )
     .replace(/{adminEmail}/g, userData?.email || "admin@example.com")
