@@ -5,24 +5,20 @@ const addSubscriptionValidator = async (req, res, next) => {
     try {
         const bodySchema = Joi.object({
             planType: Joi.string()
-                .valid("free", "basic", "premium")
-                .required()
-                .messages({ "any.only": "Plan type must be 'free', 'basic', or 'premium'" }),
+               // .valid("free", "basic", "premium")
+                .required(),
 
             participantLimit: Joi.number()
                 .required(),
 
             meetingCount: Joi.number()
-                .required()
-                .messages({ "any.required": "Meeting count is required" }),
+                .required(),
 
             meetingDuration: Joi.number()
-                .required()
-                .messages({ "any.required": "Meeting duration is required" }),
+                .required(),
 
-            price: Joi.number()
-                .required()
-                .messages({ "any.required": "Price is required" }),
+            price: Joi.number().precision(2)
+                .required(),
 
             billingCycle: Joi.string()
                 .valid("monthly", "early", "3year")
@@ -30,8 +26,7 @@ const addSubscriptionValidator = async (req, res, next) => {
                 .messages({ "any.only": "Billing cycle must be 'monthly', 'early', or '3year'" }),
 
             validity: Joi.number()
-                .required()
-                .messages({ "any.required": "Validity is required" }),
+                .required(),
 
             // isActive: Joi.boolean()
             //     .optional()
@@ -61,28 +56,21 @@ const updateSubscriptionValidator = async (req, res, next) => {
         });
 
         const bodySchema = Joi.object({
-            planType: Joi.string()
-                .valid("free", "basic", "premium")
-                .messages({ "any.only": "Plan type must be 'free', 'basic', or 'premium'" }),
+            planType: Joi.string(),
 
-            participantLimit: Joi.number().integer()
-                .messages({ "number.base": "Participant limit must be a valid number" }),
+            participantLimit: Joi.number().integer(),
 
-            meetingCount: Joi.number().integer()
-                .messages({ "number.base": "Meeting count must be a valid number" }),
+            meetingCount: Joi.number().integer(),
 
-            meetingDuration: Joi.number().integer()
-                .messages({ "number.base": "Meeting duration must be a valid number" }),
+            meetingDuration: Joi.number().integer(),
 
-            price: Joi.number().integer()
-                .messages({ "number.base": "Price must be a valid number" }),
+            price: Joi.number().precision(2),
 
             billingCycle: Joi.string()
                 .valid("monthly", "early", "3year")
                 .messages({ "any.only": "Billing cycle must be 'monthly', 'early', or '3year'" }),
 
-            validity: Joi.number().integer()
-                .messages({ "number.base": "Validity must be a valid number" }),
+            validity: Joi.number().integer(),
         });
 
         await paramsSchema.validateAsync(req.params);

@@ -594,5 +594,6 @@ module.exports = {
   signInByPassword,
   forgotPassword,
   loginByGmailAccessToken,
-  loginByGmailCredentials
+  loginByGmailCredentials,
+  getOtpLogs,
 };

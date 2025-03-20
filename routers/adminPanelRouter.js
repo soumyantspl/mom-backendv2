@@ -5,7 +5,9 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const adminPanelController = require("../controllers/adminPanelController");
 
 
-router.post("/add-admin", adminPanelController.addAdminController);
+router.post("/add-admin",
+    adminPanelValidator.addAdminValidator,
+    adminPanelController.addAdminController);
 
 router.post("/loginByPassword", 
     adminPanelValidator.loginByPasswordValidator, 

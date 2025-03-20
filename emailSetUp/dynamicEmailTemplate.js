@@ -2660,83 +2660,7 @@ const sendDraftMeetingNotification = async (meetings, creator, logo) => {
 };
 
 
-const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, reason }) => {
-  const template = await EmailTemplate.findOne({
-    templateType: "LEADFORWARD",
-    isActive: true,
-  });
-
-  if (!template) {
-    console.error("No email template found!");
-    return { subject: "", mailBody: "" };
-  }
-
-  if (!template.leadForwardCredentials) {
-    console.error("LeadForwardCredentials missing in template!");
-    return { subject: "", mailBody: "" };
-  }
-
-  let body = template.leadForwardCredentials.body || "";
-  let subject = template.subject;
-  subject = subject.replace(/{adminName}/g, userData?.name);
-  // Replace placeholders in email body
-  body = body
-    .replace(/{assignedUserName}/g, employee?.name)
-    .replace(/{remark}/g, reason)
-    .replace(/{adminEmail}/g, userData?.email )
-    .replace(/{adminName}/g, userData?.name);
-
-  // Lead Details Table
-  const leadDetailsTable = `
-     <h3 style="margin-top: 20px; margin-bottom: 5px; font-size: 14px; font-weight: bold;">Lead Details</h3>
-    <table style="width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.4;">
-      <tr>
-        <td style="border: 1px solid #ddd; padding: 6px;  background-color: #f2f2f2;">Name</td>
-        <td style="border: 1px solid #ddd; padding: 6px;">${contact?.name}</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #ddd; padding: 6px;  background-color: #f2f2f2;">Email</td>
-        <td style="border: 1px solid #ddd; padding: 6px;">${contact?.email}</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #ddd; padding: 6px;  background-color: #f2f2f2; width:100px;">Phone Number</td>
-        <td style="border: 1px solid #ddd; padding: 6px;">${contact?.phoneNo}</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #ddd; padding: 6px;  background-color: #f2f2f2;">Message</td>
-        <td style="border: 1px solid #ddd; padding: 6px;">${contact?.message}</td>
-      </tr>
-    </table>`;
-
-  // Construct email body
-  const mailBody = `
-    <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%; font-family: Arial, sans-serif; line-height: 1.2;">
-      <div style="background-color:#e9f3ff;margin:0;padding:40px 0;width:100%;">
-        <div style="background-color:#fff;padding:20px;width:100%;max-width:640px;margin:0 auto; font-size: 14px;">
-          <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
-            <img style="display: block; margin: 15px auto;" src="${logo}" alt="Logo" />
-          </a>
-          
-          <p style="margin-bottom: 10px;">Dear ${employee?.name},</p>
-          
-          <p style="margin-bottom: 10px;">A new lead has been forwarded to you for follow-up. Please find the details below:</p>
-
-          ${leadDetailsTable} <!-- Table with proper formatting -->
-
-          <p style="margin-top: 15px; margin-bottom: 15px;"><strong>Forwarded Remark:</strong> ${reason}</p>
-
-          <p style=" margin-top: 30px; font-weight: bold;">Regards,</p>
-          <p style=" font-weight: bold;">${userData?.name}</p>
-          <p style="margin-bottom: 10px; font-weight: bold;">${userData?.email}</p>
-        </div>
-      </div>
-    </div>`;
-
-  return { subject, mailBody };
-};
-
-
-// const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, reason }) => {
+// const forwardLeadEmailTemplate = async ({ contact, forwardedUser, userData, logo, reason }) => {
 //   const template = await EmailTemplate.findOne({
 //     templateType: "LEADFORWARD",
 //     isActive: true,
@@ -2744,7 +2668,7 @@ const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, rea
 
 //   if (!template) {
 //     console.error("No email template found!");
-//     return { subject: "", mailBody: "" }; 
+//     return { subject: "", mailBody: "" };
 //   }
 
 //   if (!template.leadForwardCredentials) {
@@ -2753,41 +2677,117 @@ const forwardLeadEmailTemplate = async ({ contact, employee, userData, logo, rea
 //   }
 
 //   let body = template.leadForwardCredentials.body || "";
-//   let subject = template.subject ;
-
-//   // Debugging: Log contact and employee details
-//   console.log("Contact Details:", contact);
-//   console.log("Employee Details:", employee);
-//   console.log("adminEmail:", userData?.email);
-
+//   let subject = template.subject;
 //   subject = subject.replace(/{adminName}/g, userData?.name);
 //   // Replace placeholders in email body
 //   body = body
-//     .replace(/{assignedUserName}/g, employee?.name )
-//     //.replace(/{UserEmail}/g, employee?.email )
-//     .replace(/{remark}/g, reason )
-//     .replace(/{adminEmail}/g, userData?.email || "admin@example.com")
-//     .replace(/{adminName}/g, userData?.name)
-//     .replace(/{leadName}/g, contact?.name )
-//     .replace(/{leadEmail}/g, contact?.email )
-//     .replace(/{leadPhone}/g, contact?.phoneNo )
-//     .replace(/{leadMessage}/g, contact?.message );
+//     .replace(/{assignedUserName}/g, forwardedUser?.name)
+//     .replace(/{remark}/g, reason)
+//     .replace(/{adminEmail}/g, userData?.email )
+//     .replace(/{adminName}/g, userData?.name);
+
+//   // Lead Details Table
+//   const leadDetailsTable = `
+//      <h3 style="margin-top: 20px; margin-bottom: 5px; font-size: 14px; font-weight: bold;">Lead Details</h3>
+//     <table style="width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.4;">
+//       <tr>
+//         <td style="border: 1px solid #ddd; padding: 6px;  background-color: #f2f2f2;">Name</td>
+//         <td style="border: 1px solid #ddd; padding: 6px;">${contact?.name}</td>
+//       </tr>
+//       <tr>
+//         <td style="border: 1px solid #ddd; padding: 6px;  background-color: #f2f2f2;">Email</td>
+//         <td style="border: 1px solid #ddd; padding: 6px;">${contact?.email}</td>
+//       </tr>
+//       <tr>
+//         <td style="border: 1px solid #ddd; padding: 6px;  background-color: #f2f2f2; width:100px;">Phone Number</td>
+//         <td style="border: 1px solid #ddd; padding: 6px;">${contact?.phoneNo}</td>
+//       </tr>
+//       <tr>
+//         <td style="border: 1px solid #ddd; padding: 6px;  background-color: #f2f2f2;">Message</td>
+//         <td style="border: 1px solid #ddd; padding: 6px;">${contact?.message}</td>
+//       </tr>
+//     </table>`;
 
 //   // Construct email body
 //   const mailBody = `
-//     <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
-//       <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
-//         <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
+//     <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%; font-family: Arial, sans-serif; line-height: 1.2;">
+//       <div style="background-color:#e9f3ff;margin:0;padding:40px 0;width:100%;">
+//         <div style="background-color:#fff;padding:20px;width:100%;max-width:640px;margin:0 auto; font-size: 14px;">
 //           <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
-//             <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
+//             <img style="display: block; margin: 15px auto;" src="${logo}" alt="Logo" />
 //           </a>
-//           ${body}
+          
+//           <p style="margin-bottom: 10px;">Dear ${forwardedUser?.name},</p>
+          
+//           <p style="margin-bottom: 10px;">A new lead has been forwarded to you for follow-up. Please find the details below:</p>
+
+//           ${leadDetailsTable} <!-- Table with proper formatting -->
+
+//           <p style="margin-top: 15px; margin-bottom: 15px;"><strong>Forwarded Remark:</strong> ${reason}</p>
+
+//           <p style=" margin-top: 30px; font-weight: bold;">Regards,</p>
+//           <p style=" font-weight: bold;">${userData?.name}</p>
+//           <p style="margin-bottom: 10px; font-weight: bold;">${userData?.email}</p>
 //         </div>
 //       </div>
 //     </div>`;
 
 //   return { subject, mailBody };
 // };
+
+
+const forwardLeadEmailTemplate = async ({ contact, forwardedUser, userData, logo, reason }) => {
+  const template = await EmailTemplate.findOne({
+    templateType: "LEADFORWARD",
+    isActive: true,
+  });
+
+  if (!template) {
+    console.error("No email template found!");
+    return { subject: "", mailBody: "" }; 
+  }
+
+  if (!template.leadForwardCredentials) {
+    console.error("LeadForwardCredentials missing in template!");
+    return { subject: "", mailBody: "" };
+  }
+
+  let body = template.leadForwardCredentials.body || "";
+  let subject = template.subject ;
+
+  // Debugging: Log contact and employee details
+  console.log("Contact Details:", contact);
+  console.log("Employee Details:", forwardedUser);
+  console.log("adminEmail:", userData?.email);
+
+  subject = subject.replace(/{adminName}/g, userData?.name);
+  // Replace placeholders in email body
+  body = body
+    .replace(/{assignedUserName}/g, forwardedUser?.name )
+    //.replace(/{UserEmail}/g, employee?.email )
+    .replace(/{remark}/g, reason )
+    .replace(/{adminEmail}/g, userData?.email || "admin@example.com")
+    .replace(/{adminName}/g, userData?.name)
+    .replace(/{leadName}/g, contact?.name )
+    .replace(/{leadEmail}/g, contact?.email )
+    .replace(/{leadPhone}/g, contact?.phoneNo )
+    .replace(/{leadMessage}/g, contact?.message );
+
+  // Construct email body
+  const mailBody = `
+    <div style="background-color:#e9f3ff;margin:0;padding:0px;width:100%">
+      <div style="background-color:#e9f3ff;margin:0;padding:50px 0;width:100%">
+        <div style="background-color:#fff;padding:30px;width:100%;max-width:640px;margin: 0 auto;">
+          <a href="${process.env.TARGET_WEBSITE}" style="width: 100%; text-align: center;">
+            <img style="float: none; margin: 30px auto; display: block;" src="${logo}" alt="Logo" />
+          </a>
+          ${body}
+        </div>
+      </div>
+    </div>`;
+
+  return { subject, mailBody };
+};
 
 
 

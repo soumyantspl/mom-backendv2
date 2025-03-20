@@ -12,6 +12,8 @@ const Organization = require("../models/organizationModel");
 const Employee = require ("../models/employeeModel");
 const AdminPanel = require("../models/adminPanelModel");
 const authMiddleware = require("../middlewares/authMiddleware");
+const authService = require("../services/authService")
+
 const BASE_URL = process.env.BASE_URL;
 
 
@@ -213,82 +215,84 @@ const rejectLead = async (contactId, data) => {
 
 
 // const forwardLead = async (contactId, data) => {
+
 //     const contact = await contactUs.findById({ _id: contactId });
-//     if (!contact) {
-//         return false;
-//     }
+//     if (contact) {
 
+//         const forwardedUser = await Employee.findById(data.forwardedTo);
+//         if (!forwardedUser) {
+//             return false;
+//         }
+//         console.log("employeeeeee---", forwardedUser);
+
+//         contact.leadStatus.status = "forwarded";
+//         contact.leadStatus.reason = data.reason;
+//         contact.leadStatus.forwardedTo = data.forwardedTo;
+//         contact.leadStatus.forwardedUserName = forwardedUser.name,
+     
     
-//     const employee = await Employee.findById(data.forwardedTo);
-//     if (!employee) {
-//         return false;
+//         contact.leadStatus.timeAndDate = new Date();
+    
+//         await contact.save();
+//         return  contact ;
+
+        
 //     }
-// console.log("employeeeeee---", employee);
-//     // Update lead status
-//     contact.leadStatus.status = "forwarded";
-//     contact.leadStatus.reason = data.reason;
-//     contact.leadStatus.forwardedTo = data.forwardedTo;
- 
+//     return false;
 
-//     contact.leadStatus.timeAndDate = new Date();
-
-//     await contact.save();
-//     return  contact ;
 // };
 
 const forwardLead = async (contactId, data, userData) => {
-    const contact = await contactUs.findById({ _id: contactId });
-    if (!contact) {
-        return false;
-    }
-
-    const employee = await Employee.findById(data.forwardedTo);
-    if (!employee) {
-        return false;
-    }
-
-    console.log("employeeeeee---", employee);
-
     
-    contact.leadStatus.status = "forwarded";
-    contact.leadStatus.reason = data.reason;
-    contact.leadStatus.forwardedTo = data.forwardedTo;
-    contact.leadStatus.timeAndDate = new Date();
+    const contact = await contactUs.findById(contactId);
+    if (contact) {
+
+        const forwardedUser = await Employee.findById(data.forwardedTo);
+
+    if (!forwardedUser) {
+        return false;
+    }
+
+    console.log("forwardedUser---", forwardedUser);
+
+    contact.leadStatus = {
+        status: "forwarded",
+        reason: data.reason,
+        forwardedTo: data.forwardedTo,
+        forwardedUserName : forwardedUser.name,
+        timeAndDate: new Date(),
+    };
 
     
     await contact.save();
-    const formattedTime = commonHelper.formatTimeFormat(contact.leadStatus.timeAndDate.toISOString());
-
 
     console.log("userData---", userData);
     const logo = process.env.LOGO;
-  
-   
+
     
     const mailData = await emailTemplates.forwardLeadEmailTemplate({
         contact,
-       employee,
-       userData,
+        forwardedUser,
+        userData,
         logo,
         reason: data.reason,
     });
 
     
     await emailService.sendEmail(
-        employee.email, 
+        forwardedUser.email,
         "Lead Forwarded Notification",
-        mailData.subject,  
-        mailData.mailBody  
+        mailData.subject,
+        mailData.mailBody
     );
-
-    return {
-        ...contact.toObject(),
-        leadStatus: {
-            ...contact.leadStatus,
-            formattedTime,
-        },
-    };
+    
+    return contact ;
+     
+    }
+ 
+    return false;
 };
+
 
 
 const viewSingleLeadById = async (contactId) => {
@@ -367,8 +371,8 @@ const loginByPassword = async (bodyData) => {
         return false; 
     }
 
-    
-    const passwordIsValid = await commonHelper.verifyPassword(password, user.password);
+     const decrypPassword = await commonHelper.decryptWithAES(password);
+    const passwordIsValid = await commonHelper.verifyPassword(decrypPassword, user.password);
 
     if (!passwordIsValid) {
         return "invalidPassword"; 
@@ -387,52 +391,87 @@ const loginByPassword = async (bodyData) => {
 };
 
 
-const setPassword = async (bodyData) => {
-    const { email, newPassword } = bodyData;
+// const setPassword = async (bodyData) => {
+//     const { email, newPassword } = bodyData;
 
     
+//     const user = await AdminPanel.findOne({ email });
+
+//     if (!user) {
+//         return false; 
+//     }
+
+//     const hashedPassword = await commonHelper.generetHashPassword(newPassword);
+//     user.password = hashedPassword;
+//     await user.save();
+
+//     return true; 
+// };
+
+const setPassword = async (bodyData) => {
+    const { email, newPassword ,otp} = bodyData;
     const user = await AdminPanel.findOne({ email });
 
-    if (!user) {
-        return false; 
+    if (user) {
+
+        const otpData = {
+            email: email,
+            otp: otp,
+        };
+       // const isOtpVerified = await getOtpLogs(otpData);
+       const isOtpVerified = await authService.getOtpLogs(otpData);
+    
+        if (isOtpVerified.length !== 0) {
+           
+        const decryptedPassword = await commonHelper.decryptWithAES(newPassword);
+            console.log("Decrypted Password---",decryptedPassword);
+        
+        const hashedPassword = await commonHelper.generetHashPassword(newPassword);
+    
+        // // Log the password change event
+        // const logData = {
+        //     moduleName: logMessages.authModule.moduleName,
+        //     userId: user._id,
+        //     action: logMessages.authModule.setPassword,
+        //     ipAddress,
+        //     details: logMessages.authModule.setPasswordDetails,
+        //     organizationId: user.organizationId,
+        // };
+        // await logService.createLog(logData);
+    
+       
+        user.password = hashedPassword;
+        await user.save();
+        return true;
+        }
+    
+        return { isInValidOtp: true };
+  
     }
 
-    const hashedPassword = await commonHelper.generetHashPassword(newPassword);
-    user.password = hashedPassword;
-    await user.save();
-
-    return true; 
+    return false;
+   
 };
+
 
 const addAdmin = async (bodyData) => {
     const { name, email, password } = bodyData;
 
-    // Check if email already exists
+    
     const existingAdmin = await AdminPanel.findOne({ email });
     if (existingAdmin) {
-        return { success: false, message: "Email already registered" };
+        return  null ;
     }
 
-    // Create new admin
-    const newAdmin = new AdminPanel({
-        name,
-        email,
-        password
-    });
+    const hashedPassword = await commonHelper.generetHashPassword(password);
 
-    // Save to database
+    const newAdmin = new AdminPanel({ name, email, password: hashedPassword });
+
     const savedAdmin = await newAdmin.save();
 
-    return {
-        success: true,
-        message: "Admin added successfully",
-        data: {
-            _id: savedAdmin._id,
-            name: savedAdmin.name,
-            email: savedAdmin.email
-        }
-    };
+    return  savedAdmin ;
 };
+
 
 
 

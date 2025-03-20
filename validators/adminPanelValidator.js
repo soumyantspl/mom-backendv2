@@ -292,7 +292,8 @@ const setPasswordValidator = async (req, res, next) => {
 
       const bodySchema = Joi.object({
           email: Joi.string().email().required(),
-          newPassword: Joi.string().min(6).max(50).required()
+          newPassword: Joi.string().min(6).max(50).required(),
+          otp: Joi.string().required()
       });
 
        // await headerSchema.validateAsync(req.headers);
@@ -302,6 +303,23 @@ const setPasswordValidator = async (req, res, next) => {
       return Responses.errorResponse(req, res, error);
   }
 };
+
+
+const addAdminValidator = async (req, res, next) => {
+  try {
+      const bodySchema = Joi.object({
+          name: Joi.string().min(3).max(50).required(),
+          email: Joi.string().email().required(),
+          password: Joi.string().min(6).max(50).required(),
+      });
+
+      await bodySchema.validateAsync(req.body);
+      next();
+  } catch (error) {
+      return Responses.errorResponse(req, res, error);
+  }
+};
+
 
 // const leadStatusValidator = async (req, res, next) => {
 //   try {
@@ -344,6 +362,7 @@ const setPasswordValidator = async (req, res, next) => {
     forwardLeadValidator,
     viewSingleLeadValidator,
     loginByPasswordValidator,
-    setPasswordValidator
+    setPasswordValidator,
+    addAdminValidator
   //  leadStatusValidator
 };

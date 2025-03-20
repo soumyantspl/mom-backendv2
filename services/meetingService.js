@@ -1853,21 +1853,50 @@ const listAttendeesFromPreviousMeetingOld = async (organizationId, userId) => {
   return finalData;
 };
 
-// /**FUNC- TO VIEW LIST OF ATTENDEES FROM PREVIOUS MEETING */
-const listAttendeesFromPreviousMeeting = async (organizationId, userId) => {
+// // /**FUNC- TO VIEW LIST OF ATTENDEES FROM PREVIOUS MEETING */
+// const listAttendeesFromPreviousMeeting = async (organizationId, userId) => {
+//   const attendeeData = await Employee.find(
+//     { organizationId: new ObjectId(organizationId), isActive: true },
+//     { name: 1, email: 1, _id: 1, isEmployee: 1 }
+//   ).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
+//   // console.log("attendeeData==========",attendeeData)
+//   // const uniqueAttendeeData = [].concat(...attendeeData);
+//   // const filetrData = uniqueAttendeeData.filter(
+//   //   (obj, index, self) =>
+//   //     index === self.findIndex((o) => JSON.stringify(o) === JSON.stringify(obj))
+//   // );
+//   // const finalData = filetrData.filter((attendee) => attendee.isActive);
+//   return attendeeData;
+// };
+
+const listAttendeesFromPreviousMeeting = async (organizationId) => {
+  // Find the most recent meeting for the given organization
+  const latestMeeting = await Meeting.findOne(
+    { organizationId: new ObjectId(organizationId) },
+    { createdById: 1, attendees: 1 }
+  ).sort({ createdAt: -1 });
+
+  if (!latestMeeting) {
+    return []; // No meetings found
+  }
+
+  const { createdById, attendees } = latestMeeting;
+
+  // Fetch attendees' details, excluding the meeting creator
   const attendeeData = await Employee.find(
-    { organizationId: new ObjectId(organizationId), isActive: true ,_id: { $ne: new ObjectId(userId) } },
+    {
+      _id: { $in: attendees.map(a => a._id), $ne: createdById }, // Exclude creator
+      organizationId: new ObjectId(organizationId),
+      isActive: true,
+    },
     { name: 1, email: 1, _id: 1, isEmployee: 1 }
-  ).sort({ name: 1 }).collation({ locale: "en", strength: 2 });
-  // console.log("attendeeData==========",attendeeData)
-  // const uniqueAttendeeData = [].concat(...attendeeData);
-  // const filetrData = uniqueAttendeeData.filter(
-  //   (obj, index, self) =>
-  //     index === self.findIndex((o) => JSON.stringify(o) === JSON.stringify(obj))
-  // );
-  // const finalData = filetrData.filter((attendee) => attendee.isActive);
+  )
+    .sort({ name: 1 })
+    .collation({ locale: "en", strength: 2 });
+
   return attendeeData;
 };
+
 
 
 

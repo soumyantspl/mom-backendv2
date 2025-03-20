@@ -216,21 +216,21 @@ const setPassword = async (req, res) => {
     }
 };
 
-
 const addAdminController = async (req, res) => {
     try {
         const result = await adminPanelService.addAdmin(req.body);
 
-        if (!result.success) {
-            return Responses.failResponse(req, res, null, result.message, 200);
+        if (!result) {
+            return Responses.failResponse(req, res, null, messages.duplicateEmail, 200);
         }
 
-        return Responses.successResponse(req, res, result.data, result.message, 201);
+        return Responses.successResponse(req, res, result, messages.createdSuccess, 201);
     } catch (error) {
         console.error("Error:", error);
         return Responses.errorResponse(req, res, error);
     }
 };
+
 
 
   module.exports = {

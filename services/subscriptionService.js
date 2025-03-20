@@ -4,11 +4,11 @@ const ObjectId = require("mongoose").Types.ObjectId;
 
 const addSubscription = async (data) => {
     
-    const existingSubscription = await Subscription.findOne({ planType: data.planType });
+    // const existingSubscription = await Subscription.findOne({ planType: data.planType });
 
-    if (existingSubscription) {
-        return { existingSubscription:true };
-    }
+    // if (existingSubscription) {
+    //     return { existingSubscription:true };
+    // }
 
     
     const newSubscription = new Subscription({
@@ -16,7 +16,7 @@ const addSubscription = async (data) => {
         participantLimit: data.participantLimit,
         meetingCount: data.meetingCount,
         meetingDuration: data.meetingDuration,
-        price: data.price,
+        price: parseFloat(data.price),
         billingCycle: data.billingCycle,
         validity: data.validity,
     });
