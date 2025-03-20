@@ -86,8 +86,67 @@ const contactListValidator = async (req, res, next) => {
     }
 };
 
+
+const loginByPasswordValidator = async (req, res, next) => {
+  try {
+      // const headerSchema = Joi.object({
+      //     authorization: Joi.string().required(),
+      // }).unknown(true);
+
+      const bodySchema = Joi.object({
+          email: Joi.string().email().required(),
+          password: Joi.string().required(),
+      });
+
+     // await headerSchema.validateAsync(req.headers);
+      await bodySchema.validateAsync(req.body);
+
+      next();
+  } catch (error) {
+      console.log(error);
+      return Responses.errorResponse(req, res, error);
+  }
+};
+
+const setPasswordValidator = async (req, res, next) => {
+  try {
+    // const headerSchema = Joi.object({
+      //     authorization: Joi.string().required(),
+      // }).
+
+      const bodySchema = Joi.object({
+          email: Joi.string().email().required(),
+          newPassword: Joi.string().min(6).max(50).required()
+      });
+
+       // await headerSchema.validateAsync(req.headers);
+      await bodySchema.validateAsync(req.body);
+      next();
+  } catch (error) {
+      return Responses.errorResponse(req, res, error);
+  }
+};
+
+const addAdminValidator = async (req, res, next) => {
+  try {
+      const bodySchema = Joi.object({
+          name: Joi.string().min(3).max(50).required(),
+          email: Joi.string().email().required(),
+          password: Joi.string().min(6).max(50).required(),
+      });
+
+      await bodySchema.validateAsync(req.body);
+      next();
+  } catch (error) {
+      return Responses.errorResponse(req, res, error);
+  }
+};
+
   module.exports = {
     contactListValidator,
-    organizationListValidator
+    organizationListValidator,
+    loginByPasswordValidator,
+    setPasswordValidator,
+    addAdminValidator
   };
   

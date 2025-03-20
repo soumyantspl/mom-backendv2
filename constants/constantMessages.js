@@ -139,7 +139,10 @@ const subscriptionExists = "Subscription already exists"
 const subscriptionUpdated = "Subscription updated succsessfully"
 const subscriptionDeleted = "Subscription deleted succsessfully"
 
+const invalidCredentials = "Invalid Credential"
+
 module.exports = {
+  invalidCredentials,
   zoomMeetingExists,
   commentCreatedSuccess,
   pleaseAddMinute,

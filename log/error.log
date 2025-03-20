@@ -4421,3 +4421,45 @@ Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith
 Date: 14/03/2025, Time: 18:14
 Error: "headers.authorization" is required
 Stack Trace: ValidationError: "headers.authorization" is required
+Date: 19/03/2025, Time: 10:18
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 19/03/2025, Time: 10:19
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 19/03/2025, Time: 10:19
+Error: Something went wrong while fetching attendees with pending actions.
+Stack Trace: Error: Something went wrong while fetching attendees with pending actions.
+    at Object.getAttendeesWithPendingActions (D:\MinutesVault V2\mom-backendv2\services\actionService.js:3959:11)
+    at getAttendeeDueActionPriorityDetails (D:\MinutesVault V2\mom-backendv2\controllers\actionController.js:631:40)
+    at Layer.handle [as handle_request] (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault V2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at verifyUserToken (D:\MinutesVault V2\mom-backendv2\middlewares\authMiddleware.js:29:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/03/2025, Time: 16:05
+Error: "date" must be a string
+Stack Trace: ValidationError: "date" must be a string
+Date: 20/03/2025, Time: 16:09
+Error: "date" must be a string
+Stack Trace: ValidationError: "date" must be a string
+Date: 20/03/2025, Time: 16:17
+Error: "date" must be a string
+Stack Trace: ValidationError: "date" must be a string
+Date: 20/03/2025, Time: 16:19
+Error: "date" must be a string
+Stack Trace: ValidationError: "date" must be a string
+Date: 20/03/2025, Time: 16:23
+Error: "date" must be a string
+Stack Trace: ValidationError: "date" must be a string
