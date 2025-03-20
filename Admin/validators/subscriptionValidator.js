@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const Responses = require("../helpers/response");
+const Responses = require("../../helpers/response");
 
 const addSubscriptionValidator = async (req, res, next) => {
     try {

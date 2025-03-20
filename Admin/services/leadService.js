@@ -1,18 +1,18 @@
-const commonHelper = require("../helpers/commonHelper");
+const commonHelper = require("../../helpers/commonHelper");
 //const emailTemplates = require("../emailSetUp/emailTemplates");
-const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
-const emailService = require("./emailService");
-const emailConstants = require("../constants/emailConstants");
-const otpDemoLogs = require("../models/otpDemoLogsModel");
-const otpContactUsLogs = require("../models/contactUsOtpLogs");
-const DemoClient = require("../models/demoClientsSchema");
-const contactUs = require("../models/contactUsModel");
+const emailTemplates = require("../../emailSetUp/dynamicEmailTemplate");
+const emailService = require("../../services/emailService");
+const emailConstants = require("../../constants/emailConstants");
+const otpDemoLogs = require("../../models/otpDemoLogsModel");
+const otpContactUsLogs = require("../../models/contactUsOtpLogs");
+const DemoClient = require("../../models/demoClientsSchema");
+const contactUs = require("../../models/contactUsModel");
 const ObjectId = require("mongoose").Types.ObjectId;
-const Organization = require("../models/organizationModel");
-const Employee = require ("../models/employeeModel");
-const AdminPanel = require("../models/adminPanelModel");
-const authMiddleware = require("../middlewares/authMiddleware");
-const authService = require("../services/authService")
+const Organization = require("../../models/organizationModel");
+const Employee = require ("../../models/employeeModel");
+const AdminPanel = require("../../models/adminPanelModel");
+const authMiddleware = require("../../middlewares/authMiddleware");
+//const authService = require("../services/authService")
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -306,186 +306,11 @@ const viewSingleLeadById = async (contactId) => {
 };
 
 
-
-
-const organizationList = async (bodyData, queryData) => {
-    const { limit, page, order = -1, sortBy = "createdAt" } = queryData;
-    let { searchKey = "", fromDate, toDate } = bodyData;
-    searchKey = searchKey.trim();
-
-    let query = {};
-
-   
-    if (searchKey.length > 0) {
-        query.$or = [
-            { name: { $regex: new RegExp(searchKey, "i") } },
-            { email: { $regex: new RegExp(searchKey, "i") } },
-            { contactPersonName: { $regex: new RegExp(searchKey, "i") } }
-        ];
-    }
-
-    
-    if (fromDate || toDate) {
-        query.createdAt = {};
-        if (fromDate) {
-            query.createdAt.$gte = new Date(fromDate);
-        }
-        if (toDate) {
-            query.createdAt.$lt = new Date(new Date(toDate).setDate(new Date(toDate).getDate() + 1));
-        }
-    }
-
-    
-    const totalCount = await Organization.countDocuments(query);
-
-    
-    const validLimit = parseInt(limit) || 5; 
-    const validPage = parseInt(page) || 1; 
-    const skip = (validPage - 1) * validLimit;
-
-    
-    const result = await Organization.find(query)
-        .sort({ [sortBy]: parseInt(order) })
-        .skip(skip)
-        .limit(validLimit);
-
-        const formattedResult = result.map(item => ({
-            ...item._doc,
-            createdAt: commonHelper.formatTimeFormat(item.createdAt.toISOString()) // Convert Date to String
-        }));
-
-    return { totalCount, data: formattedResult };
-};
-
-
-const loginByPassword = async (bodyData) => {
-    const { email, password } = bodyData;
-
-   
-    const user = await AdminPanel.findOne({ email });
-
-    console.log("User Found:", user); 
-
-    
-    if (!user) {
-        return false; 
-    }
-
-     const decrypPassword = await commonHelper.decryptWithAES(password);
-    const passwordIsValid = await commonHelper.verifyPassword(decrypPassword, user.password);
-
-    if (!passwordIsValid) {
-        return "invalidPassword"; 
-    }
-    const token = await authMiddleware.generateUserToken({
-        userId: user._id,
-        name: user.name,
-      });
-      delete user.password;
-    return {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        token,
-    };
-};
-
-
-// const setPassword = async (bodyData) => {
-//     const { email, newPassword } = bodyData;
-
-    
-//     const user = await AdminPanel.findOne({ email });
-
-//     if (!user) {
-//         return false; 
-//     }
-
-//     const hashedPassword = await commonHelper.generetHashPassword(newPassword);
-//     user.password = hashedPassword;
-//     await user.save();
-
-//     return true; 
-// };
-
-const setPassword = async (bodyData) => {
-    const { email, newPassword ,otp} = bodyData;
-    const user = await AdminPanel.findOne({ email });
-
-    if (user) {
-
-        const otpData = {
-            email: email,
-            otp: otp,
-        };
-       // const isOtpVerified = await getOtpLogs(otpData);
-       const isOtpVerified = await authService.getOtpLogs(otpData);
-    
-        if (isOtpVerified.length !== 0) {
-           
-        const decryptedPassword = await commonHelper.decryptWithAES(newPassword);
-            console.log("Decrypted Password---",decryptedPassword);
-        
-        const hashedPassword = await commonHelper.generetHashPassword(newPassword);
-    
-        // // Log the password change event
-        // const logData = {
-        //     moduleName: logMessages.authModule.moduleName,
-        //     userId: user._id,
-        //     action: logMessages.authModule.setPassword,
-        //     ipAddress,
-        //     details: logMessages.authModule.setPasswordDetails,
-        //     organizationId: user.organizationId,
-        // };
-        // await logService.createLog(logData);
-    
-       
-        user.password = hashedPassword;
-        await user.save();
-        return true;
-        }
-    
-        return { isInValidOtp: true };
-  
-    }
-
-    return false;
-   
-};
-
-
-const addAdmin = async (bodyData) => {
-    const { name, email, password } = bodyData;
-
-    
-    const existingAdmin = await AdminPanel.findOne({ email });
-    if (existingAdmin) {
-        return  null ;
-    }
-
-    const hashedPassword = await commonHelper.generetHashPassword(password);
-
-    const newAdmin = new AdminPanel({ name, email, password: hashedPassword });
-
-    const savedAdmin = await newAdmin.save();
-
-    return  savedAdmin ;
-};
-
-
-
-
-
-
-  module.exports = {
-    organizationList,
+module.exports = {
     contactUsList,
     cancelLead,
     closeLead, 
     rejectLead ,
     forwardLead,
     viewSingleLeadById,
-    loginByPassword,
-    setPassword,
-    addAdmin
   };

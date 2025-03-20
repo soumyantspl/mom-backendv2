@@ -2381,3 +2381,115 @@ Stack Trace: ReferenceError: Cannot access 'createdById' before initialization
     at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
     at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:30:7)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/03/2025, Time: 17:07
+Error: adminPanelService.organizationList is not a function
+Stack Trace: TypeError: adminPanelService.organizationList is not a function
+    at getOrganizations (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\controllers\organizationController.js:10:58)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at organizationListValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\validators\organizationValidator.js:40:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/03/2025, Time: 17:09
+Error: messages is not defined
+Stack Trace: ReferenceError: messages is not defined
+    at getOrganizations (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\controllers\organizationController.js:26:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/03/2025, Time: 17:10
+Error: adminPanelService.contactUsList is not a function
+Stack Trace: TypeError: adminPanelService.contactUsList is not a function
+    at getAllContacts (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\controllers\leadController.js:20:52)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at contactListValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\validators\leadValidator.js:39:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 20/03/2025, Time: 17:53
+Error: logMessages is not defined
+Stack Trace: ReferenceError: logMessages is not defined
+    at Object.sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:36:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\controllers\adminAuthController.js:11:20)
+Date: 20/03/2025, Time: 17:56
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 17:59
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:00
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:02
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:05
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:06
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:07
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:07
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:08
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:12
+Error: OtpLogs is not defined
+Stack Trace: ReferenceError: OtpLogs is not defined
+    at checkReSendOtpRules (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:236:23)
+    at validateSendingOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:207:27)
+    at Object.sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:47:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\controllers\adminAuthController.js:11:20)
+Date: 20/03/2025, Time: 18:14
+Error: otpLogs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: otpLogs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 20/03/2025, Time: 18:16
+Error: otpLogs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: otpLogs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)

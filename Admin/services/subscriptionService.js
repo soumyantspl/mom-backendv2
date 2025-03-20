@@ -1,4 +1,4 @@
-const Subscription = require("../models/subscriptionModel");
+const Subscription = require("../../models/subscriptionModel");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 

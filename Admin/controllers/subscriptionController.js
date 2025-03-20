@@ -1,7 +1,7 @@
 const subscriptionService = require("../services/subscriptionService");
-const Responses = require("../helpers/response"); 
-const messages = require("../constants/constantMessages"); 
-const { errorLog } = require("../middlewares/errorLog");
+const Responses = require("../../helpers/response"); 
+const messages = require("../../constants/constantMessages"); 
+const { errorLog } = require("../../middlewares/errorLog");
 
 const addSubscription = async (req, res) => {
     try {
