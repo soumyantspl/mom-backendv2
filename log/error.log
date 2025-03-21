@@ -4644,3 +4644,31 @@ Date: 14/03/2025, Time: 18:14
 Error: "headers.authorization" is required
 Stack Trace: ValidationError: "headers.authorization" is required
 >>>>>>> 832c9ce1eb51bd1d5c51c5136d9bd3071a78a573
+Date: 21/03/2025, Time: 12:01
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\Admin\validators\leadValidator.js:198:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 21/03/2025, Time: 12:04
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\Admin\validators\leadValidator.js:198:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 21/03/2025, Time: 13:01
+Error: Operation `contactus.countDocuments()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `contactus.countDocuments()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 21/03/2025, Time: 13:01
+Error: Operation `subscriptions.countDocuments()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `subscriptions.countDocuments()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
