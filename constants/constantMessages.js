@@ -63,7 +63,7 @@ const otpVerifiedSuccess = "Your OTP has been successfully verified!";
 const invalidOtp =
   "The OTP you entered is incorrect. Please verify and try again.";
 const userNotFound =
-  "The email you entered does not match our records. Please enter a valid  email.";
+  "The email you entered does not match with our records. Please enter a valid  email.";
 const otpSentSuccess = async (email) => {
   return `A 6 digit OTP has been sent to ${email}.`;
 };

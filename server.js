@@ -115,12 +115,12 @@ io.on("connection", (socket) => {
 }); 
 app.set("io", io);
 // Run the cron job
-const cronJob = require("./cronJob/index");
-cronJob.acceptAllPendingMomsCronJob();
-cronJob.alertsCron();
- cronJob.chaseOfActionCron()
- cronJob.checkDraftMeetingsCron()
- cronJob.scheduleDraftMeetingCleanup()
+// const cronJob = require("./cronJob/index");
+// cronJob.acceptAllPendingMomsCronJob();
+// cronJob.alertsCron();
+//  cronJob.chaseOfActionCron()
+//  cronJob.checkDraftMeetingsCron()
+//  cronJob.scheduleDraftMeetingCleanup()
 //"dev": "set NODE_TLS_REJECT_UNAUTHORIZED='0'&& nodemon server.js",
 
 //NODE_TLS_REJECT_UNAUTHORIZED='0' node server.js
