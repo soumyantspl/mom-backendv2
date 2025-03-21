@@ -10,11 +10,12 @@ const contactUs = require("../../models/contactUsModel");
 const ObjectId = require("mongoose").Types.ObjectId;
 const Organization = require("../../models/organizationModel");
 const Employee = require ("../../models/employeeModel");
-const AdminPanel = require("../../models/adminPanelModel");
+const AdminPanel = require("../models/adminPanelModel");
 const authMiddleware = require("../../middlewares/authMiddleware");
 const logService = require("../../services/logsService");
 const logMessages = require("../../constants/logsConstants");
-const OtpLogs = require("../../models/otpLogsModel");
+//const OtpLogs = require("../../models/otpLogsModel");
+const adminOtpLogs = require("../models/adminOtpLogsModel");
 //const authService = require("../services/authService")
 
 const BASE_URL = process.env.BASE_URL;
@@ -59,16 +60,16 @@ const verifyOtp = async (data, ipAddress) => {
       userId: userData?._id,
       name: userData?.name,
     });
-    const logData = {
-      moduleName: logMessages.authModule.moduleName,
-      userId: userData._id,
-      action: logMessages.authModule.sendOTP,
-      ipAddress,
-      details: logMessages.authModule.signInByOTP,
-      organizationId: userData.organizationId,
-    };
-    "logData-------------------", logData;
-    await logService.createLog(logData);
+    // const logData = {
+    //   moduleName: logMessages.authModule.moduleName,
+    //   userId: userData._id,
+    //   action: logMessages.authModule.sendOTP,
+    //   ipAddress,
+    //   details: logMessages.authModule.signInByOTP,
+    //   organizationId: userData.organizationId,
+    // };
+    // "logData-------------------", logData;
+    // await logService.createLog(logData);
     return {
       token,
       userData,
@@ -86,7 +87,7 @@ const getOtpLogs = async (data) => {
   "NOW--------------", fromTime;
   "CURRENT-----------", new Date();
 
-  return await OtpLogs.aggregate([
+  return await adminOtpLogs.aggregate([
     {
       $match: {
         email: data.email,
@@ -100,7 +101,7 @@ const getOtpLogs = async (data) => {
     },
     {
       $lookup: {
-        from: "employees",
+        from: "adminpanels",
         localField: "email",
         foreignField: "email",
         as: "userDetail",
@@ -131,24 +132,24 @@ const insertOtp = async (
   otpResendTime = null,
   emailType
 ) => {
-  const otpLogsUpdate = await OtpLogs.updateMany(
-    {
-      email: userData.email,
-      organizationId: new ObjectId(userData.organizationId),
-    },
-    { isActive: false },
-    { upsert: true }
-  );
-  "----------------otpLogsUpdate", otpLogsUpdate;
+  // const otpLogsUpdate = await adminOtpLogs.updateMany(
+  //   {
+  //     email: userData.email,
+  //   //  organizationId: new ObjectId(userData.organizationId),
+  //   },
+  //   { isActive: false },
+  //   { upsert: true }
+  // );
+  // "----------------otpLogsUpdate", otpLogsUpdate;
   const data = {
     otp: commonHelper.generateOtp(),
     email: userData.email,
-    organizationId: userData.organizationId,
+   // organizationId: userData.organizationId,
     expiryTime: commonHelper.otpExpiryTime(2), // 10 minutes
     otpResendCount,
     otpResendTime,
   };
-  const otpData = new OtpLogs(data);
+  const otpData = new adminOtpLogs(data);
   await otpData.save();
   "-------------------------------1", userData, data.otp;
   const supportData = "support@ntspl.co.in";
@@ -234,7 +235,7 @@ const validateSendingOtp = async (userData, emailType) => {
 
 /**FUNC- TO VERIFY SEND OTP RULES   */
 const checkReSendOtpRules = async (userData) => {
-  const otpLogsData = await OtpLogs.findOne({ email: userData.email }).sort({
+  const otpLogsData = await adminOtpLogs.findOne({ email: userData.email }).sort({
     createdAt: -1,
   });
   "otpLogsData----------------", otpLogsData;
@@ -309,37 +310,85 @@ const checkReSendOtpRules = async (userData) => {
 
 
 
-const loginByPassword = async (bodyData) => {
-    const { email, password } = bodyData;
+// const loginByPassword = async (bodyData) => {
+//     const { email, password } = bodyData;
 
    
-    const user = await AdminPanel.findOne({ email });
+//     const user = await AdminPanel.findOne({ email });
 
-    console.log("User Found:", user); 
+//     console.log("User Found:", user); 
 
     
-    if (!user) {
-        return false; 
-    }
+//     if (!user) {
+//         return false; 
+//     }
 
-     const decrypPassword = await commonHelper.decryptWithAES(password);
-    const passwordIsValid = await commonHelper.verifyPassword(decrypPassword, user.password);
+//     // const decrypPassword = await commonHelper.decryptWithAES(password);
+//    // const passwordIsValid = await commonHelper.verifyPassword(decrypPassword, user.password);
+   
+//     if (!passwordIsValid) {
+//         return "invalidPassword"; 
+//     }
+//     const token = await authMiddleware.generateUserToken({
+//         userId: user._id,
+//         name: user.name,
+//       });
+//       delete user.password;
+//     return {
+//         _id: user._id,
+//         name: user.name,
+//         email: user.email,
+//         token,
+//     };
+// };
 
-    if (!passwordIsValid) {
-        return "invalidPassword"; 
-    }
-    const token = await authMiddleware.generateUserToken({
-        userId: user._id,
-        name: user.name,
-      });
-      delete user.password;
-    return {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        token,
-    };
+const loginByPassword = async (bodyData) => {
+  const { email, password } = bodyData;
+
+  // Find user by email
+  const user = await AdminPanel.findOne({ email });
+
+  console.log("User Found:", user);
+
+  if (!user) {
+      return false; // User not found
+  }
+
+  // Fetch admin panel password based on email
+  const adminPanelUser = await AdminPanel.findOne({ email });
+  const adminPanelPassword = adminPanelUser ? adminPanelUser.password : null;
+
+  if (!adminPanelPassword) {
+      console.error("Admin panel password not found!");
+      return "serverError";
+  }
+
+  // Verify if the entered password matches the user's stored password or admin panel password
+  // const decryptedPassword = await commonHelper.decryptWithAES(password);
+  const passwordIsValid =
+      password === adminPanelPassword || // Match with admin panel password
+      (await commonHelper.verifyPassword(password, user.password)); // Match with user's hashed password
+
+  if (!passwordIsValid) {
+      return "invalidPassword";
+  }
+
+  // Generate auth token
+  const token = await authMiddleware.generateUserToken({
+      userId: user._id,
+      name: user.name,
+  });
+
+  delete user.password;
+
+  return {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token,
+  };
 };
+
 
 
 // const setPassword = async (bodyData) => {
@@ -390,7 +439,7 @@ const setPassword = async (bodyData) => {
         // };
         // await logService.createLog(logData);
     
-       
+       // user.password = newPassword;
         user.password = hashedPassword;
         await user.save();
         return true;

@@ -11,6 +11,7 @@ const AdminPanelSchema = new mongoose.Schema({
         }
     },
     password: { type: String, required: true },
+    isSuperAdmin:{ type:Boolean , default: true},
     isActive:{ type:Boolean , default: true},
 }, 
 { timestamps: true });

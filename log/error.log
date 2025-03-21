@@ -2493,3 +2493,79 @@ Stack Trace: ValidationError: otpLogs validation failed: organizationId: Path `o
     at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
     at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 21/03/2025, Time: 10:04
+Error: otpLogs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: otpLogs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 21/03/2025, Time: 10:43
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 21/03/2025, Time: 11:54
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 21/03/2025, Time: 11:58
+Error: logs validation failed: organizationId: Path `organizationId` is required.
+Stack Trace: ValidationError: logs validation failed: organizationId: Path `organizationId` is required.
+    at Document.invalidate (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3329:32)
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\document.js:3090:17
+    at D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\schemaType.js:1407:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+Date: 21/03/2025, Time: 12:29
+Error: OtpLogs is not defined
+Stack Trace: ReferenceError: OtpLogs is not defined
+    at checkReSendOtpRules (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:238:23)
+    at validateSendingOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:209:27)
+    at Object.sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:49:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\controllers\adminAuthController.js:11:20)
+Date: 21/03/2025, Time: 12:29
+Error: OtpLogs is not defined
+Stack Trace: ReferenceError: OtpLogs is not defined
+    at insertOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:135:25)
+    at validateSendingOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:217:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Object.sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:49:12)
+    at async sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\controllers\adminAuthController.js:11:20)
+Date: 21/03/2025, Time: 12:30
+Error: Operation `adminpanels.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `adminpanels.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)
+Date: 21/03/2025, Time: 12:31
+Error: Path "organizationId" is not in schema, strict mode is `true`, and upsert is `true`.
+Stack Trace: StrictModeError: Path "organizationId" is not in schema, strict mode is `true`, and upsert is `true`.
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:305:17)
+    at Query.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._updateThunk (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:3880:8)
+    at model.Query._updateMany (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:3971:23)
+    at model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async insertOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:135:25)
+    at async validateSendingOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:217:11)
+    at async Object.sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:49:12)
+Date: 21/03/2025, Time: 15:48
+Error: Path "organizationId" is not in schema, strict mode is `true`, and upsert is `true`.
+Stack Trace: StrictModeError: Path "organizationId" is not in schema, strict mode is `true`, and upsert is `true`.
+    at cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\cast.js:305:17)
+    at Query.cast (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4907:12)
+    at Query._castConditions (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:2325:10)
+    at model.Query._updateThunk (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:3880:8)
+    at model.Query._updateMany (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:3971:23)
+    at model.Query.exec (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\mongoose\lib\query.js:4456:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async insertOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:135:25)
+    at async validateSendingOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:227:11)
+    at async Object.sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:49:12)

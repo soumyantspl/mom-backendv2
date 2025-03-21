@@ -90,7 +90,7 @@ const loginByPassword = async (req, res) => {
         const result = await adminAuthService.loginByPassword(req.body, req.userData);
 
         if (!result) {
-            return Responses.failResponse(req, res, null, messages.invalidCredentials, 200);
+            return Responses.failResponse(req, res, null, messages.userNotFound, 200);
         }
 
         if (result === "invalidPassword") {
@@ -111,6 +111,9 @@ const setPassword = async (req, res) => {
         if (!result) {
             return Responses.failResponse(req, res, null, messages.userNotFound, 200);
         }
+         if (result?.isInValidOtp) {
+              return Responses.failResponse(req, res, null, messages.invalidOtp, 200);
+            }
 
         return Responses.successResponse(req, res, null, messages.passwordResetSuccess, 200);
     } catch (error) {

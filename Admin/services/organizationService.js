@@ -10,7 +10,7 @@ const contactUs = require("../../models/contactUsModel");
 const ObjectId = require("mongoose").Types.ObjectId;
 const Organization = require("../../models/organizationModel");
 const Employee = require ("../../models/employeeModel");
-const AdminPanel = require("../../models/adminPanelModel");
+const AdminPanel = require("../models/adminPanelModel");
 const authMiddleware = require("../../middlewares/authMiddleware");
 //const authService = require("../services/authService")
 
