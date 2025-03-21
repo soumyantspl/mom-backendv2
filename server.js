@@ -116,8 +116,8 @@ io.on("connection", (socket) => {
 app.set("io", io);
 // Run the cron job
 const cronJob = require("./cronJob/index");
-// cronJob.acceptAllPendingMomsCronJob();
-// cronJob.alertsCron();
+cronJob.acceptAllPendingMomsCronJob();
+cronJob.alertsCron();
  cronJob.chaseOfActionCron()
  cronJob.checkDraftMeetingsCron()
  cronJob.scheduleDraftMeetingCleanup()

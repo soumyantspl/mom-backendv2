@@ -148,14 +148,10 @@ const leadFowarded = "Lead forwarded successfully"
 const leadFetched = "Lead fetched successfully"
 const deactivatedOrganization = "Organization is deactivated"
 const activatedOrganization = "Organization is activated"
+const invalidCredentials = "Invalid Credential"
+
 module.exports = {
-  leadFetched,
-  leadFowarded,
-  alreadyRejected,
-  alreadyClosed,
-  alreadyCancelled,
-  leadUpdated,
-  contactListFetched,
+  invalidCredentials,
   zoomMeetingExists,
   commentCreatedSuccess,
   pleaseAddMinute,
@@ -273,5 +269,13 @@ module.exports = {
   subscriptionUpdated,
   subscriptionDeleted,
   deactivatedOrganization,
-  activatedOrganization
+  activatedOrganization,
+
+  leadFetched,
+  leadFowarded,
+  alreadyRejected,
+  alreadyClosed,
+  alreadyCancelled,
+  leadUpdated,
+  contactListFetched,
 }; 

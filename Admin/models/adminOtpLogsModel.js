@@ -17,11 +17,11 @@ const adminOtpLogsSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-    organizationId: {
-      type: mongoose.Schema.ObjectId,
-      required: false,
-      index: true,
-    },
+    // organizationId: {
+    //   type: mongoose.Schema.ObjectId,
+    //   required: false,
+      
+    // },
     expiryTime: {
       required: false,
       type: Date,
