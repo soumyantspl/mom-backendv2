@@ -13,7 +13,7 @@ router.post("/loginByPassword",
     adminAuthValidator.loginByPasswordValidator, 
     adminAuthController.loginByPassword);
 
-router.post("/set-password", 
+router.post("/setPassword", 
     adminAuthValidator.setPasswordValidator,
    // authMiddleware.verifyUserToken, 
     adminAuthController.setPassword);

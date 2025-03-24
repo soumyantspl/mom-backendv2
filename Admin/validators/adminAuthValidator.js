@@ -84,7 +84,7 @@ const setPasswordValidator = async (req, res, next) => {
 
       const bodySchema = Joi.object({
           email: Joi.string().email().required(),
-          newPassword: Joi.string().min(6).max(50).required(),
+          password: Joi.string().min(6).max(50).required(),
           otp: Joi.string().required()
       });
 

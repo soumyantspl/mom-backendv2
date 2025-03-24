@@ -346,11 +346,11 @@ const loginByPassword = async (bodyData) => {
   const { email, password } = bodyData;
 
   // Find user by email
-  const user = await AdminPanel.findOne({ email });
+  const userData = await AdminPanel.findOne({ email });
 
-  console.log("User Found:", user);
+  console.log("User Found:", userData);
 
-  if (!user) {
+  if (!userData) {
       return false; // User not found
   }
 
@@ -363,29 +363,32 @@ const loginByPassword = async (bodyData) => {
       return "serverError";
   }
 
-  // Verify if the entered password matches the user's stored password or admin panel password
+  
   // const decryptedPassword = await commonHelper.decryptWithAES(password);
   const passwordIsValid =
       password === adminPanelPassword || // Match with admin panel password
-      (await commonHelper.verifyPassword(password, user.password)); // Match with user's hashed password
+      (await commonHelper.verifyPassword(password, userData.password)); // Match with user's hashed password
 
   if (!passwordIsValid) {
       return "invalidPassword";
   }
 
-  // Generate auth token
+  
   const token = await authMiddleware.generateUserToken({
-      userId: user._id,
-      name: user.name,
+      userId: userData._id,
+      name: userData.name,
   });
 
-  delete user.password;
+  delete userData.password;
 
   return {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      token,
+    token,
+    userData:{
+      _id: userData._id,
+      name: userData.name,
+      email: userData.email,
+      isSuperAdmin: userData.isSuperAdmin,
+    },
   };
 };
 
@@ -409,48 +412,48 @@ const loginByPassword = async (bodyData) => {
 // };
 
 const setPassword = async (bodyData) => {
-    const { email, newPassword ,otp} = bodyData;
-    const user = await AdminPanel.findOne({ email });
+  const { email, password ,otp} = bodyData;
+  const user = await AdminPanel.findOne({ email });
 
-    if (user) {
+  if (user) {
 
-        const otpData = {
-            email: email,
-            otp: otp,
-        };
-       // const isOtpVerified = await getOtpLogs(otpData);
-       const isOtpVerified = await getOtpLogs(otpData);
-    
-        if (isOtpVerified.length !== 0) {
-           
-        const decryptedPassword = await commonHelper.decryptWithAES(newPassword);
-            console.log("Decrypted Password---",decryptedPassword);
-        
-        const hashedPassword = await commonHelper.generetHashPassword(newPassword);
-    
-        // // Log the password change event
-        // const logData = {
-        //     moduleName: logMessages.authModule.moduleName,
-        //     userId: user._id,
-        //     action: logMessages.authModule.setPassword,
-        //     ipAddress,
-        //     details: logMessages.authModule.setPasswordDetails,
-        //     organizationId: user.organizationId,
-        // };
-        // await logService.createLog(logData);
-    
-       // user.password = newPassword;
-        user.password = hashedPassword;
-        await user.save();
-        return true;
-        }
-    
-        return { isInValidOtp: true };
+      const otpData = {
+          email: email,
+          otp: otp,
+      };
+     // const isOtpVerified = await getOtpLogs(otpData);
+     const isOtpVerified = await getOtpLogs(otpData);
   
-    }
+      if (isOtpVerified.length !== 0) {
+         
+      const decryptedPassword = await commonHelper.decryptWithAES(password);
+          console.log("Decrypted Password---",decryptedPassword);
+      
+      const hashedPassword = await commonHelper.generetHashPassword(decryptedPassword);
+  
+      // // Log the password change event
+      // const logData = {
+      //     moduleName: logMessages.authModule.moduleName,
+      //     userId: user._id,
+      //     action: logMessages.authModule.setPassword,
+      //     ipAddress,
+      //     details: logMessages.authModule.setPasswordDetails,
+      //     organizationId: user.organizationId,
+      // };
+      // await logService.createLog(logData);
+  
+    //  user.password = newPassword;
+      user.password = hashedPassword;
+      await user.save();
+      return true;
+      }
+  
+      return { isInValidOtp: true };
 
-    return false;
-   
+  }
+
+  return false;
+ 
 };
 
 
