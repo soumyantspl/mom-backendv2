@@ -310,84 +310,88 @@ const checkReSendOtpRules = async (userData) => {
 
 
 
-const loginByPassword = async (bodyData) => {
-    const { email, password } = bodyData;
+// const loginByPassword = async (bodyData) => {
+//     const { email, password } = bodyData;
 
    
-    const user = await AdminPanel.findOne({ email });
+//     const user = await AdminPanel.findOne({ email });
 
-    console.log("User Found:", user); 
+//     console.log("User Found:", user); 
 
     
-    if (!user) {
-        return false; 
-    }
+//     if (!user) {
+//         return false; 
+//     }
 
-    const decrypPassword = await commonHelper.decryptWithAES(password);
-   const passwordIsValid = await commonHelper.verifyPassword(decrypPassword, user.password);
+//     const decrypPassword = await commonHelper.decryptWithAES(password);
+//    const passwordIsValid = await commonHelper.verifyPassword(decrypPassword, user.password);
    
-    if (!passwordIsValid) {
-        return "invalidPassword"; 
-    }
-    const token = await authMiddleware.generateUserToken({
-        userId: user._id,
-        name: user.name,
-      });
-      delete user.password;
-    return {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        token,
-    };
-};
-
-// const loginByPassword = async (bodyData) => {
-//   const { email, password } = bodyData;
-
-//   // Find user by email
-//   const user = await AdminPanel.findOne({ email });
-
-//   console.log("User Found:", user);
-
-//   if (!user) {
-//       return false; // User not found
-//   }
-
-//   // Fetch admin panel password based on email
-//   const adminPanelUser = await AdminPanel.findOne({ email });
-//   const adminPanelPassword = adminPanelUser ? adminPanelUser.password : null;
-
-//   if (!adminPanelPassword) {
-//       console.error("Admin panel password not found!");
-//       return "serverError";
-//   }
-
-//   // Verify if the entered password matches the user's stored password or admin panel password
-//   // const decryptedPassword = await commonHelper.decryptWithAES(password);
-//   const passwordIsValid =
-//       password === adminPanelPassword || // Match with admin panel password
-//       (await commonHelper.verifyPassword(password, user.password)); // Match with user's hashed password
-
-//   if (!passwordIsValid) {
-//       return "invalidPassword";
-//   }
-
-//   // Generate auth token
-//   const token = await authMiddleware.generateUserToken({
-//       userId: user._id,
-//       name: user.name,
-//   });
-
-//   delete user.password;
-
-//   return {
-//       _id: user._id,
-//       name: user.name,
-//       email: user.email,
-//       token,
-//   };
+//     if (!passwordIsValid) {
+//         return "invalidPassword"; 
+//     }
+//     const token = await authMiddleware.generateUserToken({
+//         userId: user._id,
+//         name: user.name,
+//       });
+//       delete user.password;
+//     return {
+//         _id: user._id,
+//         name: user.name,
+//         email: user.email,
+//         token,
+//     };
 // };
+
+
+const loginByPassword = async (bodyData) => {
+  const { email, password } = bodyData;
+
+  
+  const userData = await AdminPanel.findOne({ email });
+
+  console.log("User Found:", userData);
+
+  if (!userData) {
+      return false; 
+  }
+
+  
+  const adminPanelUser = await AdminPanel.findOne({ email });
+  const adminPanelPassword = adminPanelUser ? adminPanelUser.password : null;
+
+  if (!adminPanelPassword) {
+      console.error("Admin panel password not found!");
+      return "serverError";
+  }
+
+  
+   const decryptedPassword = await commonHelper.decryptWithAES(password);
+  // const passwordIsValid =
+  //     password === adminPanelPassword || // Match with admin panel password
+  //     (await commonHelper.verifyPassword(password, userData.decryptedPassword)); // Match with user's hashed password
+      const passwordIsValid = await commonHelper.verifyPassword(decryptedPassword, userData.password);
+  if (!passwordIsValid) {
+      return "invalidPassword";
+  }
+
+  
+  const token = await authMiddleware.generateUserToken({
+      userId: userData._id,
+      name: userData.name,
+  });
+
+  delete userData.password;
+
+  return {
+    token,
+    userData:{
+      _id: userData._id,
+      name: userData.name,
+      email: userData.email,
+      isSuperAdmin: userData.isSuperAdmin,
+    },
+  };
+};
 
 
 
@@ -409,48 +413,48 @@ const loginByPassword = async (bodyData) => {
 // };
 
 const setPassword = async (bodyData) => {
-    const { email, newPassword ,otp} = bodyData;
-    const user = await AdminPanel.findOne({ email });
+  const { email, password ,otp} = bodyData;
+  const user = await AdminPanel.findOne({ email });
 
-    if (user) {
+  if (user) {
 
-        const otpData = {
-            email: email,
-            otp: otp,
-        };
-       // const isOtpVerified = await getOtpLogs(otpData);
-       const isOtpVerified = await getOtpLogs(otpData);
-    
-        if (isOtpVerified.length !== 0) {
-           
-        const decryptedPassword = await commonHelper.decryptWithAES(newPassword);
-            console.log("Decrypted Password---",decryptedPassword);
-        
-        const hashedPassword = await commonHelper.generetHashPassword(newPassword);
-    
-        // // Log the password change event
-        // const logData = {
-        //     moduleName: logMessages.authModule.moduleName,
-        //     userId: user._id,
-        //     action: logMessages.authModule.setPassword,
-        //     ipAddress,
-        //     details: logMessages.authModule.setPasswordDetails,
-        //     organizationId: user.organizationId,
-        // };
-        // await logService.createLog(logData);
-    
-      //  user.password = newPassword;
-        user.password = hashedPassword;
-        await user.save();
-        return true;
-        }
-    
-        return { isInValidOtp: true };
+      const otpData = {
+          email: email,
+          otp: otp,
+      };
+     // const isOtpVerified = await getOtpLogs(otpData);
+     const isOtpVerified = await getOtpLogs(otpData);
   
-    }
+      if (isOtpVerified.length !== 0) {
+         
+      const decryptedPassword = await commonHelper.decryptWithAES(password);
+          console.log("Decrypted Password---",decryptedPassword);
+      
+      const hashedPassword = await commonHelper.generetHashPassword(decryptedPassword);
+  
+      // // Log the password change event
+      // const logData = {
+      //     moduleName: logMessages.authModule.moduleName,
+      //     userId: user._id,
+      //     action: logMessages.authModule.setPassword,
+      //     ipAddress,
+      //     details: logMessages.authModule.setPasswordDetails,
+      //     organizationId: user.organizationId,
+      // };
+      // await logService.createLog(logData);
+  
+    //  user.password = newPassword;
+      user.password = hashedPassword;
+      await user.save();
+      return true;
+      }
+  
+      return { isInValidOtp: true };
 
-    return false;
-   
+  }
+
+  return false;
+ 
 };
 
 

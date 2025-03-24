@@ -4723,3 +4723,9 @@ Date: 21/03/2025, Time: 10:15
 Error: "date" must be a string
 Stack Trace: ValidationError: "date" must be a string
 >>>>>>> 3194a30043efaa932d6870700993a8baece5202f
+Date: 24/03/2025, Time: 13:02
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
+Date: 24/03/2025, Time: 13:02
+Error: "organizationId" is required
+Stack Trace: ValidationError: "organizationId" is required
