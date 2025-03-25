@@ -47,7 +47,7 @@ const emailLogList = async (bodyData, queryData) => {
     
     const formattedResult = result.map(item => ({
         ...item._doc,
-        createdAt: commonHelper.formatTimeFormat(item.createdAt.toISOString())
+        createdAt: commonHelper.formatDateTimeFormat(item.createdAt.toISOString())
     }));
 
     return { totalCount, data: formattedResult };
