@@ -137,8 +137,6 @@ const addAdminController = async (req, res) => {
     }
 };
 
-
-
   module.exports = {
     loginByPassword,
     setPassword,
