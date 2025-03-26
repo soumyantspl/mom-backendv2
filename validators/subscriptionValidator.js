@@ -22,9 +22,9 @@ const addSubscriptionValidator = async (req, res, next) => {
                 .required(),
 
             billingCycle: Joi.string()
-                .valid("monthly", "early", "3year")
+                .valid("monthly", "yearly", "3year")
                 .required()
-                .messages({ "any.only": "Billing cycle must be 'monthly', 'early', or '3year'" }),
+                .messages({ "any.only": "Billing cycle must be 'monthly', 'yearly', or '3year'" }),
 
             validity: Joi.number()
                 .required(),
@@ -109,8 +109,8 @@ const updateSubscriptionValidator = async (req, res, next) => {
             price: Joi.number().precision(2),
 
             billingCycle: Joi.string()
-                .valid("monthly", "early", "3year")
-                .messages({ "any.only": "Billing cycle must be 'monthly', 'early', or '3year'" }),
+                .valid("monthly", "yearly", "3year")
+                .messages({ "any.only": "Billing cycle must be 'monthly', 'yearly', or '3year'" }),
 
             validity: Joi.number().integer(),
         });
