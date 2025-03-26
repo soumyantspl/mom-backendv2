@@ -149,8 +149,10 @@ const subscriptionUpdated = "Subscription updated succsessfully"
 const subscriptionDeleted = "Subscription deleted succsessfully"
 const leadFetched = "Lead fetched successfully"
 const invalidCredentials = "Invalid Credential"
+const emailLogsFetched = "Email logs fetched successfully"
 
 module.exports = {
+  emailLogsFetched,
   invalidCredentials,
   leadFetched,
   subscriptionDeleted,

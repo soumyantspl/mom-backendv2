@@ -22,6 +22,75 @@ const BASE_URL = process.env.BASE_URL;
 
 
 
+/**FUNC- TO VERIFY ACTIVE USER*/
+// const verifyAdmin = async (empId) => {
+//   // return await Employee.findOne(
+//    return await AdminPanel.findOne(
+//      { _id: new ObjectId(empId), isActive: true },
+//      {
+//        _id: 1,
+//        email: 1,
+//       // organizationId: 1,
+//        name: 1,
+//        isActive: 1,
+//       // isMeetingOrganiser: 1,
+//      //  isAdmin: 1,
+//      isSuperAdmin:1
+//      }
+//    );
+//  };
+
+
+ /**FUNC- TO VERIFY ACTIVE USER*/
+const verifyAdmin = async (empId, token) => {
+  console.log(empId, token);
+  // const userData = await AdminPanel.findOne(
+  //   { _id: new ObjectId(empId), isActive: true },
+  //   //{ _id: new ObjectId(empId), isActive: true },
+  //   {
+  //     _id: 1,
+  //     email: 1,
+  //   //  organizationId: 1,
+  //     name: 1,
+  //     isActive: 1,
+  //   //  isMeetingOrganiser: 1,
+  //     isSuperAdmin: 1,
+  //     token: 1,
+  //   //  isEmployee: 1,
+  //   }
+  // );
+
+  // return userData;
+
+  const userData = await AdminPanel.findOne(
+    { _id: new ObjectId(empId), isActive: true },
+    {
+      _id: 1,
+      email: 1,
+     // organizationId: 1,
+      name: 1,
+      isActive: 1,
+     isSuperAdmin: 1,
+      token: 1,
+    
+    }
+  );
+  console.log(userData);
+
+  if (userData) {
+    if (userData?.token !== token) {
+      return {
+        invalidToken: true,
+      };
+    }
+    return userData;
+  } else {
+    return false;
+  }
+};
+
+
+
 /**FUNC- TO VERIFY VALID EMAIL USER */
 const verifyEmail = async (email) => {
   "----------------------33333", email;
@@ -374,10 +443,15 @@ const loginByPassword = async (bodyData) => {
   }
 
   
-  const token = await authMiddleware.generateUserToken({
+  let token = await authMiddleware.generateUserToken({
       userId: userData._id,
       name: userData.name,
   });
+  if (token.startsWith("Bearer ")) {
+    token = token.substring(7);
+    await AdminPanel.updateOne({ email }, { $set: { token } });
+  }
+  
 
   delete userData.password;
 
@@ -489,4 +563,5 @@ const addAdmin = async (bodyData) => {
     sendOtp,
     verifyOtp,
     reSendOtp,
+    verifyAdmin
   };

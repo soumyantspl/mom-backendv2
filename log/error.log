@@ -2569,3 +2569,53 @@ Stack Trace: StrictModeError: Path "organizationId" is not in schema, strict mod
     at async insertOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:135:25)
     at async validateSendingOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:227:11)
     at async Object.sendOtp (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\services\adminAuthService.js:49:12)
+Date: 26/03/2025, Time: 10:27
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\validators\leadValidator.js:198:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 26/03/2025, Time: 11:18
+Error: Cannot read properties of undefined (reading 'toString')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'toString')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:27:56)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 26/03/2025, Time: 11:19
+Error: Cannot read properties of undefined (reading 'toString')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'toString')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\middlewares\authMiddleware.js:27:56)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 26/03/2025, Time: 11:23
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 26/03/2025, Time: 11:27
+Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+Stack Trace: Error: queryTxt ESERVFAIL ntspl.6crwppo.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17)
+Date: 26/03/2025, Time: 12:10
+Error: ObjectId is not defined
+Stack Trace: ReferenceError: ObjectId is not defined
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\middlewares\authMiddleware.js:25:16)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\validators\leadValidator.js:198:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 26/03/2025, Time: 12:11
+Error: ObjectId is not defined
+Stack Trace: ReferenceError: ObjectId is not defined
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\middlewares\authMiddleware.js:26:16)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at forwardLeadValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\validators\leadValidator.js:198:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Date: 26/03/2025, Time: 12:19
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\middlewares\authMiddleware.js:19:15)
+    at Layer.handle [as handle_request] (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at contactListValidator (D:\MinutesVault\MINUTES-VAULT-NEW\MinutesVaultV2\mom-backendv2\Admin\validators\leadValidator.js:39:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
