@@ -207,6 +207,55 @@ const loginByGmail = async (req, res) => {
   }
 };
 
+/**FUNC- SIGGLE SIGN ON*/
+const loginBySigleSignOn = async (req, res) => {
+  try {
+    let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
+    console.log(req.body)
+     const result = await authService.loginBySigleSignOn(req.body, ip);
+    if (!result) {
+      return Responses.failResponse(req, res, null, messages.userNotFound, 200);
+    }
+    if (result?.isUserDeactivated) {
+      return Responses.failResponse(req, res, null, messages.invalidUser, 200);
+    }
+
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.signInSuccess,
+      200
+    );
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ err });
+  }
+};
+
+/**FUNC- LOGOUT */
+const logOut = async (req, res) => {
+  try {
+    let ip = req.headers.ip ? req.headers.ip : await commonHelper.getIp(req);
+
+     const result = await authService.logOut(req.userData, ip);
+    if (!result) {
+      return Responses.failResponse(req, res, null, messages.userNotFound, 200);
+    }
+
+    return Responses.successResponse(
+      req,
+      res,
+      result,
+      messages.logOutSuccess,
+      200
+    );
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ err });
+  }
+};
+
 module.exports = {
   sendOtp,
   verifyOtp,
@@ -215,4 +264,6 @@ module.exports = {
   forgotPassword,
   signInByPassword,
   loginByGmail,
+  logOut,
+  loginBySigleSignOn
 };

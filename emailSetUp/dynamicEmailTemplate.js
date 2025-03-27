@@ -659,8 +659,8 @@ const actionAssignEmailTemplate = async (
   meetingData,
   logo,
   assignedUserDetails,
-  action,
-  userData
+  userData,
+  action
 ) => {
   console.log("meetingData Template", meetingData)
   return new Promise(async (resolve, reject) => {

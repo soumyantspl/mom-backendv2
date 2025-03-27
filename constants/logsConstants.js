@@ -34,7 +34,7 @@ const Designation = {
   updateDesignationDetails: "The Designation has been updated",
   editDesignation: "Designation updated",
   deleteDesignation: "Designation Deleted",
-  deleteDesignationDetails: "Deleted is Designation:"
+  deleteDesignationDetails: "Deleted is Designation:",
 };
 
 const Minute = {
@@ -125,7 +125,7 @@ const Organization = {
   editOrganization: "Organization has been edited",
   deleteOrganization: "Organization has been deleted",
   detailsDeleteOrganization: " Organization succesfully",
-  organizationCodeUpdate: "Organization Code"
+  organizationCodeUpdate: "Organization Code",
 };
 
 const Config = {
@@ -144,7 +144,7 @@ const Alert = {
 const authModule = {
   moduleName: "Sign In",
   setPassword: "Reset Password",
-  forgotPassword:"Forgot Password",
+  forgotPassword: "Forgot Password",
   setPasswordDetails: "Password set successfully",
   sendOTP: "Sign In",
   sendOTPfailed: "Failed to Send OTP",
@@ -153,6 +153,9 @@ const authModule = {
   verifiedOTP: "OTP verifed successfull",
   signInByOTP: "SignIn by OTP is successfull",
   signInByPassword: "SignIn by passsword is successfull",
+  logOutName: "Logout",
+  logOut: "Logout successfull",
+  singleSignOn: "Signin by Single Sign On",
 };
 module.exports = {
   Meeting,

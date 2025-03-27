@@ -5,17 +5,12 @@ const logService = require("./logsService");
 const logMessages = require("../constants/logsConstants");
 const emailService = require("./emailService");
 const authMiddleware = require("../middlewares/authMiddleware");
-// const emailTemplates = require("../emailSetUp/emailTemplates");
-const emailTemplates = require("../emailSetUp/dynamicEmailTemplate");
+const emailTemplates = require("../emailSetUp/emailTemplates");
 const emailConstants = require("../constants/emailConstants");
 const ObjectId = require("mongoose").Types.ObjectId;
 const axios = require("axios");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.CLIENT_ID);
-
-const Organization = require("../models/organizationModel");
-const BASE_URL = process.env.BASE_URL;
-
 /**FUNC- TO VERIFY VALID EMAIL USER */
 const verifyEmail = async (email) => {
   "----------------------33333", email;
@@ -50,10 +45,14 @@ const verifyOtp = async (data, ipAddress) => {
   const otpLogsData = await getOtpLogs(data);
   if (otpLogsData?.length !== 0) {
     const userData = otpLogsData[0]?.userDetail;
-    const token = await authMiddleware.generateUserToken({
+    let token = await authMiddleware.generateUserToken({
       userId: userData?._id,
       name: userData?.name,
     });
+    if (token.startsWith("Bearer ")) {
+      token = token.substring(7, token.length);
+    }
+    await Employee.updateOne({ _id: userData?._id }, { token });
     const logData = {
       moduleName: logMessages.authModule.moduleName,
       userId: userData._id,
@@ -147,15 +146,7 @@ const insertOtp = async (
   await otpData.save();
   "-------------------------------1", userData, data.otp;
   const supportData = "support@ntspl.co.in";
-  // const logo = process.env.LOGO;
-  const organization = await Organization.findOne({
-    _id: new ObjectId(userData.organizationId),
-  });
-
-  const logo = organization?.dashboardLogo
-    ? `${BASE_URL}/${organization.dashboardLogo.replace(/\\/g, "/")}`
-    : process.env.LOGO;
-
+  const logo = process.env.LOGO;
   const mailData = await emailTemplates.sendOtpEmailTemplate(
     userData,
     data.otp,
@@ -164,15 +155,13 @@ const insertOtp = async (
     logo
   );
   //const mailData = await emailTemplates.signInByOtpEmail(userData, data.otp);
-  // const emailSubject = emailConstants.signInOtpsubject;
-  const { emailSubject, mailData: mailBody } = mailData;
-
+  const emailSubject = emailConstants.signInOtpsubject;
   "sendOtpEmailTemplate-----------------------maildata", mailData;
   await emailService.sendEmail(
     userData.email,
     emailType,
     emailSubject,
-    mailBody
+    mailData
   );
   return data.otp;
 };
@@ -353,7 +342,7 @@ const signInByPassword = async (data, ipAddress) => {
       isMeetingOrganiser: 1,
     }
   );
-  userData;
+
   if (!userData) {
     return false;
   }
@@ -383,11 +372,15 @@ const signInByPassword = async (data, ipAddress) => {
     };
   }
 
-  const token = await authMiddleware.generateUserToken({
+  let token = await authMiddleware.generateUserToken({
     userId: userData._id,
     name: userData.name,
   });
   delete userData.password;
+  if (token.startsWith("Bearer ")) {
+    token = token.substring(7, token.length);
+  }
+  await Employee.updateOne({ _id: userData._id }, { token });
 
   const logData = {
     moduleName: logMessages.authModule.moduleName,
@@ -483,12 +476,15 @@ const loginByGmailCredentials = async (data, ipAddress) => {
       };
     }
 
-    const token = await authMiddleware.generateUserToken({
+    let token = await authMiddleware.generateUserToken({
       userId: userData._id,
       name: userData.name,
     });
     delete userData.password;
-
+    if (token.startsWith("Bearer ")) {
+      token = token.substring(7, token.length);
+    }
+    await Employee.updateOne({ _id: userData._id }, { token });
     const logData = {
       moduleName: logMessages.authModule.moduleName,
       userId: userData._id,
@@ -515,17 +511,18 @@ const loginByGmailCredentials = async (data, ipAddress) => {
   return false;
 };
 
-
 /**FUNC- FOR SIGN IN BY PASSWORD   */
 const loginByGmailAccessToken = async (data, ipAddress) => {
   const { access_token } = data;
 
-
-  const response = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-  });
+  const response = await axios.get(
+    "https://www.googleapis.com/oauth2/v3/userinfo",
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    }
+  );
   const user = response.data;
   console.log("User Info:", user);
   const { email, email_verified } = user;
@@ -542,7 +539,7 @@ const loginByGmailAccessToken = async (data, ipAddress) => {
         isMeetingOrganiser: 1,
       }
     );
-    userData;
+  
     if (!userData) {
       return false;
     }
@@ -553,12 +550,18 @@ const loginByGmailAccessToken = async (data, ipAddress) => {
       };
     }
 
-    const token = await authMiddleware.generateUserToken({
+    let token = await authMiddleware.generateUserToken({
       userId: userData._id,
       name: userData.name,
     });
     delete userData.password;
-
+    if (token.startsWith("Bearer ")) {
+      token = token.substring(7, token.length);
+    }
+    console.log("userdATA==========",userData,token)
+    const isUpdate=await Employee.updateOne({ _id: userData._id }, { token });
+    console.log(isUpdate)
+  
     const logData = {
       moduleName: logMessages.authModule.moduleName,
       userId: userData._id,
@@ -584,7 +587,92 @@ const loginByGmailAccessToken = async (data, ipAddress) => {
   }
   return false;
 };
+/**FUNC- FOR SIGN IN BY PASSWORD   */
+const logOut = async (userData, ipAddress) => {
+  console.log(userData)
+  const updateData = await Employee.updateOne({ _id: userData?._id }, { token: null });
+console.log(updateData)
+  if (updateData) {
+    const logData = {
+      moduleName: logMessages.authModule.moduleName,
+      userId: userData?._id ,
+      action: logMessages.authModule.logOutName,
+      ipAddress,
+      details: logMessages.authModule.logOut,
+      organizationId: userData?.organizationId,
+    };
 
+    console.log("logData-------------------", logData);
+    await logService.createLog(logData);
+
+    return true;
+  }
+
+  return false;
+};
+
+
+const loginBySigleSignOn = async (data, ipAddress) => {
+  const { email,empId } = data;
+
+
+    const userData = await Employee.findOne(
+      { email },
+      {
+        _id: 1,
+        email: 1,
+        organizationId: 1,
+        name: 1,
+        password: 1,
+        isActive: 1,
+        isMeetingOrganiser: 1,
+      }
+    );
+  
+    if (!userData) {
+      return false;
+    }
+    // Based on user Status
+    if (!userData.isActive) {
+      return {
+        isUserDeactivated: true,
+      };
+    }
+
+    let token = await authMiddleware.generateUserToken({
+      userId: userData._id,
+      name: userData.name,
+    });
+    delete userData.password;
+    if (token.startsWith("Bearer ")) {
+      token = token.substring(7, token.length);
+    }
+    await Employee.updateOne({ _id: userData._id }, { token });
+    const logData = {
+      moduleName: logMessages.authModule.moduleName,
+      userId: userData._id,
+      action: logMessages.authModule.sendOTP,
+      ipAddress,
+      details: logMessages.authModule.singleSignOn,
+      organizationId: userData.organizationId,
+    };
+
+    "logData-------------------", logData;
+    await logService.createLog(logData);
+
+    return {
+      token,
+      userData: {
+        _id: userData._id,
+        name: userData.name,
+        email: userData.email,
+        organizationId: userData.organizationId,
+        isMeetingOrganiser: userData.isMeetingOrganiser,
+      },
+    };
+  
+  return false;
+};
 module.exports = {
   verifyEmail,
   sendOtp,
@@ -594,5 +682,7 @@ module.exports = {
   signInByPassword,
   forgotPassword,
   loginByGmailAccessToken,
-  loginByGmailCredentials
+  loginByGmailCredentials,
+  logOut,
+  loginBySigleSignOn
 };

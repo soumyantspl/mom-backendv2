@@ -170,13 +170,13 @@ router.post(
   meetingController.fetchCurrentAttendeesList
 );
 
-router.post(
-  // "/fetchCurrentAttendeesList/:organizationId",
-  "/createZoomMeeting",
-  // meetingValidator.fetchCurrentAttendeesListValidator,
-  // authMiddleware.verifyUserToken,
-  zoomController.createMeeting
-);
+// router.post(
+//   // "/fetchCurrentAttendeesList/:organizationId",
+//   "/createZoomMeeting",
+//   // meetingValidator.fetchCurrentAttendeesListValidator,
+//   // authMiddleware.verifyUserToken,
+//   zoomController.createMeeting
+// );
 
 /* GET ALL RECORDING OF A MEETING */
 router.get(
@@ -269,10 +269,10 @@ router.delete(
   meetingController.draftMeetingdelete
 );
 
-router.post("/check-zoom-meeting",
-  meetingValidator.checkZoomMeetingValidator,
-  authMiddleware.verifyUserToken,
-  meetingController.checkZoomMeeting);
+// router.post("/check-zoom-meeting",
+//   meetingValidator.checkZoomMeetingValidator,
+//   authMiddleware.verifyUserToken,
+//   meetingController.checkZoomMeeting);
 
 
 module.exports = router;

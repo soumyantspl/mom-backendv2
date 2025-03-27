@@ -3529,6 +3529,7 @@ Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out 
     at listOnTimeout (node:internal/timers:594:17)
     at process.processTimers (node:internal/timers:529:7)
 >>>>>>> a30189855633c8958c606f1f4761fb60f45a7656
+<<<<<<< HEAD
 Date: 06/03/2025, Time: 14:24
 Error: logo is not defined
 Stack Trace: ReferenceError: logo is not defined
@@ -4735,3 +4736,31 @@ Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out 
     at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
     at listOnTimeout (node:internal/timers:594:17)
     at process.processTimers (node:internal/timers:529:7)
+=======
+Date: 06/03/2025, Time: 15:02
+Error: "email" is required
+Stack Trace: ValidationError: "email" is required
+Date: 10/03/2025, Time: 12:17
+Error: Cannot read properties of undefined (reading 'startsWith')
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at verifyUserToken (E:\Ongoing\V2\BE\TESTING\mom-backendv2\middlewares\authMiddleware.js:18:15)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\layer.js:95:5)
+    at E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:284:15
+    at param (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:365:14)
+    at param (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:421:3)
+    at next (E:\Ongoing\V2\BE\TESTING\mom-backendv2\node_modules\express\lib\router\index.js:280:10)
+Date: 10/03/2025, Time: 12:17
+Error: "headers.authorization" is required
+Stack Trace: ValidationError: "headers.authorization" is required
+Date: 10/03/2025, Time: 12:36
+Error: self-signed certificate in certificate chain
+Stack Trace: Error: self-signed certificate in certificate chain
+    at TLSSocket.onConnectSecure (node:_tls_wrap:1674:34)
+    at TLSSocket.emit (node:events:519:28)
+    at TLSSocket._finishInit (node:_tls_wrap:1085:8)
+    at ssl.onhandshakedone (node:_tls_wrap:871:12)
+>>>>>>> a5adc23212fc8f3e950dc6916469785de9277bcc

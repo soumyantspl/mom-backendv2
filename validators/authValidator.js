@@ -100,9 +100,54 @@ const signInByPasswordValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error, 200);
   }
 };
+
+// SET SIGN IN BY PASWORD VALIDATOR
+const loginBySigleSignOn = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        ip: Joi?.string()?.trim(),
+      }).unknown(true),
+    });
+    const schema = Joi.object({
+      email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .required(),
+       // empId: Joi.string().required(),
+    });
+    await headerSchema.validateAsync({ headers: req.headers });
+    await schema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+
+// SET SIGN IN BY PASWORD VALIDATOR
+const logOut = async (req, res, next) => {
+  try {
+    const headerSchema = Joi.object({
+      headers: Joi.object({
+        ip: Joi?.string()?.trim(),
+      }).unknown(true),
+    });
+   
+    await headerSchema.validateAsync({ headers: req.headers });
+   
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
 module.exports = {
   sendOtpValidator,
   verifyOtpValidator,
   setPasswordValidator,
   signInByPasswordValidator,
+  loginBySigleSignOn,
+  logOut
 };
