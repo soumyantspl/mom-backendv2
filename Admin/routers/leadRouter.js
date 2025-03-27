@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const leadValidator = require("../validators/leadValidator");
-const authMiddleware = require("../../middlewares/authMiddleware");
+const authMiddleware = require("../middlewares/authMiddleware");
 const leadController = require("../controllers/leadController");
 
 
@@ -25,6 +25,7 @@ router.put("/reject-lead/:contactId",
 
  router.post("/forward-lead/:contactId", 
     leadValidator.forwardLeadValidator,
+    authMiddleware.verifyUserToken,
     leadController.forwardLead);
 
 router.get("/lead/:contactId", 

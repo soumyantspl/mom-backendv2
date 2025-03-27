@@ -4729,3 +4729,9 @@ Stack Trace: ValidationError: "organizationId" is required
 Date: 24/03/2025, Time: 13:02
 Error: "organizationId" is required
 Stack Trace: ValidationError: "organizationId" is required
+Date: 26/03/2025, Time: 11:01
+Error: Operation `employees.findOne()` buffering timed out after 10000ms
+Stack Trace: MongooseError: Operation `employees.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (D:\ongoing\V2-20-02-2025-Git\v2b\mom-backendv2\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:23)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)

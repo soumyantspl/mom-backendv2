@@ -10,6 +10,7 @@ const AdminPanelSchema = new mongoose.Schema({
             validator: validator.isEmail, 
         }
     },
+    token: { type: String, required: true },
     password: { type: String, required: true },
     isSuperAdmin:{ type:Boolean , default: true},
     isActive:{ type:Boolean , default: true},

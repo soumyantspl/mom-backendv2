@@ -380,6 +380,7 @@ const loginByPassword = async (bodyData) => {
       name: userData.name,
   });
 
+await AdminPanel.updateOne({ email }, { $set: { token } });
   delete userData.password;
 
   return {

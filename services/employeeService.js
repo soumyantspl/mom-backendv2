@@ -544,6 +544,7 @@ const viewSingleEmployee = async (id) => {
 /**FUNC- TO VERIFY ACTIVE USER*/
 const verifyEmployee = async (empId) => {
   return await Employee.findOne(
+    
     { _id: new ObjectId(empId), isActive: true },
     {
       _id: 1,
