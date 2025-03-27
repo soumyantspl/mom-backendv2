@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const mongoose = require("mongoose");
 const validator = require("validator");
 const contactUsSchema = new mongoose.Schema(
@@ -32,6 +33,31 @@ const contactUsSchema = new mongoose.Schema(
       default: false,
     },
     ip: { type: String, required: false },
+    leadStatus: {
+      status: {
+        type: String,
+        enum: ["pending","cancelled", "closed", "rejected", "forwarded"],
+        default: "pending",
+      },
+      reason: { 
+        type: String, 
+        required: false 
+      },
+      forwardedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Employee",
+        required: false, 
+      },
+      forwardedUserName: {
+        type: String,
+        required: false, 
+      },
+      timeAndDate: {
+        type: Date,
+        required: true,
+        default: Date.now(),
+      },
+    },
   },
   {
     timestamps: true,

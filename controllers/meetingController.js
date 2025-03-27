@@ -37,6 +37,16 @@ const createMeeting = async (req, res) => {
       );
     }
 
+    if (result?.existingZoomMeeting) {
+      return Responses.failResponse(
+        req,
+        res,
+        null,
+        messages.zoomMeetingExists,
+        200
+      );
+    }
+
     if (result?.isDuplicateEmpCode) {
       return Responses.failResponse(
         req,

@@ -545,7 +545,8 @@ const viewSingleEmployee = async (id) => {
 const verifyEmployee = async (empId,token) => {
   console.log(empId,token)
   return await Employee.findOne(
-    { _id: new ObjectId(empId), isActive: true ,token},
+    
+    { _id: new ObjectId(empId), isActive: true },
     {
       _id: 1,
       email: 1,
@@ -1123,7 +1124,7 @@ const updateProfile = async (userId, id, data, ipAddress, profilePicture) => {
     );
   }
 
-  // ❌ Skipping Unit Tracking (as requested)
+ 
 
   const userType = result.isEmployee ? "Employee" : "Guest Employee";
 

@@ -63,7 +63,7 @@ const otpVerifiedSuccess = "Your OTP has been successfully verified!";
 const invalidOtp =
   "The OTP you entered is incorrect. Please verify and try again.";
 const userNotFound =
-  "The email you entered does not match our records. Please enter a valid  email.";
+  "The email you entered does not match with our records. Please enter a valid  email.";
 const otpSentSuccess = async (email) => {
   return `A 6 digit OTP has been sent to ${email}.`;
 };
@@ -132,7 +132,27 @@ const notificationSent = "Email sent successfully"
 const notValid = "Draft Meeting Cleanup Days must be at least 2 days greater than Draft MeetingReminder Days"
 const draftDeleted = "Draft Meeting Deleted"
 const deleteDraftFailed = "Faild in Delete Draft Meeting"
+const zoomMeetingExists = "There is already a meeting scheduled on Zoom at that time."
+const subscriptionAdded = "Subscription added successfully"
+const subscriptionsFetched = "Subscription list fetched successfully"
+const subscriptionExists = "Subscription already exists"
+const subscriptionUpdated = "Subscription updated succsessfully"
+const subscriptionDeleted = "Subscription deleted succsessfully"
+
+const contactListFetched = "Contact list fetched successfully."
+const leadUpdated = "Lead status updated successfully"
+const alreadyCancelled = "Lead is already cancelled"
+const alreadyClosed = "Lead is already closed"
+const alreadyRejected = "Lead is already rejecteded"
+const leadFowarded = "Lead forwarded successfully"
+const leadFetched = "Lead fetched successfully"
+const deactivatedOrganization = "Organization is deactivated"
+const activatedOrganization = "Organization is activated"
+const invalidCredentials = "Invalid Credential"
+
 module.exports = {
+  invalidCredentials,
+  zoomMeetingExists,
   commentCreatedSuccess,
   pleaseAddMinute,
   isDeleteNotAllowed,
@@ -242,7 +262,20 @@ module.exports = {
   notValid,
   deleteDraftFailed,
   draftDeleted,
-  draftFailed
-  ///////////////////
-  //////////////////
-};
+  draftFailed,
+  subscriptionAdded,
+  subscriptionsFetched,
+  subscriptionExists,
+  subscriptionUpdated,
+  subscriptionDeleted,
+  deactivatedOrganization,
+  activatedOrganization,
+
+  leadFetched,
+  leadFowarded,
+  alreadyRejected,
+  alreadyClosed,
+  alreadyCancelled,
+  leadUpdated,
+  contactListFetched,
+}; 

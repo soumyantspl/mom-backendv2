@@ -72,6 +72,7 @@ const createMeeting = async (data, userId, ipAddress = 1000) => {
     };
   }
 
+
   let parentMeetingData = null;
   const meetingId = await commonHelper.customMeetingId(
     data.date,
@@ -3496,7 +3497,7 @@ const sendAlertTime = async () => {
           // }
           if (
             settingDiffTime >= timeDifferenceBetweenMeetingCurrent &&
-            timeDifferenceBetweenMeetingCurrent >= 0
+            timeDifferenceBetweenMeetingCurrent > 0
           ) {
             console.log("innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn---------");
             if (meeting.attendees.length !== 0) {
@@ -3519,71 +3520,19 @@ const sendAlertTime = async () => {
                 });
                 const createdByName = createdByDetail.name;
                 const attendeeDetails = empDetails;
-                // const logo = process.env.LOGO;
+                const logo = process.env.LOGO;
                 const singleMeetingDetails = await viewMeeting(
                   meeting?._id,
                   userId
                 );
-                // console.log(
-                //   "singleMeetingDetails----------------------------",
-                //   singleMeetingDetails
-                // );
+       
                 const attendeesData = singleMeetingDetails?.attendees
                   .map((attendee) => {
                     return `${attendee.name}(${attendee.email})`;
                   })
                   .join(", ");
 
-                // const agendaData = singleMeetingDetails?.agendasDetail
-                //   .map((agenda) => {
-                //     return `<table style="border: 1px solid black;border-collapse: collapse; width:100%;color:black;margin-top:5px;">
-                //     <tr style="border: 1px solid black;border-collapse: collapse;" >
-                //     <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
-                //     Agenda Title
-                //     </td>
-                //     <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${
-                //       agenda.title
-                //     }</td>
-                //     </tr>
-                //     ${
-                //       agenda.topic !== (null || "")
-                //         ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-                //           <td
-                //             style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                //             colspan="6"
-                //           >
-                //             Topic to Discuss
-                //           </td>
-                //           <td
-                //             colspan="6"
-                //             style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-                //           >
-                //             <p>${agenda.topic}</p>
-                //           </td>
-                //         </tr>`
-                //         : `<tr style={{display:"none"}}></tr>`
-                //     }
-                //        ${
-                //          agenda.timeLine !== (null || "" || 0)
-                //            ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
-                //              <td
-                //                style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
-                //                colspan="6"
-                //              >
-                //                Timeline
-                //              </td>
-                //              <td
-                //                colspan="6"
-                //                style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-                //              >
-                //                ${agenda.timeLine} Mins
-                //              </td>
-                //            </tr>`
-                //            : `<tr style={{display:"none"}}></tr>`
-                //        }
-                //     </table><br />`;
-                //   })
-                //   .join(" ");
+               
                 const agendaData = singleMeetingDetails?.agendasDetail
                   .map((agenda) => {
                     return `<table style="border: 1px solid black;border-collapse: collapse; width:100%;color:black;margin-top:5px;">
@@ -5522,3 +5471,4 @@ exports.notifyMeetingCreatorAboutDraft = notifyMeetingCreatorAboutDraft;
 exports.deleteOldDraftMeetings = deleteOldDraftMeetings;
 exports.getMeetingActionPriorityDetailsforChart = getMeetingActionPriorityDetailsforChart;
 exports.deleteDraftMeeting = deleteDraftMeeting;
+// exports.checkZoomMeetingAvailability = checkZoomMeetingAvailability;
