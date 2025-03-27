@@ -234,22 +234,26 @@ router.post(
   meetingController.downloadZoomRecordingsInZip
 );
 
-router.post('/check-availability/:id', 
-  // authMiddleware.verifyUserToken,
+// ADD ATTENDEE
+router.post('/check-availability/:id',
+  meetingValidator.checkAttendeeAvailabilityValidator, 
+  authMiddleware.verifyUserToken,
   meetingController.checkAttendeeAvailability
 );
 
 //check room availability
 router.post('/check-meetingroom-availability', 
+  meetingValidator.checkRoomAvailabilityValidator,
+  authMiddleware.verifyUserToken,
   meetingController.checkMeetingRoomAvailability
 );
 
 // check attendee availability in edit-meeting
-router.post('/check-attendee-availability', 
+router.post('/check-attendee-availability',
+  meetingValidator.checkAttendeeArrayAvailabilityValidator,
+  authMiddleware.verifyUserToken, 
   meetingController.checkAttendeeArrayAvailability
 );
-
-
 
 ///CREATE FOR CRONJOB DRAFT MEETINg/// PRATISHRUTI
 // Route to notify the meeting creator about a draft meeting

@@ -2270,8 +2270,46 @@ const downloadMOM = async (meetingId, userId, ipAddress = "1000") => {
 };
 
 /**FUNC- TO RESCHEDULE MEETING */
-const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
+const rescheduleMeeting = async (
+  id,
+  userId,
+  data,
+  userData,
+  ipAddress = "1000"
+) => {
   const updatedMeeting = null;
+
+  console.log("Meeting ID---", id);
+
+  // const existingMeeting = await Meeting.findById(id);
+  const existingMeeting = await Meeting.findOne({ _id: new ObjectId(id) });
+  console.log("existingMeeting in rescheduleMeeting", existingMeeting);
+  data.organizationId = existingMeeting.organizationId;
+  if (existingMeeting?.locationDetails.roomId) {  
+    data.roomId = existingMeeting.locationDetails.roomId;
+    const roomAvailability = await checkMeetingRoomAvailability({
+      ...data,
+      _id: { $ne: data?.meetingId },
+    });
+    console.log("roomAvailability in rescheduleMeeting", roomAvailability);
+    if (roomAvailability?.roomUnavailable) {
+      return {
+        roomUnavailable: true,
+        bookedTimeRange: roomAvailability.bookedTimeRange,
+      };
+    }
+  }
+  const attendeeAvailability = await checkAttendeeArrayAvailability({
+    ...data,
+    meetingId: data?.meetingId,
+  });
+  console.log(
+    "attendeeAvailability in rescheduleMeeting",
+    attendeeAvailability
+  );
+  if (attendeeAvailability && attendeeAvailability.length > 0) {
+    return { attendeesUnavailable: true, attendeeAvailability };
+  }
 
   const isUpdated = await Meeting.findOneAndUpdate(
     {
@@ -2316,29 +2354,7 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
       console.log("updatedMeetingHostData============", updatedMeetingHostData);
 
       if (updatedMeetingHostData) {
-        // hostingPassword = updatedMeetingHostData?.password;
-        // meetingLink = updatedMeetingHostData?.meeting_url?.split("?")[0];
-        // hostLink = updatedMeetingHostData?.host_url;
-
-        // updatedMeeting = await Meeting.findByIdAndUpdate(
-        //   { _id: new ObjectId(id) },
-
-        //   {
-        //     $set: {
-        //       link: updatedMeetingHostData?.meeting_url,
-        //       hostDetails: {
-        //         hostLink: updatedMeetingHostData?.host_url,
-        //         hostingPassword,
-        //         hostType: meetingDetails?.hostDetails?.hostType,
-        //       },
-        //       // linkType,
-        //     },
-        //   },
-
-        //   {
-        //     new: true,
-        //   }
-        // );
+      
         console.log(updatedMeeting);
 
         const meetingHostDeatils = {
@@ -2353,28 +2369,26 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
             _id: new ObjectId(updatedMeetingHostData.id),
             meetingId: new ObjectId(updatedMeeting?._id),
           },
-
           {
             $set: meetingHostDeatils,
           },
-
           {
             new: true,
           }
         );
       }
     }
-
+console.log("meetingDetails-------------",meetingDetails)
+const orgData=await Organization.findOne({_id:new ObjectId(meetingDetails?.organizationId)},{_id:1,loginLogo:1})
+console.log("orgData--------------------------",orgData)
+let logo = process.env.LOGO;
+if(orgData){
+  logo= baseUrl+orgData?.loginLogo;
+}
+console.log("log000",logo)
     if (data.attendees?.length !== 0 && meetingDetails) {
       data.attendees.map(async (attendee) => {
-        // const logo = process.env.LOGO;
-        const organizationDetails = await Organization.findOne({
-          _id: meetingDetails.organizationId,
-        });
-        const logo = organizationDetails?.dashboardLogo
-          ? `${BASE_URL}/${organizationDetails.dashboardLogo.replace(/\\/g, "/")}`
-          : process.env.LOGO;
-
+      
         const attendeeData = meetingDetails?.attendees
           .map((attendee) => {
             return `${attendee.name}(${attendee.email})`;
@@ -2384,65 +2398,35 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
           .map((agenda) => {
             return `<table style="border: 1px solid black;border-collapse: collapse; width:100%;color:black;margin-top:5px;">
         <tr style="border: 1px solid black;border-collapse: collapse;" >
-        <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="6">
+        <td  style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;" colspan="4">
         Agenda Title
         </td>
-        <td colspan="6" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${commonHelper.decryptWithAES(agenda.title)
-              }</td>
+        <td colspan="" style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;">${
+          agenda.title
+        }</td>
         </tr>
-        ${agenda.topic !== (null || "")
-                ? `<tr style="border: 1px solid black;border-collapse: collapse;">
-              <td
-                style="border: 1px solid black;border-collapse: collapse; width:20%;padding:3px;"
-                colspan="6"
-              >
-                Topic to Discuss
-              </td>
-              <td
-                colspan="6"
-                style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
-              >
-                <p>${commonHelper.decryptWithAES(agenda.topic)}</p>
-              </td>
-            </tr>`
-                : `<tr style={{display:"none"}}></tr>`
-              }
-           ${agenda.timeLine !== (null || "" || 0)
-                ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
+   
+           ${
+             agenda.timeLine !== (null || "" || 0)
+               ? `<tr style="border: 1px solid black;border-collapse: collapse; ">
                  <td
                    style="border: 1px solid black;border-collapse: collapse;width:20%;padding:3px;"
-                   colspan="6"
+                   colspan="4"
                  >
                    Timeline
                  </td>
                  <td
-                   colspan="6"
+                   colspan="8"
                    style="border: 1px solid black;border-collapse: collapse;width:50%;padding:3px;"
                  >
                    ${agenda.timeLine} Mins
                  </td>
                </tr>`
-                : `<tr style={{display:"none"}}></tr>`
-              }
+               : `<tr style={{display:"none"}}></tr>`
+           }
         </table><br />`;
           })
           .join(" ");
-
-        // let finalMeetingLink = null;
-        // let meetingLinkCode = null;
-        // if (isUpdated) {
-        //   finalMeetingLink =
-        //     isUpdated?.hostDetails?.hostType === "ZOOM"
-        //       ? isUpdated?.hostDetails?.hostLink?.split("?")[0]
-        //       : isUpdated?.link;
-        //   meetingLinkCode = isUpdated?.hostDetails?.hostingPassword
-        //     ? isUpdated?.hostDetails?.hostingPassword
-        //     : null;
-        // }
-
-        // //  console.log("updatedMeeting==============", updatedMeeting);
-        // console.log("finalMeetingLink==============", finalMeetingLink);
-        // console.log("meetingLinkCode==============", meetingLinkCode);
 
         let finalMeetingLink = null;
         let meetingLinkCode = null;
@@ -2455,18 +2439,9 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
           ? isUpdated?.hostDetails?.hostingPassword
           : null;
 
-        // console.log("meeting==============", meeting);
-        // console.log("updatedMeeting==============", updatedMeeting);
         console.log("finalMeetingLink==============", finalMeetingLink);
         console.log("meetingLinkCode==============", meetingLinkCode);
 
-        //  const hostKey =
-        //         meeting?.createdById?.toString() ==
-        //           attendeeData?._id?.toString() &&
-        //         singleMeetingDetails?.hostDetails?.hostLink
-        //           ? singleMeetingDetails?.hostDetails?.hostLink?.split("?")[0]
-        //
-        //         : singleMeetingDetails?.link;
         let hostKey = null;
 
         const attendeeDetails = await Employee.findOne(
@@ -2498,36 +2473,6 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
         }
         console.log("hostKey==============", hostKey);
 
-        // mailData = await emailTemplates.sendScheduledMeetingEmailTemplate(
-        //   meeting,
-        //   commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
-        //   logo,
-        //   agendaData,
-        //   attendeeData,
-        //   attendee,
-        //    meetingLinkCode,
-        //   finalMeetingLink,
-        //   hostKey
-        //   // (meetingLink =
-        //   //   meeting?.createdById?.toString() == attendee?._id?.toString()
-        //   //     ? hostLink
-        //   //     : meetingLink)
-        // );
-
-        // const logo = process.env.LOGO;
-        // const mailData = await emailTemplates.reSendScheduledMeetingEmailTemplate(
-        //   meetingDetails,
-        //   commonHelper.convertFirstLetterOfFullNameToCapital(attendee.name),
-        //   logo,
-        //   agendaData,
-        //   attendeeData,
-        //   attendee,
-        //   attendee?.rsvp,
-        //   meetingLinkCode,
-        //   finalMeetingLink,
-        //   hostKey
-        // );
-
         const mailData =
           await emailTemplates.sendReScheduledMeetingEmailTemplate(
             meetingDetails,
@@ -2538,18 +2483,18 @@ const rescheduleMeeting = async (id, userId, data, ipAddress = "1000") => {
             attendee,
             meetingLinkCode,
             finalMeetingLink,
+            userData,
             hostKey
           );
-        // const emailSubject = await emailConstants.reScheduleMeetingSubject(
-        //   meetingDetails
-        // );
-        const { emailSubject, mailData: mailBody } = mailData;
+        const emailSubject = await emailConstants.reScheduleMeetingSubject(
+          meetingDetails
+        );
 
         emailService.sendEmail(
           attendee.email,
           "Meeting Rescheduled",
           emailSubject,
-          mailBody
+          mailData
         );
       });
     }

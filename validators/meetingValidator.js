@@ -708,6 +708,54 @@ const downloadMomValidator = async (req, res, next) => {
 };
 
 //RESCHEDULE MEETING VALIDATOR
+// const rescheduleMeetingValidator = async (req, res, next) => {
+//   try {
+//     const headerSchema = Joi.object({
+//       headers: Joi.object({
+//         authorization: Joi.required(),
+//         ip: Joi.string(),
+//       }).unknown(true),
+//     });
+//     const bodySchema = Joi.object({
+//       meetingId: Joi.string().trim().alphanum().required(),
+//       fromTime: Joi.string().trim().required(),
+//       toTime: Joi.string().trim().required(),
+//       date: Joi.string().trim().required(),
+//       remarks: Joi.string()
+//         .trim()
+//         .min(3)
+//         .max(200)
+//         .pattern(regularExpression)
+//         .messages({ "Allowed Inputs": `(a-z, A-Z, 0-9, space, comma, dash)` })
+//         .required(),
+//       attendees: Joi.array()
+//         .min(1)
+//         .messages({
+//           "array.min": "attendees can't be empty!",
+//         })
+//         .items({
+//           _id: Joi.string().trim().alphanum().required(),
+//           email: Joi.string()
+//             .email({ tlds: { allow: false } })
+//             .required(),
+//           name: Joi.string().trim().required(),
+//           canWriteMOM: Joi.boolean(),
+//         })
+//         .required(),
+//     });
+//     const paramsSchema = Joi.object({
+//       id: Joi.string().trim().alphanum().required(),
+//     });
+//     await headerSchema.validateAsync({ headers: req.headers });
+//     await paramsSchema.validateAsync(req.params);
+//     await bodySchema.validateAsync(req.body);
+//     next();
+//   } catch (error) {
+//     console.log(error);
+//     return Responses.errorResponse(req, res, error, 200);
+//   }
+// };
+
 const rescheduleMeetingValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
@@ -717,6 +765,7 @@ const rescheduleMeetingValidator = async (req, res, next) => {
       }).unknown(true),
     });
     const bodySchema = Joi.object({
+      meetingId: Joi.string().trim().alphanum().required(),
       fromTime: Joi.string().trim().required(),
       toTime: Joi.string().trim().required(),
       date: Joi.string().trim().required(),
@@ -732,29 +781,35 @@ const rescheduleMeetingValidator = async (req, res, next) => {
         .messages({
           "array.min": "attendees can't be empty!",
         })
-        .items({
-          _id: Joi.string().trim().alphanum().required(),
-          email: Joi.string()
-            .email({ tlds: { allow: false } })
-            .required(),
-          name: Joi.string().trim().required(),
-          canWriteMOM: Joi.boolean(),
-          profilePicture: Joi.string().trim().allow(null, ""),
-        })
+        .items(
+          Joi.object({
+            _id: Joi.string().trim().alphanum().required(),
+            email: Joi.string()
+              .email({ tlds: { allow: false } })
+              .required(),
+            name: Joi.string().trim().required(),
+            canWriteMOM: Joi.boolean(),
+            profilePicture: Joi.string().trim().optional(),
+          })
+        )
         .required(),
     });
     const paramsSchema = Joi.object({
       id: Joi.string().trim().alphanum().required(),
     });
+    
     await headerSchema.validateAsync({ headers: req.headers });
     await paramsSchema.validateAsync(req.params);
     await bodySchema.validateAsync(req.body);
+    
     next();
   } catch (error) {
     console.log(error);
     return Responses.errorResponse(req, res, error, 200);
   }
 };
+
+
 //GIVE MOM WRITE PERMISSION VALIDATOR
 const giveMomWritePermissionValidator = async (req, res, next) => {
   try {
@@ -1205,6 +1260,7 @@ const checkAttendeeAvailabilityValidator = async (req, res, next) => {
     const bodySchema = Joi.object({
       email: Joi.string().email().optional(),
       attendeeId: Joi.string().optional(),
+      meetingId: Joi.string().trim().alphanum(),
     }).or("email", "attendeeId");
 
     await headerSchema.validateAsync({ headers: req.headers });
@@ -1231,6 +1287,7 @@ const checkRoomAvailabilityValidator = async (req, res, next) => {
       roomId: Joi.string().required(),
       fromTime: Joi.string().required(),
       toTime: Joi.string().required(),
+      meetingId: Joi.string(),
     });
 
     await headerSchema.validateAsync({ headers: req.headers });
@@ -1252,6 +1309,7 @@ const checkAttendeeArrayAvailabilityValidator = async (req, res, next) => {
       }).unknown(true),
     });
     const bodySchema = Joi.object({
+      meetingId: Joi.string().trim().alphanum().required(),
       date: Joi.date().iso().required(),
       fromTime: Joi.string()
         .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
@@ -1277,6 +1335,8 @@ const checkAttendeeArrayAvailabilityValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error, 200);
   }
 };
+
+
 const draftMeetingValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({

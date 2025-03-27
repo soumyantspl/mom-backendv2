@@ -116,15 +116,14 @@ const importSuccess = "Import completed successfully."
 const importFailed = "Import completed with errors.Please check 'Reason' column for failed reason"
 const importEroor = "Error in processing Excel file"
 const validationError = "Validation Errors"
-const attendeeUnavailable = "This attendee is already scheduled for a meeting at the same date and time "
-const roomUnavailable = "The room is already booked for the selected date and time ";
-const organizerUnavailable = "You already have a meeting scheduled on this date from "
 const attendeesFound = "Busy attendees found"
 ///Pratishruti//
 //Draft Delete//
 const draftFailed= "Draft Failed";
 
-
+const attendeeUnavailable = "This attendee is already scheduled for a meeting "
+const roomUnavailable = "The room is already booked for the selected date and time ";
+const organizerUnavailable = "You already have a meeting scheduled on this date from "
 //Pratishruti//
 //view pRofile//
 const currentPasswordIncorrect = "Current Password is Incorrect"
