@@ -572,26 +572,69 @@ const viewActionCommentValidator = async (req, res, next) => {
   }
 };
 
+// const actionCommentsValidator = async (req, res, next) => {
+//   try {
+//     const headerSchema = Joi.object({
+//       headers: Joi.object({
+//         authorization: Joi.required(),
+     
+//       }).unknown(true),
+//     });
+//     const bodySchema = Joi.object({
+//       actionId: Joi.string().trim().alphanum().required(),
+//       userId: Joi.string().trim().alphanum().required(),
+//       commentDescription: Joi.string()
+//         .min(3)
+//         .max(300)
+//         .trim()
+//         .pattern(commentRegex)
+//         .messages({
+//           "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+//         }),
+//     });
+//     await headerSchema.validateAsync({ headers: req.headers });
+//     await bodySchema.validateAsync(req.body);
+//     next();
+//   } catch (error) {
+//     console.log(error);
+//     errorLog(error);
+//     return Responses.errorResponse(req, res, error);
+//   }
+// };
+
 const actionCommentsValidator = async (req, res, next) => {
   try {
     const headerSchema = Joi.object({
       headers: Joi.object({
         authorization: Joi.required(),
-     
       }).unknown(true),
     });
+
     const bodySchema = Joi.object({
       actionId: Joi.string().trim().alphanum().required(),
       userId: Joi.string().trim().alphanum().required(),
-      commentDescription: Joi.string()
-        .min(3)
-        .max(300)
-        .trim()
-        .pattern(commentRegex)
-        .messages({
-          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-        }),
+      mentionedUsers: Joi.array().items(
+        Joi.object({
+          id: Joi.string().trim().alphanum().required(),
+          name: Joi.string().trim().required(),
+          email: Joi.string().trim().email().required(),
+          message: Joi.string().trim().min(3).max(300).required(),
+        })
+      ).default([]),
+
+      commentDescription: Joi.alternatives().conditional('mentionedUsers', {
+        is: Joi.array().min(1), // If mentionedUsers has at least 1 item, commentDescription is optional
+        then: Joi.string().trim().min(3).max(300).pattern(commentRegex).optional(),
+        otherwise: Joi.string().trim().min(3).max(300).pattern(commentRegex).required()
+          .messages({
+            "string.pattern.base": "HTML tags & Special letters are not allowed!",
+            "any.required": "Path `commentDescription` is required when `mentionedUsers` is empty.",
+            "string.min": "commentDescription must be at least 3 characters long.",
+            "string.max": "commentDescription cannot exceed 300 characters.",
+          })
+      })
     });
+
     await headerSchema.validateAsync({ headers: req.headers });
     await bodySchema.validateAsync(req.body);
     next();
@@ -602,33 +645,74 @@ const actionCommentsValidator = async (req, res, next) => {
   }
 };
 
+
 //ACTION COMMENT UPDATE VALIDATOR
+// const actionCommentsUpdateValidator = async (req, res, next) => {
+//   try {
+
+//     const headerSchema = Joi.object({
+//       authorization: Joi.string().required(), 
+//     }).unknown(true); 
+
+
+//     const bodySchema = Joi.object({
+//       commentDescription: Joi.string()
+//         .min(3)
+//         .max(100)
+//         .trim()
+//         .pattern(commentRegex)
+//         .messages({
+//           "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+//         }),
+//         mentionedUsers: Joi.array().items(
+//           Joi.object({
+//             id: Joi.string().required(),
+//             name: Joi.string().min(1).max(50).required(),
+//             email: Joi.string().email().required(),
+//           })
+//         ).optional(),
+//     });
+    
+//     await headerSchema.validateAsync(req.headers);
+//     await bodySchema.validateAsync(req.body);
+//     next();
+//   } catch (error) {
+//     console.log(error);
+//     errorLog(error);
+//     return Responses.errorResponse(req, res, error);
+//   }
+// };
+
+
 const actionCommentsUpdateValidator = async (req, res, next) => {
   try {
-
     const headerSchema = Joi.object({
       authorization: Joi.string().required(), 
     }).unknown(true); 
 
-
     const bodySchema = Joi.object({
-      commentDescription: Joi.string()
-        .min(3)
-        .max(100)
-        .trim()
-        .pattern(commentRegex)
-        .messages({
-          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
-        }),
-        mentionedUsers: Joi.array().items(
-          Joi.object({
-            id: Joi.string().required(),
-            name: Joi.string().min(1).max(50).required(),
-            email: Joi.string().email().required(),
+      commentDescription: Joi.alternatives().conditional('mentionedUsers', {
+        is: Joi.array().min(1), // If mentionedUsers exist, commentDescription is optional
+        then: Joi.string().trim().min(3).max(300).pattern(commentRegex).optional(),
+        otherwise: Joi.string().trim().min(3).max(300).pattern(commentRegex).required()
+          .messages({
+            "string.pattern.base": "HTML tags & Special letters are not allowed!",
+            "any.required": "Path `commentDescription` is required when `mentionedUsers` is empty.",
+            "string.min": "commentDescription must be at least 3 characters long.",
+            "string.max": "commentDescription cannot exceed 300 characters.",
           })
-        ).optional(),
+      }),
+
+      mentionedUsers: Joi.array().items(
+        Joi.object({
+          id: Joi.string().trim().alphanum().required(),
+          name: Joi.string().trim().min(1).max(50).required(),
+          email: Joi.string().trim().email().required(),
+          message: Joi.string().trim().min(3).max(300).required(), // Message for mentioned users
+        })
+      ).default([]),
     });
-    
+
     await headerSchema.validateAsync(req.headers);
     await bodySchema.validateAsync(req.body);
     next();
@@ -638,6 +722,7 @@ const actionCommentsUpdateValidator = async (req, res, next) => {
     return Responses.errorResponse(req, res, error);
   }
 };
+
 
 module.exports = {
   actionCommentsValidator,

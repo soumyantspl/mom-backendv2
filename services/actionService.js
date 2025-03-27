@@ -84,19 +84,21 @@ const addComments = async (userId, id, data) => {
   let mentionedUsers = [];
   let commentText = data.commentDescription;
 
-  // Extract mentioned attendees based on their names
   meetingDetails.attendees.forEach(attendee => {
     if (!attendee.name) return;
-    const mentionTag = `@${attendee.name}`;
+
+const mentionRegex = new RegExp(`@${attendee.name}(\\s+[^@]*)?`, "g");
+const matches = [...commentText.matchAll(mentionRegex)];
     
-    if (commentText.includes(mentionTag)) {
+    matches.forEach((match) => {
       mentionedUsers.push({
         id: attendee._id.toString(),
         name: attendee.name,
         email: attendee.email,
+        message: match[1]?.trim() || "", 
       });
-      commentText = commentText.replace(mentionTag, "").trim(); 
-    }
+      commentText = commentText.replace(match[0], "").trim(); 
+    })
   });
 
   const inputData = {
@@ -4010,16 +4012,19 @@ const updateComment = async (userId, commentId, data) => {
  
   meetingDetails.attendees.forEach(attendee => {
     if (!attendee.name) return;
-    const mentionTag = `@${attendee.name}`;
+    
+    const mentionRegex = new RegExp(`@${attendee.name}(\\s+[^@]*)?`, "g");
+    const matches = [...commentText.matchAll(mentionRegex)];
 
-    if (commentText.includes(mentionTag)) {
+    matches.forEach((match) => {
       mentionedUsers.push({
         id: attendee._id.toString(),
         name: attendee.name,
         email: attendee.email,
+        message: match[1]?.trim() || "", // Capture individual messages for each mentioned user
       });
       commentText = commentText.replace(mentionTag, "").trim(); 
-    }
+    })
   });
      // Ensure mentionedUsers are valid attendees
     //  mentionedUsers = mentionedUsers.filter(user => 

@@ -30,12 +30,6 @@ router.get(
 );
 
 /* ACTION COMMENT  */
-router.post(
-  "/addActionComment/:id",
-  actionValidator.actionCommentsValidator,
-  authMiddleware.verifyUserToken,
-  actionController.actionCommentsCreate
-);
 
 /* VIEW ACTION COMMENT  */
 router.get(
